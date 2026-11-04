@@ -1,0 +1,613 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+                        
+<ClinVarResult-Set><VariationArchive RecordType="classified" VariationID="90868" VariationName="NM_000251.2(MSH2):c.2047G&gt;A (p.Gly683Arg)" VariationType="single nucleotide variant" Accession="VCV000090868" Version="3" NumberOfSubmissions="4" NumberOfSubmitters="4" DateLastUpdated="2021-05-24" DateCreated="2015-03-24" MostRecentSubmission="2019-08-13">
+  <RecordStatus>previous</RecordStatus>
+  <Species>Homo sapiens</Species>
+  <ClassifiedRecord>
+    <SimpleAllele AlleleID="96343" VariationID="90868">
+      <GeneList>
+        <Gene Symbol="MSH2" FullName="mutS homolog 2" GeneID="4436" HGNC_ID="HGNC:7325" Source="submitted" RelationshipType="within single gene">
+          <Location>
+            <CytogeneticLocation>2p21-16.3</CytogeneticLocation>
+            <SequenceLocation Assembly="GRCh38" AssemblyAccessionVersion="GCF_000001405.38" AssemblyStatus="current" Chr="2" Accession="NC_000002.12" start="47403067" stop="47634501" display_start="47403067" display_stop="47634501" Strand="+"/>
+            <SequenceLocation Assembly="GRCh37" AssemblyAccessionVersion="GCF_000001405.25" AssemblyStatus="previous" Chr="2" Accession="NC_000002.11" start="47630205" stop="47710366" display_start="47630205" display_stop="47710366" Strand="+"/>
+          </Location>
+          <OMIM>609309</OMIM>
+          <Haploinsufficiency last_evaluated="2015-07-09" ClinGen="https://www.ncbi.nlm.nih.gov/projects/dbvar/ISCA/isca_gene.cgi?sym=MSH2">Sufficient evidence for dosage pathogenicity</Haploinsufficiency>
+          <Triplosensitivity last_evaluated="2015-07-09" ClinGen="https://www.ncbi.nlm.nih.gov/projects/dbvar/ISCA/isca_gene.cgi?sym=MSH2">No evidence available</Triplosensitivity>
+          <Property>gene_acmg_incidental_2013</Property>
+        </Gene>
+      </GeneList>
+      <Name>NM_000251.2(MSH2):c.2047G&gt;A (p.Gly683Arg)</Name>
+      <CanonicalSPDI>NC_000002.12:47476407:G:A</CanonicalSPDI>
+      <VariantType>single nucleotide variant</VariantType>
+      <Location>
+        <CytogeneticLocation>2p21</CytogeneticLocation>
+        <SequenceLocation Assembly="GRCh38" AssemblyAccessionVersion="GCF_000001405.38" forDisplay="true" AssemblyStatus="current" Chr="2" Accession="NC_000002.12" start="47476408" stop="47476408" display_start="47476408" display_stop="47476408" variantLength="1" positionVCF="47476408" referenceAlleleVCF="G" alternateAlleleVCF="A"/>
+        <SequenceLocation Assembly="GRCh37" AssemblyAccessionVersion="GCF_000001405.25" AssemblyStatus="previous" Chr="2" Accession="NC_000002.11" start="47703547" stop="47703547" display_start="47703547" display_stop="47703547" variantLength="1" positionVCF="47703547" referenceAlleleVCF="G" alternateAlleleVCF="A"/>
+      </Location>
+      <ProteinChange>G683R</ProteinChange>
+      <ProteinChange>G617R</ProteinChange>
+      <HGVSlist>
+        <HGVS Assembly="GRCh37" Type="genomic, top-level">
+          <NucleotideExpression sequenceAccessionVersion="NC_000002.11" sequenceAccession="NC_000002" sequenceVersion="11" change="g.47703547G&gt;A" Assembly="GRCh37">
+            <Expression>NC_000002.11:g.47703547G&gt;A</Expression>
+          </NucleotideExpression>
+        </HGVS>
+        <HGVS Assembly="GRCh38" Type="genomic, top-level">
+          <NucleotideExpression sequenceAccessionVersion="NC_000002.12" sequenceAccession="NC_000002" sequenceVersion="12" change="g.47476408G&gt;A" Assembly="GRCh38">
+            <Expression>NC_000002.12:g.47476408G&gt;A</Expression>
+          </NucleotideExpression>
+        </HGVS>
+        <HGVS Type="coding">
+          <NucleotideExpression sequenceAccessionVersion="NM_000251.2" sequenceAccession="NM_000251" sequenceVersion="2" change="c.2047G&gt;A">
+            <Expression>NM_000251.2:c.2047G&gt;A</Expression>
+          </NucleotideExpression>
+          <ProteinExpression sequenceAccessionVersion="NP_000242.1" sequenceAccession="NP_000242" sequenceVersion="1" change="p.Gly683Arg">
+            <Expression>NP_000242.1:p.Gly683Arg</Expression>
+          </ProteinExpression>
+          <MolecularConsequence ID="SO:0001583" Type="missense variant" DB="SO"/>
+        </HGVS>
+        <HGVS Type="coding">
+          <NucleotideExpression sequenceAccessionVersion="NM_001258281.1" sequenceAccession="NM_001258281" sequenceVersion="1" change="c.1849G&gt;A">
+            <Expression>NM_001258281.1:c.1849G&gt;A</Expression>
+          </NucleotideExpression>
+          <ProteinExpression sequenceAccessionVersion="NP_001245210.1" sequenceAccession="NP_001245210" sequenceVersion="1" change="p.Gly617Arg">
+            <Expression>NP_001245210.1:p.Gly617Arg</Expression>
+          </ProteinExpression>
+          <MolecularConsequence ID="SO:0001583" Type="missense variant" DB="SO"/>
+        </HGVS>
+        <HGVS Type="coding">
+          <NucleotideExpression sequenceAccessionVersion="LRG_218t1" sequenceAccession="LRG_218t1" change="c.2047G&gt;A">
+            <Expression>LRG_218t1:c.2047G&gt;A</Expression>
+          </NucleotideExpression>
+          <ProteinExpression sequenceAccessionVersion="LRG_218p1" sequenceAccession="LRG_218p1" change="p.Gly683Arg">
+            <Expression>LRG_218p1:p.Gly683Arg</Expression>
+          </ProteinExpression>
+        </HGVS>
+        <HGVS Type="genomic">
+          <NucleotideExpression sequenceAccessionVersion="NG_007110.2" sequenceAccession="NG_007110" sequenceVersion="2" change="g.78285G&gt;A">
+            <Expression>NG_007110.2:g.78285G&gt;A</Expression>
+          </NucleotideExpression>
+        </HGVS>
+        <HGVS Type="genomic">
+          <NucleotideExpression sequenceAccessionVersion="LRG_218" sequenceAccession="LRG_218" change="g.78285G&gt;A">
+            <Expression>LRG_218:g.78285G&gt;A</Expression>
+          </NucleotideExpression>
+        </HGVS>
+      </HGVSlist>
+      <XRefList>
+        <XRef ID="CA019900" DB="ClinGen"/>
+        <XRef Type="rs" ID="267607995" DB="dbSNP"/>
+      </XRefList>
+      <AlleleFrequencyList>
+        <AlleleFrequency Value="0.00001" Source="Trans-Omics for Precision Medicine (TOPMed)"/>
+      </AlleleFrequencyList>
+    </SimpleAllele>
+    <RCVList>
+      <RCVAccession Title="NM_000251.2(MSH2):c.2047G&gt;A (p.Gly683Arg) AND Lynch syndrome" Accession="RCV000076370" Version="4">
+        <ClassifiedConditionList>
+          <ClassifiedCondition DB="MedGen" ID="C1333990">Lynch syndrome</ClassifiedCondition>
+        </ClassifiedConditionList>
+        <RCVClassifications>
+          <GermlineClassification>
+            <ReviewStatus>reviewed by expert panel</ReviewStatus>
+            <Description DateLastEvaluated="2013-09-05" SubmissionCount="1">Pathogenic</Description>
+          </GermlineClassification>
+        </RCVClassifications>
+      </RCVAccession>
+      <RCVAccession Title="NM_000251.2(MSH2):c.2047G&gt;A (p.Gly683Arg) AND Hereditary cancer-predisposing syndrome" Accession="RCV000132039" Version="5">
+        <ClassifiedConditionList>
+          <ClassifiedCondition DB="MedGen" ID="C0027672">Hereditary cancer-predisposing syndrome</ClassifiedCondition>
+        </ClassifiedConditionList>
+        <RCVClassifications>
+          <GermlineClassification>
+            <ReviewStatus>criteria provided, single submitter</ReviewStatus>
+            <Description DateLastEvaluated="2018-08-07" SubmissionCount="1">Pathogenic</Description>
+          </GermlineClassification>
+        </RCVClassifications>
+      </RCVAccession>
+      <RCVAccession Title="NM_000251.2(MSH2):c.2047G&gt;A (p.Gly683Arg) AND not specified" Accession="RCV000202225" Version="1">
+        <ClassifiedConditionList>
+          <ClassifiedCondition DB="MedGen" ID="CN169374">not specified</ClassifiedCondition>
+        </ClassifiedConditionList>
+        <RCVClassifications>
+          <GermlineClassification>
+            <ReviewStatus>no assertion criteria provided</ReviewStatus>
+            <Description SubmissionCount="1">Uncertain significance</Description>
+          </GermlineClassification>
+        </RCVClassifications>
+      </RCVAccession>
+      <RCVAccession Title="NM_000251.2(MSH2):c.2047G&gt;A (p.Gly683Arg) AND Hereditary nonpolyposis colon cancer" Accession="RCV000524373" Version="4">
+        <ClassifiedConditionList>
+          <ClassifiedCondition DB="MedGen" ID="C0009405">Hereditary nonpolyposis colon cancer</ClassifiedCondition>
+        </ClassifiedConditionList>
+        <RCVClassifications>
+          <GermlineClassification>
+            <ReviewStatus>criteria provided, single submitter</ReviewStatus>
+            <Description DateLastEvaluated="2018-12-14" SubmissionCount="1">Pathogenic</Description>
+          </GermlineClassification>
+        </RCVClassifications>
+      </RCVAccession>
+    </RCVList>
+    <Classifications>
+      <GermlineClassification DateLastEvaluated="2013-09-05" NumberOfSubmissions="4" NumberOfSubmitters="4" DateCreated="2015-03-24" MostRecentSubmission="2019-08-13">
+        <ReviewStatus>reviewed by expert panel</ReviewStatus>
+        <Description>Pathogenic</Description>
+        <Citation Type="general">
+          <ID Source="PubMed">11606497</ID>
+        </Citation>
+        <Citation Type="general">
+          <ID Source="PubMed">18931482</ID>
+        </Citation>
+        <Citation Type="general">
+          <ID Source="PubMed">19731080</ID>
+        </Citation>
+        <Citation Type="general">
+          <ID Source="PubMed">23690608</ID>
+        </Citation>
+        <Citation Type="general">
+          <ID Source="PubMed">26248088</ID>
+        </Citation>
+        <Citation Type="general">
+          <ID Source="PubMed">28422960</ID>
+        </Citation>
+        <Citation Type="general">
+          <URL>http://www.insight-database.org/classifications/index.html?gene=MSH2&amp;variant=c.2047G%3EA</URL>
+        </Citation>
+        <ConditionList>
+          <TraitSet ID="9590" Type="Disease">
+            <Trait ID="16789" Type="Disease">
+              <Name>
+                <ElementValue Type="Alternate">AllHighlyPenetrant</ElementValue>
+              </Name>
+              <Name>
+                <ElementValue Type="Preferred">not specified</ElementValue>
+              </Name>
+              <AttributeSet>
+                <Attribute Type="public definition">The term 'not specified' was created for use in ClinVar so that submitters can convey the concept that a variant is benign, likely benign, or of uncertain significance for an unspecified set of disorders.  This usage was introduced in 2014 to replace AllHighlyPenetrant.</Attribute>
+              </AttributeSet>
+              <XRef ID="CN169374" DB="MedGen"/>
+            </Trait>
+          </TraitSet>
+          <TraitSet ID="37727" Type="Disease">
+            <Trait ID="38245" Type="Disease">
+              <Name>
+                <ElementValue Type="Preferred">Hereditary nonpolyposis colon cancer</ElementValue>
+                <XRef ID="443090" DB="Orphanet"/>
+              </Name>
+              <XRef ID="443090" DB="Orphanet"/>
+              <XRef ID="C0009405" DB="MedGen"/>
+            </Trait>
+          </TraitSet>
+          <TraitSet ID="13598" Type="Disease">
+            <Trait ID="18746" Type="Disease">
+              <Name>
+                <ElementValue Type="Alternate">Neoplastic Syndromes, Hereditary</ElementValue>
+                <XRef ID="D009386" DB="MeSH"/>
+              </Name>
+              <Name>
+                <ElementValue Type="Preferred">Hereditary cancer-predisposing syndrome</ElementValue>
+                <XRef ID="699346009" DB="SNOMED CT"/>
+              </Name>
+              <Name>
+                <ElementValue Type="Alternate">Tumor predisposition</ElementValue>
+              </Name>
+              <Name>
+                <ElementValue Type="Alternate">Cancer predisposition</ElementValue>
+                <XRef ID="Hereditary+Cancer/3345" DB="Genetic Alliance"/>
+              </Name>
+              <AttributeSet>
+                <Attribute Type="keyword">Neoplasm</Attribute>
+              </AttributeSet>
+              <AttributeSet>
+                <Attribute Type="keyword">Hereditary cancer syndrome</Attribute>
+              </AttributeSet>
+              <Citation Type="practice guideline" Abbrev="IARC, 2008">
+                <ID Source="pmc">3075918</ID>
+              </Citation>
+              <Citation Type="practice guideline" Abbrev="ACMG/NSGC, 2015">
+                <ID Source="PubMed">25394175</ID>
+              </Citation>
+              <XRef ID="C0027672" DB="MedGen"/>
+            </Trait>
+          </TraitSet>
+          <TraitSet ID="8777" Type="Disease">
+            <Trait ID="14688" Type="Disease">
+              <Name>
+                <ElementValue Type="Preferred">Lynch syndrome</ElementValue>
+                <XRef ID="2622" DB="GeneTests"/>
+                <XRef ID="Hereditary+Non-Polyposis+Colorectal+Cancer+%28HNPCC%29/3371" DB="Genetic Alliance"/>
+                <XRef ID="9905" DB="Office of Rare Diseases"/>
+              </Name>
+              <Symbol>
+                <ElementValue Type="Preferred">HNPCC</ElementValue>
+                <XRef ID="9905" DB="Office of Rare Diseases"/>
+              </Symbol>
+              <AttributeSet>
+                <Attribute Type="public definition">Lynch syndrome is characterized by an increased risk for colorectal cancer (CRC) and cancers of the endometrium, stomach, ovary, small bowel, hepatobiliary tract, urinary tract, brain, and skin. In individuals with Lynch syndrome the following lifetime risks for cancer are seen: CRC: 52%-82% (mean age at diagnosis 44-61 years). Endometrial cancer in females: 25%-60% (mean age at diagnosis 48-62 years). Gastric cancer: 6%-13% (mean age at diagnosis 56 years). Ovarian cancer: 4%-12% (mean age at diagnosis 42.5 years; ~30% are diagnosed &lt; age 40 years). The risk for other Lynch syndrome-related cancers is lower, though substantially increased over general population rates.</Attribute>
+                <XRef ID="NBK1211" DB="GeneReviews"/>
+              </AttributeSet>
+              <AttributeSet>
+                <Attribute Type="disease mechanism" integerValue="273">loss of function</Attribute>
+                <XRef ID="GTR000515821" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000518997" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000528915" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000551450" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000551461" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000551464" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000558503" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000561860" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000316595" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000325623" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000512403" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000512828" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000515534" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000519150" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000520030" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000520868" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000520869" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000520872" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000522224" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000522278" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000528914" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000528930" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000322202" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000518999" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000520080" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000520394" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000520867" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000520870" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000522559" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000527981" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000527984" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000528529" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000530120" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000530202" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000551459" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000552183" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000552184" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000552245" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000552440" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000569916" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000570011" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000321105" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000332519" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000515774" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000519254" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000520392" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000520865" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000520871" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000522225" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000527983" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000528534" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000529017" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000530028" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000551463" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000558908" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000562151" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000568362" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000568365" DB="Genetic Testing Registry (GTR)"/>
+                <XRef ID="GTR000569958" DB="Genetic Testing Registry (GTR)"/>
+              </AttributeSet>
+              <Citation Type="review" Abbrev="GeneReviews">
+                <ID Source="PubMed">20301390</ID>
+                <ID Source="BookShelf">NBK1211</ID>
+              </Citation>
+              <Citation Type="Position Statement" Abbrev="EGAPP, 2009">
+                <ID Source="pmc">2743612</ID>
+              </Citation>
+              <Citation Type="practice guideline" Abbrev="ASCRS, 2001">
+                <ID Source="PubMed">11598466</ID>
+              </Citation>
+              <Citation Type="practice guideline" Abbrev="NSGC, 2004">
+                <ID Source="PubMed">15604628</ID>
+              </Citation>
+              <Citation Type="Recommendation" Abbrev="ACMG, 2013">
+                <ID Source="PubMed">23788249</ID>
+              </Citation>
+              <Citation Type="Suggested Reading" Abbrev="AMA/NCHPEG, 2012">
+                <URL>http://www.nchpeg.org/documents/crc/11-0456%20Fact%20sheets%20(MSI%20and%20IHC%20testing).pdf</URL>
+              </Citation>
+              <Citation Type="practice guideline" Abbrev="SGO, 2014">
+                <URL>https://www.sgo.org/clinical-practice/guidelines/screening-for-lynch-syndrome-in-endometrial-cancer</URL>
+                <CitationText>Society of Gynecologic Oncology (SGO) Clinical Practice Statement: Screening for Lynch Syndrome in Endometrial Cancer</CitationText>
+              </Citation>
+              <Citation Type="practice guideline" Abbrev="MSTF, 2014">
+                <ID Source="PubMed">25070057</ID>
+              </Citation>
+              <Citation Type="practice guideline" Abbrev="ASCO, 2014">
+                <ID Source="PubMed">24493721</ID>
+              </Citation>
+              <Citation Type="practice guideline" Abbrev="CAPS, 2013">
+                <ID Source="pmc">3585492</ID>
+              </Citation>
+              <Citation Type="practice guideline" Abbrev="MSTF, 2014">
+                <ID Source="PubMed">25003300</ID>
+              </Citation>
+              <Citation Type="practice guideline" Abbrev="ASCO/ESMO, 2015">
+                <ID Source="PubMed">25452455</ID>
+              </Citation>
+              <Citation Type="practice guideline" Abbrev="ACMG, 2014">
+                <ID Source="PubMed">24310308</ID>
+              </Citation>
+              <Citation Type="Recommendation" Abbrev="Mork et al., 2015">
+                <ID Source="PubMed">25711197</ID>
+              </Citation>
+              <Citation Type="practice guideline" Abbrev="Dutch SCG, 2013">
+                <ID Source="PubMed">23535968</ID>
+              </Citation>
+              <Citation Type="practice guideline" Abbrev="ACG, 2015">
+                <ID Source="PubMed">25645574</ID>
+              </Citation>
+              <Citation Type="Recommendation" Abbrev="Mallorca group, 2013">
+                <ID Source="PubMed">23408351</ID>
+              </Citation>
+              <Citation Type="Recommendation" Abbrev="ACMG, 2015">
+                <ID Source="PubMed">25356965</ID>
+              </Citation>
+              <Citation Type="Recommendation" Abbrev="ACMG, 2016">
+                <ID Source="PubMed">27854360</ID>
+                <ID Source="DOI">10.1038/gim.2016.190</ID>
+              </Citation>
+              <XRef ID="144" DB="Orphanet"/>
+              <XRef ID="C1333990" DB="MedGen"/>
+              <XRef Type="Phenotypic series" ID="PS120435" DB="OMIM"/>
+            </Trait>
+          </TraitSet>
+        </ConditionList>
+      </GermlineClassification>
+    </Classifications>
+    <ClinicalAssertionList>
+      <ClinicalAssertion ID="186240" SubmissionDate="2013-12-18" DateLastUpdated="2015-03-24" DateCreated="2013-12-19">
+        <ClinVarSubmissionID localKey="c.2047G&gt;A"/>
+        <ClinVarAccession Accession="SCV000107397" DateUpdated="2015-03-24" DateCreated="2013-12-19" Type="SCV" Version="2" SubmitterName="International Society for Gastrointestinal Hereditary Tumours (InSiGHT)" OrgID="500189" OrganizationCategory="other"/>
+        <RecordStatus>current</RecordStatus>
+        <Classification DateLastEvaluated="2013-09-05">
+          <ReviewStatus>reviewed by expert panel</ReviewStatus>
+          <GermlineClassification>Pathogenic</GermlineClassification>
+          <Comment>Multifactorial likelihood analysis posterior probability &gt;0.99</Comment>
+        </Classification>
+        <Assertion>variation to disease</Assertion>
+        <AttributeSet>
+          <Attribute Type="AssertionMethod">Guidelines v1.9</Attribute>
+          <Citation Type="general">
+            <URL>https://docs.google.com/file/d/0B3JL6rP6JzhoN2EydHRVMEI1UGs/edit?pli=1</URL>
+          </Citation>
+        </AttributeSet>
+        <ObservedInList>
+          <ObservedIn>
+            <Sample>
+              <Origin>germline</Origin>
+              <Species TaxonomyId="9606">human</Species>
+              <AffectedStatus>unknown</AffectedStatus>
+            </Sample>
+            <Method>
+              <MethodType>research</MethodType>
+            </Method>
+            <ObservedData>
+              <Attribute Type="Description">not provided</Attribute>
+            </ObservedData>
+          </ObservedIn>
+        </ObservedInList>
+        <SimpleAllele>
+          <GeneList>
+            <Gene Symbol="MSH2"/>
+          </GeneList>
+          <VariantType>Variation</VariantType>
+          <AttributeSet>
+            <Attribute Type="HGVS">NM_000251.1:c.2047G&gt;A</Attribute>
+          </AttributeSet>
+        </SimpleAllele>
+        <TraitSet Type="Disease">
+          <Trait Type="Disease">
+            <Name>
+              <ElementValue Type="Preferred">Lynch Syndrome</ElementValue>
+            </Name>
+          </Trait>
+        </TraitSet>
+        <Comment>Classified with v1.9 guidelines: https://docs.google.com/file/d/0B3JL6rP6JzhoN2EydHRVMEI1UGs</Comment>
+      </ClinicalAssertion>
+      <ClinicalAssertion ID="479635" SubmissionDate="2015-11-19" DateLastUpdated="2015-11-20" DateCreated="2015-11-20">
+        <ClinVarSubmissionID localKey="270" localKeyIsSubmitted="1"/>
+        <ClinVarAccession Accession="SCV000257166" DateUpdated="2015-11-20" DateCreated="2015-11-20" Type="SCV" Version="1" SubmitterName="Mayo Clinic Genetic Testing Laboratories,Mayo Clinic" OrgID="500068" OrganizationCategory="laboratory"/>
+        <RecordStatus>current</RecordStatus>
+        <Classification>
+          <ReviewStatus>no assertion criteria provided</ReviewStatus>
+          <GermlineClassification>Uncertain significance</GermlineClassification>
+        </Classification>
+        <Assertion>variation to disease</Assertion>
+        <ObservedInList>
+          <ObservedIn>
+            <Sample>
+              <Origin>unknown</Origin>
+              <Species TaxonomyId="9606">human</Species>
+              <AffectedStatus>unknown</AffectedStatus>
+            </Sample>
+            <Method>
+              <MethodType>research</MethodType>
+            </Method>
+            <ObservedData>
+              <Attribute Type="VariantAlleles" integerValue="1"/>
+            </ObservedData>
+            <ObservedData>
+              <Attribute Type="Homozygote" integerValue="0"/>
+            </ObservedData>
+          </ObservedIn>
+        </ObservedInList>
+        <SimpleAllele>
+          <GeneList>
+            <Gene Symbol="MSH2"/>
+          </GeneList>
+          <VariantType>Variation</VariantType>
+          <AttributeSet>
+            <Attribute Type="HGVS">NM_000251.2:c.2047G&gt;A</Attribute>
+          </AttributeSet>
+        </SimpleAllele>
+        <TraitSet Type="Disease">
+          <Trait Type="Disease">
+            <Name>
+              <ElementValue Type="Preferred">not specified</ElementValue>
+            </Name>
+          </Trait>
+        </TraitSet>
+        <SubmissionNameList>
+          <SubmissionName>MC_20151112</SubmissionName>
+        </SubmissionNameList>
+      </ClinicalAssertion>
+      <ClinicalAssertion ID="305613" SubmissionDate="2020-02-26" DateLastUpdated="" DateCreated="2014-08-06">
+        <ClinVarSubmissionID localKey="a9248" localKeyIsSubmitted="1" submittedAssembly="GRCh37"/>
+        <ClinVarAccession Accession="SCV000187098" DateUpdated="" DateCreated="2014-08-06" Type="SCV" Version="6" SubmitterName="Ambry Genetics" OrgID="61756" OrganizationCategory="laboratory" OrgAbbreviation="Ambry"/>
+        <RecordStatus>current</RecordStatus>
+        <Classification DateLastEvaluated="2018-08-07">
+          <ReviewStatus>criteria provided, single submitter</ReviewStatus>
+          <GermlineClassification>Pathogenic</GermlineClassification>
+          <Citation>
+            <ID Source="PubMed">23690608</ID>
+          </Citation>
+          <Citation>
+            <ID Source="PubMed">18931482</ID>
+          </Citation>
+          <Citation>
+            <ID Source="PubMed">19731080</ID>
+          </Citation>
+          <Citation>
+            <ID Source="PubMed">11606497</ID>
+          </Citation>
+          <Citation>
+            <ID Source="PubMed">28422960</ID>
+          </Citation>
+          <Comment>Detected in individual satisfying established diagnostic critera for classic disease without a clear mutation;Deficient protein function in appropriate functional assay(s);In silico models in agreement (deleterious) and/or completely conserved position in appropriate species;Rarity in general population databases (dbsnp, esp, 1000 genomes);Other data supporting pathogenic classification</Comment>
+        </Classification>
+        <Assertion>variation to disease</Assertion>
+        <AttributeSet>
+          <Attribute Type="AssertionMethod">Ambry Autosomal Dominant and X-Linked criteria (3/2017)</Attribute>
+          <Citation>
+            <URL>https://submit.ncbi.nlm.nih.gov/ft/byid/nlauicnm/ad_xl_classificationscheme_03.2017_ambry.pdf</URL>
+          </Citation>
+        </AttributeSet>
+        <ObservedInList>
+          <ObservedIn>
+            <Sample>
+              <Origin>germline</Origin>
+              <Species TaxonomyId="9606">human</Species>
+              <AffectedStatus>unknown</AffectedStatus>
+              <NumberTested>1</NumberTested>
+            </Sample>
+            <Method>
+              <MethodType>clinical testing</MethodType>
+            </Method>
+            <ObservedData>
+              <Attribute Type="VariantAlleles" integerValue="1"/>
+            </ObservedData>
+          </ObservedIn>
+        </ObservedInList>
+        <SimpleAllele>
+          <GeneList>
+            <Gene Symbol="MSH2"/>
+          </GeneList>
+          <VariantType>Variation</VariantType>
+          <AttributeSet>
+            <Attribute Type="HGVS">NM_000251.1:c.2047G&gt;A</Attribute>
+          </AttributeSet>
+        </SimpleAllele>
+        <TraitSet Type="Disease">
+          <Trait Type="Disease">
+            <Name>
+              <ElementValue Type="Preferred">Hereditary cancer-predisposing syndrome</ElementValue>
+            </Name>
+            <XRef DB="MedGen" ID="C0027672" Type="CUI"/>
+          </Trait>
+        </TraitSet>
+        <SubmissionNameList>
+          <SubmissionName>NonExomeUpdate_101019AmbryReport</SubmissionName>
+        </SubmissionNameList>
+      </ClinicalAssertion>
+      <ClinicalAssertion ID="468898" SubmissionDate="2019-03-28" DateLastUpdated="2019-08-13" DateCreated="2015-10-11">
+        <ClinVarSubmissionID localKey="650131|MedGen:C0009405" submittedAssembly="GRCh37"/>
+        <ClinVarAccession Accession="SCV000253804" DateUpdated="2019-08-13" DateCreated="2015-10-11" Type="SCV" Version="5" SubmitterName="Invitae" OrgID="500031" OrganizationCategory="laboratory"/>
+        <RecordStatus>current</RecordStatus>
+        <Classification DateLastEvaluated="2018-12-14">
+          <ReviewStatus>criteria provided, single submitter</ReviewStatus>
+          <GermlineClassification>Pathogenic</GermlineClassification>
+          <Citation>
+            <ID Source="PubMed">26248088</ID>
+          </Citation>
+          <Citation>
+            <ID Source="PubMed">19731080</ID>
+          </Citation>
+          <Citation>
+            <ID Source="PubMed">23690608</ID>
+          </Citation>
+          <Citation>
+            <ID Source="PubMed">11606497</ID>
+          </Citation>
+          <Citation>
+            <ID Source="PubMed">18931482</ID>
+          </Citation>
+          <Comment>This sequence change replaces glycine with arginine at codon 683 of the MSH2 protein (p.Gly683Arg). The glycine residue is highly conserved and there is a moderate physicochemical difference between glycine and arginine. This variant is not present in population databases (ExAC no frequency). This variant has been reported in a Lynch syndrome family (PMID: 18931482), and has been observed in three other unrelated individuals affected with MSH2-related cancers (PMID: 11606497, 19731080, 26248088,Â¬â€ Invitae database). ClinVar contains an entry for this variant (Variation ID: 90868). Experimental studies have shown that this missense change disrupts protein stability and mismatch repair activity in vitro (PMID: 23690608). In addition, this missense change is located in the Walker A ATPase domain of the MSH2 protein, where a significant number of previously reported deleterious MSH2 missense mutations are found (PMID: 23690608). For these reasons, this variant has been classified as Pathogenic.</Comment>
+        </Classification>
+        <Assertion>variation to disease</Assertion>
+        <AttributeSet>
+          <Attribute Type="AssertionMethod">Invitae Variant Classification Sherloc (09022015)</Attribute>
+          <Citation>
+            <ID Source="PubMed">28492532</ID>
+          </Citation>
+        </AttributeSet>
+        <ObservedInList>
+          <ObservedIn>
+            <Sample>
+              <Origin>germline</Origin>
+              <Species TaxonomyId="9606">human</Species>
+              <AffectedStatus>unknown</AffectedStatus>
+            </Sample>
+            <Method>
+              <MethodType>clinical testing</MethodType>
+            </Method>
+            <ObservedData>
+              <Attribute Type="Description">not provided</Attribute>
+            </ObservedData>
+          </ObservedIn>
+        </ObservedInList>
+        <SimpleAllele>
+          <GeneList>
+            <Gene Symbol="MSH2"/>
+          </GeneList>
+          <VariantType>Variation</VariantType>
+          <AttributeSet>
+            <Attribute Type="HGVS">NM_000251.2:c.2047G&gt;A</Attribute>
+          </AttributeSet>
+        </SimpleAllele>
+        <TraitSet Type="Disease">
+          <Trait Type="Disease">
+            <Name>
+              <ElementValue Type="Preferred">Hereditary nonpolyposis colon cancer</ElementValue>
+            </Name>
+            <XRef DB="MedGen" ID="C0009405" Type="CUI"/>
+          </Trait>
+        </TraitSet>
+        <Citation Type="general">
+          <ID Source="PubMed">28492532</ID>
+        </Citation>
+        <SubmissionNameList>
+          <SubmissionName>SUB5371970</SubmissionName>
+        </SubmissionNameList>
+      </ClinicalAssertion>
+    </ClinicalAssertionList>
+    <TraitMappingList>
+      <TraitMapping ClinicalAssertionID="186240" TraitType="Disease" MappingType="Name" MappingValue="Lynch Syndrome" MappingRef="Preferred">
+        <MedGen CUI="C1333990" Name="Lynch syndrome"/>
+      </TraitMapping>
+      <TraitMapping ClinicalAssertionID="468898" TraitType="Disease" MappingType="Name" MappingValue="Hereditary nonpolyposis colon cancer" MappingRef="Preferred">
+        <MedGen CUI="C0009405" Name="Hereditary nonpolyposis colon cancer"/>
+      </TraitMapping>
+      <TraitMapping ClinicalAssertionID="305613" TraitType="Disease" MappingType="Name" MappingValue="Hereditary cancer-predisposing syndrome" MappingRef="Preferred">
+        <MedGen CUI="C0027672" Name="Hereditary cancer-predisposing syndrome"/>
+      </TraitMapping>
+      <TraitMapping ClinicalAssertionID="479635" TraitType="Disease" MappingType="Name" MappingValue="not specified" MappingRef="Preferred">
+        <MedGen CUI="CN169374" Name="not specified"/>
+      </TraitMapping>
+    </TraitMappingList>
+  </ClassifiedRecord>
+</VariationArchive>
+</ClinVarResult-Set>

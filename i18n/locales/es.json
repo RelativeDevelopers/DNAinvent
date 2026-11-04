@@ -1,0 +1,972 @@
+{
+  "_meta": {
+    "name": "Español",
+    "decimal_separator": ",",
+    "thousands_separator": "."
+  },
+  "app": {
+    "title": "DNAinvent",
+    "tools_title": "DNAtools",
+    "bits_title": "Ser a partir de bits",
+    "goodbye": "¡Hasta la próxima!",
+    "database_title": "Base de datos"
+  },
+  "menu": {
+    "main": {
+      "complement": "Doble hélice y complementaria inversa",
+      "transcribe": "Transcripción ADN -> ARN",
+      "translate": "Traducción ARN -> aminoácidos",
+      "crispr": "CRISPR/Cas9",
+      "to_binary": "ADN a binario",
+      "from_binary": "Binario a ADN",
+      "tools": "Herramientas",
+      "language": "Idioma / Language",
+      "exit": "Salir",
+      "microscope": "Microscopio 3D: de la hélice a los quarks",
+      "protein": "Proteína 3D: del ADN a la estructura",
+      "database": "Base de datos de genes reales (NCBI y ClinVar)"
+    },
+    "tools": {
+      "find": "Buscar una secuencia",
+      "align": "Alinear y comparar dos secuencias",
+      "permutations": "Permutaciones",
+      "bits": "Generar un ser a partir de bits"
+    },
+    "bits": {
+      "time": "Tiempo de generación",
+      "flip": "Invertir ceros y unos",
+      "reverse": "Invertir el orden de las bases",
+      "both": "Las dos cosas a la vez",
+      "restore": "Volver al ser original"
+    },
+    "back": "Volver",
+    "database": {
+      "import": "Importar un gen",
+      "gene": "Ver un gen guardado",
+      "compare": "Sana frente a variante",
+      "search": "Buscar genes y enfermedades",
+      "list": "Genes guardados"
+    }
+  },
+  "common": {
+    "choose_option": "Elige una opción: ",
+    "invalid_option": "Opción no válida, prueba otra vez.",
+    "yes": "Sí",
+    "no": "No",
+    "confirm_suffix": " (s/n): ",
+    "yes_answers": "s,si,sí,y,yes",
+    "sequence_length": "Esta secuencia tiene {length} caracteres.",
+    "int_between": "Escribe un número entero entre {minimum} y {maximum}.",
+    "int_minimum": "Escribe un número entero mayor o igual que {minimum}."
+  },
+  "prompts": {
+    "dna": "Introduce la cadena de ADN (A, C, G, T): ",
+    "rna": "Introduce la cadena de ARN (A, C, G, U): ",
+    "binary": "Introduce la cadena binaria (0 y 1, 2 bits por base): ",
+    "search": "Secuencia que quieres buscar: ",
+    "first_dna": "Primera cadena de ADN: ",
+    "second_dna": "Segunda cadena de ADN: ",
+    "insert": "Secuencia que quieres insertar: ",
+    "guide_length": "Longitud de la guía (Enter = {default}): ",
+    "choose_target": "Elige una diana: ",
+    "permutation_size": "¿De cuántas bases quieres cada permutación?: ",
+    "being_size": "¿Cuántas bases quieres que tenga el ser?: ",
+    "gene_symbol": "Símbolo del gen (p. ej. HBB, TP53, BRCA1; Intro = volver): ",
+    "taxon": "Organismo: número de taxón del NCBI (Intro = humano, 9606; ratón = 10090): ",
+    "variant": "Variante (c.20A>T, p.Glu7Val, rs334...; Intro = las que causan alguna enfermedad): ",
+    "choose_variant": "Elige una variante: ",
+    "search_text": "Buscar un gen o una enfermedad (los nombres están en inglés): "
+  },
+  "complement": {
+    "helix": "Doble hélice (hebras antiparalelas):",
+    "reverse": "Complementaria inversa (5'->3'):"
+  },
+  "translate": {
+    "no_start": "No hay codón de inicio (AUG): el ribosoma no empezaría a traducir.",
+    "start_at": "Inicio en la posición {position}.",
+    "stop_at": "Parada en el codón {codon} (posición {position}).",
+    "no_stop": "Sin codón de parada: la secuencia podría estar incompleta.",
+    "protein": "Proteína ({count} aminoácidos): {protein}",
+    "is_dna_hint": "¿Es ADN? Transcríbelo antes con la opción 2."
+  },
+  "crispr": {
+    "no_targets": "No hay ninguna PAM (NGG) con {length} bases delante en ninguna de las dos hebras. Prueba una secuencia más larga o una guía más corta.",
+    "found": "Dianas encontradas: {count}",
+    "target": "hebra {strand}  corte tras la base {cut}  guía 5'-{guide}-3'  PAM {pam}",
+    "cut_here": "Cas9 corta aquí (cian: diana, magenta: PAM, |: corte):",
+    "repair_question": "¿Cómo repara la célula el corte?",
+    "nhej": "NHEJ: pega los extremos y suele equivocarse (inactiva el gen)",
+    "hdr": "HDR: copia un ADN molde que aportamos (inserta una secuencia)",
+    "donor": "Molde de ADN donante (brazos de homología en gris, inserto en verde):",
+    "result": "Resultado: {change}.",
+    "insertion": "inserción de {count} base(s) ({bases}) entre las posiciones {before} y {after}",
+    "deletion": "deleción de {count} base(s) ({bases}) en las posiciones {first}-{last}",
+    "substitution": "sustitución de {deleted} por {inserted} en las posiciones {first}-{last}",
+    "frameshift": "El cambio no es múltiplo de 3: desplaza el marco de lectura.",
+    "in_frame": "El cambio es múltiplo de 3: el marco de lectura se conserva.",
+    "protein_effect": "Efecto en la proteína:",
+    "no_atg": "(No hay codón de inicio ATG: esta secuencia no codifica proteína.)",
+    "before": "Antes:",
+    "after": "Después:",
+    "unchanged": "La proteína no cambia."
+  },
+  "binary": {
+    "summary": "{bases} bases -> {bits} bits ({bytes} bytes).",
+    "text_size": "Como texto normal (8 bits por letra) ocuparía {bits} bits: 4 veces más."
+  },
+  "find": {
+    "found": "Encontrada {count} veces en las posiciones: {positions}"
+  },
+  "align": {
+    "confirm": "El alineamiento necesita {cells} cálculos y puede tardar. ¿Continuar?",
+    "identity": "Identidad:",
+    "mismatches": "Sustituciones:",
+    "gaps": "Huecos:",
+    "score": "Puntuación:"
+  },
+  "permutations": {
+    "too_big": "No se pueden formar grupos de {size} bases con solo {length}.",
+    "positional": "Ordenaciones de posiciones:",
+    "distinct": "Secuencias distintas:",
+    "avoided": "Se evitan {count} repeticiones por las bases iguales.",
+    "confirm": "Son muchas. ¿Mostrarlas igualmente?"
+  },
+  "bits": {
+    "generated": "Ser generado:",
+    "flip": "Invertir ceros y unos (complementaria):",
+    "reverse": "Invertir el orden de las bases:",
+    "both": "Invertir ceros y unos + orden de las bases (complementaria inversa):",
+    "check": "¿Coincide con reverse_complement() del paso anterior? {result}",
+    "restored": "Ser original restaurado:",
+    "time": "Generados {bits} bits en {ms} ms ({us} µs de media por bit).",
+    "label_bits": "Bits:",
+    "label_dna": "ADN:"
+  },
+  "language": {
+    "choose": "Elige el idioma:",
+    "changed": "Idioma cambiado a español."
+  },
+  "errors": {
+    "empty_sequence": "La secuencia de {kind} está vacía.",
+    "invalid_characters": "Caracteres no válidos para {kind}: {chars} (permitidos: {allowed}).",
+    "odd_bit_length": "La cadena binaria tiene {length} bits; debe ser múltiplo de {multiple}.",
+    "cut_out_of_range": "El punto de corte {cut} está fuera de la secuencia.",
+    "guide_too_short": "La guía debe tener al menos {minimum} nucleótidos.",
+    "invalid_bit_count": "El número de bits debe ser mayor que 0.",
+    "negative_permutation_size": "El tamaño de la permutación no puede ser negativo.",
+    "too_long": "{field}: el texto es demasiado largo (máximo {maximum} caracteres).",
+    "too_small": "{field}: el valor debe ser como mínimo {minimum}.",
+    "too_big": "{field}: el valor debe ser como máximo {maximum}.",
+    "invalid_request": "{field}: falta el dato o no tiene el formato correcto.",
+    "alignment_too_large": "Las secuencias son demasiado largas para alinearlas aquí: harían falta {cells} cálculos y el máximo es {maximum}.",
+    "unknown_language": "Idioma no disponible: {language}.",
+    "start_out_of_range": "El inicio {start} está fuera de la secuencia, que tiene {length} bases.",
+    "count_too_small": "El número de pares debe ser al menos {minimum}.",
+    "no_orf": "No se ha encontrado ningún marco de lectura: la secuencia no tiene ningún codón de inicio ATG en ninguna de sus 6 pautas.",
+    "min_length_too_small": "La longitud mínima de la proteína debe ser como mínimo {minimum}.",
+    "invalid_accession": "«{accession}» no es una accesión de UniProt válida (ejemplo: P68871).",
+    "protein_not_found": "No hay ninguna estructura para la proteína {accession}.",
+    "service_unavailable": "{service} no responde ahora mismo. Comprueba la conexión a internet o inténtalo más tarde.",
+    "invalid_email": "El correo no parece válido (ejemplo: nombre@dominio.com).",
+    "search_failed": "{service} no ha podido hacer la búsqueda.",
+    "search_timeout": "{service} ha tardado más de {minutes} minutos. Inténtalo más tarde.",
+    "prediction_too_long": "La proteína tiene {length} aminoácidos y el predictor admite como máximo {maximum}.",
+    "prediction_failed": "{service} no ha podido predecir esta proteína.",
+    "email_not_configured": "El servidor no tiene configurado el correo que pide BLAST (variable de entorno DNAINVENT_EMAIL).",
+    "job_not_found": "Esa búsqueda ya no existe: se guardan una hora. Vuelve a empezar.",
+    "job_failed": "Algo ha fallado en el servidor durante la búsqueda. Inténtalo otra vez.",
+    "job_not_finished": "La búsqueda todavía no ha terminado.",
+    "no_structure": "No hay ninguna estructura que enseñar para esta proteína.",
+    "gene_not_found": "No se ha encontrado el gen «{symbol}» en el organismo {taxon}.",
+    "sequence_not_found": "No se ha encontrado la secuencia {accession}.",
+    "variant_not_found": "No existe la variante {variant}.",
+    "variant_not_supported": "Por ahora solo se pueden situar en la secuencia las sustituciones de una base dentro de la región codificante (como c.20A>T); {hgvs} no lo es.",
+    "variant_outside_cds": "{hgvs} cae fuera de la región codificante ({start}..{end}).",
+    "variant_mismatch": "En {accession} la posición {position} es {found}, no {expected}: {hgvs} no corresponde a esta versión de la secuencia."
+  },
+  "kinds": {
+    "dna": "ADN",
+    "rna": "ARN",
+    "binary": "binario",
+    "protein": "proteína"
+  },
+  "fields": {
+    "dna": "Secuencia de ADN",
+    "rna": "Secuencia de ARN",
+    "bits": "Cadena binaria",
+    "target": "Secuencia a buscar",
+    "first": "Primera secuencia",
+    "second": "Segunda secuencia",
+    "insert": "Secuencia a insertar",
+    "size": "Tamaño de la permutación",
+    "limit": "Número de resultados",
+    "bases": "Número de bases",
+    "seed": "Semilla",
+    "guide_length": "Longitud de la guía",
+    "cut": "Punto de corte",
+    "method": "Tipo de reparación",
+    "operation": "Operación",
+    "match": "Puntuación por coincidencia",
+    "mismatch": "Puntuación por sustitución",
+    "gap": "Puntuación por hueco",
+    "body": "Petición",
+    "start": "Inicio",
+    "count": "Número de pares"
+  },
+  "amino_acids": {
+    "A": "Alanina",
+    "R": "Arginina",
+    "N": "Asparagina",
+    "D": "Aspartato",
+    "C": "Cisteína",
+    "Q": "Glutamina",
+    "E": "Glutamato",
+    "G": "Glicina",
+    "H": "Histidina",
+    "I": "Isoleucina",
+    "L": "Leucina",
+    "K": "Lisina",
+    "M": "Metionina",
+    "F": "Fenilalanina",
+    "P": "Prolina",
+    "S": "Serina",
+    "T": "Treonina",
+    "W": "Triptófano",
+    "Y": "Tirosina",
+    "V": "Valina"
+  },
+  "web": {
+    "tagline": "Lee, codifica, compara y edita secuencias de ADN.",
+    "language": "Idioma",
+    "nav_label": "Herramientas",
+    "groups": {
+      "learn": "Aprender",
+      "read": "Leer",
+      "encode": "Codificar",
+      "compare": "Comparar",
+      "edit": "Editar"
+    },
+    "tools": {
+      "learn": {
+        "title": "Qué es el ADN",
+        "about": "El ADN es la molécula que guarda las instrucciones para construir y hacer funcionar a cada ser vivo, desde una bacteria hasta una persona. Está en casi todas tus células y se escribe con solo cuatro letras."
+      },
+      "complement": {
+        "title": "Doble hélice",
+        "about": "Escribe una hebra de ADN y verás su pareja. Las dos hebras van en sentidos opuestos, así que la complementaria se escribe al revés para leerla de 5' a 3'.",
+        "run": "Formar la doble hélice"
+      },
+      "transcribe": {
+        "title": "Transcripción",
+        "about": "Copia el ADN de la hebra codificante a ARN mensajero: cada T pasa a ser U.",
+        "run": "Transcribir"
+      },
+      "translate": {
+        "title": "Traducción",
+        "about": "Lee el ARN como un ribosoma: empieza en el primer AUG, avanza de 3 en 3 bases y se detiene en el primer codón de parada.",
+        "run": "Traducir"
+      },
+      "protein": {
+        "title": "Proteína 3D",
+        "about": "Escribe un gen: se busca su marco de lectura, se identifica la proteína en UniProt (BLAST) y se muestra su estructura de AlphaFold DB. Si la tuya es distinta o inventada, se predice con ESMFold y se compara con la natural. Después, puedes explorarla en el microscopio 3D.",
+        "run": "Buscar la proteína"
+      },
+      "to_binary": {
+        "title": "ADN a binario",
+        "about": "Cada base ocupa 2 bits: A = 00, C = 01, G = 10 y T = 11. Cada base y su pareja son opuestas bit a bit.",
+        "run": "Convertir a binario"
+      },
+      "from_binary": {
+        "title": "Binario a ADN",
+        "about": "Lee los bits de 2 en 2 y los convierte en bases. Puedes separar los bits con espacios.",
+        "run": "Convertir a ADN"
+      },
+      "being": {
+        "title": "Ser a partir de bits",
+        "about": "Genera bits al azar y léelos como ADN. Las operaciones se acumulan: invertir los bits dos veces devuelve el ser original.",
+        "run": "Generar un ser"
+      },
+      "find": {
+        "title": "Buscar",
+        "about": "Encuentra dónde aparece un fragmento dentro de una secuencia.",
+        "run": "Buscar"
+      },
+      "align": {
+        "title": "Alinear",
+        "about": "Coloca una secuencia bajo la otra, con huecos donde haga falta, para que se parezcan lo máximo posible (algoritmo de Needleman-Wunsch).",
+        "run": "Alinear"
+      },
+      "permutations": {
+        "title": "Permutaciones",
+        "about": "Todas las secuencias distintas que se pueden formar reordenando las bases, sin repetir ninguna.",
+        "run": "Generar permutaciones"
+      },
+      "crispr": {
+        "title": "CRISPR/Cas9",
+        "about": "Busca dónde puede cortar Cas9, elige una diana y decide cómo repara la célula el corte.",
+        "run": "Buscar dianas"
+      },
+      "microscope": {
+        "title": "Microscopio 3D",
+        "about": "Vuela dentro de tu secuencia: de la doble hélice a un átomo, a su núcleo, a un protón y a sus quarks. Con teclado, ratón o pantalla táctil.",
+        "run": "Construir la molécula"
+      }
+    },
+    "labels": {
+      "dna": "Secuencia de ADN",
+      "rna": "Secuencia de ARN",
+      "bits": "Bits",
+      "target": "Fragmento que buscar",
+      "first": "Primera secuencia",
+      "second": "Segunda secuencia",
+      "size": "Bases por permutación",
+      "bases": "Número de bases",
+      "guide_length": "Longitud de la guía",
+      "insert": "Secuencia que insertar",
+      "scoring": "Puntuación del alineamiento",
+      "match": "Coincidencia",
+      "mismatch": "Sustitución",
+      "gap": "Hueco",
+      "start": "Desde el par de bases",
+      "count": "Pares de bases"
+    },
+    "actions": {
+      "example": "Cargar un ejemplo",
+      "repair": "Cortar y reparar"
+    },
+    "status": {
+      "loading": "Calculando…",
+      "network": "No se ha podido conectar con el servidor. Comprueba que sigue en marcha con python main.py --web.",
+      "unexpected": "El servidor ha devuelto un error inesperado (código {status})."
+    },
+    "results": {
+      "length": "{count} bases",
+      "strand_top": "Hebra introducida",
+      "strand_bottom": "Hebra complementaria",
+      "reverse": "Complementaria inversa, de 5' a 3'",
+      "dna": "ADN",
+      "rna": "ARN",
+      "orf": "Marco de lectura",
+      "stop": "Codón de parada",
+      "untranslated": "No se traduce",
+      "protein": "Proteína de {count} aminoácidos",
+      "no_protein": "La proteína está vacía: el primer codón tras el AUG ya es de parada.",
+      "counts": "Aminoácidos por frecuencia",
+      "is_dna_hint": "¿Es ADN? Transcríbelo antes en la herramienta Transcripción.",
+      "not_found": "El fragmento no aparece en la secuencia.",
+      "shown": "Se muestran las {shown} primeras de {count}.",
+      "being_current": "Ser actual",
+      "being_steps": "Operaciones aplicadas: {count}",
+      "targets_none": "No hay dianas. Prueba una secuencia más larga o una guía más corta.",
+      "strand": "Hebra",
+      "cut": "Corte tras la base",
+      "guide": "ARN guía (5' a 3')",
+      "pam": "PAM",
+      "protospacer": "Diana",
+      "cut_site": "Punto de corte",
+      "chosen": "Diana elegida",
+      "repair_nhej": "NHEJ: la célula pega los extremos y suele equivocarse. Sirve para inactivar un gen.",
+      "repair_hdr": "HDR: la célula copia un molde de ADN que aportamos. Sirve para insertar una secuencia.",
+      "donor": "Molde de ADN donante",
+      "arms": "Brazos de homología",
+      "insert": "Inserto"
+    },
+    "bases": {
+      "A": "Adenina",
+      "T": "Timina",
+      "G": "Guanina",
+      "C": "Citosina",
+      "U": "Uracilo"
+    },
+    "helix": {
+      "title": "Modelo en 3D",
+      "label": "Doble hélice en 3D de los pares de bases {first} a {last}",
+      "backbone": "Esqueleto de azúcar-fosfato",
+      "pause": "Pausar",
+      "play": "Girar",
+      "hint": "Arrastra la hélice para girarla. Pasa el puntero sobre un peldaño para ver su par de bases.",
+      "window": "Pares de bases {first} a {last} de {length}",
+      "from": "Desde el par de bases",
+      "pair": "Par {position}: {base}–{partner}",
+      "flat": "Las dos hebras, base a base"
+    },
+    "microscope": {
+      "dive": "Entrar",
+      "full": "Viaje completo",
+      "up": "Salir",
+      "mode": "Modo",
+      "fullscreen": "Pantalla completa",
+      "help": [
+        "Clic en la imagen para dirigir con el ratón · Esc: soltar · WASD: mover · Espacio / C: subir / bajar · Q/E: girar · Shift: turbo · Rueda: velocidad",
+        "Enter: bajar un nivel · Mayús+Enter: viaje completo · Retroceso: subir · M: modo · H: ayuda · F: pantalla completa"
+      ],
+      "touch": "En el móvil o la tableta: arrastra para mirar y usa los botones.",
+      "no_webgl": "Tu navegador no puede mostrar gráficos 3D (WebGL 2). Prueba con Chrome, Firefox, Edge o Safari actualizados.",
+      "long": "La secuencia tiene {length} pares de bases: el microscopio enseña como mucho {maximum} a la vez. Elige desde qué par empezar.",
+      "building": "Construyendo la molécula…",
+      "explore": "Explorar esta secuencia en el microscopio 3D →",
+      "layout": "Partida / superpuestas",
+      "side": "Cambiar de lado",
+      "help_compare": "X: pantalla partida / superpuestas · V: cambiar el lado que manejas"
+    },
+    "protein": {
+      "queued": "En cola…",
+      "elapsed": "({seconds} s)",
+      "slow": "Buscar en todo UniProtKB puede tardar unos minutos. Puedes usar otras herramientas mientras tanto.",
+      "explore": "Explorar en el microscopio 3D",
+      "download_natural": "Descargar la natural (PDB con hidrógenos)",
+      "download_yours": "Descargar la tuya (PDB con hidrógenos)",
+      "loading_structure": "Construyendo las moléculas…",
+      "from": "Desde el aminoácido",
+      "long": "La proteína tiene {length} aminoácidos: el microscopio enseña como mucho {maximum} a la vez. Elige desde cuál empezar y pulsa otra vez «Explorar»."
+    }
+  },
+  "learn": {
+    "lead": "El ADN es la molécula que guarda las instrucciones para construir y hacer funcionar a cada ser vivo, desde una bacteria hasta una persona. Está en casi todas tus células y se escribe con solo cuatro letras.",
+    "try": "Pruébalo:",
+    "alt": "Estructura química: {name}",
+    "letters": {
+      "title": "Cuatro letras químicas",
+      "p1": "El ADN es una cadena muy larga de piezas llamadas nucleótidos. Cada nucleótido tiene tres partes: un azúcar (la desoxirribosa), un grupo fosfato y una base nitrogenada. Los azúcares y los fosfatos se enlazan entre sí y forman el esqueleto de la cadena; las bases sobresalen de él y son las que llevan la información.",
+      "p2": "En el ADN hay cuatro bases, y por eso se escribe con cuatro letras: A, G, C y T. Según su forma, se dividen en dos familias.",
+      "purines": "Purinas: dos anillos",
+      "pyrimidines": "Pirimidinas: un anillo",
+      "A": "Se empareja con la timina.",
+      "G": "Se empareja con la citosina.",
+      "C": "Se empareja con la guanina.",
+      "T": "Se empareja con la adenina. Solo está en el ADN, y es como el uracilo con un grupo metilo (CH₃) de más.",
+      "U": "Ocupa el lugar de la timina en el ARN.",
+      "key": "Cómo leer las imágenes: las bolas son átomos de hidrógeno (H), nitrógeno (N) y oxígeno (O), y los vértices de los anillos sin etiqueta son átomos de carbono. Las líneas dobles son dobles enlaces."
+    },
+    "pairs": {
+      "title": "Parejas que encajan",
+      "p1": "Las bases de una hebra se unen con las de la otra mediante puentes de hidrógeno: atracciones débiles que se pueden abrir y cerrar sin romper la cadena. Solo encajan dos parejas.",
+      "at": "Adenina y timina: 2 puentes de hidrógeno",
+      "gc": "Guanina y citosina: 3 puentes de hidrógeno",
+      "p2": "Siempre se une una purina con una pirimidina, así que todos los peldaños miden lo mismo y la doble hélice tiene un grosor constante de unos 2 nanómetros. Y como cada base solo admite una pareja, conocer una hebra basta para saber cómo es la otra."
+    },
+    "helix": {
+      "title": "La doble hélice",
+      "p1": "Las dos hebras se enrollan una sobre la otra como una escalera de caracol: los peldaños son las parejas de bases, y las barandillas, los esqueletos de azúcar y fosfato. La escalera da una vuelta completa cada 10,5 pares de bases, unos 3,5 nanómetros.",
+      "p2": "Las hebras van en sentidos opuestos. Cada una tiene un extremo llamado 5' y otro llamado 3', según el carbono del azúcar en el que termina, y están colocadas al revés una respecto a la otra: son antiparalelas.",
+      "p3": "Esta forma la describieron James Watson y Francis Crick en 1953, a partir de las imágenes de rayos X que habían obtenido Rosalind Franklin y Raymond Gosling, en especial la famosa Fotografía 51."
+    },
+    "copy": {
+      "title": "Cómo se copia",
+      "p1": "Antes de dividirse, una célula tiene que copiar todo su ADN. La enzima helicasa separa las dos hebras como quien abre una cremallera, y la ADN polimerasa construye una hebra nueva frente a cada una, siguiendo las reglas de emparejamiento.",
+      "p2": "Al final hay dos moléculas iguales, y cada una conserva una hebra de la original: por eso se dice que la copia es semiconservativa. La polimerasa se equivoca muy pocas veces, y además revisa su trabajo y corrige casi todos sus errores."
+    },
+    "protein": {
+      "title": "Del ADN a las proteínas",
+      "p1": "En células como las nuestras, el ADN no sale del núcleo. Para usar un gen, la célula hace primero una copia de trabajo en ARN mensajero: es la transcripción. El ARN se escribe casi igual que el ADN, pero usa uracilo (U) en lugar de timina.",
+      "p2": "Después, el ribosoma lee ese ARN de tres en tres bases. Cada grupo de tres, llamado codón, indica un aminoácido. Hay 64 codones posibles para solo 20 aminoácidos, así que varios codones significan lo mismo. La lectura empieza en el codón AUG y termina en uno de los tres codones de parada: UAA, UAG o UGA. Es la traducción.",
+      "p3": "La cadena de aminoácidos se pliega y forma una proteína, como las enzimas que digieren la comida, la hemoglobina que transporta el oxígeno o la queratina del pelo."
+    },
+    "mutations": {
+      "title": "Cuando el ADN cambia",
+      "p1": "A veces una base se cambia por otra, o se pierden o se añaden algunas: son las mutaciones. Muchas no tienen ningún efecto, otras causan enfermedades y unas pocas resultan útiles. Son la materia prima de la evolución.",
+      "p2": "Como el ribosoma lee de tres en tres, añadir o quitar una sola base desplaza toda la lectura posterior y cambia todos los aminoácidos siguientes. Si el cambio es de tres bases, la lectura vuelve a encajar.",
+      "p3": "Hoy se puede editar el ADN a propósito con CRISPR/Cas9, una herramienta que corta el ADN en el punto exacto que le indica un ARN guía. Su desarrollo valió el Premio Nobel de Química de 2020 a Emmanuelle Charpentier y Jennifer Doudna."
+    },
+    "info": {
+      "title": "El ADN como información",
+      "p1": "Con cuatro letras, cada base puede guardar 2 bits: A = 00, C = 01, G = 10 y T = 11. Tu genoma tiene unos 3.100 millones de pares de bases por cada juego de cromosomas; escrito así, ocuparía unos 775 megabytes.",
+      "p2": "Si se estirase el ADN de una sola de tus células, mediría unos 2 metros. Cabe en un núcleo de unas milésimas de milímetro porque está enrollado alrededor de proteínas y plegado muchas veces sobre sí mismo.",
+      "p3": "Esa densidad es tan grande que ya se han guardado libros, imágenes y vídeos en ADN fabricado en el laboratorio."
+    }
+  },
+  "units": {
+    "proton": {
+      "one": "{n} protón",
+      "other": "{n} protones"
+    },
+    "neutron": {
+      "one": "{n} neutrón",
+      "other": "{n} neutrones"
+    },
+    "electron": {
+      "one": "{n} electrón",
+      "other": "{n} electrones"
+    },
+    "variant": {
+      "one": "{n} variante",
+      "other": "{n} variantes"
+    },
+    "variant_causal": {
+      "one": "{n} la causa",
+      "other": "{n} la causan"
+    },
+    "variant_protective": {
+      "one": "{n} protege",
+      "other": "{n} protegen"
+    },
+    "variant_risk_factor": {
+      "one": "{n} factor de riesgo",
+      "other": "{n} factores de riesgo"
+    }
+  },
+  "microscope": {
+    "title": "DNAinvent — microscopio 3D",
+    "offer": "¿Explorar esta secuencia en 3D?",
+    "missing": "Para el microscopio 3D faltan estos paquetes: {packages}.",
+    "install": "Instálalos con:  pip install -r requirements.txt  (ver README)",
+    "long": "La secuencia tiene {length} pares de bases; el microscopio enseña {maximum} a la vez.",
+    "ask_start": "¿Desde qué base? [Enter = 1]: ",
+    "window": "Microscopio 3D: pares {first} a {last} de {length}.",
+    "opening": "Abriendo el microscopio en otra ventana… (la consola sigue disponible)",
+    "console": {
+      "ask": "Secuencia de ADN (A, C, G, T) [Enter = {example}]: ",
+      "built": "{pairs} pares de bases · {atoms} átomos",
+      "slow": "Aviso: {pairs} pares es mucho para el microscopio (recomendado: {maximum}); puede ir lento.",
+      "integrated_gpu": "AVISO: se está usando la gráfica integrada. En Windows, elige la NVIDIA en Configuración > Sistema > Pantalla > Gráficos.",
+      "built_protein": "{residues} aminoácidos · {atoms} átomos"
+    },
+    "levels": {
+      "helix": "Doble hélice de ADN (forma B)",
+      "nucleus": "Núcleo {of_element}-{a}",
+      "proton": "Interior de un protón (uud)",
+      "neutron": "Interior de un neutrón (udd)",
+      "protein": "Proteína",
+      "overlay": "Proteínas superpuestas"
+    },
+    "hud": {
+      "level": "Nivel {n} · {name}",
+      "visible": "Anchura visible ≈ {width}  ({sci} m)",
+      "distance": "Distancia al objeto: {d}",
+      "speed": "Velocidad: {v}/s  ×{mult}",
+      "time": "Tiempo: {t}",
+      "mode_didactic": "Modo: DIDÁCTICO  [Tab]",
+      "mode_realistic": "Modo: REALISTA  [Tab]",
+      "help": [
+        "Clic: capturar ratón · Esc: soltar · WASD: mover · Espacio/Ctrl: subir/bajar · Q/E: girar · Shift: turbo · Rueda: velocidad",
+        "Enter: bajar un nivel · Mayús+Enter: viaje completo · Retroceso: subir · Tab: modo · L: idioma · H: ayuda · F11: pantalla completa"
+      ],
+      "entering": "Entrando: {name}",
+      "leaving": "Saliendo a: {name}",
+      "click": "Haz clic para controlar la nave",
+      "now_didactic": "Modo DIDÁCTICO",
+      "now_realistic": "Modo REALISTA",
+      "language": "Idioma: español",
+      "pair": "par {pair} de {length}",
+      "span": "tramo {first}–{last} de {length}",
+      "residue": "aminoácido {pair} de {length}",
+      "help_compare": "C: pantalla partida / superpuestas · V: cambiar el lado que manejas",
+      "layout_split": "Pantalla partida",
+      "layout_overlay": "Superpuestas",
+      "only_at_protein": "Vuelve a la vista de la proteína para cambiarlo (Retroceso)",
+      "side": "Manejas: {side}"
+    },
+    "autopilot": {
+      "dive": "PILOTO AUTOMÁTICO → {target}",
+      "full": "VIAJE COMPLETO → {target}",
+      "ascend": "PILOTO AUTOMÁTICO → subiendo de nivel",
+      "dive_short": "Piloto automático",
+      "full_short": "Viaje completo hasta un quark",
+      "off": "Piloto automático desactivado",
+      "next": "Siguiente: {target}",
+      "end_of_journey": "Fin del viaje: no hay nada dentro de un quark",
+      "atom_target": "{atom}, par {pair}",
+      "nucleus_target": "Núcleo {of_element}-{a}",
+      "atom_target_residue": "{atom}, {residue} {number}"
+    },
+    "depth_marks": {
+      "dna": "ADN  ~2 nm",
+      "atom": "Átomo  ~100 pm",
+      "nucleus": "Núcleo  ~3 fm",
+      "proton": "Protón  0,84 fm",
+      "quarks": "Quarks  <10⁻¹⁸ m",
+      "protein": "Proteína  ~5 nm"
+    },
+    "bases": {
+      "A": "Adenina",
+      "C": "Citosina",
+      "G": "Guanina",
+      "T": "Timina"
+    },
+    "parts": {
+      "base": "base nitrogenada",
+      "sugar": "desoxirribosa (azúcar)",
+      "phosphate": "grupo fosfato"
+    },
+    "molecule": {
+      "atom": "Átomo {of_element} ({name})",
+      "base": "{name} ({base})",
+      "part_of": "{part} del nucleótido {base}",
+      "where": "{what} · par {pair} · hebra {strand}"
+    },
+    "helix": {
+      "title": "ADN · {sequence}",
+      "pairs": "{pairs} pares de bases · {atoms} átomos",
+      "window": "Pares {first} a {last} de {length} · {atoms} átomos",
+      "explanation": [
+        "Dos hebras enrolladas en espiral; cada vuelta mide 3,55 nm",
+        "y tiene 10,5 pares de bases (forma B, la del ADN en las células)."
+      ],
+      "explanation_base": [
+        "Las bases se unen a su pareja con puentes de hidrógeno",
+        "(líneas amarillas): A–T forma 2 y G–C forma 3."
+      ],
+      "explanation_sugar": [
+        "La desoxirribosa une la base con el fosfato.",
+        "Azúcares y fosfatos forman el «pasamanos» de la escalera."
+      ],
+      "explanation_phosphate": [
+        "El fosfato tiene carga negativa: por eso el ADN es un ácido.",
+        "Une el azúcar de un nucleótido con el siguiente."
+      ],
+      "time": "1 s en pantalla ≈ 50 fs reales (vibraciones de enlace ralentizadas ~10¹³ veces)"
+    },
+    "atom": {
+      "nucleus_title": "Núcleo {of_element}: {protons} + {neutrons}",
+      "nucleus_distance": "Distancia al núcleo: {d} pm",
+      "nucleus_explanation": [
+        "Radio ≈ {r} fm: el átomo es ~{ratio} veces mayor.",
+        "Casi toda la masa del átomo está aquí. Acércate (o pulsa Enter) para entrar."
+      ],
+      "cloud_title": "Nube electrónica · {electrons}",
+      "config": "Configuración: {config} · carga efectiva (Slater): {zeff}",
+      "cloud_explanation": [
+        "Cada punto es una posición probable de un electrón, no una trayectoria: no orbitan.",
+        "Colores: naranja n = 1, cian n = 2, violeta n = 3; los orbitales p muestran sus lóbulos.",
+        "Donde las nubes se solapan con las vecinas, los electrones se comparten: es el enlace."
+      ],
+      "cloud_explanation_realistic": [
+        "Átomo aislado: promediada sobre todas las orientaciones, su densidad es esférica.",
+        "En la molécula los orbitales se deforman al enlazarse (aquí no se ve)."
+      ],
+      "time": "Orbitales estacionarios: la densidad no cambia (el parpadeo = medidas sucesivas)"
+    },
+    "nucleus": {
+      "title": "{protons} + {neutrons} · radio ≈ {r} fm",
+      "detail": "densidad ≈ {rho} kg/m³",
+      "explanation": [
+        "La fuerza fuerte vence a la repulsión eléctrica entre los {protons}.",
+        "Probabilidad de encontrar aquí dentro a un electrón: ~{p_in}",
+        "Una cucharadita de materia nuclear pesaría ~1.000 millones de toneladas."
+      ],
+      "explanation_hydrogen": [
+        "El núcleo del hidrógeno-1 es un único protón.",
+        "Probabilidad de encontrar aquí dentro al electrón: ~{p_in}"
+      ],
+      "explanation_realistic": [
+        "Densidad de materia nuclear (perfil de Woods–Saxon): los nucleones",
+        "son ondas cuánticas y no tienen una posición definida."
+      ],
+      "strong_lines": "Líneas verdes: fuerza nuclear fuerte (alcance ~2 fm).",
+      "go_in": "acércate (o pulsa Enter) para entrar",
+      "proton": {
+        "title": "Protón",
+        "detail": "carga +1 · {mass} MeV/c² · quarks u u d",
+        "explanation": [
+          "3 quarks de valencia (uud) unidos por gluones.",
+          "Solo ~1 % de su masa viene de los quarks: el resto es energía",
+          "de la interacción fuerte (E = mc²)."
+        ]
+      },
+      "neutron": {
+        "title": "Neutrón",
+        "detail": "carga 0 · {mass} MeV/c² · quarks u d d",
+        "explanation": [
+          "3 quarks de valencia (udd). Libre, se desintegra en ~15 minutos;",
+          "dentro de un núcleo estable dura para siempre.",
+          "Sin neutrones, la repulsión eléctrica separaría a los protones."
+        ]
+      },
+      "time": "1 s en pantalla ≈ 10⁻²² s reales (un nucleón cruza el núcleo en ~10⁻²² s)"
+    },
+    "nucleon": {
+      "proton": "Protón",
+      "neutron": "Neutrón",
+      "title": "{name}: quarks de valencia {content} + mar de partones",
+      "colors_now": "Colores ahora: {colors}",
+      "realistic_detail": "1 s en pantalla ≈ 10⁻²⁴ s reales",
+      "up": {
+        "title": "Quark up (u)",
+        "detail": "carga +2/3 · masa ≈ {mass} MeV/c² · color: {color}"
+      },
+      "down": {
+        "title": "Quark down (d)",
+        "detail": "carga −1/3 · masa ≈ {mass} MeV/c² · color: {color}"
+      },
+      "quark_explanation": [
+        "Partícula fundamental: sin estructura conocida (< 10⁻¹⁸ m).",
+        "Aquí termina el viaje: no hay nada «dentro» de un quark.",
+        "Confinamiento: si separas un quark, el tubo de gluones se",
+        "rompe y crea nuevos pares quark–antiquark."
+      ],
+      "explanation": [
+        "Rojo/verde/azul = carga de color (una etiqueta, no un color real).",
+        "Los 3 quarks suman «blanco». Los gluones viajeros intercambian",
+        "el color entre ellos. Puntos del fondo: gluones y pares del mar.",
+        "Los quarks aportan ~1 % de la masa; el resto es energía (E = mc²)."
+      ],
+      "explanation_realistic": [
+        "Niebla de partones: quarks, antiquarks y gluones que aparecen y",
+        "desaparecen. No se puede señalar dónde está cada quark: solo la",
+        "probabilidad de encontrarlos (radio de carga 0,84 fm)."
+      ],
+      "colors": {
+        "r": "rojo",
+        "g": "verde",
+        "b": "azul"
+      },
+      "time": "1 s en pantalla ≈ 10⁻²⁴ s reales (la luz cruza un protón en ~3×10⁻²⁴ s)"
+    },
+    "protein": {
+      "title": "Proteína · {name}",
+      "residues": "{residues} aminoácidos · {atoms} átomos",
+      "window": "Aminoácidos {first} a {last} de {length} · {atoms} átomos",
+      "explanation": [
+        "Una cadena de aminoácidos plegada sobre sí misma. La línea de colores une",
+        "los carbonos α: amarillo hidrófobo, verde polar, azul +, rojo −, gris Gly/Pro."
+      ],
+      "explanation_confidence": [
+        "Colores de confianza de la predicción (pLDDT): azul oscuro muy alta,",
+        "azul claro buena, amarillo baja, naranja muy baja."
+      ],
+      "explanation_backbone": [
+        "Esqueleto: N–Cα–C=O, igual en todos los aminoácidos.",
+        "El enlace peptídico (C–N) une cada uno con el siguiente."
+      ],
+      "explanation_sidechain": [
+        "Cadena lateral: lo que distingue a cada aminoácido",
+        "y decide dónde se coloca cuando la proteína se pliega."
+      ],
+      "classes": {
+        "hydrophobic": "Hidrófobo: huye del agua y suele quedar en el interior de la proteína.",
+        "special": "Glicina o prolina: el aminoácido más flexible o el más rígido de la cadena.",
+        "polar": "Polar: sin carga, pero atrae el agua; suele estar en la superficie.",
+        "positive": "Con carga positiva a pH 7.",
+        "negative": "Con carga negativa a pH 7."
+      },
+      "where": "{part} · {residue} {number}",
+      "parts": {
+        "backbone": "esqueleto",
+        "sidechain": "cadena lateral"
+      },
+      "atom_confidence": "Confianza de la predicción aquí: pLDDT {plddt}, {band}.",
+      "atom_highlighted": "Este aminoácido cambia respecto a la otra proteína: {label}.",
+      "highlighted": "Cambios (en magenta): {list}",
+      "overlay_title": "{natural}  frente a  {yours}",
+      "overlay_explanation": [
+        "Las dos a la vez, ya superpuestas: cian la natural, naranja la tuya.",
+        "Donde coinciden, los colores se suman y se ven blancos; donde la forma cambia, se separan."
+      ],
+      "sides": {
+        "natural": "natural",
+        "yours": "la tuya"
+      }
+    }
+  },
+  "protein": {
+    "categories": {
+      "identical": {
+        "name": "Proteína conocida",
+        "description": "Coincide al 100 % con una proteína real: se muestra su estructura de AlphaFold DB."
+      },
+      "very_similar": {
+        "name": "Variante de una proteína conocida",
+        "description": "Es al menos un {high} % idéntica a una proteína real: se comparan lado a lado la natural y la tuya."
+      },
+      "distant_relative": {
+        "name": "Pariente lejano",
+        "description": "Es entre un {low} % y un {high} % idéntica a una proteína real: comparten antepasado. Se resaltan las zonas que la evolución ha conservado."
+      },
+      "invented": {
+        "name": "Proteína inventada",
+        "description": "No se parece a ninguna proteína conocida: su estructura se predice, y probablemente no se plegaría así en la naturaleza."
+      }
+    },
+    "confidence": {
+      "very_high": "Confianza muy alta",
+      "confident": "Confianza buena",
+      "low": "Confianza baja",
+      "very_low": "Confianza muy baja (zona probablemente desordenada)"
+    },
+    "email": {
+      "using": "Búsqueda con el correo {email}."
+    },
+    "stage": {
+      "orf": "Buscando el marco de lectura…",
+      "search": "Buscando parecidos en {database}…",
+      "search_everything": "Ninguno fiable. Buscando en {database}; puede tardar unos minutos…",
+      "waiting": "Búsqueda en marcha ({status})…",
+      "structure": "Descargando la estructura de {accession} de AlphaFold DB…",
+      "predict": "Prediciendo la estructura de tu proteína con {predictor} ({length} aminoácidos)…"
+    },
+    "databases": {
+      "uniprotkb_swissprot": "Swiss-Prot (proteínas revisadas a mano)",
+      "uniprotkb": "UniProtKB completa"
+    },
+    "report": {
+      "orf": "Marco de lectura {frame}: bases {start}–{end} de {length}, {count} aminoácidos ({stop}).",
+      "complete": "termina en el codón de parada {codon}",
+      "incomplete": "sin codón de parada",
+      "protein": "Tu proteína:",
+      "category": "Caso:",
+      "best": "Proteína real más parecida:",
+      "gene": "gen {gene}",
+      "identity": "Identidad {identity} % · cubre el {query} % de tu proteína y el {subject} % de la real · E-value {evalue}",
+      "others": "Otros parecidos:",
+      "none": "Ningún parecido fiable en {database}.",
+      "alignment": "Alineamiento (arriba la tuya, abajo la real; letra = igual, + = parecido, - = hueco):",
+      "structure": "Estructura: {model} (versión {version}), confianza media (pLDDT) {plddt}",
+      "atoms": "{heavy} átomos pesados + {hydrogens} hidrógenos calculados",
+      "citation": "Datos: AlphaFold DB (EMBL-EBI y Google DeepMind), licencia CC-BY 4.0.",
+      "warnings": "Avisos:",
+      "prediction": "Tu proteína predicha ({predictor}): confianza media (pLDDT) {plddt}",
+      "prediction_citation": "Predicción: {predictor} (Meta; Lin et al. 2023, Science).",
+      "comparison": "Comparación con la natural ({accession}):",
+      "differences": "Mutaciones ({count}): {list}",
+      "differences_distant": "Diferencias ({count}): {list}",
+      "differences_more": "… y {count} más",
+      "no_differences": "Sin cambios de aminoácidos en el tramo alineado.",
+      "indels": "Huecos: {insertions} aminoácidos de más y {deletions} de menos respecto a la natural.",
+      "conserved": "Aminoácidos conservados: {count} de {total} ({percent} %).",
+      "rmsd": "Diferencia de forma (RMSD de los carbonos α): {rmsd} Å sobre {count} aminoácidos ({meaning}).",
+      "rmsd_same": "prácticamente la misma forma",
+      "rmsd_close": "la misma forma con pequeñas diferencias",
+      "rmsd_different": "formas claramente distintas",
+      "most_different": "Zonas que más cambian: {list}",
+      "numbering": "Numeración de UniProt: empieza en la metionina inicial (la anemia falciforme, Glu6Val en medicina, aparece como Glu7Val)."
+    },
+    "save_offer": "¿Guardar las estructuras con hidrógenos en archivos PDB?",
+    "saved": "Guardada en {path}. Puedes verla en https://molstar.org/viewer/ arrastrando el archivo.",
+    "warnings": {
+      "incomplete_orf": "El marco de lectura llega al final de la secuencia sin codón de parada: quizá solo has pegado una parte del gen.",
+      "too_short": "La proteína tiene {length} aminoácidos: con menos de {minimum} no se puede identificar ni predecir su forma de manera fiable (un péptido tan corto no tiene un plegamiento propio).",
+      "fragment": "Tu proteína corresponde solo a los aminoácidos {start}–{end} de los {length} de la real.",
+      "no_structure": "AlphaFold DB no tiene la estructura de {accession}.",
+      "structure_unavailable": "AlphaFold DB no responde: no se ha podido descargar la estructura de {accession}.",
+      "mutation_effect": "Aunque la forma se parezca mucho, un solo aminoácido distinto puede cambiar por completo cómo funciona una proteína (así ocurre en la anemia falciforme).",
+      "prediction_too_long": "No se predice la forma de tu proteína: tiene {length} aminoácidos y el servidor de predicción admite como máximo {maximum}.",
+      "prediction_unavailable": "{predictor} no responde ahora mismo: no se ha podido predecir la forma de tu proteína. Inténtalo más tarde.",
+      "unlikely_fold": "La confianza media de la predicción es {plddt} (de 100): lo más probable es que esta proteína no se plegara en la naturaleza. Las proteínas reales son secuencias muy especiales, seleccionadas durante millones de años de evolución.",
+      "prediction_failed": "{predictor} no ha podido predecir la forma de esta proteína."
+    },
+    "saved_pair": "Si abres las dos en https://molstar.org/viewer/, la tuya aparece superpuesta sobre la natural.",
+    "microscope_offer": "¿Explorar la estructura en el microscopio 3D?",
+    "microscope": {
+      "yours": "Tu proteína ({predictor})",
+      "long": "La proteína tiene {length} aminoácidos; el microscopio enseña {maximum} a la vez.",
+      "ask_start": "¿Desde qué aminoácido? [Enter = 1]: ",
+      "window": "Microscopio 3D: aminoácidos {first} a {last} de {length}."
+    }
+  },
+  "database": {
+    "stage": {
+      "gene": "Buscando el gen {symbol} en NCBI Gene…",
+      "sequence": "Descargando el ARNm {accession} de RefSeq…",
+      "variants": "Buscando las variantes de {symbol} en ClinVar…",
+      "summaries": "Leyendo variantes: {done} de {total}…",
+      "conditions": "Leyendo la clasificación de cada enfermedad: {done} de {total}…",
+      "saving": "Guardando {count} variantes…"
+    },
+    "imported_gene": "Gen {symbol} guardado: {name}.",
+    "clinvar_offer": "¿Importar también sus variantes de ClinVar? Puede tardar un minuto",
+    "clinvar_human_only": "ClinVar solo tiene variantes humanas: se ha guardado el gen sin variantes.",
+    "stats": {
+      "found": "Variantes en ClinVar:",
+      "saved": "Guardadas:",
+      "saved_value": "{count} ({pathogenic} patogénicas o probablemente patogénicas)",
+      "with_conditions": "Con clasificación por enfermedad:",
+      "not_on_mrna": "No descritas sobre un ARNm:",
+      "other_gene": "De un gen vecino:",
+      "new_diseases": "Enfermedades nuevas:",
+      "few_conditions": "Solo {count} de {saved} variantes tienen clasificación por enfermedad: las demás se han enlazado sin decir qué efecto tienen. Vuelve a importar el gen más tarde.",
+      "batches_failed": "{count} peticiones de clasificaciones no han llegado (ClinVar no respondía).",
+      "unexpected": "ClinVar ha devuelto {count} registros que no se habían pedido; se han descartado."
+    },
+    "citation": "Datos: NCBI Gene, RefSeq y ClinVar (dominio público).",
+    "empty": "Todavía no hay genes guardados. Impórtalos con la opción 1.",
+    "not_saved": "El gen {symbol} no está guardado. Impórtalo con la opción 1.",
+    "path": "Base de datos: {path}",
+    "units": {
+      "nt": "nt",
+      "aa": "aminoácidos"
+    },
+    "mol_types": {
+      "mrna": "ARNm",
+      "protein": "proteína",
+      "genomic": "ADN genómico",
+      "cds": "CDS",
+      "ncrna": "ARN no codificante"
+    },
+    "gene": {
+      "header": "{symbol}: {name} ({organism})",
+      "location": "Cromosoma {chromosome}: {start}-{end}, cadena {strand} ({assembly}) · NCBI Gene {gene_id}",
+      "sequence": "{accession} · {kind} · {length} {unit}",
+      "cds": "región codificante {start}..{end}",
+      "pending": "Secuencias solo con sus datos (se descargan cuando hacen falta): {count}",
+      "no_variants": "Sin variantes guardadas.",
+      "variants": "Variantes guardadas: {count}",
+      "diseases": "Enfermedades (nº de variantes según lo que hacen en CADA enfermedad):",
+      "diseases_note": "Los nombres de las enfermedades vienen de ClinVar, en inglés."
+    },
+    "significance": {
+      "pathogenic": "patogénica",
+      "likely_pathogenic": "probablemente patogénica",
+      "pathogenic_likely_pathogenic": "patogénica / probablemente patogénica",
+      "uncertain": "significado incierto",
+      "conflicting": "clasificaciones contradictorias",
+      "likely_benign": "probablemente benigna",
+      "benign": "benigna",
+      "benign_likely_benign": "benigna / probablemente benigna",
+      "protective": "protectora",
+      "risk_factor": "factor de riesgo",
+      "none": "sin clasificar",
+      "other": "otra",
+      "drug_response": "respuesta a fármacos",
+      "association": "asociación",
+      "affects": "afecta",
+      "not_provided": "sin datos",
+      "oncogenic": "oncogénica",
+      "likely_oncogenic": "probablemente oncogénica",
+      "pathogenic_low_penetrance": "patogénica de baja penetrancia",
+      "likely_pathogenic_low_penetrance": "probablemente patogénica de baja penetrancia",
+      "established_risk_allele": "alelo de riesgo confirmado",
+      "likely_risk_allele": "probable alelo de riesgo",
+      "uncertain_risk_allele": "alelo de riesgo incierto",
+      "tier_1": "nivel I: impacto clínico fuerte",
+      "tier_2": "nivel II: impacto clínico posible",
+      "tier_3": "nivel III: impacto clínico desconocido",
+      "tier_4": "nivel IV: benigna o probablemente benigna",
+      "no_single_classification": "sin clasificación propia (solo en combinación con otras)"
+    },
+    "effects": {
+      "causal": "la causa",
+      "protective": "protege",
+      "risk_factor": "factor de riesgo",
+      "none": "sin efecto claro"
+    },
+    "variant_kinds": {
+      "missense": "cambio de sentido: cambia un aminoácido",
+      "synonymous": "sinónima: el aminoácido no cambia",
+      "nonsense": "sin sentido: aparece un codón de parada y la proteína se corta",
+      "stop_lost": "pérdida de la parada: la proteína sigue más allá de su final"
+    },
+    "variants": {
+      "none": "No hay ninguna variante que coincida.",
+      "found": "Variantes encontradas:",
+      "more": "(se muestran las primeras {count}; escribe la variante para afinar)"
+    },
+    "compare": {
+      "title": "{gene} {hgvs_c} {hgvs_p} en {accession}",
+      "global": "Clasificación global en ClinVar: {significance}",
+      "position": "Posición {position} del ARNm, codón {codon}: {ref} -> {alt}",
+      "codon": "Codón",
+      "healthy": "Sana",
+      "variant": "Variante",
+      "effect": "Efecto: {kind}",
+      "old_numbering": "En textos antiguos de algunas proteínas (como la hemoglobina) no se cuenta la metionina inicial y aparece como {old}: es la misma mutación.",
+      "diseases": "Qué hace en cada enfermedad:",
+      "no_diseases": "ClinVar no la relaciona con ninguna enfermedad concreta."
+    },
+    "search": {
+      "none": "Sin resultados.",
+      "gene": "Gen",
+      "disease": "Enfermedad",
+      "genes": "Genes: {list}"
+    }
+  }
+}

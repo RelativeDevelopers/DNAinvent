@@ -1,0 +1,12 @@
+# Consola
+colorama>=0.4
+# Tests
+pytest>=8
+# Microscopio 3D (opción 7 de la consola, o python -m microscope):
+# la física del átomo hacia abajo es la de AtomicWorld, desde su carpeta. Ruta desde
+# project-DNAinvent/DNAinvent hasta project-AtomicWorld/AtomicWorld:
+-e ../../project-AtomicWorld/AtomicWorld
+numpy>=1.26
+moderngl>=5.10
+pyglet>=2.0
+pillow>=10.1

@@ -1,0 +1,972 @@
+{
+  "_meta": {
+    "name": "Català",
+    "decimal_separator": ",",
+    "thousands_separator": "."
+  },
+  "app": {
+    "title": "DNAinvent",
+    "tools_title": "DNAtools",
+    "bits_title": "Ésser a partir de bits",
+    "goodbye": "Fins aviat!",
+    "database_title": "Base de dades"
+  },
+  "menu": {
+    "main": {
+      "complement": "Doble hèlix i complementària inversa",
+      "transcribe": "Transcripció ADN -> ARN",
+      "translate": "Traducció ARN -> aminoàcids",
+      "crispr": "CRISPR/Cas9",
+      "to_binary": "ADN a binari",
+      "from_binary": "Binari a ADN",
+      "tools": "Eines",
+      "language": "Idioma / Language",
+      "exit": "Sortir",
+      "microscope": "Microscopi 3D: de l'hèlix als quarks",
+      "protein": "Proteïna 3D: de l'ADN a l'estructura",
+      "database": "Base de dades de gens reals (NCBI i ClinVar)"
+    },
+    "tools": {
+      "find": "Cercar una seqüència",
+      "align": "Alinear i comparar dues seqüències",
+      "permutations": "Permutacions",
+      "bits": "Generar un ésser a partir de bits"
+    },
+    "bits": {
+      "time": "Temps de generació",
+      "flip": "Invertir zeros i uns",
+      "reverse": "Invertir l'ordre de les bases",
+      "both": "Les dues coses alhora",
+      "restore": "Tornar a l'ésser original"
+    },
+    "back": "Tornar",
+    "database": {
+      "import": "Importar un gen",
+      "gene": "Veure un gen desat",
+      "compare": "Sana davant de variant",
+      "search": "Cercar gens i malalties",
+      "list": "Gens desats"
+    }
+  },
+  "common": {
+    "choose_option": "Tria una opció: ",
+    "invalid_option": "Opció no vàlida, torna-ho a provar.",
+    "yes": "Sí",
+    "no": "No",
+    "confirm_suffix": " (s/n): ",
+    "yes_answers": "s,si,sí,y,yes",
+    "sequence_length": "Aquesta seqüència té {length} caràcters.",
+    "int_between": "Escriu un nombre enter entre {minimum} i {maximum}.",
+    "int_minimum": "Escriu un nombre enter més gran o igual que {minimum}."
+  },
+  "prompts": {
+    "dna": "Introdueix la cadena d'ADN (A, C, G, T): ",
+    "rna": "Introdueix la cadena d'ARN (A, C, G, U): ",
+    "binary": "Introdueix la cadena binària (0 i 1, 2 bits per base): ",
+    "search": "Seqüència que vols cercar: ",
+    "first_dna": "Primera cadena d'ADN: ",
+    "second_dna": "Segona cadena d'ADN: ",
+    "insert": "Seqüència que vols inserir: ",
+    "guide_length": "Longitud de la guia (Enter = {default}): ",
+    "choose_target": "Tria una diana: ",
+    "permutation_size": "De quantes bases vols cada permutació?: ",
+    "being_size": "Quantes bases vols que tingui l'ésser?: ",
+    "gene_symbol": "Símbol del gen (p. ex. HBB, TP53, BRCA1; Intro = tornar): ",
+    "taxon": "Organisme: número de tàxon de l'NCBI (Intro = humà, 9606; ratolí = 10090): ",
+    "variant": "Variant (c.20A>T, p.Glu7Val, rs334...; Intro = les que causen alguna malaltia): ",
+    "choose_variant": "Tria una variant: ",
+    "search_text": "Cercar un gen o una malaltia (els noms són en anglès): "
+  },
+  "complement": {
+    "helix": "Doble hèlix (cadenes antiparal·leles):",
+    "reverse": "Complementària inversa (5'->3'):"
+  },
+  "translate": {
+    "no_start": "No hi ha codó d'inici (AUG): el ribosoma no començaria a traduir.",
+    "start_at": "Inici a la posició {position}.",
+    "stop_at": "Aturada al codó {codon} (posició {position}).",
+    "no_stop": "Sense codó d'aturada: la seqüència podria estar incompleta.",
+    "protein": "Proteïna ({count} aminoàcids): {protein}",
+    "is_dna_hint": "És ADN? Transcriu-lo abans amb l'opció 2."
+  },
+  "crispr": {
+    "no_targets": "No hi ha cap PAM (NGG) amb {length} bases al davant en cap de les dues cadenes. Prova una seqüència més llarga o una guia més curta.",
+    "found": "Dianes trobades: {count}",
+    "target": "cadena {strand}  tall després de la base {cut}  guia 5'-{guide}-3'  PAM {pam}",
+    "cut_here": "Cas9 talla aquí (cian: diana, magenta: PAM, |: tall):",
+    "repair_question": "Com repara la cèl·lula el tall?",
+    "nhej": "NHEJ: enganxa els extrems i sovint s'equivoca (inactiva el gen)",
+    "hdr": "HDR: copia un ADN motlle que aportem (insereix una seqüència)",
+    "donor": "Motlle d'ADN donant (braços d'homologia en gris, insert en verd):",
+    "result": "Resultat: {change}.",
+    "insertion": "inserció de {count} base(s) ({bases}) entre les posicions {before} i {after}",
+    "deletion": "deleció de {count} base(s) ({bases}) a les posicions {first}-{last}",
+    "substitution": "substitució de {deleted} per {inserted} a les posicions {first}-{last}",
+    "frameshift": "El canvi no és múltiple de 3: desplaça el marc de lectura.",
+    "in_frame": "El canvi és múltiple de 3: el marc de lectura es conserva.",
+    "protein_effect": "Efecte en la proteïna:",
+    "no_atg": "(No hi ha codó d'inici ATG: aquesta seqüència no codifica proteïna.)",
+    "before": "Abans:",
+    "after": "Després:",
+    "unchanged": "La proteïna no canvia."
+  },
+  "binary": {
+    "summary": "{bases} bases -> {bits} bits ({bytes} bytes).",
+    "text_size": "Com a text normal (8 bits per lletra) ocuparia {bits} bits: 4 vegades més."
+  },
+  "find": {
+    "found": "Trobada {count} vegades a les posicions: {positions}"
+  },
+  "align": {
+    "confirm": "L'alineament necessita {cells} càlculs i pot trigar. Vols continuar?",
+    "identity": "Identitat:",
+    "mismatches": "Substitucions:",
+    "gaps": "Buits:",
+    "score": "Puntuació:"
+  },
+  "permutations": {
+    "too_big": "No es poden formar grups de {size} bases amb només {length}.",
+    "positional": "Ordenacions de posicions:",
+    "distinct": "Seqüències diferents:",
+    "avoided": "S'eviten {count} repeticions per les bases iguals.",
+    "confirm": "Són moltes. Les vols veure igualment?"
+  },
+  "bits": {
+    "generated": "Ésser generat:",
+    "flip": "Invertir zeros i uns (complementària):",
+    "reverse": "Invertir l'ordre de les bases:",
+    "both": "Invertir zeros i uns + ordre de les bases (complementària inversa):",
+    "check": "Coincideix amb reverse_complement() del pas anterior? {result}",
+    "restored": "Ésser original restaurat:",
+    "time": "Generats {bits} bits en {ms} ms ({us} µs de mitjana per bit).",
+    "label_bits": "Bits:",
+    "label_dna": "ADN:"
+  },
+  "language": {
+    "choose": "Tria l'idioma:",
+    "changed": "Idioma canviat a català."
+  },
+  "errors": {
+    "empty_sequence": "La seqüència és buida ({kind}).",
+    "invalid_characters": "Caràcters no vàlids per a {kind}: {chars} (permesos: {allowed}).",
+    "odd_bit_length": "La cadena binària té {length} bits; ha de ser múltiple de {multiple}.",
+    "cut_out_of_range": "El punt de tall {cut} és fora de la seqüència.",
+    "guide_too_short": "La guia ha de tenir com a mínim {minimum} nucleòtids.",
+    "invalid_bit_count": "El nombre de bits ha de ser més gran que 0.",
+    "negative_permutation_size": "La mida de la permutació no pot ser negativa.",
+    "too_long": "{field}: el text és massa llarg (màxim {maximum} caràcters).",
+    "too_small": "{field}: el valor ha de ser com a mínim {minimum}.",
+    "too_big": "{field}: el valor ha de ser com a màxim {maximum}.",
+    "invalid_request": "{field}: falta la dada o no té el format correcte.",
+    "alignment_too_large": "Les seqüències són massa llargues per alinear-les aquí: caldrien {cells} càlculs i el màxim és {maximum}.",
+    "unknown_language": "Idioma no disponible: {language}.",
+    "start_out_of_range": "L'inici {start} és fora de la seqüència, que té {length} bases.",
+    "count_too_small": "El nombre de parells ha de ser com a mínim {minimum}.",
+    "no_orf": "No s'ha trobat cap marc de lectura: la seqüència no té cap codó d'inici ATG en cap de les seves 6 pautes.",
+    "min_length_too_small": "La longitud mínima de la proteïna ha de ser com a mínim {minimum}.",
+    "invalid_accession": "«{accession}» no és una accessió d'UniProt vàlida (exemple: P68871).",
+    "protein_not_found": "No hi ha cap estructura per a la proteïna {accession}.",
+    "service_unavailable": "{service} no respon ara mateix. Comprova la connexió a internet o torna-ho a provar més tard.",
+    "invalid_email": "El correu no sembla vàlid (exemple: nom@domini.com).",
+    "search_failed": "{service} no ha pogut fer la cerca.",
+    "search_timeout": "{service} ha trigat més de {minutes} minuts. Torna-ho a provar més tard.",
+    "prediction_too_long": "La proteïna té {length} aminoàcids i el predictor n'admet com a màxim {maximum}.",
+    "prediction_failed": "{service} no ha pogut predir aquesta proteïna.",
+    "email_not_configured": "El servidor no té configurat el correu que demana BLAST (variable d'entorn DNAINVENT_EMAIL).",
+    "job_not_found": "Aquesta cerca ja no existeix: es guarden una hora. Torna a començar.",
+    "job_failed": "Alguna cosa ha fallat al servidor durant la cerca. Torna-ho a provar.",
+    "job_not_finished": "La cerca encara no ha acabat.",
+    "no_structure": "No hi ha cap estructura per ensenyar d'aquesta proteïna.",
+    "gene_not_found": "No s'ha trobat el gen «{symbol}» a l'organisme {taxon}.",
+    "sequence_not_found": "No s'ha trobat la seqüència {accession}.",
+    "variant_not_found": "No existeix la variant {variant}.",
+    "variant_not_supported": "De moment només es poden situar a la seqüència les substitucions d'una base dins de la regió codificant (com c.20A>T); {hgvs} no ho és.",
+    "variant_outside_cds": "{hgvs} cau fora de la regió codificant ({start}..{end}).",
+    "variant_mismatch": "A {accession} la posició {position} és {found}, no {expected}: {hgvs} no correspon a aquesta versió de la seqüència."
+  },
+  "kinds": {
+    "dna": "ADN",
+    "rna": "ARN",
+    "binary": "binari",
+    "protein": "proteïna"
+  },
+  "fields": {
+    "dna": "Seqüència d'ADN",
+    "rna": "Seqüència d'ARN",
+    "bits": "Cadena binària",
+    "target": "Seqüència a cercar",
+    "first": "Primera seqüència",
+    "second": "Segona seqüència",
+    "insert": "Seqüència a inserir",
+    "size": "Mida de la permutació",
+    "limit": "Nombre de resultats",
+    "bases": "Nombre de bases",
+    "seed": "Llavor",
+    "guide_length": "Longitud de la guia",
+    "cut": "Punt de tall",
+    "method": "Tipus de reparació",
+    "operation": "Operació",
+    "match": "Puntuació per coincidència",
+    "mismatch": "Puntuació per substitució",
+    "gap": "Puntuació per buit",
+    "body": "Petició",
+    "start": "Inici",
+    "count": "Nombre de parells"
+  },
+  "amino_acids": {
+    "A": "Alanina",
+    "R": "Arginina",
+    "N": "Asparagina",
+    "D": "Aspartat",
+    "C": "Cisteïna",
+    "Q": "Glutamina",
+    "E": "Glutamat",
+    "G": "Glicina",
+    "H": "Histidina",
+    "I": "Isoleucina",
+    "L": "Leucina",
+    "K": "Lisina",
+    "M": "Metionina",
+    "F": "Fenilalanina",
+    "P": "Prolina",
+    "S": "Serina",
+    "T": "Treonina",
+    "W": "Triptòfan",
+    "Y": "Tirosina",
+    "V": "Valina"
+  },
+  "web": {
+    "tagline": "Llegeix, codifica, compara i edita seqüències d'ADN.",
+    "language": "Idioma",
+    "nav_label": "Eines",
+    "groups": {
+      "learn": "Aprendre",
+      "read": "Llegir",
+      "encode": "Codificar",
+      "compare": "Comparar",
+      "edit": "Editar"
+    },
+    "tools": {
+      "learn": {
+        "title": "Què és l'ADN",
+        "about": "L'ADN és la molècula que guarda les instruccions per construir i fer funcionar cada ésser viu, des d'un bacteri fins a una persona. És a gairebé totes les teves cèl·lules i s'escriu amb només quatre lletres."
+      },
+      "complement": {
+        "title": "Doble hèlix",
+        "about": "Escriu una cadena d'ADN i veuràs la seva parella. Les dues cadenes van en sentits oposats, així que la complementària s'escriu al revés per llegir-la de 5' a 3'.",
+        "run": "Formar la doble hèlix"
+      },
+      "transcribe": {
+        "title": "Transcripció",
+        "about": "Copia l'ADN de la cadena codificant a ARN missatger: cada T passa a ser U.",
+        "run": "Transcriure"
+      },
+      "translate": {
+        "title": "Traducció",
+        "about": "Llegeix l'ARN com un ribosoma: comença al primer AUG, avança de 3 en 3 bases i s'atura al primer codó d'aturada.",
+        "run": "Traduir"
+      },
+      "protein": {
+        "title": "Proteïna 3D",
+        "about": "Escriu un gen: se'n busca el marc de lectura, s'identifica la proteïna a UniProt (BLAST) i se'n mostra l'estructura d'AlphaFold DB. Si la teva és diferent o inventada, es prediu amb ESMFold i es compara amb la natural. Després, la pots explorar al microscopi 3D.",
+        "run": "Buscar la proteïna"
+      },
+      "to_binary": {
+        "title": "ADN a binari",
+        "about": "Cada base ocupa 2 bits: A = 00, C = 01, G = 10 i T = 11. Cada base i la seva parella són oposades bit a bit.",
+        "run": "Convertir a binari"
+      },
+      "from_binary": {
+        "title": "Binari a ADN",
+        "about": "Llegeix els bits de 2 en 2 i els converteix en bases. Pots separar els bits amb espais.",
+        "run": "Convertir a ADN"
+      },
+      "being": {
+        "title": "Ésser a partir de bits",
+        "about": "Genera bits a l'atzar i llegeix-los com a ADN. Les operacions s'acumulen: invertir els bits dues vegades torna l'ésser original.",
+        "run": "Generar un ésser"
+      },
+      "find": {
+        "title": "Cercar",
+        "about": "Troba on apareix un fragment dins d'una seqüència.",
+        "run": "Cercar"
+      },
+      "align": {
+        "title": "Alinear",
+        "about": "Col·loca una seqüència sota l'altra, amb buits on calgui, perquè s'assemblin tant com sigui possible (algorisme de Needleman-Wunsch).",
+        "run": "Alinear"
+      },
+      "permutations": {
+        "title": "Permutacions",
+        "about": "Totes les seqüències diferents que es poden formar reordenant les bases, sense repetir-ne cap.",
+        "run": "Generar permutacions"
+      },
+      "crispr": {
+        "title": "CRISPR/Cas9",
+        "about": "Cerca on pot tallar Cas9, tria una diana i decideix com repara la cèl·lula el tall.",
+        "run": "Cercar dianes"
+      },
+      "microscope": {
+        "title": "Microscopi 3D",
+        "about": "Vola dins la teva seqüència: de la doble hèlix a un àtom, al seu nucli, a un protó i als seus quarks. Amb teclat, ratolí o pantalla tàctil.",
+        "run": "Construir la molècula"
+      }
+    },
+    "labels": {
+      "dna": "Seqüència d'ADN",
+      "rna": "Seqüència d'ARN",
+      "bits": "Bits",
+      "target": "Fragment a cercar",
+      "first": "Primera seqüència",
+      "second": "Segona seqüència",
+      "size": "Bases per permutació",
+      "bases": "Nombre de bases",
+      "guide_length": "Longitud de la guia",
+      "insert": "Seqüència a inserir",
+      "scoring": "Puntuació de l'alineament",
+      "match": "Coincidència",
+      "mismatch": "Substitució",
+      "gap": "Buit",
+      "start": "Des del parell de bases",
+      "count": "Parells de bases"
+    },
+    "actions": {
+      "example": "Carregar un exemple",
+      "repair": "Tallar i reparar"
+    },
+    "status": {
+      "loading": "Calculant…",
+      "network": "No s'ha pogut connectar amb el servidor. Comprova que continua en marxa amb python main.py --web.",
+      "unexpected": "El servidor ha retornat un error inesperat (codi {status})."
+    },
+    "results": {
+      "length": "{count} bases",
+      "strand_top": "Cadena introduïda",
+      "strand_bottom": "Cadena complementària",
+      "reverse": "Complementària inversa, de 5' a 3'",
+      "dna": "ADN",
+      "rna": "ARN",
+      "orf": "Marc de lectura",
+      "stop": "Codó d'aturada",
+      "untranslated": "No es tradueix",
+      "protein": "Proteïna de {count} aminoàcids",
+      "no_protein": "La proteïna és buida: el primer codó després de l'AUG ja és d'aturada.",
+      "counts": "Aminoàcids per freqüència",
+      "is_dna_hint": "És ADN? Transcriu-lo abans a l'eina Transcripció.",
+      "not_found": "El fragment no apareix a la seqüència.",
+      "shown": "Es mostren les {shown} primeres de {count}.",
+      "being_current": "Ésser actual",
+      "being_steps": "Operacions aplicades: {count}",
+      "targets_none": "No hi ha dianes. Prova una seqüència més llarga o una guia més curta.",
+      "strand": "Cadena",
+      "cut": "Tall després de la base",
+      "guide": "ARN guia (5' a 3')",
+      "pam": "PAM",
+      "protospacer": "Diana",
+      "cut_site": "Punt de tall",
+      "chosen": "Diana triada",
+      "repair_nhej": "NHEJ: la cèl·lula enganxa els extrems i sovint s'equivoca. Serveix per inactivar un gen.",
+      "repair_hdr": "HDR: la cèl·lula copia un motlle d'ADN que aportem. Serveix per inserir una seqüència.",
+      "donor": "Motlle d'ADN donant",
+      "arms": "Braços d'homologia",
+      "insert": "Insert"
+    },
+    "bases": {
+      "A": "Adenina",
+      "T": "Timina",
+      "G": "Guanina",
+      "C": "Citosina",
+      "U": "Uracil"
+    },
+    "helix": {
+      "title": "Model en 3D",
+      "label": "Doble hèlix en 3D dels parells de bases {first} a {last}",
+      "backbone": "Esquelet de sucre-fosfat",
+      "pause": "Aturar",
+      "play": "Girar",
+      "hint": "Arrossega l'hèlix per girar-la. Passa el punter per sobre d'un graó per veure'n el parell de bases.",
+      "window": "Parells de bases {first} a {last} de {length}",
+      "from": "Des del parell de bases",
+      "pair": "Parell {position}: {base}–{partner}",
+      "flat": "Les dues cadenes, base a base"
+    },
+    "microscope": {
+      "dive": "Entrar",
+      "full": "Viatge complet",
+      "up": "Sortir",
+      "mode": "Mode",
+      "fullscreen": "Pantalla completa",
+      "help": [
+        "Clic a la imatge per dirigir amb el ratolí · Esc: deixar-lo · WASD: moure't · Espai / C: pujar / baixar · Q/E: girar · Maj: turbo · Roda: velocitat",
+        "Enter: baixar un nivell · Maj+Enter: viatge complet · Retrocés: pujar · M: mode · H: ajuda · F: pantalla completa"
+      ],
+      "touch": "Al mòbil o la tauleta: arrossega per mirar i fes servir els botons.",
+      "no_webgl": "El teu navegador no pot mostrar gràfics 3D (WebGL 2). Prova amb Chrome, Firefox, Edge o Safari actualitzats.",
+      "long": "La seqüència té {length} parells de bases: el microscopi n'ensenya com a màxim {maximum} alhora. Tria des de quin parell començar.",
+      "building": "Construint la molècula…",
+      "explore": "Explora aquesta seqüència al microscopi 3D →",
+      "layout": "Partida / superposades",
+      "side": "Canviar de costat",
+      "help_compare": "X: pantalla partida / superposades · V: canviar el costat que manegues"
+    },
+    "protein": {
+      "queued": "A la cua…",
+      "elapsed": "({seconds} s)",
+      "slow": "Buscar a tot UniProtKB pot trigar uns minuts. Mentrestant, pots fer servir altres eines.",
+      "explore": "Explorar al microscopi 3D",
+      "download_natural": "Descarregar la natural (PDB amb hidrògens)",
+      "download_yours": "Descarregar la teva (PDB amb hidrògens)",
+      "loading_structure": "Construint les molècules…",
+      "from": "Des de l'aminoàcid",
+      "long": "La proteïna té {length} aminoàcids: el microscopi n'ensenya com a màxim {maximum} alhora. Tria des de quin començar i torna a prémer «Explorar»."
+    }
+  },
+  "learn": {
+    "lead": "L'ADN és la molècula que guarda les instruccions per construir i fer funcionar cada ésser viu, des d'un bacteri fins a una persona. És a gairebé totes les teves cèl·lules i s'escriu amb només quatre lletres.",
+    "try": "Prova-ho:",
+    "alt": "Estructura química: {name}",
+    "letters": {
+      "title": "Quatre lletres químiques",
+      "p1": "L'ADN és una cadena molt llarga de peces anomenades nucleòtids. Cada nucleòtid té tres parts: un sucre (la desoxiribosa), un grup fosfat i una base nitrogenada. Els sucres i els fosfats s'enllacen entre si i formen l'esquelet de la cadena; les bases en sobresurten i són les que porten la informació.",
+      "p2": "A l'ADN hi ha quatre bases, i per això s'escriu amb quatre lletres: A, G, C i T. Segons la seva forma, es divideixen en dues famílies.",
+      "purines": "Purines: dos anells",
+      "pyrimidines": "Pirimidines: un anell",
+      "A": "S'aparella amb la timina.",
+      "G": "S'aparella amb la citosina.",
+      "C": "S'aparella amb la guanina.",
+      "T": "S'aparella amb l'adenina. Només és a l'ADN, i és com l'uracil amb un grup metil (CH₃) de més.",
+      "U": "Ocupa el lloc de la timina a l'ARN.",
+      "key": "Com llegir les imatges: les boles són àtoms d'hidrogen (H), nitrogen (N) i oxigen (O), i els vèrtexs dels anells sense etiqueta són àtoms de carboni. Les línies dobles són enllaços dobles."
+    },
+    "pairs": {
+      "title": "Parelles que encaixen",
+      "p1": "Les bases d'una cadena s'uneixen amb les de l'altra mitjançant ponts d'hidrogen: atraccions febles que es poden obrir i tancar sense trencar la cadena. Només encaixen dues parelles.",
+      "at": "Adenina i timina: 2 ponts d'hidrogen",
+      "gc": "Guanina i citosina: 3 ponts d'hidrogen",
+      "p2": "Sempre s'uneix una purina amb una pirimidina, així que tots els graons fan el mateix i la doble hèlix té un gruix constant d'uns 2 nanòmetres. I com que cada base només admet una parella, conèixer una cadena n'hi ha prou per saber com és l'altra."
+    },
+    "helix": {
+      "title": "La doble hèlix",
+      "p1": "Les dues cadenes s'enrotllen l'una sobre l'altra com una escala de cargol: els graons són les parelles de bases, i les baranes, els esquelets de sucre i fosfat. L'escala fa una volta completa cada 10,5 parells de bases, uns 3,5 nanòmetres.",
+      "p2": "Les cadenes van en sentits oposats. Cadascuna té un extrem anomenat 5' i un altre anomenat 3', segons el carboni del sucre on acaba, i estan col·locades al revés l'una respecte de l'altra: són antiparal·leles.",
+      "p3": "Aquesta forma la van descriure James Watson i Francis Crick el 1953, a partir de les imatges de raigs X que havien obtingut Rosalind Franklin i Raymond Gosling, especialment la famosa Fotografia 51."
+    },
+    "copy": {
+      "title": "Com es copia",
+      "p1": "Abans de dividir-se, una cèl·lula ha de copiar tot el seu ADN. L'enzim helicasa separa les dues cadenes com qui obre una cremallera, i l'ADN polimerasa construeix una cadena nova davant de cadascuna, seguint les regles d'aparellament.",
+      "p2": "Al final hi ha dues molècules iguals, i cadascuna conserva una cadena de l'original: per això es diu que la còpia és semiconservativa. La polimerasa s'equivoca molt poques vegades, i a més revisa la seva feina i corregeix gairebé tots els errors."
+    },
+    "protein": {
+      "title": "De l'ADN a les proteïnes",
+      "p1": "En cèl·lules com les nostres, l'ADN no surt del nucli. Per fer servir un gen, la cèl·lula fa primer una còpia de treball en ARN missatger: és la transcripció. L'ARN s'escriu gairebé igual que l'ADN, però fa servir uracil (U) en lloc de timina.",
+      "p2": "Després, el ribosoma llegeix aquest ARN de tres en tres bases. Cada grup de tres, anomenat codó, indica un aminoàcid. Hi ha 64 codons possibles per a només 20 aminoàcids, així que diversos codons volen dir el mateix. La lectura comença al codó AUG i acaba en un dels tres codons d'aturada: UAA, UAG o UGA. És la traducció.",
+      "p3": "La cadena d'aminoàcids es plega i forma una proteïna, com els enzims que digereixen el menjar, l'hemoglobina que transporta l'oxigen o la queratina dels cabells."
+    },
+    "mutations": {
+      "title": "Quan l'ADN canvia",
+      "p1": "De vegades una base canvia per una altra, o se'n perden o se n'afegeixen algunes: són les mutacions. Moltes no tenen cap efecte, d'altres causen malalties i unes poques resulten útils. Són la matèria primera de l'evolució.",
+      "p2": "Com que el ribosoma llegeix de tres en tres, afegir o treure una sola base desplaça tota la lectura posterior i canvia tots els aminoàcids següents. Si el canvi és de tres bases, la lectura torna a encaixar.",
+      "p3": "Avui es pot editar l'ADN a propòsit amb CRISPR/Cas9, una eina que talla l'ADN al punt exacte que li indica un ARN guia. El seu desenvolupament va valer el Premi Nobel de Química de 2020 a Emmanuelle Charpentier i Jennifer Doudna."
+    },
+    "info": {
+      "title": "L'ADN com a informació",
+      "p1": "Amb quatre lletres, cada base pot guardar 2 bits: A = 00, C = 01, G = 10 i T = 11. El teu genoma té uns 3.100 milions de parells de bases per cada joc de cromosomes; escrit així, ocuparia uns 775 megabytes.",
+      "p2": "Si s'estirés l'ADN d'una sola de les teves cèl·lules, faria uns 2 metres. Cap en un nucli d'unes mil·lèsimes de mil·límetre perquè està enrotllat al voltant de proteïnes i plegat moltes vegades sobre si mateix.",
+      "p3": "Aquesta densitat és tan gran que ja s'han guardat llibres, imatges i vídeos en ADN fabricat al laboratori."
+    }
+  },
+  "units": {
+    "proton": {
+      "one": "{n} protó",
+      "other": "{n} protons"
+    },
+    "neutron": {
+      "one": "{n} neutró",
+      "other": "{n} neutrons"
+    },
+    "electron": {
+      "one": "{n} electró",
+      "other": "{n} electrons"
+    },
+    "variant": {
+      "one": "{n} variant",
+      "other": "{n} variants"
+    },
+    "variant_causal": {
+      "one": "{n} la causa",
+      "other": "{n} la causen"
+    },
+    "variant_protective": {
+      "one": "{n} protegeix",
+      "other": "{n} protegeixen"
+    },
+    "variant_risk_factor": {
+      "one": "{n} factor de risc",
+      "other": "{n} factors de risc"
+    }
+  },
+  "microscope": {
+    "title": "DNAinvent — microscopi 3D",
+    "offer": "Vols explorar aquesta seqüència en 3D?",
+    "missing": "Per al microscopi 3D falten aquests paquets: {packages}.",
+    "install": "Instal·la'ls amb:  pip install -r requirements.txt  (vegeu el README)",
+    "long": "La seqüència té {length} parells de bases; el microscopi n'ensenya {maximum} alhora.",
+    "ask_start": "Des de quina base? [Enter = 1]: ",
+    "window": "Microscopi 3D: parells {first} a {last} de {length}.",
+    "opening": "Obrint el microscopi en una altra finestra… (la consola continua disponible)",
+    "console": {
+      "ask": "Seqüència d'ADN (A, C, G, T) [Enter = {example}]: ",
+      "built": "{pairs} parells de bases · {atoms} àtoms",
+      "slow": "Avís: {pairs} parells és molt per al microscopi (recomanat: {maximum}); pot anar lent.",
+      "integrated_gpu": "AVÍS: s'està fent servir la gràfica integrada. A Windows, tria la NVIDIA a Configuració > Sistema > Pantalla > Gràfics.",
+      "built_protein": "{residues} aminoàcids · {atoms} àtoms"
+    },
+    "levels": {
+      "helix": "Doble hèlix d'ADN (forma B)",
+      "nucleus": "Nucli {of_element}-{a}",
+      "proton": "Interior d'un protó (uud)",
+      "neutron": "Interior d'un neutró (udd)",
+      "protein": "Proteïna",
+      "overlay": "Proteïnes superposades"
+    },
+    "hud": {
+      "level": "Nivell {n} · {name}",
+      "visible": "Amplada visible ≈ {width}  ({sci} m)",
+      "distance": "Distància a l'objecte: {d}",
+      "speed": "Velocitat: {v}/s  ×{mult}",
+      "time": "Temps: {t}",
+      "mode_didactic": "Mode: DIDÀCTIC  [Tab]",
+      "mode_realistic": "Mode: REALISTA  [Tab]",
+      "help": [
+        "Clic: capturar el ratolí · Esc: deixar-lo · WASD: moure't · Espai/Ctrl: pujar/baixar · Q/E: girar · Maj: turbo · Roda: velocitat",
+        "Enter: baixar un nivell · Maj+Enter: viatge complet · Retrocés: pujar · Tab: mode · L: idioma · H: ajuda · F11: pantalla completa"
+      ],
+      "entering": "Entrant: {name}",
+      "leaving": "Tornant a: {name}",
+      "click": "Fes clic per controlar la nau",
+      "now_didactic": "Mode DIDÀCTIC",
+      "now_realistic": "Mode REALISTA",
+      "language": "Idioma: català",
+      "pair": "parell {pair} de {length}",
+      "span": "tram {first}–{last} de {length}",
+      "residue": "aminoàcid {pair} de {length}",
+      "help_compare": "C: pantalla partida / superposades · V: canviar el costat que manegues",
+      "layout_split": "Pantalla partida",
+      "layout_overlay": "Superposades",
+      "only_at_protein": "Torna a la vista de la proteïna per canviar-ho (Retrocés)",
+      "side": "Manegues: {side}"
+    },
+    "autopilot": {
+      "dive": "PILOT AUTOMÀTIC → {target}",
+      "full": "VIATGE COMPLET → {target}",
+      "ascend": "PILOT AUTOMÀTIC → pujant de nivell",
+      "dive_short": "Pilot automàtic",
+      "full_short": "Viatge complet fins a un quark",
+      "off": "Pilot automàtic desactivat",
+      "next": "Següent: {target}",
+      "end_of_journey": "Fi del viatge: no hi ha res dins d'un quark",
+      "atom_target": "{atom}, parell {pair}",
+      "nucleus_target": "Nucli {of_element}-{a}",
+      "atom_target_residue": "{atom}, {residue} {number}"
+    },
+    "depth_marks": {
+      "dna": "ADN  ~2 nm",
+      "atom": "Àtom  ~100 pm",
+      "nucleus": "Nucli  ~3 fm",
+      "proton": "Protó  0,84 fm",
+      "quarks": "Quarks  <10⁻¹⁸ m",
+      "protein": "Proteïna  ~5 nm"
+    },
+    "bases": {
+      "A": "Adenina",
+      "C": "Citosina",
+      "G": "Guanina",
+      "T": "Timina"
+    },
+    "parts": {
+      "base": "base nitrogenada",
+      "sugar": "desoxiribosa (sucre)",
+      "phosphate": "grup fosfat"
+    },
+    "molecule": {
+      "atom": "Àtom {of_element} ({name})",
+      "base": "{name} ({base})",
+      "part_of": "{part} del nucleòtid {base}",
+      "where": "{what} · parell {pair} · cadena {strand}"
+    },
+    "helix": {
+      "title": "ADN · {sequence}",
+      "pairs": "{pairs} parells de bases · {atoms} àtoms",
+      "window": "Parells {first} a {last} de {length} · {atoms} àtoms",
+      "explanation": [
+        "Dues cadenes enrotllades en espiral; cada volta fa 3,55 nm",
+        "i té 10,5 parells de bases (forma B, la de l'ADN a les cèl·lules)."
+      ],
+      "explanation_base": [
+        "Les bases s'uneixen a la seva parella amb ponts d'hidrogen",
+        "(línies grogues): A–T en forma 2 i G–C en forma 3."
+      ],
+      "explanation_sugar": [
+        "La desoxiribosa uneix la base amb el fosfat.",
+        "Sucres i fosfats formen el «passamà» de l'escala."
+      ],
+      "explanation_phosphate": [
+        "El fosfat té càrrega negativa: per això l'ADN és un àcid.",
+        "Uneix el sucre d'un nucleòtid amb el següent."
+      ],
+      "time": "1 s a la pantalla ≈ 50 fs reals (vibracions d'enllaç alentides ~10¹³ vegades)"
+    },
+    "atom": {
+      "nucleus_title": "Nucli {of_element}: {protons} + {neutrons}",
+      "nucleus_distance": "Distància al nucli: {d} pm",
+      "nucleus_explanation": [
+        "Radi ≈ {r} fm: l'àtom és ~{ratio} vegades més gran.",
+        "Gairebé tota la massa de l'àtom és aquí. Acosta't (o prem Enter) per entrar-hi."
+      ],
+      "cloud_title": "Núvol electrònic · {electrons}",
+      "config": "Configuració: {config} · càrrega efectiva (Slater): {zeff}",
+      "cloud_explanation": [
+        "Cada punt és una posició probable d'un electró, no una trajectòria: no orbiten.",
+        "Colors: taronja n = 1, cian n = 2, violeta n = 3; els orbitals p mostren els seus lòbuls.",
+        "On els núvols se superposen amb els veïns, els electrons es comparteixen: és l'enllaç."
+      ],
+      "cloud_explanation_realistic": [
+        "Àtom aïllat: fent la mitjana de totes les orientacions, la seva densitat és esfèrica.",
+        "A la molècula els orbitals es deformen en enllaçar-se (aquí no es veu)."
+      ],
+      "time": "Orbitals estacionaris: la densitat no canvia (el parpelleig = mesures successives)"
+    },
+    "nucleus": {
+      "title": "{protons} + {neutrons} · radi ≈ {r} fm",
+      "detail": "densitat ≈ {rho} kg/m³",
+      "explanation": [
+        "La força forta venç la repulsió elèctrica entre els {protons}.",
+        "Probabilitat de trobar aquí dins un electró: ~{p_in}",
+        "Una culleradeta de matèria nuclear pesaria ~1.000 milions de tones."
+      ],
+      "explanation_hydrogen": [
+        "El nucli de l'hidrogen-1 és un únic protó.",
+        "Probabilitat de trobar aquí dins l'electró: ~{p_in}"
+      ],
+      "explanation_realistic": [
+        "Densitat de matèria nuclear (perfil de Woods–Saxon): els nucleons",
+        "són ones quàntiques i no tenen una posició definida."
+      ],
+      "strong_lines": "Línies verdes: força nuclear forta (abast ~2 fm).",
+      "go_in": "acosta't (o prem Enter) per entrar-hi",
+      "proton": {
+        "title": "Protó",
+        "detail": "càrrega +1 · {mass} MeV/c² · quarks u u d",
+        "explanation": [
+          "3 quarks de valència (uud) units per gluons.",
+          "Només ~1 % de la seva massa ve dels quarks: la resta és energia",
+          "de la interacció forta (E = mc²)."
+        ]
+      },
+      "neutron": {
+        "title": "Neutró",
+        "detail": "càrrega 0 · {mass} MeV/c² · quarks u d d",
+        "explanation": [
+          "3 quarks de valència (udd). Lliure, es desintegra en ~15 minuts;",
+          "dins d'un nucli estable dura per sempre.",
+          "Sense neutrons, la repulsió elèctrica separaria els protons."
+        ]
+      },
+      "time": "1 s a la pantalla ≈ 10⁻²² s reals (un nucleó travessa el nucli en ~10⁻²² s)"
+    },
+    "nucleon": {
+      "proton": "Protó",
+      "neutron": "Neutró",
+      "title": "{name}: quarks de valència {content} + mar de partons",
+      "colors_now": "Colors ara: {colors}",
+      "realistic_detail": "1 s a la pantalla ≈ 10⁻²⁴ s reals",
+      "up": {
+        "title": "Quark up (u)",
+        "detail": "càrrega +2/3 · massa ≈ {mass} MeV/c² · color: {color}"
+      },
+      "down": {
+        "title": "Quark down (d)",
+        "detail": "càrrega −1/3 · massa ≈ {mass} MeV/c² · color: {color}"
+      },
+      "quark_explanation": [
+        "Partícula fonamental: sense estructura coneguda (< 10⁻¹⁸ m).",
+        "Aquí s'acaba el viatge: no hi ha res «dins» d'un quark.",
+        "Confinament: si separes un quark, el tub de gluons es",
+        "trenca i crea nous parells quark–antiquark."
+      ],
+      "explanation": [
+        "Vermell/verd/blau = càrrega de color (una etiqueta, no un color real).",
+        "Els 3 quarks sumen «blanc». Els gluons viatgers intercanvien",
+        "el color entre ells. Punts del fons: gluons i parells del mar.",
+        "Els quarks aporten ~1 % de la massa; la resta és energia (E = mc²)."
+      ],
+      "explanation_realistic": [
+        "Boira de partons: quarks, antiquarks i gluons que apareixen i",
+        "desapareixen. No es pot assenyalar on és cada quark: només la",
+        "probabilitat de trobar-los (radi de càrrega 0,84 fm)."
+      ],
+      "colors": {
+        "r": "vermell",
+        "g": "verd",
+        "b": "blau"
+      },
+      "time": "1 s a la pantalla ≈ 10⁻²⁴ s reals (la llum travessa un protó en ~3×10⁻²⁴ s)"
+    },
+    "protein": {
+      "title": "Proteïna · {name}",
+      "residues": "{residues} aminoàcids · {atoms} àtoms",
+      "window": "Aminoàcids {first} a {last} de {length} · {atoms} àtoms",
+      "explanation": [
+        "Una cadena d'aminoàcids plegada sobre si mateixa. La línia de colors uneix",
+        "els carbonis α: groc hidròfob, verd polar, blau +, vermell −, gris Gly/Pro."
+      ],
+      "explanation_confidence": [
+        "Colors de confiança de la predicció (pLDDT): blau fosc molt alta,",
+        "blau clar bona, groc baixa, taronja molt baixa."
+      ],
+      "explanation_backbone": [
+        "Esquelet: N–Cα–C=O, igual a tots els aminoàcids.",
+        "L'enllaç peptídic (C–N) uneix cadascun amb el següent."
+      ],
+      "explanation_sidechain": [
+        "Cadena lateral: el que distingeix cada aminoàcid",
+        "i decideix on es col·loca quan la proteïna es plega."
+      ],
+      "classes": {
+        "hydrophobic": "Hidròfob: fuig de l'aigua i sol quedar a l'interior de la proteïna.",
+        "special": "Glicina o prolina: l'aminoàcid més flexible o el més rígid de la cadena.",
+        "polar": "Polar: sense càrrega, però atreu l'aigua; sol ser a la superfície.",
+        "positive": "Amb càrrega positiva a pH 7.",
+        "negative": "Amb càrrega negativa a pH 7."
+      },
+      "where": "{part} · {residue} {number}",
+      "parts": {
+        "backbone": "esquelet",
+        "sidechain": "cadena lateral"
+      },
+      "atom_confidence": "Confiança de la predicció aquí: pLDDT {plddt}, {band}.",
+      "atom_highlighted": "Aquest aminoàcid canvia respecte de l'altra proteïna: {label}.",
+      "highlighted": "Canvis (en magenta): {list}",
+      "overlay_title": "{natural}  davant de  {yours}",
+      "overlay_explanation": [
+        "Les dues alhora, ja superposades: cian la natural, taronja la teva.",
+        "On coincideixen, els colors se sumen i es veuen blancs; on la forma canvia, se separen."
+      ],
+      "sides": {
+        "natural": "natural",
+        "yours": "la teva"
+      }
+    }
+  },
+  "protein": {
+    "categories": {
+      "identical": {
+        "name": "Proteïna coneguda",
+        "description": "Coincideix al 100 % amb una proteïna real: se'n mostra l'estructura d'AlphaFold DB."
+      },
+      "very_similar": {
+        "name": "Variant d'una proteïna coneguda",
+        "description": "És almenys un {high} % idèntica a una proteïna real: es comparen l'una al costat de l'altra la natural i la teva."
+      },
+      "distant_relative": {
+        "name": "Parent llunyà",
+        "description": "És entre un {low} % i un {high} % idèntica a una proteïna real: comparteixen avantpassat. Es ressalten les zones que l'evolució ha conservat."
+      },
+      "invented": {
+        "name": "Proteïna inventada",
+        "description": "No s'assembla a cap proteïna coneguda: se'n prediu l'estructura, i probablement no es plegaria així a la natura."
+      }
+    },
+    "confidence": {
+      "very_high": "Confiança molt alta",
+      "confident": "Confiança bona",
+      "low": "Confiança baixa",
+      "very_low": "Confiança molt baixa (zona probablement desordenada)"
+    },
+    "email": {
+      "using": "Cerca amb el correu {email}."
+    },
+    "stage": {
+      "orf": "Buscant el marc de lectura…",
+      "search": "Buscant semblances a {database}…",
+      "search_everything": "Cap de fiable. Buscant a {database}; pot trigar uns minuts…",
+      "waiting": "Cerca en marxa ({status})…",
+      "structure": "Descarregant l'estructura de {accession} d'AlphaFold DB…",
+      "predict": "Predient l'estructura de la teva proteïna amb {predictor} ({length} aminoàcids)…"
+    },
+    "databases": {
+      "uniprotkb_swissprot": "Swiss-Prot (proteïnes revisades a mà)",
+      "uniprotkb": "UniProtKB completa"
+    },
+    "report": {
+      "orf": "Marc de lectura {frame}: bases {start}–{end} de {length}, {count} aminoàcids ({stop}).",
+      "complete": "acaba amb el codó d'aturada {codon}",
+      "incomplete": "sense codó d'aturada",
+      "protein": "La teva proteïna:",
+      "category": "Cas:",
+      "best": "Proteïna real més semblant:",
+      "gene": "gen {gene}",
+      "identity": "Identitat {identity} % · cobreix el {query} % de la teva proteïna i el {subject} % de la real · E-value {evalue}",
+      "others": "Altres semblances:",
+      "none": "Cap semblança fiable a {database}.",
+      "alignment": "Alineament (a dalt la teva, a baix la real; lletra = igual, + = semblant, - = buit):",
+      "structure": "Estructura: {model} (versió {version}), confiança mitjana (pLDDT) {plddt}",
+      "atoms": "{heavy} àtoms pesants + {hydrogens} hidrògens calculats",
+      "citation": "Dades: AlphaFold DB (EMBL-EBI i Google DeepMind), llicència CC-BY 4.0.",
+      "warnings": "Avisos:",
+      "prediction": "La teva proteïna predita ({predictor}): confiança mitjana (pLDDT) {plddt}",
+      "prediction_citation": "Predicció: {predictor} (Meta; Lin et al. 2023, Science).",
+      "comparison": "Comparació amb la natural ({accession}):",
+      "differences": "Mutacions ({count}): {list}",
+      "differences_distant": "Diferències ({count}): {list}",
+      "differences_more": "… i {count} més",
+      "no_differences": "Cap canvi d'aminoàcids al tram alineat.",
+      "indels": "Buits: {insertions} aminoàcids de més i {deletions} de menys respecte de la natural.",
+      "conserved": "Aminoàcids conservats: {count} de {total} ({percent} %).",
+      "rmsd": "Diferència de forma (RMSD dels carbonis α): {rmsd} Å sobre {count} aminoàcids ({meaning}).",
+      "rmsd_same": "pràcticament la mateixa forma",
+      "rmsd_close": "la mateixa forma amb petites diferències",
+      "rmsd_different": "formes clarament diferents",
+      "most_different": "Zones que canvien més: {list}",
+      "numbering": "Numeració d'UniProt: comença a la metionina inicial (l'anèmia falciforme, Glu6Val en medicina, apareix com a Glu7Val)."
+    },
+    "save_offer": "Vols desar les estructures amb hidrògens en fitxers PDB?",
+    "saved": "Desada a {path}. La pots veure a https://molstar.org/viewer/ arrossegant-hi el fitxer.",
+    "warnings": {
+      "incomplete_orf": "El marc de lectura arriba al final de la seqüència sense codó d'aturada: potser només has enganxat una part del gen.",
+      "too_short": "La proteïna té {length} aminoàcids: amb menys de {minimum} no es pot identificar ni predir-ne la forma de manera fiable (un pèptid tan curt no té un plegament propi).",
+      "fragment": "La teva proteïna correspon només als aminoàcids {start}–{end} dels {length} de la real.",
+      "no_structure": "AlphaFold DB no té l'estructura de {accession}.",
+      "structure_unavailable": "AlphaFold DB no respon: no s'ha pogut descarregar l'estructura de {accession}.",
+      "mutation_effect": "Encara que la forma s'assembli molt, un sol aminoàcid diferent pot canviar del tot com funciona una proteïna (és el que passa a l'anèmia falciforme).",
+      "prediction_too_long": "No es prediu la forma de la teva proteïna: té {length} aminoàcids i el servidor de predicció n'admet com a màxim {maximum}.",
+      "prediction_unavailable": "{predictor} no respon ara mateix: no s'ha pogut predir la forma de la teva proteïna. Torna-ho a provar més tard.",
+      "unlikely_fold": "La confiança mitjana de la predicció és {plddt} (de 100): el més probable és que aquesta proteïna no es plegués a la natura. Les proteïnes reals són seqüències molt especials, seleccionades durant milions d'anys d'evolució.",
+      "prediction_failed": "{predictor} no ha pogut predir la forma d'aquesta proteïna."
+    },
+    "saved_pair": "Si obres les dues a https://molstar.org/viewer/, la teva apareix superposada sobre la natural.",
+    "microscope_offer": "Vols explorar l'estructura al microscopi 3D?",
+    "microscope": {
+      "yours": "La teva proteïna ({predictor})",
+      "long": "La proteïna té {length} aminoàcids; el microscopi n'ensenya {maximum} alhora.",
+      "ask_start": "Des de quin aminoàcid? [Intro = 1]: ",
+      "window": "Microscopi 3D: aminoàcids {first} a {last} de {length}."
+    }
+  },
+  "database": {
+    "stage": {
+      "gene": "Buscant el gen {symbol} a NCBI Gene…",
+      "sequence": "Descarregant l'ARNm {accession} de RefSeq…",
+      "variants": "Buscant les variants de {symbol} a ClinVar…",
+      "summaries": "Llegint variants: {done} de {total}…",
+      "conditions": "Llegint la classificació de cada malaltia: {done} de {total}…",
+      "saving": "Desant {count} variants…"
+    },
+    "imported_gene": "Gen {symbol} desat: {name}.",
+    "clinvar_offer": "Vols importar també les seves variants de ClinVar? Pot trigar un minut",
+    "clinvar_human_only": "ClinVar només té variants humanes: s'ha desat el gen sense variants.",
+    "stats": {
+      "found": "Variants a ClinVar:",
+      "saved": "Desades:",
+      "saved_value": "{count} ({pathogenic} patogèniques o probablement patogèniques)",
+      "with_conditions": "Amb classificació per malaltia:",
+      "not_on_mrna": "No descrites sobre un ARNm:",
+      "other_gene": "D'un gen veí:",
+      "new_diseases": "Malalties noves:",
+      "few_conditions": "Només {count} de {saved} variants tenen classificació per malaltia: les altres s'han enllaçat sense dir quin efecte tenen. Torna a importar el gen més tard.",
+      "batches_failed": "{count} peticions de classificacions no han arribat (ClinVar no responia).",
+      "unexpected": "ClinVar ha retornat {count} registres que no s'havien demanat; s'han descartat."
+    },
+    "citation": "Dades: NCBI Gene, RefSeq i ClinVar (domini públic).",
+    "empty": "Encara no hi ha cap gen desat. Importa'ls amb l'opció 1.",
+    "not_saved": "El gen {symbol} no està desat. Importa'l amb l'opció 1.",
+    "path": "Base de dades: {path}",
+    "units": {
+      "nt": "nt",
+      "aa": "aminoàcids"
+    },
+    "mol_types": {
+      "mrna": "ARNm",
+      "protein": "proteïna",
+      "genomic": "ADN genòmic",
+      "cds": "CDS",
+      "ncrna": "ARN no codificant"
+    },
+    "gene": {
+      "header": "{symbol}: {name} ({organism})",
+      "location": "Cromosoma {chromosome}: {start}-{end}, cadena {strand} ({assembly}) · NCBI Gene {gene_id}",
+      "sequence": "{accession} · {kind} · {length} {unit}",
+      "cds": "regió codificant {start}..{end}",
+      "pending": "Seqüències només amb les seves dades (es descarreguen quan cal): {count}",
+      "no_variants": "Cap variant desada.",
+      "variants": "Variants desades: {count}",
+      "diseases": "Malalties (nre. de variants segons el que fan a CADA malaltia):",
+      "diseases_note": "Els noms de les malalties vénen de ClinVar, en anglès."
+    },
+    "significance": {
+      "pathogenic": "patogènica",
+      "likely_pathogenic": "probablement patogènica",
+      "pathogenic_likely_pathogenic": "patogènica / probablement patogènica",
+      "uncertain": "significat incert",
+      "conflicting": "classificacions contradictòries",
+      "likely_benign": "probablement benigna",
+      "benign": "benigna",
+      "benign_likely_benign": "benigna / probablement benigna",
+      "protective": "protectora",
+      "risk_factor": "factor de risc",
+      "none": "sense classificar",
+      "other": "altra",
+      "drug_response": "resposta a fàrmacs",
+      "association": "associació",
+      "affects": "afecta",
+      "not_provided": "sense dades",
+      "oncogenic": "oncogènica",
+      "likely_oncogenic": "probablement oncogènica",
+      "pathogenic_low_penetrance": "patogènica de baixa penetrància",
+      "likely_pathogenic_low_penetrance": "probablement patogènica de baixa penetrància",
+      "established_risk_allele": "al·lel de risc confirmat",
+      "likely_risk_allele": "probable al·lel de risc",
+      "uncertain_risk_allele": "al·lel de risc incert",
+      "tier_1": "nivell I: impacte clínic fort",
+      "tier_2": "nivell II: impacte clínic possible",
+      "tier_3": "nivell III: impacte clínic desconegut",
+      "tier_4": "nivell IV: benigna o probablement benigna",
+      "no_single_classification": "sense classificació pròpia (només en combinació amb altres)"
+    },
+    "effects": {
+      "causal": "la causa",
+      "protective": "protegeix",
+      "risk_factor": "factor de risc",
+      "none": "sense efecte clar"
+    },
+    "variant_kinds": {
+      "missense": "de canvi de sentit: canvia un aminoàcid",
+      "synonymous": "sinònima: l'aminoàcid no canvia",
+      "nonsense": "sense sentit: apareix un codó d'aturada i la proteïna es talla",
+      "stop_lost": "pèrdua de l'aturada: la proteïna continua més enllà del seu final"
+    },
+    "variants": {
+      "none": "No hi ha cap variant que hi coincideixi.",
+      "found": "Variants trobades:",
+      "more": "(es mostren les primeres {count}; escriu la variant per afinar)"
+    },
+    "compare": {
+      "title": "{gene} {hgvs_c} {hgvs_p} a {accession}",
+      "global": "Classificació global a ClinVar: {significance}",
+      "position": "Posició {position} de l'ARNm, codó {codon}: {ref} -> {alt}",
+      "codon": "Codó",
+      "healthy": "Sana",
+      "variant": "Variant",
+      "effect": "Efecte: {kind}",
+      "old_numbering": "En textos antics d'algunes proteïnes (com l'hemoglobina) no es compta la metionina inicial i apareix com {old}: és la mateixa mutació.",
+      "diseases": "Què fa a cada malaltia:",
+      "no_diseases": "ClinVar no la relaciona amb cap malaltia concreta."
+    },
+    "search": {
+      "none": "Cap resultat.",
+      "gene": "Gen",
+      "disease": "Malaltia",
+      "genes": "Gens: {list}"
+    }
+  }
+}

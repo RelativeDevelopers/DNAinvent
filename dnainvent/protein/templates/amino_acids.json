@@ -1,0 +1,3528 @@
+{
+ "source": "PyMOL fab G-X-G + h_add (pH 7: Lys+, Arg+, Asp-, Glu-, His con H en NE2)",
+ "units": {
+  "r": "angstrom",
+  "angle": "degrees",
+  "dihedral": "degrees"
+ },
+ "convention": "H = place(R3, R2, parent, r, angle, dihedral); '-C' = C del residuo anterior",
+ "residues": {
+  "ALA": {
+   "heavy": [
+    "N",
+    "CA",
+    "C",
+    "O",
+    "CB"
+   ],
+   "bonds": [
+    [
+     "C",
+     "CA"
+    ],
+    [
+     "C",
+     "O"
+    ],
+    [
+     "CA",
+     "CB"
+    ],
+    [
+     "CA",
+     "HA"
+    ],
+    [
+     "CA",
+     "N"
+    ],
+    [
+     "CB",
+     "HB1"
+    ],
+    [
+     "CB",
+     "HB2"
+    ],
+    [
+     "CB",
+     "HB3"
+    ],
+    [
+     "H",
+     "N"
+    ]
+   ],
+   "hydrogens": [
+    {
+     "name": "H",
+     "parent": "N",
+     "refs": [
+      "CA",
+      "-C"
+     ],
+     "r": 1.01,
+     "angle": 120.5134,
+     "dihedral": -180.0,
+     "rotates": false
+    },
+    {
+     "name": "HA",
+     "parent": "CA",
+     "refs": [
+      "N",
+      "C"
+     ],
+     "r": 1.1061,
+     "angle": 108.6455,
+     "dihedral": 117.6953,
+     "rotates": false
+    },
+    {
+     "name": "HB1",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "N"
+     ],
+     "r": 1.1068,
+     "angle": 111.7804,
+     "dihedral": -59.3578,
+     "rotates": true
+    },
+    {
+     "name": "HB2",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "N"
+     ],
+     "r": 1.1074,
+     "angle": 112.1155,
+     "dihedral": 60.7034,
+     "rotates": true
+    },
+    {
+     "name": "HB3",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "N"
+     ],
+     "r": 1.1051,
+     "angle": 111.8859,
+     "dihedral": -178.937,
+     "rotates": true
+    }
+   ]
+  },
+  "CYS": {
+   "heavy": [
+    "N",
+    "CA",
+    "C",
+    "O",
+    "CB",
+    "SG"
+   ],
+   "bonds": [
+    [
+     "C",
+     "CA"
+    ],
+    [
+     "C",
+     "O"
+    ],
+    [
+     "CA",
+     "CB"
+    ],
+    [
+     "CA",
+     "HA"
+    ],
+    [
+     "CA",
+     "N"
+    ],
+    [
+     "CB",
+     "HB2"
+    ],
+    [
+     "CB",
+     "HB3"
+    ],
+    [
+     "CB",
+     "SG"
+    ],
+    [
+     "H",
+     "N"
+    ],
+    [
+     "HG",
+     "SG"
+    ]
+   ],
+   "hydrogens": [
+    {
+     "name": "H",
+     "parent": "N",
+     "refs": [
+      "CA",
+      "-C"
+     ],
+     "r": 1.01,
+     "angle": 120.487,
+     "dihedral": 180.0,
+     "rotates": false
+    },
+    {
+     "name": "HA",
+     "parent": "CA",
+     "refs": [
+      "N",
+      "C"
+     ],
+     "r": 1.1055,
+     "angle": 108.2872,
+     "dihedral": 117.503,
+     "rotates": false
+    },
+    {
+     "name": "HB3",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "SG"
+     ],
+     "r": 1.1092,
+     "angle": 111.4733,
+     "dihedral": -121.9188,
+     "rotates": false
+    },
+    {
+     "name": "HB2",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "SG"
+     ],
+     "r": 1.1044,
+     "angle": 111.2355,
+     "dihedral": 119.961,
+     "rotates": false
+    },
+    {
+     "name": "HG",
+     "parent": "SG",
+     "refs": [
+      "CB",
+      "CA"
+     ],
+     "r": 1.3308,
+     "angle": 96.8905,
+     "dihedral": -105.2958,
+     "rotates": true
+    }
+   ]
+  },
+  "ASP": {
+   "heavy": [
+    "N",
+    "CA",
+    "C",
+    "O",
+    "CB",
+    "CG",
+    "OD1",
+    "OD2"
+   ],
+   "bonds": [
+    [
+     "C",
+     "CA"
+    ],
+    [
+     "C",
+     "O"
+    ],
+    [
+     "CA",
+     "CB"
+    ],
+    [
+     "CA",
+     "HA"
+    ],
+    [
+     "CA",
+     "N"
+    ],
+    [
+     "CB",
+     "CG"
+    ],
+    [
+     "CB",
+     "HB2"
+    ],
+    [
+     "CB",
+     "HB3"
+    ],
+    [
+     "CG",
+     "OD1"
+    ],
+    [
+     "CG",
+     "OD2"
+    ],
+    [
+     "H",
+     "N"
+    ]
+   ],
+   "hydrogens": [
+    {
+     "name": "H",
+     "parent": "N",
+     "refs": [
+      "CA",
+      "-C"
+     ],
+     "r": 1.01,
+     "angle": 120.4978,
+     "dihedral": -180.0,
+     "rotates": false
+    },
+    {
+     "name": "HA",
+     "parent": "CA",
+     "refs": [
+      "N",
+      "C"
+     ],
+     "r": 1.1067,
+     "angle": 108.2158,
+     "dihedral": 117.4341,
+     "rotates": false
+    },
+    {
+     "name": "HB3",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "CG"
+     ],
+     "r": 1.1055,
+     "angle": 109.9929,
+     "dihedral": -122.1818,
+     "rotates": false
+    },
+    {
+     "name": "HB2",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "CG"
+     ],
+     "r": 1.1021,
+     "angle": 110.7672,
+     "dihedral": 121.3662,
+     "rotates": false
+    }
+   ]
+  },
+  "GLU": {
+   "heavy": [
+    "N",
+    "CA",
+    "C",
+    "O",
+    "CB",
+    "CG",
+    "CD",
+    "OE1",
+    "OE2"
+   ],
+   "bonds": [
+    [
+     "C",
+     "CA"
+    ],
+    [
+     "C",
+     "O"
+    ],
+    [
+     "CA",
+     "CB"
+    ],
+    [
+     "CA",
+     "HA"
+    ],
+    [
+     "CA",
+     "N"
+    ],
+    [
+     "CB",
+     "CG"
+    ],
+    [
+     "CB",
+     "HB2"
+    ],
+    [
+     "CB",
+     "HB3"
+    ],
+    [
+     "CD",
+     "CG"
+    ],
+    [
+     "CD",
+     "OE1"
+    ],
+    [
+     "CD",
+     "OE2"
+    ],
+    [
+     "CG",
+     "HG2"
+    ],
+    [
+     "CG",
+     "HG3"
+    ],
+    [
+     "H",
+     "N"
+    ]
+   ],
+   "hydrogens": [
+    {
+     "name": "H",
+     "parent": "N",
+     "refs": [
+      "CA",
+      "-C"
+     ],
+     "r": 1.01,
+     "angle": 120.4978,
+     "dihedral": 180.0,
+     "rotates": false
+    },
+    {
+     "name": "HA",
+     "parent": "CA",
+     "refs": [
+      "N",
+      "C"
+     ],
+     "r": 1.105,
+     "angle": 108.671,
+     "dihedral": 118.4974,
+     "rotates": false
+    },
+    {
+     "name": "HB3",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "CG"
+     ],
+     "r": 1.1092,
+     "angle": 109.7269,
+     "dihedral": -123.0436,
+     "rotates": false
+    },
+    {
+     "name": "HB2",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "CG"
+     ],
+     "r": 1.1071,
+     "angle": 109.9344,
+     "dihedral": 122.85,
+     "rotates": false
+    },
+    {
+     "name": "HG3",
+     "parent": "CG",
+     "refs": [
+      "CB",
+      "CD"
+     ],
+     "r": 1.102,
+     "angle": 111.2274,
+     "dihedral": -123.4759,
+     "rotates": false
+    },
+    {
+     "name": "HG2",
+     "parent": "CG",
+     "refs": [
+      "CB",
+      "CD"
+     ],
+     "r": 1.1024,
+     "angle": 111.2742,
+     "dihedral": 119.0442,
+     "rotates": false
+    }
+   ]
+  },
+  "PHE": {
+   "heavy": [
+    "N",
+    "CA",
+    "C",
+    "O",
+    "CB",
+    "CG",
+    "CD1",
+    "CD2",
+    "CE1",
+    "CE2",
+    "CZ"
+   ],
+   "bonds": [
+    [
+     "C",
+     "CA"
+    ],
+    [
+     "C",
+     "O"
+    ],
+    [
+     "CA",
+     "CB"
+    ],
+    [
+     "CA",
+     "HA"
+    ],
+    [
+     "CA",
+     "N"
+    ],
+    [
+     "CB",
+     "CG"
+    ],
+    [
+     "CB",
+     "HB2"
+    ],
+    [
+     "CB",
+     "HB3"
+    ],
+    [
+     "CD1",
+     "CE1"
+    ],
+    [
+     "CD1",
+     "CG"
+    ],
+    [
+     "CD1",
+     "HD1"
+    ],
+    [
+     "CD2",
+     "CE2"
+    ],
+    [
+     "CD2",
+     "CG"
+    ],
+    [
+     "CD2",
+     "HD2"
+    ],
+    [
+     "CE1",
+     "CZ"
+    ],
+    [
+     "CE1",
+     "HE1"
+    ],
+    [
+     "CE2",
+     "CZ"
+    ],
+    [
+     "CE2",
+     "HE2"
+    ],
+    [
+     "CZ",
+     "HZ"
+    ],
+    [
+     "H",
+     "N"
+    ]
+   ],
+   "hydrogens": [
+    {
+     "name": "H",
+     "parent": "N",
+     "refs": [
+      "CA",
+      "-C"
+     ],
+     "r": 1.01,
+     "angle": 120.4961,
+     "dihedral": -180.0,
+     "rotates": false
+    },
+    {
+     "name": "HA",
+     "parent": "CA",
+     "refs": [
+      "N",
+      "C"
+     ],
+     "r": 1.1067,
+     "angle": 108.9226,
+     "dihedral": 118.8458,
+     "rotates": false
+    },
+    {
+     "name": "HB3",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "CG"
+     ],
+     "r": 1.1081,
+     "angle": 109.3913,
+     "dihedral": -123.2287,
+     "rotates": false
+    },
+    {
+     "name": "HB2",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "CG"
+     ],
+     "r": 1.1093,
+     "angle": 109.599,
+     "dihedral": 124.0157,
+     "rotates": false
+    },
+    {
+     "name": "HD1",
+     "parent": "CD1",
+     "refs": [
+      "CG",
+      "CE1"
+     ],
+     "r": 1.082,
+     "angle": 120.173,
+     "dihedral": 177.2197,
+     "rotates": false
+    },
+    {
+     "name": "HD2",
+     "parent": "CD2",
+     "refs": [
+      "CG",
+      "CE2"
+     ],
+     "r": 1.0814,
+     "angle": 120.2443,
+     "dihedral": -178.8922,
+     "rotates": false
+    },
+    {
+     "name": "HE1",
+     "parent": "CE1",
+     "refs": [
+      "CD1",
+      "CZ"
+     ],
+     "r": 1.0802,
+     "angle": 119.7021,
+     "dihedral": 178.9139,
+     "rotates": false
+    },
+    {
+     "name": "HE2",
+     "parent": "CE2",
+     "refs": [
+      "CD2",
+      "CZ"
+     ],
+     "r": 1.0802,
+     "angle": 119.8934,
+     "dihedral": -179.2845,
+     "rotates": false
+    },
+    {
+     "name": "HZ",
+     "parent": "CZ",
+     "refs": [
+      "CE1",
+      "CE2"
+     ],
+     "r": 1.0796,
+     "angle": 119.744,
+     "dihedral": 179.446,
+     "rotates": false
+    }
+   ]
+  },
+  "GLY": {
+   "heavy": [
+    "N",
+    "CA",
+    "C",
+    "O"
+   ],
+   "bonds": [
+    [
+     "C",
+     "CA"
+    ],
+    [
+     "C",
+     "O"
+    ],
+    [
+     "CA",
+     "HA2"
+    ],
+    [
+     "CA",
+     "HA3"
+    ],
+    [
+     "CA",
+     "N"
+    ],
+    [
+     "H",
+     "N"
+    ]
+   ],
+   "hydrogens": [
+    {
+     "name": "H",
+     "parent": "N",
+     "refs": [
+      "CA",
+      "-C"
+     ],
+     "r": 1.01,
+     "angle": 120.5031,
+     "dihedral": 180.0,
+     "rotates": false
+    },
+    {
+     "name": "HA3",
+     "parent": "CA",
+     "refs": [
+      "N",
+      "C"
+     ],
+     "r": 1.05,
+     "angle": 108.3126,
+     "dihedral": -120.0408,
+     "rotates": false
+    },
+    {
+     "name": "HA2",
+     "parent": "CA",
+     "refs": [
+      "N",
+      "C"
+     ],
+     "r": 1.1062,
+     "angle": 108.9339,
+     "dihedral": 118.6596,
+     "rotates": false
+    }
+   ]
+  },
+  "HIS": {
+   "heavy": [
+    "N",
+    "CA",
+    "C",
+    "O",
+    "CB",
+    "CG",
+    "CD2",
+    "ND1",
+    "CE1",
+    "NE2"
+   ],
+   "bonds": [
+    [
+     "C",
+     "CA"
+    ],
+    [
+     "C",
+     "O"
+    ],
+    [
+     "CA",
+     "CB"
+    ],
+    [
+     "CA",
+     "HA"
+    ],
+    [
+     "CA",
+     "N"
+    ],
+    [
+     "CB",
+     "CG"
+    ],
+    [
+     "CB",
+     "HB2"
+    ],
+    [
+     "CB",
+     "HB3"
+    ],
+    [
+     "CD2",
+     "CG"
+    ],
+    [
+     "CD2",
+     "HD2"
+    ],
+    [
+     "CD2",
+     "NE2"
+    ],
+    [
+     "CE1",
+     "HE1"
+    ],
+    [
+     "CE1",
+     "ND1"
+    ],
+    [
+     "CE1",
+     "NE2"
+    ],
+    [
+     "CG",
+     "ND1"
+    ],
+    [
+     "H",
+     "N"
+    ],
+    [
+     "HE2",
+     "NE2"
+    ]
+   ],
+   "hydrogens": [
+    {
+     "name": "H",
+     "parent": "N",
+     "refs": [
+      "CA",
+      "-C"
+     ],
+     "r": 1.01,
+     "angle": 120.4854,
+     "dihedral": 180.0,
+     "rotates": false
+    },
+    {
+     "name": "HA",
+     "parent": "CA",
+     "refs": [
+      "N",
+      "C"
+     ],
+     "r": 1.1031,
+     "angle": 107.6238,
+     "dihedral": 116.3436,
+     "rotates": false
+    },
+    {
+     "name": "HB3",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "CG"
+     ],
+     "r": 1.1082,
+     "angle": 111.1947,
+     "dihedral": -121.0199,
+     "rotates": false
+    },
+    {
+     "name": "HB2",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "CG"
+     ],
+     "r": 1.11,
+     "angle": 112.1305,
+     "dihedral": 121.3379,
+     "rotates": false
+    },
+    {
+     "name": "HD2",
+     "parent": "CD2",
+     "refs": [
+      "CG",
+      "NE2"
+     ],
+     "r": 1.0861,
+     "angle": 124.4867,
+     "dihedral": 179.9859,
+     "rotates": false
+    },
+    {
+     "name": "HE1",
+     "parent": "CE1",
+     "refs": [
+      "ND1",
+      "NE2"
+     ],
+     "r": 1.082,
+     "angle": 117.6024,
+     "dihedral": 179.8101,
+     "rotates": false
+    },
+    {
+     "name": "HE2",
+     "parent": "NE2",
+     "refs": [
+      "CD2",
+      "CE1"
+     ],
+     "r": 1.0303,
+     "angle": 128.2958,
+     "dihedral": 179.8645,
+     "rotates": false
+    }
+   ]
+  },
+  "ILE": {
+   "heavy": [
+    "N",
+    "CA",
+    "C",
+    "O",
+    "CB",
+    "CG1",
+    "CG2",
+    "CD1"
+   ],
+   "bonds": [
+    [
+     "C",
+     "CA"
+    ],
+    [
+     "C",
+     "O"
+    ],
+    [
+     "CA",
+     "CB"
+    ],
+    [
+     "CA",
+     "HA"
+    ],
+    [
+     "CA",
+     "N"
+    ],
+    [
+     "CB",
+     "CG1"
+    ],
+    [
+     "CB",
+     "CG2"
+    ],
+    [
+     "CB",
+     "HB"
+    ],
+    [
+     "CD1",
+     "CG1"
+    ],
+    [
+     "CD1",
+     "HD11"
+    ],
+    [
+     "CD1",
+     "HD12"
+    ],
+    [
+     "CD1",
+     "HD13"
+    ],
+    [
+     "CG1",
+     "HG12"
+    ],
+    [
+     "CG1",
+     "HG13"
+    ],
+    [
+     "CG2",
+     "HG21"
+    ],
+    [
+     "CG2",
+     "HG22"
+    ],
+    [
+     "CG2",
+     "HG23"
+    ],
+    [
+     "H",
+     "N"
+    ]
+   ],
+   "hydrogens": [
+    {
+     "name": "H",
+     "parent": "N",
+     "refs": [
+      "CA",
+      "-C"
+     ],
+     "r": 1.01,
+     "angle": 120.5053,
+     "dihedral": -180.0,
+     "rotates": false
+    },
+    {
+     "name": "HA",
+     "parent": "CA",
+     "refs": [
+      "N",
+      "C"
+     ],
+     "r": 1.1055,
+     "angle": 107.5795,
+     "dihedral": 116.1452,
+     "rotates": false
+    },
+    {
+     "name": "HB",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "CG1"
+     ],
+     "r": 1.1105,
+     "angle": 106.6176,
+     "dihedral": 117.8325,
+     "rotates": false
+    },
+    {
+     "name": "HG13",
+     "parent": "CG1",
+     "refs": [
+      "CB",
+      "CD1"
+     ],
+     "r": 1.1061,
+     "angle": 109.5674,
+     "dihedral": -119.6218,
+     "rotates": false
+    },
+    {
+     "name": "HG12",
+     "parent": "CG1",
+     "refs": [
+      "CB",
+      "CD1"
+     ],
+     "r": 1.1076,
+     "angle": 110.2671,
+     "dihedral": 125.9498,
+     "rotates": false
+    },
+    {
+     "name": "HG21",
+     "parent": "CG2",
+     "refs": [
+      "CB",
+      "CA"
+     ],
+     "r": 1.1039,
+     "angle": 113.2195,
+     "dihedral": -58.8214,
+     "rotates": true
+    },
+    {
+     "name": "HG22",
+     "parent": "CG2",
+     "refs": [
+      "CB",
+      "CA"
+     ],
+     "r": 1.1067,
+     "angle": 112.0808,
+     "dihedral": 62.6848,
+     "rotates": true
+    },
+    {
+     "name": "HG23",
+     "parent": "CG2",
+     "refs": [
+      "CB",
+      "CA"
+     ],
+     "r": 1.1051,
+     "angle": 112.4097,
+     "dihedral": -176.8117,
+     "rotates": true
+    },
+    {
+     "name": "HD11",
+     "parent": "CD1",
+     "refs": [
+      "CG1",
+      "CB"
+     ],
+     "r": 1.1066,
+     "angle": 111.7637,
+     "dihedral": -56.3634,
+     "rotates": true
+    },
+    {
+     "name": "HD12",
+     "parent": "CD1",
+     "refs": [
+      "CG1",
+      "CB"
+     ],
+     "r": 1.1049,
+     "angle": 112.5598,
+     "dihedral": 64.6682,
+     "rotates": true
+    },
+    {
+     "name": "HD13",
+     "parent": "CD1",
+     "refs": [
+      "CG1",
+      "CB"
+     ],
+     "r": 1.1057,
+     "angle": 111.1673,
+     "dihedral": -175.8637,
+     "rotates": true
+    }
+   ]
+  },
+  "LYS": {
+   "heavy": [
+    "N",
+    "CA",
+    "C",
+    "O",
+    "CB",
+    "CG",
+    "CD",
+    "CE",
+    "NZ"
+   ],
+   "bonds": [
+    [
+     "C",
+     "CA"
+    ],
+    [
+     "C",
+     "O"
+    ],
+    [
+     "CA",
+     "CB"
+    ],
+    [
+     "CA",
+     "HA"
+    ],
+    [
+     "CA",
+     "N"
+    ],
+    [
+     "CB",
+     "CG"
+    ],
+    [
+     "CB",
+     "HB2"
+    ],
+    [
+     "CB",
+     "HB3"
+    ],
+    [
+     "CD",
+     "CE"
+    ],
+    [
+     "CD",
+     "CG"
+    ],
+    [
+     "CD",
+     "HD2"
+    ],
+    [
+     "CD",
+     "HD3"
+    ],
+    [
+     "CE",
+     "HE2"
+    ],
+    [
+     "CE",
+     "HE3"
+    ],
+    [
+     "CE",
+     "NZ"
+    ],
+    [
+     "CG",
+     "HG2"
+    ],
+    [
+     "CG",
+     "HG3"
+    ],
+    [
+     "H",
+     "N"
+    ],
+    [
+     "HZ1",
+     "NZ"
+    ],
+    [
+     "HZ2",
+     "NZ"
+    ],
+    [
+     "HZ3",
+     "NZ"
+    ]
+   ],
+   "hydrogens": [
+    {
+     "name": "H",
+     "parent": "N",
+     "refs": [
+      "CA",
+      "-C"
+     ],
+     "r": 1.01,
+     "angle": 120.4869,
+     "dihedral": -180.0,
+     "rotates": false
+    },
+    {
+     "name": "HA",
+     "parent": "CA",
+     "refs": [
+      "N",
+      "C"
+     ],
+     "r": 1.1059,
+     "angle": 108.3974,
+     "dihedral": 117.8317,
+     "rotates": false
+    },
+    {
+     "name": "HB3",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "CG"
+     ],
+     "r": 1.1097,
+     "angle": 109.6383,
+     "dihedral": -123.1981,
+     "rotates": false
+    },
+    {
+     "name": "HB2",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "CG"
+     ],
+     "r": 1.1082,
+     "angle": 109.6704,
+     "dihedral": 122.2103,
+     "rotates": false
+    },
+    {
+     "name": "HG3",
+     "parent": "CG",
+     "refs": [
+      "CB",
+      "CD"
+     ],
+     "r": 1.1076,
+     "angle": 109.5872,
+     "dihedral": -124.3041,
+     "rotates": false
+    },
+    {
+     "name": "HG2",
+     "parent": "CG",
+     "refs": [
+      "CB",
+      "CD"
+     ],
+     "r": 1.1059,
+     "angle": 110.1998,
+     "dihedral": 120.0927,
+     "rotates": false
+    },
+    {
+     "name": "HD3",
+     "parent": "CD",
+     "refs": [
+      "CG",
+      "CE"
+     ],
+     "r": 1.1094,
+     "angle": 109.7863,
+     "dihedral": -120.9336,
+     "rotates": false
+    },
+    {
+     "name": "HD2",
+     "parent": "CD",
+     "refs": [
+      "CG",
+      "CE"
+     ],
+     "r": 1.1071,
+     "angle": 109.7883,
+     "dihedral": 122.5008,
+     "rotates": false
+    },
+    {
+     "name": "HE3",
+     "parent": "CE",
+     "refs": [
+      "CD",
+      "NZ"
+     ],
+     "r": 1.1099,
+     "angle": 111.1487,
+     "dihedral": -121.0922,
+     "rotates": false
+    },
+    {
+     "name": "HE2",
+     "parent": "CE",
+     "refs": [
+      "CD",
+      "NZ"
+     ],
+     "r": 1.1105,
+     "angle": 110.4631,
+     "dihedral": 121.7567,
+     "rotates": false
+    },
+    {
+     "name": "HZ1",
+     "parent": "NZ",
+     "refs": [
+      "CE",
+      "CD"
+     ],
+     "r": 1.0272,
+     "angle": 110.633,
+     "dihedral": 37.0095,
+     "rotates": true
+    },
+    {
+     "name": "HZ2",
+     "parent": "NZ",
+     "refs": [
+      "CE",
+      "CD"
+     ],
+     "r": 1.0253,
+     "angle": 111.3461,
+     "dihedral": 154.7655,
+     "rotates": true
+    },
+    {
+     "name": "HZ3",
+     "parent": "NZ",
+     "refs": [
+      "CE",
+      "CD"
+     ],
+     "r": 1.01,
+     "angle": 106.3764,
+     "dihedral": -84.339,
+     "rotates": true
+    }
+   ]
+  },
+  "LEU": {
+   "heavy": [
+    "N",
+    "CA",
+    "C",
+    "O",
+    "CB",
+    "CG",
+    "CD1",
+    "CD2"
+   ],
+   "bonds": [
+    [
+     "C",
+     "CA"
+    ],
+    [
+     "C",
+     "O"
+    ],
+    [
+     "CA",
+     "CB"
+    ],
+    [
+     "CA",
+     "HA"
+    ],
+    [
+     "CA",
+     "N"
+    ],
+    [
+     "CB",
+     "CG"
+    ],
+    [
+     "CB",
+     "HB2"
+    ],
+    [
+     "CB",
+     "HB3"
+    ],
+    [
+     "CD1",
+     "CG"
+    ],
+    [
+     "CD1",
+     "HD11"
+    ],
+    [
+     "CD1",
+     "HD12"
+    ],
+    [
+     "CD1",
+     "HD13"
+    ],
+    [
+     "CD2",
+     "CG"
+    ],
+    [
+     "CD2",
+     "HD21"
+    ],
+    [
+     "CD2",
+     "HD22"
+    ],
+    [
+     "CD2",
+     "HD23"
+    ],
+    [
+     "CG",
+     "HG"
+    ],
+    [
+     "H",
+     "N"
+    ]
+   ],
+   "hydrogens": [
+    {
+     "name": "H",
+     "parent": "N",
+     "refs": [
+      "CA",
+      "-C"
+     ],
+     "r": 1.01,
+     "angle": 120.5088,
+     "dihedral": -180.0,
+     "rotates": false
+    },
+    {
+     "name": "HA",
+     "parent": "CA",
+     "refs": [
+      "N",
+      "C"
+     ],
+     "r": 1.1048,
+     "angle": 108.4359,
+     "dihedral": 116.3745,
+     "rotates": false
+    },
+    {
+     "name": "HB3",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "CG"
+     ],
+     "r": 1.1078,
+     "angle": 108.4771,
+     "dihedral": -123.5333,
+     "rotates": false
+    },
+    {
+     "name": "HB2",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "CG"
+     ],
+     "r": 1.1084,
+     "angle": 108.6743,
+     "dihedral": 123.4431,
+     "rotates": false
+    },
+    {
+     "name": "HG",
+     "parent": "CG",
+     "refs": [
+      "CB",
+      "CD1"
+     ],
+     "r": 1.1102,
+     "angle": 108.1155,
+     "dihedral": -117.613,
+     "rotates": false
+    },
+    {
+     "name": "HD11",
+     "parent": "CD1",
+     "refs": [
+      "CG",
+      "CB"
+     ],
+     "r": 1.1068,
+     "angle": 111.806,
+     "dihedral": -57.7545,
+     "rotates": true
+    },
+    {
+     "name": "HD12",
+     "parent": "CD1",
+     "refs": [
+      "CG",
+      "CB"
+     ],
+     "r": 1.1064,
+     "angle": 112.2572,
+     "dihedral": 62.6821,
+     "rotates": true
+    },
+    {
+     "name": "HD13",
+     "parent": "CD1",
+     "refs": [
+      "CG",
+      "CB"
+     ],
+     "r": 1.1055,
+     "angle": 111.6117,
+     "dihedral": -176.9944,
+     "rotates": true
+    },
+    {
+     "name": "HD21",
+     "parent": "CD2",
+     "refs": [
+      "CG",
+      "CB"
+     ],
+     "r": 1.1052,
+     "angle": 112.2721,
+     "dihedral": -56.19,
+     "rotates": true
+    },
+    {
+     "name": "HD22",
+     "parent": "CD2",
+     "refs": [
+      "CG",
+      "CB"
+     ],
+     "r": 1.1062,
+     "angle": 111.2556,
+     "dihedral": 64.103,
+     "rotates": true
+    },
+    {
+     "name": "HD23",
+     "parent": "CD2",
+     "refs": [
+      "CG",
+      "CB"
+     ],
+     "r": 1.1059,
+     "angle": 111.9619,
+     "dihedral": -177.4633,
+     "rotates": true
+    }
+   ]
+  },
+  "MET": {
+   "heavy": [
+    "N",
+    "CA",
+    "C",
+    "O",
+    "CB",
+    "CG",
+    "SD",
+    "CE"
+   ],
+   "bonds": [
+    [
+     "C",
+     "CA"
+    ],
+    [
+     "C",
+     "O"
+    ],
+    [
+     "CA",
+     "CB"
+    ],
+    [
+     "CA",
+     "HA"
+    ],
+    [
+     "CA",
+     "N"
+    ],
+    [
+     "CB",
+     "CG"
+    ],
+    [
+     "CB",
+     "HB2"
+    ],
+    [
+     "CB",
+     "HB3"
+    ],
+    [
+     "CE",
+     "HE1"
+    ],
+    [
+     "CE",
+     "HE2"
+    ],
+    [
+     "CE",
+     "HE3"
+    ],
+    [
+     "CE",
+     "SD"
+    ],
+    [
+     "CG",
+     "HG2"
+    ],
+    [
+     "CG",
+     "HG3"
+    ],
+    [
+     "CG",
+     "SD"
+    ],
+    [
+     "H",
+     "N"
+    ]
+   ],
+   "hydrogens": [
+    {
+     "name": "H",
+     "parent": "N",
+     "refs": [
+      "CA",
+      "-C"
+     ],
+     "r": 1.01,
+     "angle": 120.4842,
+     "dihedral": -180.0,
+     "rotates": false
+    },
+    {
+     "name": "HA",
+     "parent": "CA",
+     "refs": [
+      "N",
+      "C"
+     ],
+     "r": 1.106,
+     "angle": 108.5918,
+     "dihedral": 117.4784,
+     "rotates": false
+    },
+    {
+     "name": "HB3",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "CG"
+     ],
+     "r": 1.107,
+     "angle": 109.3098,
+     "dihedral": -121.8578,
+     "rotates": false
+    },
+    {
+     "name": "HB2",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "CG"
+     ],
+     "r": 1.1087,
+     "angle": 109.8496,
+     "dihedral": 123.6792,
+     "rotates": false
+    },
+    {
+     "name": "HG3",
+     "parent": "CG",
+     "refs": [
+      "CB",
+      "SD"
+     ],
+     "r": 1.1064,
+     "angle": 110.0364,
+     "dihedral": -120.4037,
+     "rotates": false
+    },
+    {
+     "name": "HG2",
+     "parent": "CG",
+     "refs": [
+      "CB",
+      "SD"
+     ],
+     "r": 1.1056,
+     "angle": 111.5954,
+     "dihedral": 121.3336,
+     "rotates": false
+    },
+    {
+     "name": "HE1",
+     "parent": "CE",
+     "refs": [
+      "SD",
+      "CG"
+     ],
+     "r": 1.1049,
+     "angle": 111.0135,
+     "dihedral": -56.0555,
+     "rotates": true
+    },
+    {
+     "name": "HE2",
+     "parent": "CE",
+     "refs": [
+      "SD",
+      "CG"
+     ],
+     "r": 1.1043,
+     "angle": 110.3786,
+     "dihedral": 64.1362,
+     "rotates": true
+    },
+    {
+     "name": "HE3",
+     "parent": "CE",
+     "refs": [
+      "SD",
+      "CG"
+     ],
+     "r": 1.1037,
+     "angle": 110.507,
+     "dihedral": -176.2606,
+     "rotates": true
+    }
+   ]
+  },
+  "ASN": {
+   "heavy": [
+    "N",
+    "CA",
+    "C",
+    "O",
+    "CB",
+    "CG",
+    "ND2",
+    "OD1"
+   ],
+   "bonds": [
+    [
+     "C",
+     "CA"
+    ],
+    [
+     "C",
+     "O"
+    ],
+    [
+     "CA",
+     "CB"
+    ],
+    [
+     "CA",
+     "HA"
+    ],
+    [
+     "CA",
+     "N"
+    ],
+    [
+     "CB",
+     "CG"
+    ],
+    [
+     "CB",
+     "HB2"
+    ],
+    [
+     "CB",
+     "HB3"
+    ],
+    [
+     "CG",
+     "ND2"
+    ],
+    [
+     "CG",
+     "OD1"
+    ],
+    [
+     "H",
+     "N"
+    ],
+    [
+     "HD21",
+     "ND2"
+    ],
+    [
+     "HD22",
+     "ND2"
+    ]
+   ],
+   "hydrogens": [
+    {
+     "name": "H",
+     "parent": "N",
+     "refs": [
+      "CA",
+      "-C"
+     ],
+     "r": 1.01,
+     "angle": 120.5058,
+     "dihedral": 180.0,
+     "rotates": false
+    },
+    {
+     "name": "HA",
+     "parent": "CA",
+     "refs": [
+      "N",
+      "C"
+     ],
+     "r": 1.1057,
+     "angle": 108.4754,
+     "dihedral": 117.5243,
+     "rotates": false
+    },
+    {
+     "name": "HB3",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "CG"
+     ],
+     "r": 1.106,
+     "angle": 110.4046,
+     "dihedral": -124.2577,
+     "rotates": false
+    },
+    {
+     "name": "HB2",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "CG"
+     ],
+     "r": 1.1076,
+     "angle": 109.5096,
+     "dihedral": 121.469,
+     "rotates": false
+    },
+    {
+     "name": "HD21",
+     "parent": "ND2",
+     "refs": [
+      "CG",
+      "CB"
+     ],
+     "r": 1.0232,
+     "angle": 112.4025,
+     "dihedral": 170.6286,
+     "rotates": true
+    },
+    {
+     "name": "HD22",
+     "parent": "ND2",
+     "refs": [
+      "CG",
+      "CB"
+     ],
+     "r": 1.0195,
+     "angle": 116.9273,
+     "dihedral": 4.5968,
+     "rotates": true
+    }
+   ]
+  },
+  "PRO": {
+   "heavy": [
+    "N",
+    "CA",
+    "C",
+    "O",
+    "CB",
+    "CG",
+    "CD"
+   ],
+   "bonds": [
+    [
+     "C",
+     "CA"
+    ],
+    [
+     "C",
+     "O"
+    ],
+    [
+     "CA",
+     "CB"
+    ],
+    [
+     "CA",
+     "HA"
+    ],
+    [
+     "CA",
+     "N"
+    ],
+    [
+     "CB",
+     "CG"
+    ],
+    [
+     "CB",
+     "HB2"
+    ],
+    [
+     "CB",
+     "HB3"
+    ],
+    [
+     "CD",
+     "CG"
+    ],
+    [
+     "CD",
+     "HD2"
+    ],
+    [
+     "CD",
+     "HD3"
+    ],
+    [
+     "CD",
+     "N"
+    ],
+    [
+     "CG",
+     "HG2"
+    ],
+    [
+     "CG",
+     "HG3"
+    ]
+   ],
+   "hydrogens": [
+    {
+     "name": "HA",
+     "parent": "CA",
+     "refs": [
+      "N",
+      "C"
+     ],
+     "r": 1.0926,
+     "angle": 110.5399,
+     "dihedral": 121.1761,
+     "rotates": false
+    },
+    {
+     "name": "HB3",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "CG"
+     ],
+     "r": 1.092,
+     "angle": 108.9631,
+     "dihedral": -116.2081,
+     "rotates": false
+    },
+    {
+     "name": "HB2",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "CG"
+     ],
+     "r": 1.0925,
+     "angle": 112.9123,
+     "dihedral": 122.427,
+     "rotates": false
+    },
+    {
+     "name": "HG3",
+     "parent": "CG",
+     "refs": [
+      "CB",
+      "CD"
+     ],
+     "r": 1.0925,
+     "angle": 112.5651,
+     "dihedral": -121.2311,
+     "rotates": false
+    },
+    {
+     "name": "HG2",
+     "parent": "CG",
+     "refs": [
+      "CB",
+      "CD"
+     ],
+     "r": 1.0917,
+     "angle": 109.597,
+     "dihedral": 116.586,
+     "rotates": false
+    },
+    {
+     "name": "HD3",
+     "parent": "CD",
+     "refs": [
+      "N",
+      "CG"
+     ],
+     "r": 1.0926,
+     "angle": 109.5095,
+     "dihedral": 117.8842,
+     "rotates": false
+    },
+    {
+     "name": "HD2",
+     "parent": "CD",
+     "refs": [
+      "N",
+      "CG"
+     ],
+     "r": 1.0924,
+     "angle": 111.149,
+     "dihedral": -120.0287,
+     "rotates": false
+    }
+   ]
+  },
+  "GLN": {
+   "heavy": [
+    "N",
+    "CA",
+    "C",
+    "O",
+    "CB",
+    "CG",
+    "CD",
+    "NE2",
+    "OE1"
+   ],
+   "bonds": [
+    [
+     "C",
+     "CA"
+    ],
+    [
+     "C",
+     "O"
+    ],
+    [
+     "CA",
+     "CB"
+    ],
+    [
+     "CA",
+     "HA"
+    ],
+    [
+     "CA",
+     "N"
+    ],
+    [
+     "CB",
+     "CG"
+    ],
+    [
+     "CB",
+     "HB2"
+    ],
+    [
+     "CB",
+     "HB3"
+    ],
+    [
+     "CD",
+     "CG"
+    ],
+    [
+     "CD",
+     "NE2"
+    ],
+    [
+     "CD",
+     "OE1"
+    ],
+    [
+     "CG",
+     "HG2"
+    ],
+    [
+     "CG",
+     "HG3"
+    ],
+    [
+     "H",
+     "N"
+    ],
+    [
+     "HE21",
+     "NE2"
+    ],
+    [
+     "HE22",
+     "NE2"
+    ]
+   ],
+   "hydrogens": [
+    {
+     "name": "H",
+     "parent": "N",
+     "refs": [
+      "CA",
+      "-C"
+     ],
+     "r": 1.01,
+     "angle": 120.492,
+     "dihedral": 180.0,
+     "rotates": false
+    },
+    {
+     "name": "HA",
+     "parent": "CA",
+     "refs": [
+      "N",
+      "C"
+     ],
+     "r": 1.106,
+     "angle": 108.729,
+     "dihedral": 118.2093,
+     "rotates": false
+    },
+    {
+     "name": "HB3",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "CG"
+     ],
+     "r": 1.1102,
+     "angle": 108.5287,
+     "dihedral": -123.0835,
+     "rotates": false
+    },
+    {
+     "name": "HB2",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "CG"
+     ],
+     "r": 1.1076,
+     "angle": 108.8555,
+     "dihedral": 122.8694,
+     "rotates": false
+    },
+    {
+     "name": "HG3",
+     "parent": "CG",
+     "refs": [
+      "CB",
+      "CD"
+     ],
+     "r": 1.1058,
+     "angle": 110.0873,
+     "dihedral": -124.6801,
+     "rotates": false
+    },
+    {
+     "name": "HG2",
+     "parent": "CG",
+     "refs": [
+      "CB",
+      "CD"
+     ],
+     "r": 1.1053,
+     "angle": 110.3515,
+     "dihedral": 120.693,
+     "rotates": false
+    },
+    {
+     "name": "HE21",
+     "parent": "NE2",
+     "refs": [
+      "CD",
+      "CG"
+     ],
+     "r": 1.0213,
+     "angle": 115.026,
+     "dihedral": 175.9262,
+     "rotates": true
+    },
+    {
+     "name": "HE22",
+     "parent": "NE2",
+     "refs": [
+      "CD",
+      "CG"
+     ],
+     "r": 1.022,
+     "angle": 114.9706,
+     "dihedral": 3.0577,
+     "rotates": true
+    }
+   ]
+  },
+  "ARG": {
+   "heavy": [
+    "N",
+    "CA",
+    "C",
+    "O",
+    "CB",
+    "CG",
+    "CD",
+    "NE",
+    "CZ",
+    "NH1",
+    "NH2"
+   ],
+   "bonds": [
+    [
+     "C",
+     "CA"
+    ],
+    [
+     "C",
+     "O"
+    ],
+    [
+     "CA",
+     "CB"
+    ],
+    [
+     "CA",
+     "HA"
+    ],
+    [
+     "CA",
+     "N"
+    ],
+    [
+     "CB",
+     "CG"
+    ],
+    [
+     "CB",
+     "HB2"
+    ],
+    [
+     "CB",
+     "HB3"
+    ],
+    [
+     "CD",
+     "CG"
+    ],
+    [
+     "CD",
+     "HD2"
+    ],
+    [
+     "CD",
+     "HD3"
+    ],
+    [
+     "CD",
+     "NE"
+    ],
+    [
+     "CG",
+     "HG2"
+    ],
+    [
+     "CG",
+     "HG3"
+    ],
+    [
+     "CZ",
+     "NE"
+    ],
+    [
+     "CZ",
+     "NH1"
+    ],
+    [
+     "CZ",
+     "NH2"
+    ],
+    [
+     "H",
+     "N"
+    ],
+    [
+     "HE",
+     "NE"
+    ],
+    [
+     "HH11",
+     "NH1"
+    ],
+    [
+     "HH12",
+     "NH1"
+    ],
+    [
+     "HH21",
+     "NH2"
+    ],
+    [
+     "HH22",
+     "NH2"
+    ]
+   ],
+   "hydrogens": [
+    {
+     "name": "H",
+     "parent": "N",
+     "refs": [
+      "CA",
+      "-C"
+     ],
+     "r": 1.01,
+     "angle": 120.5095,
+     "dihedral": -179.9999,
+     "rotates": false
+    },
+    {
+     "name": "HA",
+     "parent": "CA",
+     "refs": [
+      "N",
+      "C"
+     ],
+     "r": 1.1065,
+     "angle": 108.0056,
+     "dihedral": 117.6978,
+     "rotates": false
+    },
+    {
+     "name": "HB3",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "CG"
+     ],
+     "r": 1.1098,
+     "angle": 108.7149,
+     "dihedral": -124.2436,
+     "rotates": false
+    },
+    {
+     "name": "HB2",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "CG"
+     ],
+     "r": 1.109,
+     "angle": 109.1224,
+     "dihedral": 122.6172,
+     "rotates": false
+    },
+    {
+     "name": "HG3",
+     "parent": "CG",
+     "refs": [
+      "CB",
+      "CD"
+     ],
+     "r": 1.1095,
+     "angle": 109.146,
+     "dihedral": -122.749,
+     "rotates": false
+    },
+    {
+     "name": "HG2",
+     "parent": "CG",
+     "refs": [
+      "CB",
+      "CD"
+     ],
+     "r": 1.1093,
+     "angle": 110.0434,
+     "dihedral": 121.794,
+     "rotates": false
+    },
+    {
+     "name": "HD3",
+     "parent": "CD",
+     "refs": [
+      "CG",
+      "NE"
+     ],
+     "r": 1.1123,
+     "angle": 109.3146,
+     "dihedral": -121.7677,
+     "rotates": false
+    },
+    {
+     "name": "HD2",
+     "parent": "CD",
+     "refs": [
+      "CG",
+      "NE"
+     ],
+     "r": 1.1112,
+     "angle": 109.4962,
+     "dihedral": 121.9832,
+     "rotates": false
+    },
+    {
+     "name": "HE",
+     "parent": "NE",
+     "refs": [
+      "CD",
+      "CZ"
+     ],
+     "r": 1.025,
+     "angle": 120.9719,
+     "dihedral": -179.8009,
+     "rotates": false
+    },
+    {
+     "name": "HH11",
+     "parent": "NH1",
+     "refs": [
+      "CZ",
+      "NE"
+     ],
+     "r": 1.0226,
+     "angle": 114.0945,
+     "dihedral": 0.1131,
+     "rotates": true
+    },
+    {
+     "name": "HH12",
+     "parent": "NH1",
+     "refs": [
+      "CZ",
+      "NE"
+     ],
+     "r": 1.0213,
+     "angle": 118.8838,
+     "dihedral": -179.9327,
+     "rotates": true
+    },
+    {
+     "name": "HH21",
+     "parent": "NH2",
+     "refs": [
+      "CZ",
+      "NE"
+     ],
+     "r": 1.0218,
+     "angle": 116.9226,
+     "dihedral": -0.0884,
+     "rotates": true
+    },
+    {
+     "name": "HH22",
+     "parent": "NH2",
+     "refs": [
+      "CZ",
+      "NE"
+     ],
+     "r": 1.0214,
+     "angle": 117.187,
+     "dihedral": 179.8882,
+     "rotates": true
+    }
+   ]
+  },
+  "SER": {
+   "heavy": [
+    "N",
+    "CA",
+    "C",
+    "O",
+    "CB",
+    "OG"
+   ],
+   "bonds": [
+    [
+     "C",
+     "CA"
+    ],
+    [
+     "C",
+     "O"
+    ],
+    [
+     "CA",
+     "CB"
+    ],
+    [
+     "CA",
+     "HA"
+    ],
+    [
+     "CA",
+     "N"
+    ],
+    [
+     "CB",
+     "HB2"
+    ],
+    [
+     "CB",
+     "HB3"
+    ],
+    [
+     "CB",
+     "OG"
+    ],
+    [
+     "H",
+     "N"
+    ],
+    [
+     "HG",
+     "OG"
+    ]
+   ],
+   "hydrogens": [
+    {
+     "name": "H",
+     "parent": "N",
+     "refs": [
+      "CA",
+      "-C"
+     ],
+     "r": 1.01,
+     "angle": 120.5176,
+     "dihedral": -179.9998,
+     "rotates": false
+    },
+    {
+     "name": "HA",
+     "parent": "CA",
+     "refs": [
+      "N",
+      "C"
+     ],
+     "r": 1.1056,
+     "angle": 107.968,
+     "dihedral": 116.7614,
+     "rotates": false
+    },
+    {
+     "name": "HB3",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "OG"
+     ],
+     "r": 1.1067,
+     "angle": 111.2029,
+     "dihedral": -123.53,
+     "rotates": false
+    },
+    {
+     "name": "HB2",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "OG"
+     ],
+     "r": 1.1077,
+     "angle": 109.667,
+     "dihedral": 120.8988,
+     "rotates": false
+    },
+    {
+     "name": "HG",
+     "parent": "OG",
+     "refs": [
+      "CB",
+      "CA"
+     ],
+     "r": 0.9602,
+     "angle": 107.4119,
+     "dihedral": -63.0244,
+     "rotates": true
+    }
+   ]
+  },
+  "THR": {
+   "heavy": [
+    "N",
+    "CA",
+    "C",
+    "O",
+    "CB",
+    "CG2",
+    "OG1"
+   ],
+   "bonds": [
+    [
+     "C",
+     "CA"
+    ],
+    [
+     "C",
+     "O"
+    ],
+    [
+     "CA",
+     "CB"
+    ],
+    [
+     "CA",
+     "HA"
+    ],
+    [
+     "CA",
+     "N"
+    ],
+    [
+     "CB",
+     "CG2"
+    ],
+    [
+     "CB",
+     "HB"
+    ],
+    [
+     "CB",
+     "OG1"
+    ],
+    [
+     "CG2",
+     "HG21"
+    ],
+    [
+     "CG2",
+     "HG22"
+    ],
+    [
+     "CG2",
+     "HG23"
+    ],
+    [
+     "H",
+     "N"
+    ],
+    [
+     "HG1",
+     "OG1"
+    ]
+   ],
+   "hydrogens": [
+    {
+     "name": "H",
+     "parent": "N",
+     "refs": [
+      "CA",
+      "-C"
+     ],
+     "r": 1.01,
+     "angle": 120.5088,
+     "dihedral": -179.9999,
+     "rotates": false
+    },
+    {
+     "name": "HA",
+     "parent": "CA",
+     "refs": [
+      "N",
+      "C"
+     ],
+     "r": 1.1054,
+     "angle": 108.3701,
+     "dihedral": 117.6837,
+     "rotates": false
+    },
+    {
+     "name": "HB",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "CG2"
+     ],
+     "r": 1.1117,
+     "angle": 108.2916,
+     "dihedral": -122.2018,
+     "rotates": false
+    },
+    {
+     "name": "HG1",
+     "parent": "OG1",
+     "refs": [
+      "CB",
+      "CA"
+     ],
+     "r": 0.9614,
+     "angle": 106.1271,
+     "dihedral": 175.4976,
+     "rotates": true
+    },
+    {
+     "name": "HG21",
+     "parent": "CG2",
+     "refs": [
+      "CB",
+      "CA"
+     ],
+     "r": 1.1058,
+     "angle": 112.1152,
+     "dihedral": 178.7262,
+     "rotates": true
+    },
+    {
+     "name": "HG22",
+     "parent": "CG2",
+     "refs": [
+      "CB",
+      "CA"
+     ],
+     "r": 1.106,
+     "angle": 112.5028,
+     "dihedral": -62.2969,
+     "rotates": true
+    },
+    {
+     "name": "HG23",
+     "parent": "CG2",
+     "refs": [
+      "CB",
+      "CA"
+     ],
+     "r": 1.1062,
+     "angle": 111.7672,
+     "dihedral": 58.2491,
+     "rotates": true
+    }
+   ]
+  },
+  "VAL": {
+   "heavy": [
+    "N",
+    "CA",
+    "C",
+    "O",
+    "CB",
+    "CG1",
+    "CG2"
+   ],
+   "bonds": [
+    [
+     "C",
+     "CA"
+    ],
+    [
+     "C",
+     "O"
+    ],
+    [
+     "CA",
+     "CB"
+    ],
+    [
+     "CA",
+     "HA"
+    ],
+    [
+     "CA",
+     "N"
+    ],
+    [
+     "CB",
+     "CG1"
+    ],
+    [
+     "CB",
+     "CG2"
+    ],
+    [
+     "CB",
+     "HB"
+    ],
+    [
+     "CG1",
+     "HG11"
+    ],
+    [
+     "CG1",
+     "HG12"
+    ],
+    [
+     "CG1",
+     "HG13"
+    ],
+    [
+     "CG2",
+     "HG21"
+    ],
+    [
+     "CG2",
+     "HG22"
+    ],
+    [
+     "CG2",
+     "HG23"
+    ],
+    [
+     "H",
+     "N"
+    ]
+   ],
+   "hydrogens": [
+    {
+     "name": "H",
+     "parent": "N",
+     "refs": [
+      "CA",
+      "-C"
+     ],
+     "r": 1.01,
+     "angle": 120.4978,
+     "dihedral": -179.9999,
+     "rotates": false
+    },
+    {
+     "name": "HA",
+     "parent": "CA",
+     "refs": [
+      "N",
+      "C"
+     ],
+     "r": 1.1051,
+     "angle": 108.8011,
+     "dihedral": 117.4894,
+     "rotates": false
+    },
+    {
+     "name": "HB",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "CG1"
+     ],
+     "r": 1.1111,
+     "angle": 107.154,
+     "dihedral": -118.9825,
+     "rotates": false
+    },
+    {
+     "name": "HG11",
+     "parent": "CG1",
+     "refs": [
+      "CB",
+      "CA"
+     ],
+     "r": 1.1063,
+     "angle": 112.5126,
+     "dihedral": 59.4999,
+     "rotates": true
+    },
+    {
+     "name": "HG12",
+     "parent": "CG1",
+     "refs": [
+      "CB",
+      "CA"
+     ],
+     "r": 1.1071,
+     "angle": 112.3089,
+     "dihedral": -179.3708,
+     "rotates": true
+    },
+    {
+     "name": "HG13",
+     "parent": "CG1",
+     "refs": [
+      "CB",
+      "CA"
+     ],
+     "r": 1.1068,
+     "angle": 112.4234,
+     "dihedral": -61.4316,
+     "rotates": true
+    },
+    {
+     "name": "HG21",
+     "parent": "CG2",
+     "refs": [
+      "CB",
+      "CA"
+     ],
+     "r": 1.1054,
+     "angle": 111.8457,
+     "dihedral": 55.0895,
+     "rotates": true
+    },
+    {
+     "name": "HG22",
+     "parent": "CG2",
+     "refs": [
+      "CB",
+      "CA"
+     ],
+     "r": 1.1073,
+     "angle": 111.8194,
+     "dihedral": 173.7596,
+     "rotates": true
+    },
+    {
+     "name": "HG23",
+     "parent": "CG2",
+     "refs": [
+      "CB",
+      "CA"
+     ],
+     "r": 1.1064,
+     "angle": 112.3415,
+     "dihedral": -65.5153,
+     "rotates": true
+    }
+   ]
+  },
+  "TRP": {
+   "heavy": [
+    "N",
+    "CA",
+    "C",
+    "O",
+    "CB",
+    "CG",
+    "CD1",
+    "CD2",
+    "CE2",
+    "CE3",
+    "NE1",
+    "CZ2",
+    "CZ3",
+    "CH2"
+   ],
+   "bonds": [
+    [
+     "C",
+     "CA"
+    ],
+    [
+     "C",
+     "O"
+    ],
+    [
+     "CA",
+     "CB"
+    ],
+    [
+     "CA",
+     "HA"
+    ],
+    [
+     "CA",
+     "N"
+    ],
+    [
+     "CB",
+     "CG"
+    ],
+    [
+     "CB",
+     "HB2"
+    ],
+    [
+     "CB",
+     "HB3"
+    ],
+    [
+     "CD1",
+     "CG"
+    ],
+    [
+     "CD1",
+     "HD1"
+    ],
+    [
+     "CD1",
+     "NE1"
+    ],
+    [
+     "CD2",
+     "CE2"
+    ],
+    [
+     "CD2",
+     "CE3"
+    ],
+    [
+     "CD2",
+     "CG"
+    ],
+    [
+     "CE2",
+     "CZ2"
+    ],
+    [
+     "CE2",
+     "NE1"
+    ],
+    [
+     "CE3",
+     "CZ3"
+    ],
+    [
+     "CE3",
+     "HE3"
+    ],
+    [
+     "CH2",
+     "CZ2"
+    ],
+    [
+     "CH2",
+     "CZ3"
+    ],
+    [
+     "CH2",
+     "HH2"
+    ],
+    [
+     "CZ2",
+     "HZ2"
+    ],
+    [
+     "CZ3",
+     "HZ3"
+    ],
+    [
+     "H",
+     "N"
+    ],
+    [
+     "HE1",
+     "NE1"
+    ]
+   ],
+   "hydrogens": [
+    {
+     "name": "H",
+     "parent": "N",
+     "refs": [
+      "CA",
+      "-C"
+     ],
+     "r": 1.01,
+     "angle": 120.4933,
+     "dihedral": -179.9999,
+     "rotates": false
+    },
+    {
+     "name": "HA",
+     "parent": "CA",
+     "refs": [
+      "N",
+      "C"
+     ],
+     "r": 1.1066,
+     "angle": 109.1264,
+     "dihedral": 118.3789,
+     "rotates": false
+    },
+    {
+     "name": "HB3",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "CG"
+     ],
+     "r": 1.1065,
+     "angle": 110.2375,
+     "dihedral": -121.554,
+     "rotates": false
+    },
+    {
+     "name": "HB2",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "CG"
+     ],
+     "r": 1.1079,
+     "angle": 110.1303,
+     "dihedral": 123.908,
+     "rotates": false
+    },
+    {
+     "name": "HD1",
+     "parent": "CD1",
+     "refs": [
+      "CG",
+      "NE1"
+     ],
+     "r": 1.0824,
+     "angle": 123.8532,
+     "dihedral": 177.1646,
+     "rotates": false
+    },
+    {
+     "name": "HE1",
+     "parent": "NE1",
+     "refs": [
+      "CD1",
+      "CE2"
+     ],
+     "r": 1.0262,
+     "angle": 128.2821,
+     "dihedral": 176.9857,
+     "rotates": false
+    },
+    {
+     "name": "HE3",
+     "parent": "CE3",
+     "refs": [
+      "CD2",
+      "CZ3"
+     ],
+     "r": 1.081,
+     "angle": 120.9951,
+     "dihedral": 179.9982,
+     "rotates": false
+    },
+    {
+     "name": "HZ2",
+     "parent": "CZ2",
+     "refs": [
+      "CE2",
+      "CH2"
+     ],
+     "r": 1.0799,
+     "angle": 120.3068,
+     "dihedral": -179.8964,
+     "rotates": false
+    },
+    {
+     "name": "HZ3",
+     "parent": "CZ3",
+     "refs": [
+      "CE3",
+      "CH2"
+     ],
+     "r": 1.0809,
+     "angle": 119.2695,
+     "dihedral": -179.9937,
+     "rotates": false
+    },
+    {
+     "name": "HH2",
+     "parent": "CH2",
+     "refs": [
+      "CZ2",
+      "CZ3"
+     ],
+     "r": 1.0794,
+     "angle": 119.4516,
+     "dihedral": -179.9728,
+     "rotates": false
+    }
+   ]
+  },
+  "TYR": {
+   "heavy": [
+    "N",
+    "CA",
+    "C",
+    "O",
+    "CB",
+    "CG",
+    "CD1",
+    "CD2",
+    "CE1",
+    "CE2",
+    "CZ",
+    "OH"
+   ],
+   "bonds": [
+    [
+     "C",
+     "CA"
+    ],
+    [
+     "C",
+     "O"
+    ],
+    [
+     "CA",
+     "CB"
+    ],
+    [
+     "CA",
+     "HA"
+    ],
+    [
+     "CA",
+     "N"
+    ],
+    [
+     "CB",
+     "CG"
+    ],
+    [
+     "CB",
+     "HB2"
+    ],
+    [
+     "CB",
+     "HB3"
+    ],
+    [
+     "CD1",
+     "CE1"
+    ],
+    [
+     "CD1",
+     "CG"
+    ],
+    [
+     "CD1",
+     "HD1"
+    ],
+    [
+     "CD2",
+     "CE2"
+    ],
+    [
+     "CD2",
+     "CG"
+    ],
+    [
+     "CD2",
+     "HD2"
+    ],
+    [
+     "CE1",
+     "CZ"
+    ],
+    [
+     "CE1",
+     "HE1"
+    ],
+    [
+     "CE2",
+     "CZ"
+    ],
+    [
+     "CE2",
+     "HE2"
+    ],
+    [
+     "CZ",
+     "OH"
+    ],
+    [
+     "H",
+     "N"
+    ],
+    [
+     "HH",
+     "OH"
+    ]
+   ],
+   "hydrogens": [
+    {
+     "name": "H",
+     "parent": "N",
+     "refs": [
+      "CA",
+      "-C"
+     ],
+     "r": 1.01,
+     "angle": 120.5029,
+     "dihedral": 179.9999,
+     "rotates": false
+    },
+    {
+     "name": "HA",
+     "parent": "CA",
+     "refs": [
+      "N",
+      "C"
+     ],
+     "r": 1.1062,
+     "angle": 108.9335,
+     "dihedral": 118.6596,
+     "rotates": false
+    },
+    {
+     "name": "HB3",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "CG"
+     ],
+     "r": 1.1081,
+     "angle": 109.6288,
+     "dihedral": -122.4249,
+     "rotates": false
+    },
+    {
+     "name": "HB2",
+     "parent": "CB",
+     "refs": [
+      "CA",
+      "CG"
+     ],
+     "r": 1.1097,
+     "angle": 109.3192,
+     "dihedral": 124.8742,
+     "rotates": false
+    },
+    {
+     "name": "HD1",
+     "parent": "CD1",
+     "refs": [
+      "CG",
+      "CE1"
+     ],
+     "r": 1.0812,
+     "angle": 120.3883,
+     "dihedral": -179.495,
+     "rotates": false
+    },
+    {
+     "name": "HD2",
+     "parent": "CD2",
+     "refs": [
+      "CG",
+      "CE2"
+     ],
+     "r": 1.0816,
+     "angle": 120.2239,
+     "dihedral": 179.2156,
+     "rotates": false
+    },
+    {
+     "name": "HE1",
+     "parent": "CE1",
+     "refs": [
+      "CD1",
+      "CZ"
+     ],
+     "r": 1.08,
+     "angle": 120.2209,
+     "dihedral": -179.744,
+     "rotates": false
+    },
+    {
+     "name": "HE2",
+     "parent": "CE2",
+     "refs": [
+      "CD2",
+      "CZ"
+     ],
+     "r": 1.0797,
+     "angle": 119.5253,
+     "dihedral": 179.7171,
+     "rotates": false
+    },
+    {
+     "name": "HH",
+     "parent": "OH",
+     "refs": [
+      "CZ",
+      "CE1"
+     ],
+     "r": 0.9596,
+     "angle": 108.445,
+     "dihedral": 179.8359,
+     "rotates": true
+    }
+   ]
+  }
+ },
+ "n_terminus": {
+  "regular": [
+   {
+    "name": "H1",
+    "parent": "N",
+    "refs": [
+     "CA",
+     "C"
+    ],
+    "r": 1.01,
+    "angle": 109.47,
+    "dihedral": 60.0,
+    "rotates": true
+   },
+   {
+    "name": "H2",
+    "parent": "N",
+    "refs": [
+     "CA",
+     "C"
+    ],
+    "r": 1.01,
+    "angle": 109.47,
+    "dihedral": 180.0,
+    "rotates": true
+   },
+   {
+    "name": "H3",
+    "parent": "N",
+    "refs": [
+     "CA",
+     "C"
+    ],
+    "r": 1.01,
+    "angle": 109.47,
+    "dihedral": -60.0,
+    "rotates": true
+   }
+  ],
+  "proline": [
+   {
+    "name": "H1",
+    "parent": "N",
+    "refs": [
+     "CA",
+     "CD"
+    ],
+    "r": 1.01,
+    "angle": 108.0857,
+    "dihedral": -120.8037,
+    "rotates": false
+   },
+   {
+    "name": "H2",
+    "parent": "N",
+    "refs": [
+     "CA",
+     "CD"
+    ],
+    "r": 1.01,
+    "angle": 108.0857,
+    "dihedral": 120.8037,
+    "rotates": false
+   }
+  ]
+ }
+}

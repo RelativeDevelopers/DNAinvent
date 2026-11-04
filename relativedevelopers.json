@@ -1,0 +1,18 @@
+{
+  "id": "dnainvent",
+  "name": "DNAinvent",
+  "version": "2.1.0-dev",
+  "status": "development",
+  "platforms": [
+    "web",
+    "desktop"
+  ],
+  "icon": "../dnainvent_web/dnainvent/web/static/img/logo-512.png",
+  "links": {
+    "web": null,
+    "web_local": "http://127.0.0.1:8001",
+    "play": null,
+    "app_store": null,
+    "source": null
+  }
+}

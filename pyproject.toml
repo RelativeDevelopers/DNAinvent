@@ -1,0 +1,41 @@
+# DNAinvent como paquete de Python, para que otros proyectos lo usen sin copiar el código.
+# La web (repositorio dnainvent_web) lo instala con:
+#     pip install -e ../../DNAinvent       (en tu ordenador, desde dnainvent_web/dnainvent)
+#     pip install "dnainvent @ git+https://github.com/aluskabarbera/DNAinvent.git"   (en el servidor)
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dnainvent"
+dynamic = ["version"]
+description = "Herramientas para secuencias de ADN y ARN: traducción, alineamiento, binario, CRISPR/Cas9, microscopio 3D y base de datos de genes reales."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "Alexei Barberà Roca", email = "relativedevelopers@gmail.com" }]
+dependencies = []
+
+[project.optional-dependencies]
+console = ["colorama>=0.4"]
+# dnainvent.scene: la molécula átomo a átomo para el microscopio 3D. La física del átomo hacia
+# abajo es la de AtomicWorld; instálalo antes desde su carpeta (ver README).
+scene = ["numpy>=1.26", "atomicworld[scene]"]
+test = ["pytest>=8"]
+
+[tool.pytest.ini_options]
+# Solo la carpeta tests/. Sin esto, pytest también recoge tools/microscope_render_test.py
+# (su nombre acaba en _test.py), que es un script con ventana OpenGL, no un test.
+testpaths = ["tests"]
+
+[tool.setuptools.dynamic]
+version = { attr = "dnainvent.__version__" }
+
+[tool.setuptools.packages.find]
+include = ["dnainvent*", "i18n*"]
+
+[tool.setuptools.package-data]
+i18n = ["locales/*.json"]
+"dnainvent.scene" = ["templates/*.json"]
+"dnainvent.protein" = ["templates/*.json"]
+"dnainvent.database" = ["schema.sql"]

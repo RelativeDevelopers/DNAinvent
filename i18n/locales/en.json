@@ -1,0 +1,972 @@
+{
+  "_meta": {
+    "name": "English",
+    "decimal_separator": ".",
+    "thousands_separator": ","
+  },
+  "app": {
+    "title": "DNAinvent",
+    "tools_title": "DNAtools",
+    "bits_title": "Being from bits",
+    "goodbye": "See you next time!",
+    "database_title": "Database"
+  },
+  "menu": {
+    "main": {
+      "complement": "Double helix and reverse complement",
+      "transcribe": "Transcription DNA -> RNA",
+      "translate": "Translation RNA -> amino acids",
+      "crispr": "CRISPR/Cas9",
+      "to_binary": "DNA to binary",
+      "from_binary": "Binary to DNA",
+      "tools": "Tools",
+      "language": "Idioma / Language",
+      "exit": "Exit",
+      "microscope": "3D microscope: from the helix to the quarks",
+      "protein": "3D protein: from DNA to structure",
+      "database": "Database of real genes (NCBI and ClinVar)"
+    },
+    "tools": {
+      "find": "Find a sequence",
+      "align": "Align and compare two sequences",
+      "permutations": "Permutations",
+      "bits": "Generate a being from bits"
+    },
+    "bits": {
+      "time": "Generation time",
+      "flip": "Flip zeros and ones",
+      "reverse": "Reverse the order of the bases",
+      "both": "Both at once",
+      "restore": "Back to the original being"
+    },
+    "back": "Back",
+    "database": {
+      "import": "Import a gene",
+      "gene": "View a saved gene",
+      "compare": "Healthy vs. variant",
+      "search": "Search genes and diseases",
+      "list": "Saved genes"
+    }
+  },
+  "common": {
+    "choose_option": "Choose an option: ",
+    "invalid_option": "Invalid option, try again.",
+    "yes": "Yes",
+    "no": "No",
+    "confirm_suffix": " (y/n): ",
+    "yes_answers": "y,yes,s,si,sí",
+    "sequence_length": "This sequence has {length} characters.",
+    "int_between": "Enter a whole number between {minimum} and {maximum}.",
+    "int_minimum": "Enter a whole number greater than or equal to {minimum}."
+  },
+  "prompts": {
+    "dna": "Enter the DNA sequence (A, C, G, T): ",
+    "rna": "Enter the RNA sequence (A, C, G, U): ",
+    "binary": "Enter the binary string (0 and 1, 2 bits per base): ",
+    "search": "Sequence to search for: ",
+    "first_dna": "First DNA sequence: ",
+    "second_dna": "Second DNA sequence: ",
+    "insert": "Sequence to insert: ",
+    "guide_length": "Guide length (Enter = {default}): ",
+    "choose_target": "Choose a target: ",
+    "permutation_size": "How many bases in each permutation?: ",
+    "being_size": "How many bases should the being have?: ",
+    "gene_symbol": "Gene symbol (e.g. HBB, TP53, BRCA1; Enter = back): ",
+    "taxon": "Organism: NCBI taxon number (Enter = human, 9606; mouse = 10090): ",
+    "variant": "Variant (c.20A>T, p.Glu7Val, rs334...; Enter = those that cause a disease): ",
+    "choose_variant": "Choose a variant: ",
+    "search_text": "Search for a gene or a disease: "
+  },
+  "complement": {
+    "helix": "Double helix (antiparallel strands):",
+    "reverse": "Reverse complement (5'->3'):"
+  },
+  "translate": {
+    "no_start": "No start codon (AUG): the ribosome would not begin translating.",
+    "start_at": "Start at position {position}.",
+    "stop_at": "Stop at codon {codon} (position {position}).",
+    "no_stop": "No stop codon: the sequence may be incomplete.",
+    "protein": "Protein ({count} amino acids): {protein}",
+    "is_dna_hint": "Is it DNA? Transcribe it first with option 2."
+  },
+  "crispr": {
+    "no_targets": "There is no PAM (NGG) with {length} bases in front of it on either strand. Try a longer sequence or a shorter guide.",
+    "found": "Targets found: {count}",
+    "target": "strand {strand}  cut after base {cut}  guide 5'-{guide}-3'  PAM {pam}",
+    "cut_here": "Cas9 cuts here (cyan: target, magenta: PAM, |: cut):",
+    "repair_question": "How does the cell repair the cut?",
+    "nhej": "NHEJ: joins the ends and often makes mistakes (knocks out the gene)",
+    "hdr": "HDR: copies a DNA template we provide (inserts a sequence)",
+    "donor": "Donor DNA template (homology arms in grey, insert in green):",
+    "result": "Result: {change}.",
+    "insertion": "insertion of {count} base(s) ({bases}) between positions {before} and {after}",
+    "deletion": "deletion of {count} base(s) ({bases}) at positions {first}-{last}",
+    "substitution": "substitution of {deleted} with {inserted} at positions {first}-{last}",
+    "frameshift": "The change is not a multiple of 3: it shifts the reading frame.",
+    "in_frame": "The change is a multiple of 3: the reading frame is kept.",
+    "protein_effect": "Effect on the protein:",
+    "no_atg": "(No ATG start codon: this sequence does not encode a protein.)",
+    "before": "Before:",
+    "after": "After:",
+    "unchanged": "The protein does not change."
+  },
+  "binary": {
+    "summary": "{bases} bases -> {bits} bits ({bytes} bytes).",
+    "text_size": "As plain text (8 bits per letter) it would take {bits} bits: 4 times more."
+  },
+  "find": {
+    "found": "Found {count} times at positions: {positions}"
+  },
+  "align": {
+    "confirm": "The alignment needs {cells} calculations and may be slow. Continue?",
+    "identity": "Identity:",
+    "mismatches": "Substitutions:",
+    "gaps": "Gaps:",
+    "score": "Score:"
+  },
+  "permutations": {
+    "too_big": "Groups of {size} bases cannot be formed from only {length}.",
+    "positional": "Position orderings:",
+    "distinct": "Distinct sequences:",
+    "avoided": "{count} repetitions avoided thanks to identical bases.",
+    "confirm": "That is a lot. Show them anyway?"
+  },
+  "bits": {
+    "generated": "Generated being:",
+    "flip": "Flip zeros and ones (complement):",
+    "reverse": "Reverse the order of the bases:",
+    "both": "Flip zeros and ones + order of the bases (reverse complement):",
+    "check": "Does it match reverse_complement() of the previous step? {result}",
+    "restored": "Original being restored:",
+    "time": "Generated {bits} bits in {ms} ms ({us} µs per bit on average).",
+    "label_bits": "Bits:",
+    "label_dna": "DNA:"
+  },
+  "language": {
+    "choose": "Choose the language:",
+    "changed": "Language changed to English."
+  },
+  "errors": {
+    "empty_sequence": "The {kind} sequence is empty.",
+    "invalid_characters": "Invalid characters for {kind}: {chars} (allowed: {allowed}).",
+    "odd_bit_length": "The binary string has {length} bits; it must be a multiple of {multiple}.",
+    "cut_out_of_range": "The cut point {cut} is outside the sequence.",
+    "guide_too_short": "The guide must have at least {minimum} nucleotides.",
+    "invalid_bit_count": "The number of bits must be greater than 0.",
+    "negative_permutation_size": "The permutation size cannot be negative.",
+    "too_long": "{field}: the text is too long (maximum {maximum} characters).",
+    "too_small": "{field}: the value must be at least {minimum}.",
+    "too_big": "{field}: the value must be at most {maximum}.",
+    "invalid_request": "{field}: the value is missing or has the wrong format.",
+    "alignment_too_large": "The sequences are too long to align here: it would take {cells} calculations and the maximum is {maximum}.",
+    "unknown_language": "Language not available: {language}.",
+    "start_out_of_range": "The start {start} is outside the sequence, which has {length} bases.",
+    "count_too_small": "The number of pairs must be at least {minimum}.",
+    "no_orf": "No reading frame found: the sequence has no ATG start codon in any of its 6 frames.",
+    "min_length_too_small": "The minimum protein length must be at least {minimum}.",
+    "invalid_accession": "“{accession}” is not a valid UniProt accession (example: P68871).",
+    "protein_not_found": "There is no structure for protein {accession}.",
+    "service_unavailable": "{service} is not responding right now. Check your internet connection or try again later.",
+    "invalid_email": "The email address does not look valid (example: name@domain.com).",
+    "search_failed": "{service} could not run the search.",
+    "search_timeout": "{service} took longer than {minutes} minutes. Try again later.",
+    "prediction_too_long": "The protein has {length} amino acids and the predictor accepts at most {maximum}.",
+    "prediction_failed": "{service} could not predict this protein.",
+    "email_not_configured": "The server has not configured the email address BLAST requires (environment variable DNAINVENT_EMAIL).",
+    "job_not_found": "That search no longer exists: they are kept for one hour. Please start again.",
+    "job_failed": "Something went wrong on the server during the search. Please try again.",
+    "job_not_finished": "The search has not finished yet.",
+    "no_structure": "There is no structure to show for this protein.",
+    "gene_not_found": "Gene “{symbol}” was not found in organism {taxon}.",
+    "sequence_not_found": "Sequence {accession} was not found.",
+    "variant_not_found": "Variant {variant} does not exist.",
+    "variant_not_supported": "For now only single-base substitutions inside the coding region (like c.20A>T) can be placed on the sequence; {hgvs} is not one.",
+    "variant_outside_cds": "{hgvs} falls outside the coding region ({start}..{end}).",
+    "variant_mismatch": "In {accession} position {position} is {found}, not {expected}: {hgvs} does not match this version of the sequence."
+  },
+  "kinds": {
+    "dna": "DNA",
+    "rna": "RNA",
+    "binary": "binary",
+    "protein": "protein"
+  },
+  "fields": {
+    "dna": "DNA sequence",
+    "rna": "RNA sequence",
+    "bits": "Binary string",
+    "target": "Sequence to find",
+    "first": "First sequence",
+    "second": "Second sequence",
+    "insert": "Sequence to insert",
+    "size": "Permutation size",
+    "limit": "Number of results",
+    "bases": "Number of bases",
+    "seed": "Seed",
+    "guide_length": "Guide length",
+    "cut": "Cut site",
+    "method": "Repair type",
+    "operation": "Operation",
+    "match": "Match score",
+    "mismatch": "Mismatch score",
+    "gap": "Gap score",
+    "body": "Request",
+    "start": "Start",
+    "count": "Number of pairs"
+  },
+  "amino_acids": {
+    "A": "Alanine",
+    "R": "Arginine",
+    "N": "Asparagine",
+    "D": "Aspartate",
+    "C": "Cysteine",
+    "Q": "Glutamine",
+    "E": "Glutamate",
+    "G": "Glycine",
+    "H": "Histidine",
+    "I": "Isoleucine",
+    "L": "Leucine",
+    "K": "Lysine",
+    "M": "Methionine",
+    "F": "Phenylalanine",
+    "P": "Proline",
+    "S": "Serine",
+    "T": "Threonine",
+    "W": "Tryptophan",
+    "Y": "Tyrosine",
+    "V": "Valine"
+  },
+  "web": {
+    "tagline": "Read, encode, compare and edit DNA sequences.",
+    "language": "Language",
+    "nav_label": "Tools",
+    "groups": {
+      "learn": "Learn",
+      "read": "Read",
+      "encode": "Encode",
+      "compare": "Compare",
+      "edit": "Edit"
+    },
+    "tools": {
+      "learn": {
+        "title": "What DNA is",
+        "about": "DNA is the molecule that stores the instructions to build and run every living thing, from a bacterium to a person. It's in almost all of your cells, and it's written with just four letters."
+      },
+      "complement": {
+        "title": "Double helix",
+        "about": "Type one DNA strand and see its partner. The two strands run in opposite directions, so the complement is written backwards to read it from 5' to 3'.",
+        "run": "Build the double helix"
+      },
+      "transcribe": {
+        "title": "Transcription",
+        "about": "Copies the DNA coding strand into messenger RNA: every T becomes U.",
+        "run": "Transcribe"
+      },
+      "translate": {
+        "title": "Translation",
+        "about": "Reads RNA like a ribosome: it starts at the first AUG, moves 3 bases at a time and stops at the first stop codon.",
+        "run": "Translate"
+      },
+      "protein": {
+        "title": "3D protein",
+        "about": "Type a gene: its reading frame is found, the protein is identified in UniProt (BLAST) and its AlphaFold DB structure is shown. If yours is different or invented, it is predicted with ESMFold and compared with the natural one. Then you can explore it in the 3D microscope.",
+        "run": "Find the protein"
+      },
+      "to_binary": {
+        "title": "DNA to binary",
+        "about": "Each base takes 2 bits: A = 00, C = 01, G = 10 and T = 11. Each base and its partner are bitwise opposites.",
+        "run": "Convert to binary"
+      },
+      "from_binary": {
+        "title": "Binary to DNA",
+        "about": "Reads the bits 2 at a time and turns them into bases. You can separate the bits with spaces.",
+        "run": "Convert to DNA"
+      },
+      "being": {
+        "title": "Being from bits",
+        "about": "Generates random bits and reads them as DNA. Operations add up: flipping the bits twice brings back the original being.",
+        "run": "Generate a being"
+      },
+      "find": {
+        "title": "Find",
+        "about": "Finds where a fragment appears inside a sequence.",
+        "run": "Find"
+      },
+      "align": {
+        "title": "Align",
+        "about": "Places one sequence under the other, with gaps where needed, so they match as closely as possible (Needleman-Wunsch algorithm).",
+        "run": "Align"
+      },
+      "permutations": {
+        "title": "Permutations",
+        "about": "Every distinct sequence you can make by reordering the bases, with no repeats.",
+        "run": "Generate permutations"
+      },
+      "crispr": {
+        "title": "CRISPR/Cas9",
+        "about": "Find where Cas9 can cut, pick a target and decide how the cell repairs the cut.",
+        "run": "Find targets"
+      },
+      "microscope": {
+        "title": "3D microscope",
+        "about": "Fly inside your sequence: from the double helix to an atom, its nucleus, a proton and its quarks. With keyboard, mouse or touch screen.",
+        "run": "Build the molecule"
+      }
+    },
+    "labels": {
+      "dna": "DNA sequence",
+      "rna": "RNA sequence",
+      "bits": "Bits",
+      "target": "Fragment to find",
+      "first": "First sequence",
+      "second": "Second sequence",
+      "size": "Bases per permutation",
+      "bases": "Number of bases",
+      "guide_length": "Guide length",
+      "insert": "Sequence to insert",
+      "scoring": "Alignment scoring",
+      "match": "Match",
+      "mismatch": "Mismatch",
+      "gap": "Gap",
+      "start": "From base pair",
+      "count": "Base pairs"
+    },
+    "actions": {
+      "example": "Load an example",
+      "repair": "Cut and repair"
+    },
+    "status": {
+      "loading": "Calculating…",
+      "network": "Couldn't reach the server. Check that it's still running with python main.py --web.",
+      "unexpected": "The server returned an unexpected error (status {status})."
+    },
+    "results": {
+      "length": "{count} bases",
+      "strand_top": "Your strand",
+      "strand_bottom": "Complementary strand",
+      "reverse": "Reverse complement, from 5' to 3'",
+      "dna": "DNA",
+      "rna": "RNA",
+      "orf": "Reading frame",
+      "stop": "Stop codon",
+      "untranslated": "Not translated",
+      "protein": "Protein of {count} amino acids",
+      "no_protein": "The protein is empty: the first codon after AUG is already a stop codon.",
+      "counts": "Amino acids by frequency",
+      "is_dna_hint": "Is it DNA? Transcribe it first with the Transcription tool.",
+      "not_found": "The fragment doesn't appear in the sequence.",
+      "shown": "Showing the first {shown} of {count}.",
+      "being_current": "Current being",
+      "being_steps": "Operations applied: {count}",
+      "targets_none": "No targets found. Try a longer sequence or a shorter guide.",
+      "strand": "Strand",
+      "cut": "Cut after base",
+      "guide": "Guide RNA (5' to 3')",
+      "pam": "PAM",
+      "protospacer": "Target",
+      "cut_site": "Cut site",
+      "chosen": "Chosen target",
+      "repair_nhej": "NHEJ: the cell glues the ends back and often makes mistakes. Used to switch a gene off.",
+      "repair_hdr": "HDR: the cell copies a DNA template we provide. Used to insert a sequence.",
+      "donor": "Donor DNA template",
+      "arms": "Homology arms",
+      "insert": "Insert"
+    },
+    "bases": {
+      "A": "Adenine",
+      "T": "Thymine",
+      "G": "Guanine",
+      "C": "Cytosine",
+      "U": "Uracil"
+    },
+    "helix": {
+      "title": "3D model",
+      "label": "3D double helix of base pairs {first} to {last}",
+      "backbone": "Sugar-phosphate backbone",
+      "pause": "Pause",
+      "play": "Spin",
+      "hint": "Drag the helix to turn it. Point at a rung to see its base pair.",
+      "window": "Base pairs {first} to {last} of {length}",
+      "from": "From base pair",
+      "pair": "Pair {position}: {base}–{partner}",
+      "flat": "Both strands, base by base"
+    },
+    "microscope": {
+      "dive": "Go in",
+      "full": "Full journey",
+      "up": "Go out",
+      "mode": "Mode",
+      "fullscreen": "Full screen",
+      "help": [
+        "Click the image to steer with the mouse · Esc: release · WASD: move · Space / C: up / down · Q/E: roll · Shift: boost · Wheel: speed",
+        "Enter: go down a level · Shift+Enter: full journey · Backspace: go up · M: mode · H: help · F: full screen"
+      ],
+      "touch": "On a phone or tablet: drag to look around and use the buttons.",
+      "no_webgl": "Your browser cannot show 3D graphics (WebGL 2). Try an up-to-date Chrome, Firefox, Edge or Safari.",
+      "long": "The sequence has {length} base pairs: the microscope shows at most {maximum} at a time. Choose the pair to start from.",
+      "building": "Building the molecule…",
+      "explore": "Explore this sequence in the 3D microscope →",
+      "layout": "Split / superimposed",
+      "side": "Switch side",
+      "help_compare": "X: split screen / superimposed · V: switch the side you control"
+    },
+    "protein": {
+      "queued": "Queued…",
+      "elapsed": "({seconds} s)",
+      "slow": "Searching all of UniProtKB may take a few minutes. You can use other tools in the meantime.",
+      "explore": "Explore in the 3D microscope",
+      "download_natural": "Download the natural one (PDB with hydrogens)",
+      "download_yours": "Download yours (PDB with hydrogens)",
+      "loading_structure": "Building the molecules…",
+      "from": "From amino acid",
+      "long": "The protein has {length} amino acids: the microscope shows at most {maximum} at a time. Choose where to start and press “Explore” again."
+    }
+  },
+  "learn": {
+    "lead": "DNA is the molecule that stores the instructions to build and run every living thing, from a bacterium to a person. It's in almost all of your cells, and it's written with just four letters.",
+    "try": "Try it:",
+    "alt": "Chemical structure: {name}",
+    "letters": {
+      "title": "Four chemical letters",
+      "p1": "DNA is a very long chain of pieces called nucleotides. Each nucleotide has three parts: a sugar (deoxyribose), a phosphate group and a nitrogenous base. The sugars and phosphates link together to form the backbone of the chain; the bases stick out from it and carry the information.",
+      "p2": "DNA has four bases, which is why it's written with four letters: A, G, C and T. By their shape, they fall into two families.",
+      "purines": "Purines: two rings",
+      "pyrimidines": "Pyrimidines: one ring",
+      "A": "Pairs with thymine.",
+      "G": "Pairs with cytosine.",
+      "C": "Pairs with guanine.",
+      "T": "Pairs with adenine. It's only found in DNA, and it's like uracil with one extra methyl group (CH₃).",
+      "U": "Takes the place of thymine in RNA.",
+      "key": "How to read the pictures: the balls are hydrogen (H), nitrogen (N) and oxygen (O) atoms, and the unlabeled corners of the rings are carbon atoms. Double lines are double bonds."
+    },
+    "pairs": {
+      "title": "Pairs that fit",
+      "p1": "The bases on one strand bind to those on the other through hydrogen bonds: weak attractions that can open and close without breaking the chain. Only two pairs fit.",
+      "at": "Adenine and thymine: 2 hydrogen bonds",
+      "gc": "Guanine and cytosine: 3 hydrogen bonds",
+      "p2": "A purine always pairs with a pyrimidine, so every rung is the same length and the double helix keeps a constant width of about 2 nanometers. And since each base accepts only one partner, knowing one strand is enough to know the other."
+    },
+    "helix": {
+      "title": "The double helix",
+      "p1": "The two strands wind around each other like a spiral staircase: the steps are the base pairs, and the handrails are the sugar-phosphate backbones. The staircase makes a full turn every 10.5 base pairs, about 3.5 nanometers.",
+      "p2": "The strands run in opposite directions. Each has one end called 5' and another called 3', after the sugar carbon where it ends, and they're laid out back to front relative to each other: they're antiparallel.",
+      "p3": "This shape was described by James Watson and Francis Crick in 1953, based on X-ray images taken by Rosalind Franklin and Raymond Gosling, especially the famous Photo 51."
+    },
+    "copy": {
+      "title": "How it's copied",
+      "p1": "Before it divides, a cell has to copy all of its DNA. The enzyme helicase separates the two strands like opening a zipper, and DNA polymerase builds a new strand opposite each one, following the pairing rules.",
+      "p2": "In the end there are two identical molecules, and each keeps one strand from the original: that's why copying is called semiconservative. Polymerase rarely makes mistakes, and it also checks its work and fixes almost all of them."
+    },
+    "protein": {
+      "title": "From DNA to proteins",
+      "p1": "In cells like ours, DNA never leaves the nucleus. To use a gene, the cell first makes a working copy in messenger RNA: that's transcription. RNA is written almost like DNA, but it uses uracil (U) instead of thymine.",
+      "p2": "Next, the ribosome reads that RNA three bases at a time. Each group of three, called a codon, stands for one amino acid. There are 64 possible codons for only 20 amino acids, so several codons mean the same thing. Reading starts at the AUG codon and ends at one of three stop codons: UAA, UAG or UGA. That's translation.",
+      "p3": "The chain of amino acids folds up into a protein, like the enzymes that digest food, the hemoglobin that carries oxygen or the keratin in hair."
+    },
+    "mutations": {
+      "title": "When DNA changes",
+      "p1": "Sometimes one base is swapped for another, or a few are lost or added: these are mutations. Many have no effect at all, some cause disease and a few turn out to be useful. They're the raw material of evolution.",
+      "p2": "Because the ribosome reads three bases at a time, adding or removing a single base shifts all the reading after it and changes every following amino acid. If the change is three bases long, the reading falls back into step.",
+      "p3": "Today DNA can be edited on purpose with CRISPR/Cas9, a tool that cuts DNA at the exact spot a guide RNA points to. Its development earned Emmanuelle Charpentier and Jennifer Doudna the 2020 Nobel Prize in Chemistry."
+    },
+    "info": {
+      "title": "DNA as information",
+      "p1": "With four letters, each base can store 2 bits: A = 00, C = 01, G = 10 and T = 11. Your genome has about 3.1 billion base pairs per set of chromosomes; written that way, it would take up about 775 megabytes.",
+      "p2": "If you stretched out the DNA from just one of your cells, it would be about 2 meters long. It fits in a nucleus a few thousandths of a millimeter across because it's wound around proteins and folded over itself many times.",
+      "p3": "It's so dense that books, images and videos have already been stored in DNA made in the lab."
+    }
+  },
+  "units": {
+    "proton": {
+      "one": "{n} proton",
+      "other": "{n} protons"
+    },
+    "neutron": {
+      "one": "{n} neutron",
+      "other": "{n} neutrons"
+    },
+    "electron": {
+      "one": "{n} electron",
+      "other": "{n} electrons"
+    },
+    "variant": {
+      "one": "{n} variant",
+      "other": "{n} variants"
+    },
+    "variant_causal": {
+      "one": "{n} causes it",
+      "other": "{n} cause it"
+    },
+    "variant_protective": {
+      "one": "{n} protects",
+      "other": "{n} protect"
+    },
+    "variant_risk_factor": {
+      "one": "{n} risk factor",
+      "other": "{n} risk factors"
+    }
+  },
+  "microscope": {
+    "title": "DNAinvent — 3D microscope",
+    "offer": "Explore this sequence in 3D?",
+    "missing": "The 3D microscope needs these packages: {packages}.",
+    "install": "Install them with:  pip install -r requirements.txt  (see README)",
+    "long": "The sequence has {length} base pairs; the microscope shows {maximum} at a time.",
+    "ask_start": "Starting from which base? [Enter = 1]: ",
+    "window": "3D microscope: pairs {first} to {last} of {length}.",
+    "opening": "Opening the microscope in another window… (the console is still available)",
+    "console": {
+      "ask": "DNA sequence (A, C, G, T) [Enter = {example}]: ",
+      "built": "{pairs} base pairs · {atoms} atoms",
+      "slow": "Warning: {pairs} pairs is a lot for the microscope (recommended: {maximum}); it may be slow.",
+      "integrated_gpu": "WARNING: using the integrated graphics card. On Windows, choose the NVIDIA one in Settings > System > Display > Graphics.",
+      "built_protein": "{residues} amino acids · {atoms} atoms"
+    },
+    "levels": {
+      "helix": "DNA double helix (B form)",
+      "nucleus": "{of_element}-{a} nucleus",
+      "proton": "Inside a proton (uud)",
+      "neutron": "Inside a neutron (udd)",
+      "protein": "Protein",
+      "overlay": "Superimposed proteins"
+    },
+    "hud": {
+      "level": "Level {n} · {name}",
+      "visible": "Visible width ≈ {width}  ({sci} m)",
+      "distance": "Distance to object: {d}",
+      "speed": "Speed: {v}/s  ×{mult}",
+      "time": "Time: {t}",
+      "mode_didactic": "Mode: DIDACTIC  [Tab]",
+      "mode_realistic": "Mode: REALISTIC  [Tab]",
+      "help": [
+        "Click: capture mouse · Esc: release · WASD: move · Space/Ctrl: up/down · Q/E: roll · Shift: boost · Wheel: speed",
+        "Enter: go down a level · Shift+Enter: full journey · Backspace: go up · Tab: mode · L: language · H: help · F11: full screen"
+      ],
+      "entering": "Entering: {name}",
+      "leaving": "Back to: {name}",
+      "click": "Click to fly the ship",
+      "now_didactic": "DIDACTIC mode",
+      "now_realistic": "REALISTIC mode",
+      "language": "Language: English",
+      "pair": "pair {pair} of {length}",
+      "span": "stretch {first}–{last} of {length}",
+      "residue": "amino acid {pair} of {length}",
+      "help_compare": "C: split screen / superimposed · V: switch the side you control",
+      "layout_split": "Split screen",
+      "layout_overlay": "Superimposed",
+      "only_at_protein": "Go back to the protein view to change this (Backspace)",
+      "side": "You control: {side}"
+    },
+    "autopilot": {
+      "dive": "AUTOPILOT → {target}",
+      "full": "FULL JOURNEY → {target}",
+      "ascend": "AUTOPILOT → going up a level",
+      "dive_short": "Autopilot",
+      "full_short": "Full journey down to a quark",
+      "off": "Autopilot off",
+      "next": "Next: {target}",
+      "end_of_journey": "End of the journey: there is nothing inside a quark",
+      "atom_target": "{atom}, pair {pair}",
+      "nucleus_target": "{of_element}-{a} nucleus",
+      "atom_target_residue": "{atom}, {residue} {number}"
+    },
+    "depth_marks": {
+      "dna": "DNA  ~2 nm",
+      "atom": "Atom  ~100 pm",
+      "nucleus": "Nucleus  ~3 fm",
+      "proton": "Proton  0.84 fm",
+      "quarks": "Quarks  <10⁻¹⁸ m",
+      "protein": "Protein  ~5 nm"
+    },
+    "bases": {
+      "A": "Adenine",
+      "C": "Cytosine",
+      "G": "Guanine",
+      "T": "Thymine"
+    },
+    "parts": {
+      "base": "nitrogenous base",
+      "sugar": "deoxyribose (sugar)",
+      "phosphate": "phosphate group"
+    },
+    "molecule": {
+      "atom": "{of_element} atom ({name})",
+      "base": "{name} ({base})",
+      "part_of": "{part} of nucleotide {base}",
+      "where": "{what} · pair {pair} · strand {strand}"
+    },
+    "helix": {
+      "title": "DNA · {sequence}",
+      "pairs": "{pairs} base pairs · {atoms} atoms",
+      "window": "Pairs {first} to {last} of {length} · {atoms} atoms",
+      "explanation": [
+        "Two strands wound into a spiral; each turn is 3.55 nm long",
+        "and has 10.5 base pairs (B form, the one found in cells)."
+      ],
+      "explanation_base": [
+        "Each base is joined to its partner by hydrogen bonds",
+        "(yellow lines): A–T makes 2 and G–C makes 3."
+      ],
+      "explanation_sugar": [
+        "Deoxyribose links the base to the phosphate.",
+        "Sugars and phosphates make the «handrails» of the ladder."
+      ],
+      "explanation_phosphate": [
+        "The phosphate is negatively charged: that is why DNA is an acid.",
+        "It links the sugar of one nucleotide to the next."
+      ],
+      "time": "1 s on screen ≈ 50 fs in reality (bond vibrations slowed down ~10¹³ times)"
+    },
+    "atom": {
+      "nucleus_title": "{of_element} nucleus: {protons} + {neutrons}",
+      "nucleus_distance": "Distance to nucleus: {d} pm",
+      "nucleus_explanation": [
+        "Radius ≈ {r} fm: the atom is ~{ratio} times bigger.",
+        "Almost all of the atom's mass is here. Get closer (or press Enter) to go in."
+      ],
+      "cloud_title": "Electron cloud · {electrons}",
+      "config": "Configuration: {config} · effective charge (Slater): {zeff}",
+      "cloud_explanation": [
+        "Each dot is a likely position of an electron, not a path: they do not orbit.",
+        "Colours: orange n = 1, cyan n = 2, violet n = 3; p orbitals show their lobes.",
+        "Where the clouds overlap with their neighbours, electrons are shared: that is the bond."
+      ],
+      "cloud_explanation_realistic": [
+        "Isolated atom: averaged over all orientations, its density is spherical.",
+        "In the molecule the orbitals deform when they bond (not shown here)."
+      ],
+      "time": "Stationary orbitals: the density does not change (the flicker = successive measurements)"
+    },
+    "nucleus": {
+      "title": "{protons} + {neutrons} · radius ≈ {r} fm",
+      "detail": "density ≈ {rho} kg/m³",
+      "explanation": [
+        "The strong force beats the electric repulsion between the {protons}.",
+        "Probability of finding an electron in here: ~{p_in}",
+        "A teaspoon of nuclear matter would weigh ~1 billion tonnes."
+      ],
+      "explanation_hydrogen": [
+        "The hydrogen-1 nucleus is a single proton.",
+        "Probability of finding the electron in here: ~{p_in}"
+      ],
+      "explanation_realistic": [
+        "Nuclear matter density (Woods–Saxon profile): nucleons are",
+        "quantum waves and have no definite position."
+      ],
+      "strong_lines": "Green lines: strong nuclear force (range ~2 fm).",
+      "go_in": "get closer (or press Enter) to go in",
+      "proton": {
+        "title": "Proton",
+        "detail": "charge +1 · {mass} MeV/c² · quarks u u d",
+        "explanation": [
+          "3 valence quarks (uud) held together by gluons.",
+          "Only ~1 % of its mass comes from the quarks: the rest is energy",
+          "of the strong interaction (E = mc²)."
+        ]
+      },
+      "neutron": {
+        "title": "Neutron",
+        "detail": "charge 0 · {mass} MeV/c² · quarks u d d",
+        "explanation": [
+          "3 valence quarks (udd). Free, it decays in ~15 minutes;",
+          "inside a stable nucleus it lasts forever.",
+          "Without neutrons, electric repulsion would push the protons apart."
+        ]
+      },
+      "time": "1 s on screen ≈ 10⁻²² s in reality (a nucleon crosses the nucleus in ~10⁻²² s)"
+    },
+    "nucleon": {
+      "proton": "Proton",
+      "neutron": "Neutron",
+      "title": "{name}: valence quarks {content} + parton sea",
+      "colors_now": "Colours now: {colors}",
+      "realistic_detail": "1 s on screen ≈ 10⁻²⁴ s in reality",
+      "up": {
+        "title": "Up quark (u)",
+        "detail": "charge +2/3 · mass ≈ {mass} MeV/c² · colour: {color}"
+      },
+      "down": {
+        "title": "Down quark (d)",
+        "detail": "charge −1/3 · mass ≈ {mass} MeV/c² · colour: {color}"
+      },
+      "quark_explanation": [
+        "Fundamental particle: no known structure (< 10⁻¹⁸ m).",
+        "The journey ends here: there is nothing «inside» a quark.",
+        "Confinement: if you pull a quark away, the gluon tube",
+        "snaps and creates new quark–antiquark pairs."
+      ],
+      "explanation": [
+        "Red/green/blue = colour charge (a label, not a real colour).",
+        "The 3 quarks add up to «white». Travelling gluons swap",
+        "colour between them. Background dots: gluons and sea pairs.",
+        "Quarks provide ~1 % of the mass; the rest is energy (E = mc²)."
+      ],
+      "explanation_realistic": [
+        "Parton fog: quarks, antiquarks and gluons that appear and",
+        "disappear. You cannot point to where each quark is: only the",
+        "probability of finding them (charge radius 0.84 fm)."
+      ],
+      "colors": {
+        "r": "red",
+        "g": "green",
+        "b": "blue"
+      },
+      "time": "1 s on screen ≈ 10⁻²⁴ s in reality (light crosses a proton in ~3×10⁻²⁴ s)"
+    },
+    "protein": {
+      "title": "Protein · {name}",
+      "residues": "{residues} amino acids · {atoms} atoms",
+      "window": "Amino acids {first} to {last} of {length} · {atoms} atoms",
+      "explanation": [
+        "A chain of amino acids folded onto itself. The coloured line joins the",
+        "alpha carbons: yellow hydrophobic, green polar, blue +, red −, grey Gly/Pro."
+      ],
+      "explanation_confidence": [
+        "Prediction confidence colours (pLDDT): dark blue very high,",
+        "light blue confident, yellow low, orange very low."
+      ],
+      "explanation_backbone": [
+        "Backbone: N–Cα–C=O, the same in every amino acid.",
+        "The peptide bond (C–N) joins each one to the next."
+      ],
+      "explanation_sidechain": [
+        "Side chain: what makes each amino acid different",
+        "and decides where it ends up when the protein folds."
+      ],
+      "classes": {
+        "hydrophobic": "Hydrophobic: avoids water and usually ends up inside the protein.",
+        "special": "Glycine or proline: the most flexible or the most rigid amino acid in the chain.",
+        "polar": "Polar: uncharged but attracts water; usually on the surface.",
+        "positive": "Positively charged at pH 7.",
+        "negative": "Negatively charged at pH 7."
+      },
+      "where": "{part} · {residue} {number}",
+      "parts": {
+        "backbone": "backbone",
+        "sidechain": "side chain"
+      },
+      "atom_confidence": "Prediction confidence here: pLDDT {plddt}, {band}.",
+      "atom_highlighted": "This amino acid differs from the other protein: {label}.",
+      "highlighted": "Changes (in magenta): {list}",
+      "overlay_title": "{natural}  vs  {yours}",
+      "overlay_explanation": [
+        "Both at once, already superimposed: natural in cyan, yours in orange.",
+        "Where they match, the colours add up to white; where the shape changes, they separate."
+      ],
+      "sides": {
+        "natural": "natural",
+        "yours": "yours"
+      }
+    }
+  },
+  "protein": {
+    "categories": {
+      "identical": {
+        "name": "Known protein",
+        "description": "A 100% match with a real protein: its AlphaFold DB structure is shown."
+      },
+      "very_similar": {
+        "name": "Variant of a known protein",
+        "description": "At least {high}% identical to a real protein: the natural one and yours are compared side by side."
+      },
+      "distant_relative": {
+        "name": "Distant relative",
+        "description": "Between {low}% and {high}% identical to a real protein: they share an ancestor. The regions that evolution has conserved are highlighted."
+      },
+      "invented": {
+        "name": "Invented protein",
+        "description": "Not similar to any known protein: its structure is predicted, and it probably would not fold like this in nature."
+      }
+    },
+    "confidence": {
+      "very_high": "Very high confidence",
+      "confident": "Confident",
+      "low": "Low confidence",
+      "very_low": "Very low confidence (probably a disordered region)"
+    },
+    "email": {
+      "using": "Searching with the email {email}."
+    },
+    "stage": {
+      "orf": "Looking for the reading frame…",
+      "search": "Searching for similar proteins in {database}…",
+      "search_everything": "Nothing reliable. Searching {database}; this may take a few minutes…",
+      "waiting": "Search in progress ({status})…",
+      "structure": "Downloading the structure of {accession} from AlphaFold DB…",
+      "predict": "Predicting the structure of your protein with {predictor} ({length} amino acids)…"
+    },
+    "databases": {
+      "uniprotkb_swissprot": "Swiss-Prot (manually reviewed proteins)",
+      "uniprotkb": "all of UniProtKB"
+    },
+    "report": {
+      "orf": "Reading frame {frame}: bases {start}–{end} of {length}, {count} amino acids ({stop}).",
+      "complete": "ends at the stop codon {codon}",
+      "incomplete": "no stop codon",
+      "protein": "Your protein:",
+      "category": "Case:",
+      "best": "Most similar real protein:",
+      "gene": "gene {gene}",
+      "identity": "Identity {identity}% · covers {query}% of your protein and {subject}% of the real one · E-value {evalue}",
+      "others": "Other similar proteins:",
+      "none": "No reliable match in {database}.",
+      "alignment": "Alignment (yours on top, the real one below; letter = same, + = similar, - = gap):",
+      "structure": "Structure: {model} (version {version}), mean confidence (pLDDT) {plddt}",
+      "atoms": "{heavy} heavy atoms + {hydrogens} calculated hydrogens",
+      "citation": "Data: AlphaFold DB (EMBL-EBI and Google DeepMind), CC-BY 4.0 licence.",
+      "warnings": "Warnings:",
+      "prediction": "Your predicted protein ({predictor}): mean confidence (pLDDT) {plddt}",
+      "prediction_citation": "Prediction: {predictor} (Meta; Lin et al. 2023, Science).",
+      "comparison": "Comparison with the natural one ({accession}):",
+      "differences": "Mutations ({count}): {list}",
+      "differences_distant": "Differences ({count}): {list}",
+      "differences_more": "… and {count} more",
+      "no_differences": "No amino acid changes in the aligned stretch.",
+      "indels": "Gaps: {insertions} extra amino acids and {deletions} missing compared with the natural one.",
+      "conserved": "Conserved amino acids: {count} of {total} ({percent}%).",
+      "rmsd": "Shape difference (RMSD of the alpha carbons): {rmsd} Å over {count} amino acids ({meaning}).",
+      "rmsd_same": "practically the same shape",
+      "rmsd_close": "the same shape with small differences",
+      "rmsd_different": "clearly different shapes",
+      "most_different": "Regions that change most: {list}",
+      "numbering": "UniProt numbering: starts at the initial methionine (sickle cell anaemia, Glu6Val in medicine, appears as Glu7Val)."
+    },
+    "save_offer": "Save the structures with hydrogens to PDB files?",
+    "saved": "Saved to {path}. You can view it at https://molstar.org/viewer/ by dragging the file in.",
+    "warnings": {
+      "incomplete_orf": "The reading frame reaches the end of the sequence without a stop codon: maybe you only pasted part of the gene.",
+      "too_short": "The protein has {length} amino acids: below {minimum} it cannot be identified or its shape predicted reliably (such a short peptide has no fold of its own).",
+      "fragment": "Your protein matches only amino acids {start}–{end} of the {length} in the real one.",
+      "no_structure": "AlphaFold DB has no structure for {accession}.",
+      "structure_unavailable": "AlphaFold DB is not responding: the structure of {accession} could not be downloaded.",
+      "mutation_effect": "Even if the shape looks very similar, a single different amino acid can completely change how a protein works (as in sickle cell anaemia).",
+      "prediction_too_long": "The shape of your protein is not predicted: it has {length} amino acids and the prediction server accepts at most {maximum}.",
+      "prediction_unavailable": "{predictor} is not responding right now: the shape of your protein could not be predicted. Try again later.",
+      "unlikely_fold": "The mean confidence of the prediction is {plddt} (out of 100): most likely this protein would not fold in nature. Real proteins are very special sequences, selected over millions of years of evolution.",
+      "prediction_failed": "{predictor} could not predict the shape of this protein."
+    },
+    "saved_pair": "If you open both at https://molstar.org/viewer/, yours appears superimposed on the natural one.",
+    "microscope_offer": "Explore the structure in the 3D microscope?",
+    "microscope": {
+      "yours": "Your protein ({predictor})",
+      "long": "The protein has {length} amino acids; the microscope shows {maximum} at a time.",
+      "ask_start": "Start from which amino acid? [Enter = 1]: ",
+      "window": "3D microscope: amino acids {first} to {last} of {length}."
+    }
+  },
+  "database": {
+    "stage": {
+      "gene": "Looking up gene {symbol} in NCBI Gene…",
+      "sequence": "Downloading mRNA {accession} from RefSeq…",
+      "variants": "Looking up the variants of {symbol} in ClinVar…",
+      "summaries": "Reading variants: {done} of {total}…",
+      "conditions": "Reading the classification for each disease: {done} of {total}…",
+      "saving": "Saving {count} variants…"
+    },
+    "imported_gene": "Gene {symbol} saved: {name}.",
+    "clinvar_offer": "Also import its ClinVar variants? It may take a minute",
+    "clinvar_human_only": "ClinVar only has human variants: the gene was saved without variants.",
+    "stats": {
+      "found": "Variants in ClinVar:",
+      "saved": "Saved:",
+      "saved_value": "{count} ({pathogenic} pathogenic or likely pathogenic)",
+      "with_conditions": "With a per-disease classification:",
+      "not_on_mrna": "Not described on an mRNA:",
+      "other_gene": "From a neighbouring gene:",
+      "new_diseases": "New diseases:",
+      "few_conditions": "Only {count} of {saved} variants have a per-disease classification: the rest were linked without saying what they do. Import the gene again later.",
+      "batches_failed": "{count} classification requests did not arrive (ClinVar was not responding).",
+      "unexpected": "ClinVar returned {count} records that were not requested; they were discarded."
+    },
+    "citation": "Data: NCBI Gene, RefSeq and ClinVar (public domain).",
+    "empty": "No genes saved yet. Import them with option 1.",
+    "not_saved": "Gene {symbol} is not saved. Import it with option 1.",
+    "path": "Database: {path}",
+    "units": {
+      "nt": "nt",
+      "aa": "amino acids"
+    },
+    "mol_types": {
+      "mrna": "mRNA",
+      "protein": "protein",
+      "genomic": "genomic DNA",
+      "cds": "CDS",
+      "ncrna": "non-coding RNA"
+    },
+    "gene": {
+      "header": "{symbol}: {name} ({organism})",
+      "location": "Chromosome {chromosome}: {start}-{end}, {strand} strand ({assembly}) · NCBI Gene {gene_id}",
+      "sequence": "{accession} · {kind} · {length} {unit}",
+      "cds": "coding region {start}..{end}",
+      "pending": "Sequences with their details only (downloaded when needed): {count}",
+      "no_variants": "No variants saved.",
+      "variants": "Saved variants: {count}",
+      "diseases": "Diseases (number of variants by what they do in EACH disease):",
+      "diseases_note": "Disease names come from ClinVar, in English."
+    },
+    "significance": {
+      "pathogenic": "pathogenic",
+      "likely_pathogenic": "likely pathogenic",
+      "pathogenic_likely_pathogenic": "pathogenic / likely pathogenic",
+      "uncertain": "uncertain significance",
+      "conflicting": "conflicting classifications",
+      "likely_benign": "likely benign",
+      "benign": "benign",
+      "benign_likely_benign": "benign / likely benign",
+      "protective": "protective",
+      "risk_factor": "risk factor",
+      "none": "not classified",
+      "other": "other",
+      "drug_response": "drug response",
+      "association": "association",
+      "affects": "affects",
+      "not_provided": "not provided",
+      "oncogenic": "oncogenic",
+      "likely_oncogenic": "likely oncogenic",
+      "pathogenic_low_penetrance": "pathogenic, low penetrance",
+      "likely_pathogenic_low_penetrance": "likely pathogenic, low penetrance",
+      "established_risk_allele": "established risk allele",
+      "likely_risk_allele": "likely risk allele",
+      "uncertain_risk_allele": "uncertain risk allele",
+      "tier_1": "tier I: strong clinical impact",
+      "tier_2": "tier II: potential clinical impact",
+      "tier_3": "tier III: unknown clinical impact",
+      "tier_4": "tier IV: benign or likely benign",
+      "no_single_classification": "no classification of its own (only in combination with others)"
+    },
+    "effects": {
+      "causal": "causes it",
+      "protective": "protects",
+      "risk_factor": "risk factor",
+      "none": "no clear effect"
+    },
+    "variant_kinds": {
+      "missense": "missense: one amino acid changes",
+      "synonymous": "synonymous: the amino acid does not change",
+      "nonsense": "nonsense: a stop codon appears and the protein is cut short",
+      "stop_lost": "stop-loss: the protein runs past its end"
+    },
+    "variants": {
+      "none": "No variant matches.",
+      "found": "Variants found:",
+      "more": "(showing the first {count}; type the variant to narrow it down)"
+    },
+    "compare": {
+      "title": "{gene} {hgvs_c} {hgvs_p} on {accession}",
+      "global": "Overall classification in ClinVar: {significance}",
+      "position": "Position {position} of the mRNA, codon {codon}: {ref} -> {alt}",
+      "codon": "Codon",
+      "healthy": "Healthy",
+      "variant": "Variant",
+      "effect": "Effect: {kind}",
+      "old_numbering": "Older texts on some proteins (such as haemoglobin) do not count the initial methionine and call it {old}: it is the same mutation.",
+      "diseases": "What it does in each disease:",
+      "no_diseases": "ClinVar does not link it to any specific disease."
+    },
+    "search": {
+      "none": "No results.",
+      "gene": "Gene",
+      "disease": "Disease",
+      "genes": "Genes: {list}"
+    }
+  }
+}
