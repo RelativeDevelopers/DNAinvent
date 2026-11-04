@@ -9,7 +9,7 @@
   ],
   "icon": "../dnainvent_web/dnainvent/web/static/img/logo-512.png",
   "links": {
-    "web": null,
+    "web": "https://dnainvent.relativedevelopers.com",
     "web_local": "http://127.0.0.1:8001",
     "play": null,
     "app_store": null,
