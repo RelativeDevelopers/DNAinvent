@@ -13,6 +13,6 @@
     "web_local": "http://127.0.0.1:8001",
     "play": null,
     "app_store": null,
-    "source": null
+    "source": "https://github.com/RelativeDevelopers/DNAinvent"
   }
 }
