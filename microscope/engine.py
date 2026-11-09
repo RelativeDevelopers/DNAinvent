@@ -15,6 +15,17 @@ Cada "vista" tiene su propia pila; la nave es la misma para todas:
               cámara. Al entrar en un átomo, se ve a pantalla completa el lado que manejas
               (tecla V para cambiarlo) y al volver a la proteína se parte otra vez.
     overlay   las dos en la misma escena, cada una de un color (tecla C para alternar).
+
+Modos de visualización (tecla Tab, Mayús+Tab hacia atrás):
+
+    didactic   didáctico: colores por capa, lóbulos de los orbitales, marcadores
+    realistic  realista: lo más fiel a la física (densidades, sin colores inventados)
+    atomic     atómico: cada átomo como el "Átomo en 3D" de AtomicWorld (todas las capas
+               visibles, subniveles uno a uno con O / I dentro de un átomo)
+    plastic    plástico: protones, neutrones, electrones y quarks como bolas de plástico
+
+Los textos de los modos atómico y plástico son los del didáctico (más alguna línea propia):
+por eso engine.didactic es True en todos menos en el realista.
 """
 from collections import OrderedDict
 from dataclasses import dataclass, field
@@ -29,6 +40,7 @@ from microscope.mathutil import perspective, view_matrix
 from microscope.render.points import Camera, Renderer
 from microscope.ship import Ship
 
+MODES = ("didactic", "realistic", "atomic", "plastic")
 FOV_Y = 70.0
 TRANSITION_TIME = 0.6
 CACHE_SIZE = 4
@@ -71,17 +83,19 @@ def make_root(molecule, tr, label="", highlight=None) -> Level:
 
 class Engine:
     def __init__(self, ctx, molecule, tr, didactic=True, comparison: Comparison | None = None,
-                 label: str = "", highlight: dict | None = None):
+                 label: str = "", highlight: dict | None = None, mode: str | None = None):
         self.renderer = Renderer(ctx)
         self.molecule = molecule
         self.tr = tr
-        self.didactic = didactic
+        self.mode = mode or ("didactic" if didactic else "realistic")
+        if self.mode not in MODES:
+            raise ValueError(f"modo desconocido: {self.mode}")
         self.time = 0.0
         self.comparison = comparison
 
         if comparison is None:
             root = make_root(molecule, tr, label, highlight)
-            root.build(self.renderer, didactic)
+            self._build(root)
             self.views = {"single": View([(root, None)], label)}
             self.layout, self.active = "single", "single"
         else:
@@ -90,7 +104,7 @@ class Engine:
                      ("right", comparison.second, comparison.labels[1], comparison.highlight[1]))
             for side, mol, text, marks in sides:
                 root = make_root(mol, tr, text, marks)
-                root.build(self.renderer, didactic)
+                self._build(root)
                 self.views[side] = View([(root, None)], text)
             self.layout, self.active = "split", "left"
 
@@ -104,6 +118,16 @@ class Engine:
         self.ship = Ship(start, look_at=np.zeros(3))
         self.home = start.copy()                     # vista panorámica (Retroceso en la raíz)
         self.autopilot = Autopilot(tr)
+
+    # ------------------------------------------------------------ modos
+    @property
+    def didactic(self) -> bool:
+        """Textos y marcadores didácticos: en todos los modos menos el realista."""
+        return self.mode != "realistic"
+
+    def _build(self, level: Level):
+        level.mode = self.mode
+        level.build(self.renderer, self.didactic)
 
     # ------------------------------------------------------------ vistas
     @property
@@ -147,7 +171,7 @@ class Engine:
                 levels = [ProteinLevel(self.molecule, self.tr, c.labels[0], c.highlight[0]),
                           ProteinLevel(c.second, self.tr, c.labels[1], c.highlight[1])]
                 overlay = OverlayLevel(levels, self.tr)
-                overlay.build(self.renderer, self.didactic)
+                self._build(overlay)
                 self.views["overlay"] = View([(overlay, None)])
             self.layout = "overlay"
         else:
@@ -214,7 +238,7 @@ class Engine:
             self.cache.move_to_end(child.key)
             return self.cache[child.key]
         lvl = child.create()
-        lvl.build(self.renderer, self.didactic)
+        self._build(lvl)
         self.cache[child.key] = lvl
         while len(self.cache) > CACHE_SIZE:
             key, old = next(iter(self.cache.items()))
@@ -225,14 +249,43 @@ class Engine:
             old.release()
         return lvl
 
-    def toggle_mode(self):
-        self.didactic = not self.didactic
+    def toggle_mode(self, step: int = 1) -> str:
+        """Tab: el modo siguiente (step=-1, Mayús+Tab: el anterior). Devuelve el nuevo."""
+        return self.set_mode(MODES[(MODES.index(self.mode) + step) % len(MODES)])
+
+    def set_mode(self, mode: str) -> str:
+        if mode not in MODES:
+            raise ValueError(f"modo desconocido: {mode}")
+        self.mode = mode
         for view in self.views.values():
             levels = [l for l, _ in view.stack] + [l for l in view.cache.values()
                                                      if not any(l is s for s, _ in view.stack)]
             for lvl in levels:
+                lvl.mode = mode
                 lvl.set_mode(self.renderer, self.didactic)
             view.transition = None
+        return mode
+
+    # ------------------------------------------------------------ subniveles (modo atómico)
+    def cycle_subshell(self) -> str | None:
+        """Tecla O, dentro de un átomo en modo atómico: los subniveles de uno en uno.
+        Devuelve el texto para el HUD, o None si aquí no se puede."""
+        lvl = self.level
+        if self.mode != "atomic" or not hasattr(lvl, "cycle_view"):
+            return None
+        view = lvl.cycle_view()
+        if view is None:
+            return self.tr("microscope.hud.showing_all")
+        return self.tr("microscope.hud.showing_subshell", name=lvl.subshell_label(view))
+
+    def cycle_orbital(self) -> str | None:
+        """Tecla I: con un subnivel p elegido, sus orbitales de uno en uno."""
+        lvl = self.level
+        if self.mode != "atomic" or not hasattr(lvl, "cycle_orbital") or not lvl.cycle_orbital():
+            return None
+        if lvl.orbital is None:
+            return self.tr("microscope.hud.showing_subshell", name=lvl.subshell_label(lvl.view))
+        return self.tr("microscope.hud.showing_orbital", name=lvl.orbital_label())
 
     # ------------------------------------------------------------ dibujo
     def _camera(self, level, pos, width, height) -> Camera:
@@ -284,6 +337,8 @@ class Engine:
             "focus": lvl.focus(self.ship.pos, self.ship.forward, self.didactic),
             "time": lvl.time_info(),
             "didactic": self.didactic,
+            "mode": self.mode,
+            "axis_labels": self._axis_labels(width, height),
             "molecule": self.view.root.mol if hasattr(self.view.root, "mol") else self.molecule,
             "panels": self._panels(),
             "comparing": self.comparison is not None,
@@ -291,6 +346,26 @@ class Engine:
             "autopilot": self.autopilot.status(),
             "target_screen": self._project(self.autopilot.target_point(), width, height),
         }
+
+    def _axis_labels(self, width, height) -> list:
+        """Nombres x, y, z en la punta de los ejes (modo atómico, con un subnivel elegido)."""
+        lvl = self.level
+        if self.split_visible or self.transition or not hasattr(lvl, "axis_labels"):
+            return []
+        out = []
+        for point, name in lvl.axis_labels():
+            px = self._screen(point, width, height)
+            if px:
+                out.append((px, name))
+        return out
+
+    def _screen(self, point, width, height):
+        cam = self._camera(self.level, self.ship.pos, width, height)
+        clip = cam.proj @ cam.view @ np.append(point, 1.0)
+        if clip[3] <= 0:
+            return None
+        ndc = clip[:3] / clip[3]
+        return ((ndc[0] * 0.5 + 0.5) * width, (0.5 - ndc[1] * 0.5) * height)
 
     def _panels(self) -> list[dict]:
         """Etiquetas de cada mitad para el HUD ([] si no hay pantalla partida a la vista).

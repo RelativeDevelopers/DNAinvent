@@ -28,7 +28,14 @@ Un viaje en primera persona dentro de tu secuencia, con cuatro niveles de zoom:
 | 3 · Núcleo | femtómetros | protones y neutrones |
 | 4 · Nucleón | 0,1 fm | los quarks, los gluones y el "mar" de partículas |
 
-Puedes moverte libremente o dejar que el **piloto automático** te lleve de un nivel al siguiente (o hasta un quark del tirón). Hay dos modos: **didáctico**, para entenderlo, y **realista**, más fiel a la física.
+Puedes moverte libremente o dejar que el **piloto automático** te lleve de un nivel al siguiente (o hasta un quark del tirón). Hay cuatro modos (tecla **Tab**):
+
+| Modo | Qué ves |
+|---|---|
+| **Didáctico** | para entenderlo: colores por elemento, enlaces y marcadores |
+| **Realista** | más fiel a la física: densidades, sin colores inventados |
+| **Atómico** | cada átomo de la hélice (oxígeno, nitrógeno, hidrógeno...) dibujado como el *Átomo en 3D* de AtomicWorld: colores por capa y todas las capas visibles. Dentro de un átomo, **O** muestra sus subniveles uno a uno y **I** sus orbitales p, con los ejes x, y, z; y puedes retroceder (**S**) hasta ver el átomo entero |
+| **Plástico 3D** | electrones (e⁻), protones (+), neutrones (0), quarks up (u) y down (d) y gluones (g) como bolas de plástico brillante. Los electrones giran como en el modelo de Bohr: es un modelo de juguete, y el HUD lo explica |
 
 ### 🧪 Proteína 3D
 Escribe ADN y DNAinvent te dice **qué proteína es**, cuánto se parece a la proteína real más cercana y cómo es su forma plegada (con datos de AlphaFold).
@@ -110,6 +117,7 @@ En el menú principal tienes todas las herramientas. Algunas destacadas:
 ```bash
 python -m microscope ATGCGTACGTTAGC                  # tu secuencia
 python -m microscope ATGC --lang ca --realistic      # en catalán y en modo realista
+python -m microscope ATGC --mode plastic             # empezar en otro modo: didactic, realistic, atomic o plastic
 python -m microscope <secuencia> --start 120 --count 60   # un tramo de una secuencia larga
 python -m microscope --pdb hbb.pdb                   # cualquier proteína guardada en PDB
 ```
@@ -128,7 +136,8 @@ El microscopio muestra hasta **60 pares de bases** (o 150 aminoácidos) a la vez
 | **Enter** | 🚀 piloto automático: bajar un nivel hacia lo que apuntas |
 | **Mayús + Enter** | 🚀 viaje completo hasta un quark |
 | **Retroceso** | subir un nivel |
-| **Tab** | modo didáctico ↔ realista |
+| **Tab** · **Mayús + Tab** | modo: didáctico → realista → atómico → plástico 3D (y al revés) |
+| **O** · **I** | (modo atómico, dentro de un átomo) un subnivel cada vez · un orbital p cada vez |
 | **L** | cambiar idioma |
 | **H** · **F11** | ayuda · pantalla completa |
 | **C** | (comparando proteínas) pantalla partida ↔ superpuestas |

@@ -8,6 +8,10 @@ Modos:
     la densidad del núcleo entero con el perfil de Woods–Saxon. Para el hidrógeno-1 (un
     único protón) se dibuja ese protón.
 
+  - Plástico: cada protón (+, rojo) y cada neutrón (0, azul) es una bola de plástico
+    (render/sprites.py), con un pequeño temblor. Al acercarte a una se vuelve transparente
+    para poder entrar.
+
 La física (posiciones, perfiles) es la de AtomicWorld: atomicworld/scene/nucleus.py. Con la
 misma semilla, el núcleo del carbono-12 es idéntico en las dos apps.
 """
@@ -17,6 +21,7 @@ from atomicworld import atoms
 from atomicworld.constants import NEUTRON_MASS_MEV, PROTON_MASS_MEV
 from atomicworld.scene import nucleus as nuc
 from atomicworld.scene.orbitals import probability_inside_nucleus
+from microscope.levels import plastic
 from microscope.levels.base import Child, Focus, Level, Target, aimed
 from microscope.render.points import LineSet, PointCloud, PointStyle
 
@@ -28,6 +33,7 @@ VIB_AMP_FM = 0.22          # movimiento de Fermi de los nucleones (ver time_info
 ENTER_NUCLEON_FM = 0.45    # se entra en un nucleón a 0,45 fm de su centro
 EXIT_FACTOR = 4.0          # se sale al átomo a 4 × R nuclear
 UNIT_PER_FM = 10.0         # el nivel del nucleón trabaja en décimas de fm
+NEAR_FADE = 2.0            # modo plástico: la bola se vuelve transparente a menos de 2 radios
 
 
 class NucleusLevel(Level):
@@ -46,6 +52,8 @@ class NucleusLevel(Level):
         self.kinds = nuc.assign_kinds(self.el.protons, self.iso.neutrons, rng)
         self.clouds = []
         self.lines = []
+        self.balls = None                # modo plástico (SpriteSet)
+        self.wobble = plastic.Wobble(self.A, plastic.FERMI_WOBBLE_FM, np.random.default_rng(self.A))
 
     @property
     def name(self):
@@ -55,6 +63,11 @@ class NucleusLevel(Level):
 
     # ------------------------------------------------------------ construcción
     def build(self, renderer, didactic):
+        if self.mode == "plastic":
+            from microscope.render.sprites import SpriteSet
+            self.balls = SpriteSet(renderer, self.centers, np.full(self.A, plastic.NUCLEON_BALL_FM),
+                                   plastic.nucleon_kinds(self.kinds), min_px=2.0)
+            return
         rng = np.random.default_rng(7)
         if didactic or self.A == 1:
             pos, owner = nuc.nucleon_clouds(self.centers, nuc.points_per_nucleon(self.A), rng)
@@ -82,10 +95,18 @@ class NucleusLevel(Level):
             c.release()
         for line in self.lines:
             line.release()
-        self.clouds, self.lines = [], []
+        if self.balls is not None:
+            self.balls.release()
+        self.clouds, self.lines, self.balls = [], [], None
+
+    def update(self, dt, time):
+        if self.balls is not None:
+            self.balls.set(pos=self.centers + self.wobble.offsets(time))
 
     # ------------------------------------------------------------ dibujo
     def render(self, renderer, cam, didactic, fade):
+        if self.balls is not None:
+            renderer.sprites(self.balls, cam, fade, near_fade=NEAR_FADE)
         for kind, cloud in self.clouds:
             if kind == "nucleons":
                 style = PointStyle(vib_amp=VIB_AMP_FM, min_px=1.5, max_px=5, softness=0.8)
@@ -142,7 +163,9 @@ class NucleusLevel(Level):
             expl = []
             if didactic:
                 expl = tr.lines(f"microscope.nucleus.{kind}.explanation")
-                if self.A > 1:
+                if self.mode == "plastic":
+                    expl += tr.lines("microscope.nucleus.plastic")
+                elif self.A > 1:
                     expl.append(tr("microscope.nucleus.strong_lines"))
             detail = tr(f"microscope.nucleus.{kind}.detail", mass=tr.decimal(mass, 2))
             return Focus(tr(f"microscope.nucleus.{kind}.title"),
@@ -155,6 +178,8 @@ class NucleusLevel(Level):
         if didactic:
             key = "explanation_hydrogen" if self.el.protons == 1 else "explanation"
             expl = tr.lines(f"microscope.nucleus.{key}", protons=protons, p_in=tr.sci(p_in))
+            if self.mode == "plastic":
+                expl += tr.lines("microscope.nucleus.plastic")
         elif self.A > 1:
             expl = tr.lines("microscope.nucleus.explanation_realistic")
         title = tr("microscope.nucleus.title", protons=protons,

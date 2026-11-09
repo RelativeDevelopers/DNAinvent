@@ -20,6 +20,9 @@ DEPTH_MARKS = [(2e-9, "dna"), (1e-10, "atom"), (3e-15, "nucleus"), (8.4e-16, "pr
 FIRST_MARK = {"dna": (2e-9, "dna"), "protein": (5e-9, "protein")}   # según la molécula
 BAR_TOP, BAR_BOTTOM = 1e-6, 1e-19
 SEQUENCE_SHOWN = 40          # bases de la secuencia que caben arriba
+MODE_COLORS = {"didactic": (255, 210, 120, 255), "realistic": (140, 230, 200, 255),
+               "atomic": (120, 200, 255, 255), "plastic": (255, 140, 170, 255)}
+AXIS_COLORS = {"x": (255, 120, 120, 230), "y": (120, 255, 120, 230), "z": (120, 170, 255, 230)}
 
 VERT = """#version 330
 in vec2 in_pos; out vec2 v_uv;
@@ -83,8 +86,7 @@ class HUD:
             (f, tr("microscope.hud.speed", v=scale.length(st["speed_m_s"], dec),
                    mult=f"{st['speed_mult']:.2g}".replace(".", dec)), (190, 215, 255, 255)),
             (f_small, tr("microscope.hud.time", t=st["time"]), (150, 170, 200, 255)),
-            (f_small, tr("microscope.hud.mode_didactic" if st["didactic"] else "microscope.hud.mode_realistic"),
-             (255, 210, 120, 255) if st["didactic"] else (140, 230, 200, 255)),
+            (f_small, tr(f"microscope.hud.mode_{st['mode']}"), MODE_COLORS[st["mode"]]),
         ]
         y = pad
         box_w = max(int(560 * k), int(max(d.textlength(t, font=fo) for fo, t, _ in lines)) + pad)
@@ -119,6 +121,11 @@ class HUD:
         for panel in panels:
             self._panel(d, panel, w, h, pad, lh, f, k)
 
+        # --- nombres de los ejes (modo atómico, con un subnivel elegido: tecla O)
+        for (px, py), name in st.get("axis_labels", []):
+            if 0 <= px < w and 0 <= py < h:
+                d.text((px + 4, py - 10 * k), name, font=f_big, fill=AXIS_COLORS[name])
+
         # --- barra de profundidad a la derecha
         self._depth_bar(d, st["depth_m"], w, h, k, f_small, getattr(mol, "kind", "dna"))
 
@@ -151,6 +158,8 @@ class HUD:
             help_lines = tr.lines("microscope.hud.help")
             if st.get("comparing"):
                 help_lines = help_lines + [tr("microscope.hud.help_compare")]
+            if st.get("mode") == "atomic":
+                help_lines = help_lines + [tr("microscope.hud.help_atomic")]
             for i, text in enumerate(help_lines):
                 d.text((pad, h - pad - lh * (len(help_lines) - i)), text, font=f_small,
                        fill=(160, 175, 200, 220))

@@ -3,6 +3,7 @@ Prueba sin ventana del microscopio: hace el viaje completo con el piloto automá
 (Mayús+Enter) y guarda capturas PNG de cada nivel.
 
     python tools/microscope_render_test.py [carpeta_salida] [--lang es|en|ca] [--realistic]
+    python tools/microscope_render_test.py test_frames --mode plastic     (o atomic)
 """
 import argparse
 import sys
@@ -27,6 +28,7 @@ def main(argv=None):
     parser.add_argument("out", nargs="?", default="test_frames")
     parser.add_argument("--lang", default="es")
     parser.add_argument("--realistic", action="store_true")
+    parser.add_argument("--mode", choices=("didactic", "realistic", "atomic", "plastic"))
     parser.add_argument("--sequence", default="ATGCGTACGTTAGC")
     args = parser.parse_args(argv)
 
@@ -36,10 +38,11 @@ def main(argv=None):
         ctx = moderngl.create_standalone_context()
     except Exception:
         ctx = moderngl.create_standalone_context(backend="egl")
-    fbo = ctx.framebuffer(color_attachments=[ctx.texture((W, H), 4)])
+    fbo = ctx.framebuffer(color_attachments=[ctx.texture((W, H), 4)],
+                          depth_attachment=ctx.depth_renderbuffer((W, H)))   # modo plástico
     tr = Translator(args.lang)
     mol = build_molecule(args.sequence)
-    eng = Engine(ctx, mol, tr, didactic=not args.realistic)
+    eng = Engine(ctx, mol, tr, mode=args.mode or ("realistic" if args.realistic else "didactic"))
     hud = HUD(ctx, tr)
 
     def snap(name):

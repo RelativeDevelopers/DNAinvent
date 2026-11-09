@@ -102,6 +102,14 @@ class ProteinLevel(Level):
 
     def build(self, renderer, didactic: bool):
         mol = self.mol
+        if self.mode == "atomic" and self.tint is None:
+            # modo atómico: cada átomo como en AtomicWorld (colores por capa), con el esqueleto
+            from microscope.levels.atomic_style import molecule_cloud
+            self.clouds.append(PointCloud(renderer, *molecule_cloud(
+                mol, atom_type, TARGET_POINTS, np.random.default_rng(1))))
+            self._trace(renderer)
+            self._highlights(renderer)
+            return
         rng = np.random.default_rng(1)
         types = {s: atom_type(s) for s in set(mol.elements)}
         total_e = sum(types[e].electrons for e in mol.elements)
@@ -306,6 +314,7 @@ class OverlayLevel(Level):
 
     def build(self, renderer, didactic):
         for level in self.levels:
+            level.mode = self.mode
             level.build(renderer, didactic)
 
     def release(self):

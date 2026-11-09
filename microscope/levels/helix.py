@@ -4,12 +4,17 @@ Nivel 1: la doble hélice completa (unidad: nanómetro).
 Cada átomo se dibuja como su nube de electrones (los mismos orbitales que se ven en el
 nivel atómico, con menos puntos). La forma de la molécula emerge sola de la suma de las
 nubes, como en la realidad.
+
+En el modo atómico, cada átomo se dibuja como en AtomicWorld (levels/atomic_style.py):
+colores por capa y todas las capas visibles. En el modo plástico, la hélice se ve como en
+el didáctico: las bolas de plástico aparecen al entrar en un átomo.
 """
 import numpy as np
 
 from atomicworld.scene import orbitals
 from dnainvent.scene.elements import DNA_ELEMENTS, atom_type
 from dnainvent.scene.molecule import Molecule
+from microscope.levels.atomic_style import NUCLEUS_COLOR, molecule_cloud
 from microscope.levels.base import Child, Focus, Level, Target, aimed
 from microscope.render.points import LineSet, PointCloud, PointStyle
 
@@ -59,6 +64,8 @@ class HelixLevel(Level):
 
     # ------------------------------------------------------------ construcción
     def build(self, renderer, didactic: bool):
+        if self.mode == "atomic":
+            return self._build_atomic(renderer)
         mol = self.mol
         rng = np.random.default_rng(1)
         types = {s: atom_type(s) for s in DNA_ELEMENTS}
@@ -95,6 +102,19 @@ class HelixLevel(Level):
                 ha, hb = mol.positions[mol.hbonds[:, 0]], mol.positions[mol.hbonds[:, 1]]
                 self.lines.append((LineSet(renderer, ha, hb, np.tile(HBOND_COLOR, (len(ha), 1))), 0.03))
 
+    def _build_atomic(self, renderer):
+        """Modo atómico: cada átomo como en AtomicWorld; solo los puentes de hidrógeno."""
+        mol = self.mol
+        self.clouds.append(PointCloud(renderer, *molecule_cloud(mol, atom_type, TARGET_POINTS,
+                                                                np.random.default_rng(1))))
+        # los núcleos, como en AtomicWorld: un puntito rojo (no a escala) para ver la estructura
+        col = np.tile([*NUCLEUS_COLOR, 0.7], (mol.n_atoms, 1))
+        self.clouds.append(PointCloud(renderer, mol.positions, col, np.full(mol.n_atoms, 0.012),
+                                      np.arange(mol.n_atoms, dtype="f4")))
+        if len(mol.hbonds):
+            ha, hb = mol.positions[mol.hbonds[:, 0]], mol.positions[mol.hbonds[:, 1]]
+            self.lines.append((LineSet(renderer, ha, hb, np.tile(HBOND_COLOR, (len(ha), 1))), 0.03))
+
     def release(self):
         for c in self.clouds:
             c.release()
@@ -106,7 +126,10 @@ class HelixLevel(Level):
     def render(self, renderer, cam, didactic, fade):
         style = PointStyle(vib_amp=VIB_AMP_NM, min_px=1.2, max_px=400, softness=1.0)
         renderer.points(self.clouds[0], cam, style, fade)
-        if didactic and len(self.clouds) > 1:
+        if self.mode == "atomic":
+            renderer.points(self.clouds[1], cam, PointStyle(vib_amp=VIB_AMP_NM, min_px=1.5,
+                                                            max_px=8, softness=0.6), fade)
+        elif didactic and len(self.clouds) > 1:
             renderer.points(self.clouds[1], cam,
                             PointStyle(vib_amp=VIB_AMP_NM, min_px=2.0, max_px=200,
                                        softness=0.35), fade * 0.9)
@@ -163,8 +186,10 @@ class HelixLevel(Level):
         else:
             detail = tr("microscope.helix.window", first=mol.start + 1, last=mol.end,
                         length=mol.length, atoms=mol.n_atoms)
-        return Focus(tr("microscope.helix.title", sequence=shown), detail,
-                     tr.lines("microscope.helix.explanation") if didactic else [])
+        expl = tr.lines("microscope.helix.explanation") if didactic else []
+        if self.mode in ("atomic", "plastic"):
+            expl = expl + tr.lines(f"microscope.helix.explanation_{self.mode}")
+        return Focus(tr("microscope.helix.title", sequence=shown), detail, expl)
 
     def atom_focus(self, i, dist, didactic):
         mol, tr = self.mol, self.tr

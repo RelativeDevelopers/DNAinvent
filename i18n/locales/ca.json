@@ -554,7 +554,17 @@
       "layout_split": "Pantalla partida",
       "layout_overlay": "Superposades",
       "only_at_protein": "Torna a la vista de la proteïna per canviar-ho (Retrocés)",
-      "side": "Manegues: {side}"
+      "side": "Manegues: {side}",
+      "mode_atomic": "Mode: ATÒMIC (AtomicWorld)  [Tab]",
+      "mode_plastic": "Mode: PLÀSTIC 3D  [Tab]",
+      "now_atomic": "Mode ATÒMIC: els àtoms com a AtomicWorld",
+      "now_plastic": "Mode PLÀSTIC 3D: partícules de joguina",
+      "help_atomic": "Mode atòmic, dins d'un àtom · O: un subnivell cada vegada · I: un orbital p cada vegada",
+      "only_atomic": "O / I: només en mode atòmic i dins d'un àtom (Tab)",
+      "only_p": "I: tria abans un subnivell p amb O",
+      "showing_subshell": "Subnivell {name} (O: següent)",
+      "showing_all": "Tots els electrons",
+      "showing_orbital": "Orbital {name} (I: següent)"
     },
     "autopilot": {
       "dive": "PILOT AUTOMÀTIC → {target}",
@@ -614,7 +624,15 @@
         "El fosfat té càrrega negativa: per això l'ADN és un àcid.",
         "Uneix el sucre d'un nucleòtid amb el següent."
       ],
-      "time": "1 s a la pantalla ≈ 50 fs reals (vibracions d'enllaç alentides ~10¹³ vegades)"
+      "time": "1 s a la pantalla ≈ 50 fs reals (vibracions d'enllaç alentides ~10¹³ vegades)",
+      "explanation_atomic": [
+        "Mode atòmic: cada àtom dibuixat com a AtomicWorld, amb totes les seves capes.",
+        "Colors per capa: taronja n = 1, cian n = 2, violeta n = 3 (el fòsfor)."
+      ],
+      "explanation_plastic": [
+        "Mode plàstic: entra en un àtom (Enter) per veure'n els electrons (e⁻),",
+        "i al seu nucli, els protons (+), els neutrons (0) i els quarks (u, d)."
+      ]
     },
     "atom": {
       "nucleus_title": "Nucli {of_element}: {protons} + {neutrons}",
@@ -634,7 +652,34 @@
         "Àtom aïllat: fent la mitjana de totes les orientacions, la seva densitat és esfèrica.",
         "A la molècula els orbitals es deformen en enllaçar-se (aquí no es veu)."
       ],
-      "time": "Orbitals estacionaris: la densitat no canvia (el parpelleig = mesures successives)"
+      "time": "Orbitals estacionaris: la densitat no canvia (el parpelleig = mesures successives)",
+      "atomic": {
+        "cloud_explanation": [
+          "Cada punt és una posició probable d'un electró: així dibuixa AtomicWorld l'àtom.",
+          "Colors per capa: taronja n = 1, cian n = 2, violeta n = 3. Les internes, més tènues.",
+          "Els núvols dels veïns, més tènues. O: un subnivell cada vegada · I: un orbital p."
+        ],
+        "subshell_title": "Subnivell {name} · {electrons}",
+        "subshell_zeff": "Càrrega efectiva (Slater): {zeff} · radi mitjà ≈ {r} pm",
+        "shape": {
+          "s": "Orbital s: una esfera (amb {nodes} nodes esfèrics a dins).",
+          "p": "Orbitals p: dos lòbuls (un vuit) al llarg de x, y o z.",
+          "d": "Orbitals d: trèvols de quatre fulles, i el dz²: dos lòbuls amb un anell al mig.",
+          "f": "Orbitals f: sis o vuit lòbuls; les formes més complexes dels estats fonamentals."
+        },
+        "hund": "Regla de Hund: els electrons ocupen primer orbitals buits (↑) i després s'aparellen (↑↓).",
+        "full": "Subnivell ple: els seus orbitals sumen una esfera perfecta (teorema d'Unsöld).",
+        "partial": "Mig ple: hi ha diversos estats igual de bons; aquest n'és un.",
+        "orbital_title": "Orbital {name} · {electrons}",
+        "orbital_colors": "Cada orbital, d'un color. I: els orbitals d'un en un."
+      },
+      "plastic": {
+        "explanation": [
+          "Mode plàstic: cada bola verda (e⁻) és un electró. Giren com en el model de Bohr (1913).",
+          "En realitat no tenen mida ni trajectòria: són núvols de probabilitat (Tab: altres modes).",
+          "Al centre, el nucli amb els protons (+) i neutrons (0), a escala real: minúscul."
+        ]
+      }
     },
     "nucleus": {
       "title": "{protons} + {neutrons} · radi ≈ {r} fm",
@@ -672,7 +717,11 @@
           "Sense neutrons, la repulsió elèctrica separaria els protons."
         ]
       },
-      "time": "1 s a la pantalla ≈ 10⁻²² s reals (un nucleó travessa el nucli en ~10⁻²² s)"
+      "time": "1 s a la pantalla ≈ 10⁻²² s reals (un nucleó travessa el nucli en ~10⁻²² s)",
+      "plastic": [
+        "Mode plàstic: protons (+, vermell) i neutrons (0, blau). Els colors són inventats.",
+        "No són boles dures: cadascun és un núvol de quarks i gluons de ~0,84 fm de radi."
+      ]
     },
     "nucleon": {
       "proton": "Protó",
@@ -710,7 +759,12 @@
         "g": "verd",
         "b": "blau"
       },
-      "time": "1 s a la pantalla ≈ 10⁻²⁴ s reals (la llum travessa un protó en ~3×10⁻²⁴ s)"
+      "time": "1 s a la pantalla ≈ 10⁻²⁴ s reals (la llum travessa un protó en ~3×10⁻²⁴ s)",
+      "plastic": [
+        "Mode plàstic: quarks up (u) i down (d); el gluó (g) viatja de l'un a l'altre.",
+        "L'halo de cada quark és la seva càrrega de color (vermell, verd o blau): una etiqueta, no un color.",
+        "Els quarks són puntuals: aquí són boles per poder-los veure."
+      ]
     },
     "protein": {
       "title": "Proteïna · {name}",

@@ -554,7 +554,17 @@
       "layout_split": "Split screen",
       "layout_overlay": "Superimposed",
       "only_at_protein": "Go back to the protein view to change this (Backspace)",
-      "side": "You control: {side}"
+      "side": "You control: {side}",
+      "mode_atomic": "Mode: ATOMIC (AtomicWorld)  [Tab]",
+      "mode_plastic": "Mode: 3D PLASTIC  [Tab]",
+      "now_atomic": "ATOMIC mode: atoms as in AtomicWorld",
+      "now_plastic": "3D PLASTIC mode: toy particles",
+      "help_atomic": "Atomic mode, inside an atom · O: one subshell at a time · I: one p orbital at a time",
+      "only_atomic": "O / I: only in atomic mode, inside an atom (Tab)",
+      "only_p": "I: pick a p subshell with O first",
+      "showing_subshell": "Subshell {name} (O: next)",
+      "showing_all": "All the electrons",
+      "showing_orbital": "Orbital {name} (I: next)"
     },
     "autopilot": {
       "dive": "AUTOPILOT → {target}",
@@ -614,7 +624,15 @@
         "The phosphate is negatively charged: that is why DNA is an acid.",
         "It links the sugar of one nucleotide to the next."
       ],
-      "time": "1 s on screen ≈ 50 fs in reality (bond vibrations slowed down ~10¹³ times)"
+      "time": "1 s on screen ≈ 50 fs in reality (bond vibrations slowed down ~10¹³ times)",
+      "explanation_atomic": [
+        "Atomic mode: every atom drawn as in AtomicWorld, with all its shells.",
+        "Colours by shell: orange n = 1, cyan n = 2, violet n = 3 (phosphorus)."
+      ],
+      "explanation_plastic": [
+        "Plastic mode: go into an atom (Enter) to see its electrons (e⁻),",
+        "and in its nucleus, the protons (+), neutrons (0) and quarks (u, d)."
+      ]
     },
     "atom": {
       "nucleus_title": "{of_element} nucleus: {protons} + {neutrons}",
@@ -634,7 +652,34 @@
         "Isolated atom: averaged over all orientations, its density is spherical.",
         "In the molecule the orbitals deform when they bond (not shown here)."
       ],
-      "time": "Stationary orbitals: the density does not change (the flicker = successive measurements)"
+      "time": "Stationary orbitals: the density does not change (the flicker = successive measurements)",
+      "atomic": {
+        "cloud_explanation": [
+          "Each dot is a likely position of an electron: this is how AtomicWorld draws the atom.",
+          "Colours by shell: orange n = 1, cyan n = 2, violet n = 3. Inner shells are fainter.",
+          "Neighbour clouds are fainter. O: one subshell at a time · I: one p orbital."
+        ],
+        "subshell_title": "Subshell {name} · {electrons}",
+        "subshell_zeff": "Effective charge (Slater): {zeff} · mean radius ≈ {r} pm",
+        "shape": {
+          "s": "s orbital: a sphere (with {nodes} spherical nodes inside).",
+          "p": "p orbitals: two lobes (a figure of eight) along x, y or z.",
+          "d": "d orbitals: four-leaf clovers, and dz²: two lobes with a ring around the middle.",
+          "f": "f orbitals: six or eight lobes; the most complex shapes in the ground states."
+        },
+        "hund": "Hund's rule: electrons first take empty orbitals (↑), then pair up (↑↓).",
+        "full": "Full subshell: its orbitals add up to a perfect sphere (Unsöld's theorem).",
+        "partial": "Partly filled: several states are equally good; this is one of them.",
+        "orbital_title": "Orbital {name} · {electrons}",
+        "orbital_colors": "Each orbital in its own colour. I: one orbital at a time."
+      },
+      "plastic": {
+        "explanation": [
+          "Plastic mode: each green ball (e⁻) is an electron. They orbit as in Bohr's model (1913).",
+          "In reality they have no size and no path: they are probability clouds (Tab: other modes).",
+          "In the centre, the nucleus with its protons (+) and neutrons (0), to scale: tiny."
+        ]
+      }
     },
     "nucleus": {
       "title": "{protons} + {neutrons} · radius ≈ {r} fm",
@@ -672,7 +717,11 @@
           "Without neutrons, electric repulsion would push the protons apart."
         ]
       },
-      "time": "1 s on screen ≈ 10⁻²² s in reality (a nucleon crosses the nucleus in ~10⁻²² s)"
+      "time": "1 s on screen ≈ 10⁻²² s in reality (a nucleon crosses the nucleus in ~10⁻²² s)",
+      "plastic": [
+        "Plastic mode: protons (+, red) and neutrons (0, blue). The colours are made up.",
+        "They are not hard balls: each one is a cloud of quarks and gluons ~0.84 fm in radius."
+      ]
     },
     "nucleon": {
       "proton": "Proton",
@@ -710,7 +759,12 @@
         "g": "green",
         "b": "blue"
       },
-      "time": "1 s on screen ≈ 10⁻²⁴ s in reality (light crosses a proton in ~3×10⁻²⁴ s)"
+      "time": "1 s on screen ≈ 10⁻²⁴ s in reality (light crosses a proton in ~3×10⁻²⁴ s)",
+      "plastic": [
+        "Plastic mode: up (u) and down (d) quarks; the gluon (g) travels from one to another.",
+        "The halo of each quark is its colour charge (red, green or blue): a label, not a colour.",
+        "Quarks are point-like: here they are balls so you can see them."
+      ]
     },
     "protein": {
       "title": "Protein · {name}",

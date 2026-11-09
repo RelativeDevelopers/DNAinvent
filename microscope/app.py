@@ -14,10 +14,13 @@ from ui import settings
 
 
 class App(pyglet.window.Window):
-    def __init__(self, molecule, tr, didactic=True, comparison=None, label="", highlight=None):
+    def __init__(self, molecule, tr, didactic=True, comparison=None, label="", highlight=None,
+                 mode=None):
         self.tr = tr
+        # depth_size: el modo plástico usa el búfer de profundidad (las bolas se tapan)
         config = pyglet.gl.Config(double_buffer=True, major_version=3, minor_version=3,
-                                  forward_compatible=True, sample_buffers=1, samples=4)
+                                  forward_compatible=True, sample_buffers=1, samples=4,
+                                  depth_size=24)
         try:
             super().__init__(1600, 900, tr("microscope.title"), resizable=True, config=config)
         except pyglet.window.NoSuchConfigException:
@@ -34,7 +37,7 @@ class App(pyglet.window.Window):
         else:
             print(tr("microscope.console.built", pairs=len(molecule.sequence),
                      atoms=molecule.n_atoms))
-        self.engine = Engine(self.ctx, molecule, tr, didactic, comparison, label, highlight)
+        self.engine = Engine(self.ctx, molecule, tr, didactic, comparison, label, highlight, mode)
         self.hud = HUD(self.ctx, tr)
         self.hud_timer = 0.0
         self.keys = key.KeyStateHandler()
@@ -126,9 +129,14 @@ class App(pyglet.window.Window):
         elif symbol == key.BACKSPACE:
             eng.autopilot.ascend(eng)
         elif symbol == key.TAB:
-            eng.toggle_mode()
-            self.hud.flash(tr("microscope.hud.now_didactic" if eng.didactic
-                              else "microscope.hud.now_realistic"), eng.time)
+            mode = eng.toggle_mode(-1 if modifiers & key.MOD_SHIFT else 1)
+            self.hud.flash(tr(f"microscope.hud.now_{mode}"), eng.time)
+        elif symbol in (key.O, key.I):
+            text = eng.cycle_subshell() if symbol == key.O else eng.cycle_orbital()
+            if text is None:
+                text = tr("microscope.hud.only_atomic" if symbol == key.O or eng.mode != "atomic"
+                          else "microscope.hud.only_p")
+            self.hud.flash(text, eng.time)
         elif symbol == key.C and eng.comparison is not None:
             if eng.toggle_layout():
                 self.hud.flash(tr("microscope.hud.layout_overlay" if eng.layout == "overlay"

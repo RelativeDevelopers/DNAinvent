@@ -3,6 +3,7 @@
     python -m microscope                              (pide la secuencia)
     python -m microscope ATGCGTACGTTAGC
     python -m microscope ATGC --lang ca --realistic
+    python -m microscope ATGC --mode plastic          (didactic, realistic, atomic, plastic)
     python -m microscope <secuencia larga> --start 120 --count 60   (un tramo)
 
     python -m microscope --pdb proteina.pdb           una proteína (cualquier archivo PDB)
@@ -22,6 +23,11 @@ from i18n import DEFAULT_LANGUAGE, Translator, available_languages
 from ui import settings
 
 EXAMPLE = "ATGCGTACGTTAGC"
+MODES = ("didactic", "realistic", "atomic", "plastic")      # = microscope.engine.MODES
+
+
+def start_mode(args) -> str:
+    return args.mode or ("realistic" if args.realistic else "didactic")
 
 
 def parse_args(argv=None):
@@ -35,6 +41,9 @@ def parse_args(argv=None):
     parser.add_argument("--lang", choices=sorted(available_languages()),
                         help="es, en o ca (por defecto, el idioma guardado)")
     parser.add_argument("--realistic", action="store_true", help="empezar en modo realista")
+    parser.add_argument("--mode", choices=MODES,
+                        help="modo inicial: didactic, realistic, atomic (átomos como en "
+                             "AtomicWorld) o plastic (partículas de plástico)")
     parser.add_argument("--pdb", help="archivo PDB de una proteína")
     parser.add_argument("--session", help="sesión preparada por la consola (opción 8)")
     return parser.parse_args(argv)
@@ -86,7 +95,7 @@ def main(argv=None):
             sys.exit(tr.error(exc) if isinstance(exc, DNAinventError) else str(exc))
         import pyglet
         from microscope.app import App
-        App(molecule, tr, not args.realistic, comparison, label, highlight)
+        App(molecule, tr, not args.realistic, comparison, label, highlight, mode=start_mode(args))
         pyglet.app.run()
         return
     try:
@@ -102,7 +111,7 @@ def main(argv=None):
 
     import pyglet                       # solo aquí: los tests no necesitan ventana
     from microscope.app import App
-    App(molecule, tr, didactic=not args.realistic)
+    App(molecule, tr, didactic=not args.realistic, mode=start_mode(args))
     pyglet.app.run()
 
 

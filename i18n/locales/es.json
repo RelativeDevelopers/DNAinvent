@@ -554,7 +554,17 @@
       "layout_split": "Pantalla partida",
       "layout_overlay": "Superpuestas",
       "only_at_protein": "Vuelve a la vista de la proteína para cambiarlo (Retroceso)",
-      "side": "Manejas: {side}"
+      "side": "Manejas: {side}",
+      "mode_atomic": "Modo: ATÓMICO (AtomicWorld)  [Tab]",
+      "mode_plastic": "Modo: PLÁSTICO 3D  [Tab]",
+      "now_atomic": "Modo ATÓMICO: los átomos como en AtomicWorld",
+      "now_plastic": "Modo PLÁSTICO 3D: partículas de juguete",
+      "help_atomic": "Modo atómico, dentro de un átomo · O: un subnivel cada vez · I: un orbital p cada vez",
+      "only_atomic": "O / I: solo en modo atómico y dentro de un átomo (Tab)",
+      "only_p": "I: elige antes un subnivel p con O",
+      "showing_subshell": "Subnivel {name} (O: siguiente)",
+      "showing_all": "Todos los electrones",
+      "showing_orbital": "Orbital {name} (I: siguiente)"
     },
     "autopilot": {
       "dive": "PILOTO AUTOMÁTICO → {target}",
@@ -614,7 +624,15 @@
         "El fosfato tiene carga negativa: por eso el ADN es un ácido.",
         "Une el azúcar de un nucleótido con el siguiente."
       ],
-      "time": "1 s en pantalla ≈ 50 fs reales (vibraciones de enlace ralentizadas ~10¹³ veces)"
+      "time": "1 s en pantalla ≈ 50 fs reales (vibraciones de enlace ralentizadas ~10¹³ veces)",
+      "explanation_atomic": [
+        "Modo atómico: cada átomo dibujado como en AtomicWorld, con todas sus capas.",
+        "Colores por capa: naranja n = 1, cian n = 2, violeta n = 3 (el fósforo)."
+      ],
+      "explanation_plastic": [
+        "Modo plástico: entra en un átomo (Enter) para ver sus electrones (e⁻),",
+        "y en su núcleo, los protones (+), los neutrones (0) y los quarks (u, d)."
+      ]
     },
     "atom": {
       "nucleus_title": "Núcleo {of_element}: {protons} + {neutrons}",
@@ -634,7 +652,34 @@
         "Átomo aislado: promediada sobre todas las orientaciones, su densidad es esférica.",
         "En la molécula los orbitales se deforman al enlazarse (aquí no se ve)."
       ],
-      "time": "Orbitales estacionarios: la densidad no cambia (el parpadeo = medidas sucesivas)"
+      "time": "Orbitales estacionarios: la densidad no cambia (el parpadeo = medidas sucesivas)",
+      "atomic": {
+        "cloud_explanation": [
+          "Cada punto es una posición probable de un electrón: así dibuja AtomicWorld el átomo.",
+          "Colores por capa: naranja n = 1, cian n = 2, violeta n = 3. Las internas, más tenues.",
+          "Las nubes de los vecinos, más tenues. O: un subnivel cada vez · I: un orbital p."
+        ],
+        "subshell_title": "Subnivel {name} · {electrons}",
+        "subshell_zeff": "Carga efectiva (Slater): {zeff} · radio medio ≈ {r} pm",
+        "shape": {
+          "s": "Orbital s: una esfera (con {nodes} nodos esféricos dentro).",
+          "p": "Orbitales p: dos lóbulos (un ocho) a lo largo de x, y o z.",
+          "d": "Orbitales d: tréboles de cuatro hojas, y el dz²: dos lóbulos con un anillo en medio.",
+          "f": "Orbitales f: seis u ocho lóbulos; las formas más complejas de los estados fundamentales."
+        },
+        "hund": "Regla de Hund: los electrones ocupan primero orbitales vacíos (↑) y luego se emparejan (↑↓).",
+        "full": "Subnivel lleno: sus orbitales suman una esfera perfecta (teorema de Unsöld).",
+        "partial": "A medio llenar: hay varios estados igual de buenos; este es uno de ellos.",
+        "orbital_title": "Orbital {name} · {electrons}",
+        "orbital_colors": "Cada orbital, de un color. I: los orbitales de uno en uno."
+      },
+      "plastic": {
+        "explanation": [
+          "Modo plástico: cada bola verde (e⁻) es un electrón. Giran como en el modelo de Bohr (1913).",
+          "En realidad no tienen tamaño ni trayectoria: son nubes de probabilidad (Tab: otros modos).",
+          "En el centro, el núcleo con sus protones (+) y neutrones (0), a escala real: diminuto."
+        ]
+      }
     },
     "nucleus": {
       "title": "{protons} + {neutrons} · radio ≈ {r} fm",
@@ -672,7 +717,11 @@
           "Sin neutrones, la repulsión eléctrica separaría a los protones."
         ]
       },
-      "time": "1 s en pantalla ≈ 10⁻²² s reales (un nucleón cruza el núcleo en ~10⁻²² s)"
+      "time": "1 s en pantalla ≈ 10⁻²² s reales (un nucleón cruza el núcleo en ~10⁻²² s)",
+      "plastic": [
+        "Modo plástico: protones (+, rojo) y neutrones (0, azul). Los colores son inventados.",
+        "No son bolas duras: cada uno es una nube de quarks y gluones de ~0,84 fm de radio."
+      ]
     },
     "nucleon": {
       "proton": "Protón",
@@ -710,7 +759,12 @@
         "g": "verde",
         "b": "azul"
       },
-      "time": "1 s en pantalla ≈ 10⁻²⁴ s reales (la luz cruza un protón en ~3×10⁻²⁴ s)"
+      "time": "1 s en pantalla ≈ 10⁻²⁴ s reales (la luz cruza un protón en ~3×10⁻²⁴ s)",
+      "plastic": [
+        "Modo plástico: quarks up (u) y down (d); el gluón (g) viaja de uno a otro.",
+        "El halo de cada quark es su carga de color (rojo, verde o azul): una etiqueta, no un color.",
+        "Los quarks son puntuales: aquí son bolas para poder verlos."
+      ]
     },
     "protein": {
       "title": "Proteína · {name}",

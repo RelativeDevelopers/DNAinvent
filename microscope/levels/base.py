@@ -46,6 +46,9 @@ class Focus:
 class Level:
     depth = 0             # 0 = hélice, 1 = átomo, 2 = núcleo, 3 = nucleón
     unit_m = 1.0          # metros por unidad local
+    # modo de visualización (engine.MODES). Lo pone el motor antes de build(); el argumento
+    # didactic de build/render/focus sigue diciendo si los textos son didácticos.
+    mode = "didactic"
 
     def __init__(self, tr):
         self.tr = tr

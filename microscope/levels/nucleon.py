@@ -16,6 +16,9 @@ Modos:
   - Didáctico: los 3 quarks con su color, el tubo de gluones en Y y los gluones viajando
     entre quarks e intercambiando el color.
 
+  - Plástico: lo mismo que el didáctico, con los quarks como bolas de plástico (u, d), un
+    halo del color de su carga de color y el gluón que viaja como una bola naranja (g).
+
 El movimiento de los quarks y el tubo en Y son una ilustración: la QCD no tiene trayectorias.
 """
 from functools import lru_cache
@@ -23,6 +26,7 @@ from functools import lru_cache
 import numpy as np
 
 from atomicworld.repository import ParticleCatalog
+from microscope.levels import plastic
 from microscope.levels.base import Focus, Level, Target, aimed
 from microscope.render.points import PointCloud, PointStyle
 
@@ -44,6 +48,10 @@ TUBE_POINTS = 1500       # por brazo de la Y
 GLUON_POINTS = 400       # gluón viajero
 EXCHANGE_EVERY = 1.3     # s entre intercambios de color
 EXCHANGE_TIME = 0.55     # s que tarda el gluón en viajar
+QUARK_BALL = 0.45        # modo plástico: radio de la bola de un quark (inventado: son puntuales)
+GLUON_BALL = 0.3
+QUARK_MIN_PX = 8.0
+QUARK_HALO = 1.6         # diámetro del halo de color (la bola mide 0,9)
 
 
 @lru_cache(maxsize=1)
@@ -80,6 +88,7 @@ class NucleonLevel(Level):
         self.time = 0.0
         self.static = []
         self.dynamic = None
+        self.balls = None                             # modo plástico (SpriteSet)
         # desplazamientos fijos del tubo y del gluón (se recolocan cada frame)
         self.tube_t = self.rng.random(3 * TUBE_POINTS)
         self.tube_off = self.rng.normal(0, 0.3, (3 * TUBE_POINTS, 3))
@@ -108,11 +117,14 @@ class NucleonLevel(Level):
             self.next_exchange = time + EXCHANGE_EVERY * self.rng.uniform(0.6, 1.4)
         if self.dynamic is not None and self.didactic:
             self.dynamic.write(*self._dynamic_points())
+        if self.balls is not None:
+            self.balls.set(pos=self._ball_positions(), alpha=self._ball_alpha())
 
     # ------------------------------------------------------------ construcción
     def build(self, renderer, didactic):
         self.didactic = didactic
         rng = np.random.default_rng(11)
+        plastic_mode = self.mode == "plastic"
         n = SEA_POINTS
         r = rng.gamma(3.0, NUCLEON_A, n)
         pos = _directions(n, rng) * r[:, None]
@@ -121,7 +133,7 @@ class NucleonLevel(Level):
             sea = rng.random(n) < 0.35                     # 35 %: quarks/antiquarks del mar
             pal = np.array(list(COLORS.values()) + list(ANTI.values()))
             col[sea] = pal[rng.integers(0, 6, sea.sum())]
-            alpha = 0.045
+            alpha = 0.025 if plastic_mode else 0.045
         else:
             col = np.tile(REALISTIC_COLOR, (n, 1))
             alpha = 0.14
@@ -145,6 +157,31 @@ class NucleonLevel(Level):
 
         if didactic:
             self.dynamic = PointCloud(renderer, *self._dynamic_points(), dynamic=True)
+        if plastic_mode:
+            self._build_balls(renderer)
+
+    # ------------------------------------------------------------ modo plástico
+    def _build_balls(self, renderer):
+        """Los 3 quarks (u, d) y el gluón viajero (g)."""
+        from microscope.render.sprites import SpriteSet
+        kinds = ["up" if f == "u" else "down" for f in self.flavors] + ["gluon"]
+        radius = [QUARK_BALL] * 3 + [GLUON_BALL]
+        min_px = [QUARK_MIN_PX] * 3 + [QUARK_MIN_PX * 0.7]
+        self.balls = SpriteSet(renderer, self._ball_positions(), np.array(radius), kinds,
+                               alpha=self._ball_alpha(), min_px=np.array(min_px))
+
+    def _gluon_position(self):
+        if not self.exchange:
+            return self.quark_pos.mean(axis=0)
+        i, j, t0 = self.exchange
+        s = np.clip((self.time - t0) / EXCHANGE_TIME, 0, 1)
+        return self.quark_pos[i] * (1 - s) + self.quark_pos[j] * s
+
+    def _ball_positions(self):
+        return np.vstack([self.quark_pos, self._gluon_position()[None, :]])
+
+    def _ball_alpha(self):
+        return np.array([1.0, 1.0, 1.0, 1.0 if self.exchange else 0.0])
 
     def _dynamic_points(self):
         q = self.quark_pos
@@ -175,7 +212,8 @@ class NucleonLevel(Level):
         # los 3 quarks de valencia: puntuales, se dibujan con un brillo mínimo
         pos.append(q)
         col.append(np.array([[*COLORS[c], 1.0] for c in self.colors]))
-        size.append(np.full(3, 0.02))
+        # modo plástico: el punto del quark es el halo de su carga de color, algo mayor que la bola
+        size.append(np.full(3, QUARK_HALO if self.mode == "plastic" else 0.02))
         pos, col, size = np.vstack(pos), np.vstack(col), np.concatenate(size)
         return pos, col, size, np.arange(len(pos), dtype="f4")
 
@@ -184,7 +222,9 @@ class NucleonLevel(Level):
             c.release()
         if self.dynamic is not None:
             self.dynamic.release()
-        self.static, self.dynamic = [], None
+        if self.balls is not None:
+            self.balls.release()
+        self.static, self.dynamic, self.balls = [], None, None
 
     # ------------------------------------------------------------ dibujo
     def render(self, renderer, cam, didactic, fade):
@@ -194,6 +234,16 @@ class NucleonLevel(Level):
                                                    softness=0.8), fade)
         if didactic and self.dynamic is not None:
             n = self.dynamic.count - 3
+            if self.balls is not None:
+                # plástico: el tubo de gluones (sin el gluón de puntos, que es una bola) y un
+                # halo del color de la carga de color detrás de cada quark
+                renderer.points(self.dynamic, cam, PointStyle(min_px=1.5, max_px=5, softness=0.8),
+                                fade * 0.6, first=0, count=3 * TUBE_POINTS)
+                renderer.points(self.dynamic, cam, PointStyle(min_px=QUARK_MIN_PX * 3.6, max_px=2000,
+                                                              softness=1.0, dim_small=False),
+                                fade, first=n, count=3)
+                renderer.sprites(self.balls, cam, fade)
+                return
             renderer.points(self.dynamic, cam, PointStyle(min_px=1.5, max_px=5, softness=0.8),
                             fade, first=0, count=n)
             # los quarks no tienen tamaño: brillo mínimo de 12 px para poder verlos
@@ -241,6 +291,8 @@ class NucleonLevel(Level):
                                   color=color_name(self.colors[k])),
                              tr.lines("microscope.nucleon.quark_explanation"), distance=float(d[k]))
             expl = tr.lines("microscope.nucleon.explanation")
+            if self.mode == "plastic":
+                expl += tr.lines("microscope.nucleon.plastic")
             detail = tr("microscope.nucleon.colors_now", colors=", ".join(color_name(c) for c in self.colors))
         else:
             expl = tr.lines("microscope.nucleon.explanation_realistic")

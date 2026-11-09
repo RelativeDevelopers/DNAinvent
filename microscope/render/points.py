@@ -42,6 +42,28 @@ class Renderer:
         self.line_prog = ctx.program(
             vertex_shader=(SHADERS / "lines.vert").read_text(),
             fragment_shader=(SHADERS / "lines.frag").read_text())
+        self._sprites = None          # modo plástico (render/sprites.py): se crea al usarlo
+
+    # ------------------------------------------------------------ modo plástico
+    def _sprite_renderer(self):
+        if self._sprites is None:
+            from microscope.render.sprites import SpriteRenderer
+            self._sprites = SpriteRenderer(self.ctx)
+        return self._sprites
+
+    def sprite_program(self):
+        return self._sprite_renderer().prog
+
+    @property
+    def sprite_quad(self):
+        return self._sprite_renderer().quad
+
+    def sprites(self, sprites, cam: "Camera", fade: float, near_fade: float = 0.0):
+        """Bolas de plástico (SpriteSet). near_fade > 0: se vuelven transparentes al
+        acercarse a menos de near_fade radios (para poder entrar en un protón)."""
+        if sprites.count == 0 or fade <= 0.001:
+            return
+        self._sprite_renderer().draw(sprites, cam, fade, near_fade)
 
     def begin(self, clear=(0.004, 0.006, 0.016)):
         self.ctx.clear(*clear, 1.0)
