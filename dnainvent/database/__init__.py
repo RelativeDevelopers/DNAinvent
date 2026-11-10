@@ -21,7 +21,7 @@ import sqlite3
 from pathlib import Path
 
 SCHEMA_PATH = Path(__file__).with_name("schema.sql")
-SCHEMA_VERSION = 2
+SCHEMA_VERSION = 4
 
 # Fuentes conocidas: código -> (nombre, url, licencia, uso comercial permitido)
 KNOWN_SOURCES = {
@@ -31,6 +31,7 @@ KNOWN_SOURCES = {
     "mondo": ("Mondo Disease Ontology", "https://mondo.monarchinitiative.org/", "CC-BY-4.0", 1),
     "chembl": ("ChEMBL", "https://www.ebi.ac.uk/chembl/", "CC-BY-SA-3.0", 1),
     "manual": ("DNAinvent (añadido a mano)", None, "public-domain", 1),
+    "uniprot": ("UniProt", "https://www.uniprot.org/", "CC-BY-4.0", 1),
 }
 
 # Columnas añadidas en cada versión del esquema (para actualizar bases de datos antiguas)
@@ -41,6 +42,21 @@ _MIGRATIONS = {
         "ALTER TABLE variant_diseases ADD COLUMN review_status TEXT",
         "ALTER TABLE variant_diseases ADD COLUMN rcv_accession TEXT",
     ],
+    3: [
+        "ALTER TABLE genes ADD COLUMN uniprot_id TEXT",
+        "ALTER TABLE drugs ADD COLUMN molecule_type TEXT",
+        "ALTER TABLE drugs ADD COLUMN first_approval INTEGER",
+        "ALTER TABLE drugs ADD COLUMN withdrawn INTEGER NOT NULL DEFAULT 0",
+        "ALTER TABLE drug_targets ADD COLUMN mechanism TEXT",
+        "ALTER TABLE drug_diseases ADD COLUMN indication TEXT",
+        "ALTER TABLE drug_diseases ADD COLUMN efo_id TEXT",
+        """CREATE TABLE IF NOT EXISTS drug_mechanisms (
+               drug_id INTEGER NOT NULL REFERENCES drugs(id),
+               target_chembl_id TEXT NOT NULL DEFAULT '', target_name TEXT, target_type TEXT,
+               action TEXT, mechanism TEXT NOT NULL DEFAULT '',
+               PRIMARY KEY (drug_id, target_chembl_id, mechanism))""",
+    ],
+    4: ["ALTER TABLE drug_diseases ADD COLUMN evidence TEXT"],
 }
 
 

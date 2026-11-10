@@ -12,7 +12,11 @@ espacios (que a veces faltan, cuando dos números largos quedan pegados):
 un experimento sino la confianza de cada átomo, el pLDDT (0-100).
 
 Solo se leen las líneas ATOM y HETATM del primer modelo (las estructuras de RMN traen
-varios). Si un átomo tiene posiciones alternativas (altLoc), se queda la primera.
+varios). Si un átomo tiene posiciones alternativas (altLoc), se queda la primera. De la
+cabecera se leen el título y las líneas DBREF, que dicen de qué proteína de UniProt es cada
+cadena (en una hemoglobina, unas cadenas son la alfa, P69905, y otras la beta, P68871):
+
+    DBREF  1ABC A    1   141  UNP    P69905   HBA_HUMAN        1    141
 
 AlphaFold DB y ESMFold devuelven PDB, así que con esto basta. Las estructuras experimentales
 muy grandes del PDB solo existen en mmCIF; se añadirá un lector cuando haga falta.
@@ -72,6 +76,7 @@ class Residue:
 class Structure:
     atoms: list[Atom]
     title: str = ""
+    chain_accessions: dict[str, str] = field(default_factory=dict)   # cadena -> UniProt
 
     @property
     def is_prediction(self) -> bool:
@@ -110,13 +115,15 @@ class Structure:
 
 def parse_pdb(text: str, model: int = 1) -> Structure:
     """Texto de un archivo PDB -> Structure (solo el modelo indicado, por defecto el 1)."""
-    atoms, title = [], []
+    atoms, title, accessions = [], [], {}
     current_model = 1
     alt_chosen = {}                       # (cadena, residuo, icode, nombre) -> altLoc elegido
     for line in text.splitlines():
         record = line[:6]
         if record == "TITLE ":
             title.append(line[10:80].strip())
+        elif record == "DBREF " and line[26:32].strip() == "UNP":
+            accessions.setdefault(line[12:13].strip() or "A", line[33:41].strip())
         elif record == "MODEL ":
             current_model = int(line[10:14])
         elif record == "ENDMDL" and current_model >= model:
@@ -129,7 +136,7 @@ def parse_pdb(text: str, model: int = 1) -> Structure:
                 if alt_chosen.setdefault(key, alt) != alt:
                     continue              # otra posición alternativa del mismo átomo
             atoms.append(atom)
-    return Structure(atoms, " ".join(title))
+    return Structure(atoms, " ".join(title), accessions)
 
 
 def read_pdb(path: str | Path, model: int = 1) -> Structure:

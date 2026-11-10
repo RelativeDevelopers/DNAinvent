@@ -48,6 +48,8 @@ Importa genes reales del NCBI con sus variantes y las enfermedades asociadas, y 
 - **Sana frente a variante:** compara la versión sana de un gen con la mutada, codón a codón. Por ejemplo, en la anemia falciforme: `GAG → GTG`, `Glu → Val`.
 - **Buscador** de genes y enfermedades por palabras.
 - Para cada variante, qué hace en cada enfermedad: si la **causa**, es **factor de riesgo** o **protege** (la variante de la anemia falciforme, por ejemplo, protege frente a la malaria).
+- **Fármacos** (de ChEMBL): los que actúan sobre la proteína del gen y los indicados para cada enfermedad, en qué fase están y cómo actúan. Cada enfermedad dice si tiene tratamiento aprobado, en ensayo o nada todavía. *Aprobado quiere decir que la trata, no necesariamente que la cure. Es divulgación, no consejo médico.*
+- **Un fármaco dentro de su proteína:** a partir de una estructura del PDB (por ejemplo 5E83, la hemoglobina de la anemia falciforme con voxelotor), qué aminoácidos lo rodean y cómo lo sujetan: enlace covalente, puente de hidrógeno o contacto hidrófobo, con la distancia medida en el cristal.
 
 ---
 
@@ -157,7 +159,8 @@ El microscopio muestra hasta **60 pares de bases** (o 150 aminoácidos) a la vez
 
 Casi todo funciona sin conexión. Solo se conecta a Internet para:
 - **Identificar proteínas** (búsqueda BLAST en el EBI) y **descargar estructuras** de AlphaFold DB.
-- **Importar genes** del NCBI.
+- **Importar genes** del NCBI y **fármacos** de ChEMBL (con UniProt para saber cuál es la proteína de cada gen).
+- **Descargar estructuras con fármacos** del PDB (RCSB).
 
 El EBI y el NCBI piden un correo de contacto en cada búsqueda; se usa el de Relative Developers (`relativedevelopers@gmail.com`), y puedes cambiarlo con la variable de entorno `DNAINVENT_EMAIL`. No se envía nada más.
 
@@ -206,6 +209,7 @@ La versión web de DNAinvent está en su propio repositorio, `dnainvent_web`, qu
 
 - **Datos de proteínas:** AlphaFold DB, licencia CC-BY 4.0 (Jumper et al. 2021, *Nature*; Varadi et al. 2024, *NAR*).
 - **Datos de genes:** NCBI Gene, RefSeq y ClinVar (dominio público). Los nombres de las enfermedades vienen de ClinVar, en inglés.
+- **Fármacos:** ChEMBL, licencia CC BY-SA 3.0 (Zdrazil et al. 2024, *NAR*). **Proteínas de cada gen:** UniProt, CC BY 4.0. **Estructuras con fármacos:** RCSB PDB (dominio público).
 - **Modelo de la doble hélice:** inspirado en la idea de [codegiovanni/DNA_helix](https://github.com/codegiovanni/DNA_helix) (hélice paramétrica girada con una matriz de rotación). El código es propio y usa las medidas reales del ADN B.
 - **Microscopio 3D:** viene del proyecto *Microscopio de ADN* (DNAmicroscope) y comparte física y renderizado con el visor de **AtomicWorld**.
 

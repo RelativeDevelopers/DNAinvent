@@ -304,7 +304,8 @@ def test_real_clinvar_summary():
     assert (lp["accession"], lp["version"], lp["hgvs_c"], lp["hgvs_p"]) == ("NM_000518", 5, "c.83C>G", "p.Ala28Gly")
     assert lp["clinical_significance"] == "likely pathogenic"
     assert lp["review_status"] == "criteria provided, single submitter"
-    assert lp["traits"] == [{"name": "Hb SS disease", "mondo_id": "MONDO:0011382", "medgen_id": "C0002895"}]
+    assert lp["traits"] == [{"name": "Hb SS disease", "mondo_id": "MONDO:0011382",
+                            "medgen_id": "C0002895", "mesh_id": None}]
     lb = parse_summary("5022597", REAL_SAMPLE["5022597"])
     assert (lb["hgvs_p"], lb["traits"]) == ("p.Leu4=", [])     # "Inborn genetic diseases" es genérico
     deletion = parse_summary("5019560", REAL_SAMPLE["5019560"])
@@ -523,14 +524,14 @@ def test_migration_from_version_1(tmp_path):
                   .replace("    clinical_significance TEXT,                -- 'pathogenic', 'protective'... para esta enfermedad\n", "")
                   .replace("    review_status   TEXT,                      -- 'criteria provided, single submitter'...\n", "")
                   .replace("    rcv_accession   TEXT,                      -- 'RCV000016574'\n", "")
-                  .replace("PRAGMA user_version = 2;", ""))
+                  .replace("PRAGMA user_version = 4;", ""))
     raw = sqlite3.connect(path)
     raw.executescript(old_schema)
     raw.close()
     connection = open_database(path)
     columns = {r[1] for r in connection.execute("PRAGMA table_info(variant_diseases)")}
     assert {"clinical_significance", "review_status", "rcv_accession"} <= columns
-    assert connection.execute("PRAGMA user_version").fetchone()[0] == 2
+    assert connection.execute("PRAGMA user_version").fetchone()[0] == 4
     connection.close()
     open_database(path).close()                       # abrirla otra vez no falla
 
@@ -545,7 +546,13 @@ def test_console_dynamic_keys_exist_in_every_language():
     keys += [f"database.variant_kinds.{k}" for k in ("missense", "synonymous", "nonsense", "stop_lost")]
     keys += [f"database.mol_types.{m}" for m in ("mrna", "protein", "genomic", "cds", "ncrna")]
     keys += [f"units.{u}.{n}" for u in ("variant", "variant_causal", "variant_protective",
-                                        "variant_risk_factor") for n in ("one", "other")]
+                                        "variant_risk_factor", "atom") for n in ("one", "other")]
+    keys += [f"database.phase.{k}" for k in ("approved", "phase3", "phase2", "phase1", "early", "unknown")]
+    keys += [f"database.{group}.{s}" for group in ("status", "status_short")
+             for s in ("approved", "withdrawn", "trials", "none")]
+    keys += [f"database.ligand_kinds.{k}" for k in ("drug", "cofactor", "additive")]
+    keys += [f"database.contact_kinds.{k}" for k in ("covalent", "hbond", "hydrophobic", "contact")]
+    keys += [f"database.actions.{k}" for k in set(console.ACTION_KEYS.values())]
     for language in available_languages():
         tr = Translator(language)
         tr._fallback = {}                     # sin el español de reserva: que falte se note

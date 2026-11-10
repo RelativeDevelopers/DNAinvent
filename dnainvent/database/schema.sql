@@ -1,5 +1,5 @@
 -- =====================================================================
--- DNAinvent — esquema de la base de datos de secuencias reales (versión 2)
+-- DNAinvent — esquema de la base de datos de secuencias reales (versión 4)
 -- SQLite (módulo sqlite3 de la biblioteca estándar, sin dependencias)
 --
 -- Idea general:
@@ -53,6 +53,7 @@ CREATE TABLE genes (
     ncbi_gene_id    INTEGER UNIQUE,
     ensembl_id      TEXT UNIQUE,
     hgnc_id         TEXT,
+    uniprot_id      TEXT,                      -- proteína revisada de UniProt: 'P68871'
     chromosome      TEXT,
     start_pos       INTEGER,                   -- coordenadas en el ensamblaje indicado
     end_pos         INTEGER,
@@ -174,9 +175,12 @@ CREATE TABLE drugs (
                          'oligonucleotide', 'mrna', 'other')),
     smiles          TEXT,
     inchikey        TEXT,
-    max_phase       INTEGER,                   -- 4 = aprobado (ChEMBL)
+    max_phase       INTEGER,                   -- 4 = aprobado (ChEMBL); 0.5 = fase 1 temprana
     sequence_id     INTEGER REFERENCES sequences(id),   -- solo fármacos peptídicos/proteicos/ARNm
-    source_id       INTEGER NOT NULL REFERENCES sources(id)
+    source_id       INTEGER NOT NULL REFERENCES sources(id),
+    molecule_type   TEXT,                      -- tal como lo da ChEMBL: 'Small molecule', 'Cell'...
+    first_approval  INTEGER,                   -- año de la primera aprobación
+    withdrawn       INTEGER NOT NULL DEFAULT 0 -- 1 si se retiró del mercado (en algún país)
 );
 CREATE INDEX idx_drugs_name ON drugs(name);
 
@@ -186,7 +190,20 @@ CREATE TABLE drug_targets (
     gene_id         INTEGER NOT NULL REFERENCES genes(id),
     action          TEXT,                      -- 'inhibitor', 'agonist', 'antagonist', 'activator'...
     source_id       INTEGER NOT NULL REFERENCES sources(id),
+    mechanism       TEXT,                      -- 'Hemoglobin S polymerisation inhibitor'
     PRIMARY KEY (drug_id, gene_id)
+);
+
+-- Mecanismos de acción tal como los da ChEMBL, aunque la diana no sea un gen guardado
+-- (la hidroxiurea trata la anemia falciforme actuando sobre la ribonucleótido reductasa)
+CREATE TABLE drug_mechanisms (
+    drug_id         INTEGER NOT NULL REFERENCES drugs(id),
+    target_chembl_id TEXT NOT NULL DEFAULT '',
+    target_name     TEXT,
+    target_type     TEXT,                      -- 'SINGLE PROTEIN', 'PROTEIN COMPLEX'...
+    action          TEXT,
+    mechanism       TEXT NOT NULL DEFAULT '',
+    PRIMARY KEY (drug_id, target_chembl_id, mechanism)
 );
 
 CREATE TABLE drug_diseases (
@@ -194,6 +211,9 @@ CREATE TABLE drug_diseases (
     disease_id      INTEGER NOT NULL REFERENCES diseases(id),
     max_phase       INTEGER,                   -- fase máxima para esa indicación
     source_id       INTEGER NOT NULL REFERENCES sources(id),
+    indication      TEXT,                      -- nombre de la indicación en ChEMBL
+    efo_id          TEXT,                      -- 'MONDO:0011382', 'EFO:0000...'
+    evidence        TEXT,                      -- 'label' (ficha técnica), 'trials' (solo ensayos)
     PRIMARY KEY (drug_id, disease_id)
 );
 
@@ -226,4 +246,4 @@ CREATE VIRTUAL TABLE search_index USING fts5(
     tokenize = 'unicode61 remove_diacritics 2'
 );
 
-PRAGMA user_version = 2;
+PRAGMA user_version = 4;

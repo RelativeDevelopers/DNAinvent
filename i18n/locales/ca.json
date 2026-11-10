@@ -45,7 +45,9 @@
       "gene": "Veure un gen desat",
       "compare": "Sana davant de variant",
       "search": "Cercar gens i malalties",
-      "list": "Gens desats"
+      "list": "Gens desats",
+      "disease": "Una malaltia i els seus tractaments",
+      "pocket": "Un fàrmac dins de la seva proteïna (PDB)"
     }
   },
   "common": {
@@ -75,7 +77,11 @@
     "taxon": "Organisme: número de tàxon de l'NCBI (Intro = humà, 9606; ratolí = 10090): ",
     "variant": "Variant (c.20A>T, p.Glu7Val, rs334...; Intro = les que causen alguna malaltia): ",
     "choose_variant": "Tria una variant: ",
-    "search_text": "Cercar un gen o una malaltia (els noms són en anglès): "
+    "search_text": "Cercar un gen o una malaltia (els noms són en anglès): ",
+    "disease_text": "Malaltia, en anglès (p. ex. sickle, thalassemia, Li-Fraumeni; Intro = tornar): ",
+    "choose_disease": "Tria una malaltia: ",
+    "pdb_id": "ID d'una estructura del PDB (p. ex. 5E83, hemoglobina S amb voxelotor; Intro = tornar): ",
+    "choose_ligand": "Tria una molècula: "
   },
   "complement": {
     "helix": "Doble hèlix (cadenes antiparal·leles):",
@@ -182,7 +188,9 @@
     "variant_not_found": "No existeix la variant {variant}.",
     "variant_not_supported": "De moment només es poden situar a la seqüència les substitucions d'una base dins de la regió codificant (com c.20A>T); {hgvs} no ho és.",
     "variant_outside_cds": "{hgvs} cau fora de la regió codificant ({start}..{end}).",
-    "variant_mismatch": "A {accession} la posició {position} és {found}, no {expected}: {hgvs} no correspon a aquesta versió de la seqüència."
+    "variant_mismatch": "A {accession} la posició {position} és {found}, no {expected}: {hgvs} no correspon a aquesta versió de la seqüència.",
+    "invalid_pdb_id": "«{pdb_id}» no és un ID del PDB vàlid (són 4 caràcters, com 5E83).",
+    "structure_not_found": "No s'ha trobat l'estructura {accession} en format PDB (les molt grans només existeixen en mmCIF)."
   },
   "kinds": {
     "dna": "ADN",
@@ -503,6 +511,10 @@
     "variant_risk_factor": {
       "one": "{n} factor de risc",
       "other": "{n} factors de risc"
+    },
+    "atom": {
+      "one": "{n} àtom",
+      "other": "{n} àtoms"
     }
   },
   "microscope": {
@@ -914,7 +926,12 @@
       "variants": "Buscant les variants de {symbol} a ClinVar…",
       "summaries": "Llegint variants: {done} de {total}…",
       "conditions": "Llegint la classificació de cada malaltia: {done} de {total}…",
-      "saving": "Desant {count} variants…"
+      "saving": "Desant {count} variants…",
+      "drug_targets": "Buscant la proteïna de {symbol} a UniProt i les seves dianes a ChEMBL…",
+      "disease_drugs": "Buscant fàrmacs per a «{disease}»…",
+      "drugs": "Llegint {count} fàrmacs…",
+      "indications": "Llegint per a quines malalties està indicat cadascun…",
+      "chembl_retry": "ChEMBL va lent: intent {attempt} de {max} d'aquí a {wait} s…"
     },
     "imported_gene": "Gen {symbol} desat: {name}.",
     "clinvar_offer": "Vols importar també les seves variants de ClinVar? Pot trigar un minut",
@@ -1021,6 +1038,97 @@
       "gene": "Gen",
       "disease": "Malaltia",
       "genes": "Gens: {list}"
+    },
+    "chembl_offer": "Vols importar també els seus fàrmacs de ChEMBL (els que actuen sobre la seva proteïna i els indicats per a les seves malalties)?",
+    "chembl_citation": "Fàrmacs: ChEMBL (CC BY-SA 3.0) · proteïnes: UniProt (CC BY 4.0).",
+    "disclaimer": "Això és divulgació, no consell mèdic. Davant de qualsevol dubte de salut, consulta un professional sanitari.",
+    "drug_stats": {
+      "protein": "Proteïna (UniProt):",
+      "targets": "Dianes a ChEMBL:",
+      "drugs": "Fàrmacs desats:",
+      "linked": "Indicacions per a malalties desades:",
+      "no_protein": "No s'ha trobat la seva proteïna a UniProt: no es poden buscar fàrmacs que hi actuïn."
+    },
+    "drugs": {
+      "gene_title": "Fàrmacs que actuen sobre la seva proteïna:",
+      "withdrawn": "retirat en algun país",
+      "approved_year": "aprovat per primera vegada el {year}"
+    },
+    "phase": {
+      "approved": "aprovat",
+      "phase3": "assaig de fase 3",
+      "phase2": "assaig de fase 2",
+      "phase1": "assaig de fase 1",
+      "early": "fase 1 primerenca",
+      "unknown": "preclínic o sense dades",
+      "phase4_trial": "assaig de fase 4 (aprovat per a una altra cosa)"
+    },
+    "actions": {
+      "inhibitor": "inhibidor",
+      "agonist": "agonista",
+      "antagonist": "antagonista",
+      "modulator": "modulador",
+      "activator": "activador",
+      "blocker": "bloquejador",
+      "opener": "obridor",
+      "stabiliser": "estabilitzador",
+      "binding_agent": "s'hi uneix",
+      "positive_modulator": "modulador al·lostèric positiu",
+      "negative_modulator": "modulador al·lostèric negatiu",
+      "cross_linking": "agent entrecreuant",
+      "substrate": "substrat",
+      "releasing_agent": "alliberador",
+      "degrader": "degradador",
+      "positive_mod": "modulador positiu",
+      "negative_mod": "modulador negatiu",
+      "exogenous_gene": "teràpia gènica: afegeix una còpia del gen",
+      "partial_agonist": "agonista parcial",
+      "inverse_agonist": "agonista invers",
+      "antisense": "inhibidor antisentit",
+      "rnai": "inhibidor per ARN d'interferència",
+      "chelating": "quelant",
+      "disrupting": "disruptor",
+      "hydrolytic_enzyme": "enzim hidrolític",
+      "vaccine_antigen": "antigen de vacuna",
+      "exogenous_protein": "proteïna afegida",
+      "gene_editing": "edició genètica"
+    },
+    "status": {
+      "approved": "Hi ha tractament aprovat. Aprovat vol dir que la tracta, no necessàriament que la curi.",
+      "withdrawn": "Hi va haver tractaments aprovats, però es van retirar.",
+      "trials": "No hi ha tractament aprovat; hi ha candidats en assaig clínic.",
+      "none": "No hi ha cap fàrmac desat per a aquesta malaltia: potser no n'hi ha o encara no s'ha importat."
+    },
+    "status_short": {
+      "approved": "amb tractament aprovat",
+      "withdrawn": "tractaments retirats",
+      "trials": "en assaig clínic",
+      "none": "sense fàrmacs desats"
+    },
+    "disease": {
+      "drugs": "Fàrmacs (fase per a aquesta malaltia):",
+      "search_drugs": "No hi ha fàrmacs desats per a aquesta malaltia. Vols buscar-los a ChEMBL?",
+      "more_drugs": "… i {count} més (en assaig o provats en assajos)."
+    },
+    "pocket": {
+      "chains": "Cadenes (UniProt): {list}",
+      "chain": "cadena",
+      "ligands": "Molècules dins de l'estructura:",
+      "no_ligands": "Aquesta estructura no té cap molècula a part de la proteïna (i l'aigua).",
+      "residues": "Aminoàcids que envolten {code} ({count}), del contacte més fort al més feble:",
+      "covalent_note": "Hi ha un enllaç covalent: la molècula està unida químicament a la proteïna, no només encaixada.",
+      "note": "Distàncies mesurades al cristall, no és una simulació. Dades: RCSB PDB (domini públic)."
+    },
+    "ligand_kinds": {
+      "drug": "fàrmac o una altra molècula d'interès",
+      "cofactor": "cofactor",
+      "additive": "additiu de l'experiment"
+    },
+    "contact_kinds": {
+      "covalent": "enllaç covalent",
+      "hbond": "pont d'hidrogen",
+      "hydrophobic": "contacte hidròfob",
+      "contact": "contacte"
     }
   }
 }

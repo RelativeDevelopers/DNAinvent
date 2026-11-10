@@ -12,9 +12,12 @@ from colorama import Fore, Style, init
 from dnainvent import DNAinventError, alignment, bits, crispr, sequences, tools
 from dnainvent.constants import AMINO_ACID_CODES
 from dnainvent.database import default_path, open_database, queries
+from dnainvent.database.chembl import ChEMBLProvider
 from dnainvent.database.clinvar import ClinVarProvider
 from dnainvent.database.ncbi import HUMAN, NCBIProvider
 from dnainvent.database.variants import locate, side_by_side, three_letter
+from dnainvent.protein import ligands as ligand_tools
+from dnainvent.protein.clients.rcsb import RCSB
 from dnainvent.protein import confidence, pipeline
 from dnainvent.protein.cache import key_for
 from dnainvent.protein.classify import Category, Thresholds
@@ -39,6 +42,24 @@ ALIGNMENT_WARNING = 4_000_000   # unas 2.000 x 2.000 bases
 LINE_WIDTH = 60
 VARIANTS_SHOWN = 20       # variantes que se enumeran al buscar
 DISEASES_SHOWN = 10       # enfermedades en la ficha de un gen
+DRUGS_SHOWN = 15          # fármacos en una lista
+DISEASES_WITH_DRUGS = 5   # al importar un gen, de cuántas de sus enfermedades se buscan fármacos
+POCKET_SHOWN = 15         # aminoácidos del bolsillo de un fármaco
+
+# Tipo de acción de ChEMBL -> clave de i18n (database.actions.*); el resto, tal cual
+ACTION_KEYS = {"inhibitor": "inhibitor", "agonist": "agonist", "antagonist": "antagonist",
+               "modulator": "modulator", "activator": "activator", "blocker": "blocker",
+               "opener": "opener", "stabiliser": "stabiliser", "binding agent": "binding_agent",
+               "positive allosteric modulator": "positive_modulator",
+               "negative allosteric modulator": "negative_modulator",
+               "cross-linking agent": "cross_linking", "substrate": "substrate",
+               "releasing agent": "releasing_agent", "degrader": "degrader",
+               "positive modulator": "positive_mod", "negative modulator": "negative_mod",
+               "exogenous gene": "exogenous_gene", "partial agonist": "partial_agonist",
+               "inverse agonist": "inverse_agonist", "antisense inhibitor": "antisense",
+               "rnai inhibitor": "rnai", "chelating agent": "chelating", "disrupting agent": "disrupting",
+               "hydrolytic enzyme": "hydrolytic_enzyme", "vaccine antigen": "vaccine_antigen",
+               "exogenous protein": "exogenous_protein", "gene editing": "gene_editing"}
 
 # Clasificación de ClinVar -> clave de i18n (database.significance.*)
 SIGNIFICANCE_KEYS = {
@@ -630,17 +651,46 @@ def db_import():
         gene = conn.execute("SELECT * FROM genes WHERE id = ?", (gene_id,)).fetchone()
         print(Fore.GREEN + tr("database.imported_gene", symbol=gene["symbol"], name=gene["name"])
               + Style.RESET_ALL)
+        stats = None
         if taxon != HUMAN:
             print(tr("database.clinvar_human_only"))
-            return
-        if not confirm("database.clinvar_offer"):
-            return
-        stats = ClinVarProvider().import_variants(conn, gene["symbol"], progress=progress)
+        elif confirm("database.clinvar_offer"):
+            stats = ClinVarProvider().import_variants(conn, gene["symbol"], progress=progress)
+            progress.finish()
+            print_clinvar_stats(stats)
+        if confirm("database.chembl_offer"):
+            import_drugs(conn, gene, progress)
     except DNAinventError as exc:
         progress.finish()
         error(tr.error(exc))
         return
+    print(Style.DIM + tr("database.citation") + Style.RESET_ALL)
+
+
+def import_drugs(conn, gene, progress):
+    """Fármacos de ChEMBL: los que actúan sobre la proteína del gen y los indicados para las
+    enfermedades que más causan sus variantes."""
+    provider = ChEMBLProvider()
+    stats = provider.import_gene_drugs(conn, gene["id"], progress)
+    diseases = [row for row in queries.diseases(conn, gene["id"], DISEASES_WITH_DRUGS) if row["causal"]]
+    by_disease = [provider.import_disease_drugs(conn, row["id"], progress) for row in diseases]
     progress.finish()
+    print()
+    if not stats.accession:
+        warning(tr("database.drug_stats.no_protein"))
+    drugs = len({d["id"] for d in queries.gene_drugs(conn, gene["id"])}
+                | {d["id"] for row in diseases for d in queries.disease_drugs(conn, row["id"])})
+    print_labeled([
+        ("database.drug_stats.protein", stats.accession or "-"),
+        ("database.drug_stats.targets", tr.number(stats.targets)),
+        ("database.drug_stats.drugs", tr.number(drugs)),
+        ("database.drug_stats.linked", tr.number(stats.indications_linked
+                                                 + sum(s.indications_linked for s in by_disease))),
+    ], indent="  ")
+    print(Style.DIM + tr("database.chembl_citation") + Style.RESET_ALL)
+
+
+def print_clinvar_stats(stats):
     print()
     print_labeled([
         ("database.stats.found", tr.number(stats.found)),
@@ -657,7 +707,6 @@ def db_import():
         warning(tr("database.stats.batches_failed", count=stats.condition_batches_failed))
     if stats.unexpected_records:
         warning(tr("database.stats.unexpected", count=stats.unexpected_records))
-    print(Style.DIM + tr("database.citation") + Style.RESET_ALL)
 
 
 def db_gene():
@@ -703,8 +752,17 @@ def db_gene():
         for row in rows:
             parts = [tr.count(row[effect], f"variant_{effect}")
                      for effect in ("causal", "protective", "risk_factor") if row[effect]]
-            print(f"  {row['name_en']}: " + ", ".join(parts))
+            status = queries.disease_status(conn, row["id"])
+            note = "" if status == "none" else f" · {status_text(status, short=True)}"
+            print(f"  {row['name_en']}: " + ", ".join(parts) + note)
         print(Style.DIM + tr("database.gene.diseases_note") + Style.RESET_ALL)
+
+    drugs = queries.gene_drugs(conn, gene["id"])
+    if drugs:
+        print("\n" + tr("database.drugs.gene_title"))
+        for drug in drugs[:DRUGS_SHOWN]:
+            print_drug(drug, drug["max_phase"], drug["mechanism"] or action_text(drug["action"]))
+        print(Style.DIM + tr("database.disclaimer") + Style.RESET_ALL)
 
 
 def choose_variant(gene):
@@ -820,13 +878,132 @@ def db_list():
     print(Style.DIM + tr("database.path", path=default_path()) + Style.RESET_ALL)
 
 
+def phase_text(value, evidence: str | None = "label") -> str:
+    """Fase en palabras. Con evidence (de una indicación): una fase 4 que solo viene de
+    ensayos no es «aprobado» para esa enfermedad."""
+    key = {4: "approved", 3: "phase3", 2: "phase2", 1: "phase1", 0.5: "early"}.get(value, "unknown")
+    if key == "approved" and evidence not in ("label", None):
+        key = "phase4_trial"
+    color = Fore.GREEN if key == "approved" else Fore.YELLOW if key != "unknown" else ""
+    return color + tr(f"database.phase.{key}") + Style.RESET_ALL
+
+
+def action_text(action: str | None) -> str:
+    key = ACTION_KEYS.get((action or "").lower())
+    return tr(f"database.actions.{key}") if key else (action or "")
+
+
+def status_text(status: str, short: bool = False) -> str:
+    colors = {"approved": Fore.GREEN, "withdrawn": Fore.RED, "trials": Fore.YELLOW, "none": ""}
+    group = "status_short" if short else "status"
+    return colors[status] + tr(f"database.{group}.{status}") + Style.RESET_ALL
+
+
+def print_drug(drug, phase, how: str | None, evidence: str | None = "label"):
+    """Una línea por fármaco: nombre, fase, retirado, año y cómo actúa."""
+    extra = []
+    if drug["withdrawn"]:
+        extra.append(Fore.RED + tr("database.drugs.withdrawn") + Style.RESET_ALL)
+    if drug["first_approval"]:
+        extra.append(tr("database.drugs.approved_year", year=str(drug["first_approval"])))
+    tail = f" · {' · '.join(extra)}" if extra else ""
+    print(f"  {Fore.CYAN}{drug['name'].capitalize()}{Style.RESET_ALL} · {phase_text(phase, evidence)}{tail}")
+    if how:
+        print(Style.DIM + "      " + how + Style.RESET_ALL)
+
+
+def db_disease():
+    """Una enfermedad: si tiene tratamiento, qué fármacos y cómo actúan, y qué genes la causan."""
+    text = input(tr("prompts.disease_text")).strip()
+    if not text:
+        return
+    conn = database()
+    found = queries.find_disease(conn, text)
+    if not found:
+        warning(tr("database.search.none"))
+        return
+    if len(found) > 1:
+        for number, row in enumerate(found[:VARIANTS_SHOWN], start=1):
+            print(f"  {number:>2}] {row['name_en']} · {tr.count(row['variants'], 'variant')}")
+        found = [found[ask_int(tr("prompts.choose_disease"), minimum=1,
+                               maximum=min(len(found), VARIANTS_SHOWN)) - 1]]
+    disease = found[0]
+    if not queries.disease_drugs(conn, disease["id"]) and confirm("database.disease.search_drugs"):
+        progress = DatabaseProgress()
+        try:
+            ChEMBLProvider().import_disease_drugs(conn, disease["id"], progress)
+        except DNAinventError as exc:
+            progress.finish()
+            error(tr.error(exc))
+        progress.finish()
+
+    print("\n" + Style.BRIGHT + disease["name_en"] + Style.RESET_ALL
+          + (f"  ({disease['mondo_id']})" if disease["mondo_id"] else ""))
+    print("  " + status_text(queries.disease_status(conn, disease["id"])))
+    genes = [f"{g['symbol']} ({tr.count(g['causal'], 'variant_causal')})"
+             for g in queries.genes_for_disease(conn, disease["id"]) if g["causal"]]
+    if genes:
+        print("  " + tr("database.search.genes", list=", ".join(genes)))
+    drugs = queries.disease_drugs(conn, disease["id"])
+    if drugs:
+        print("\n" + tr("database.disease.drugs"))
+        for drug in drugs[:DRUGS_SHOWN]:
+            print_drug(drug, drug["phase_for_disease"], drug["mechanisms"], drug["evidence"])
+        if len(drugs) > DRUGS_SHOWN:
+            print(Style.DIM + tr("database.disease.more_drugs", count=len(drugs) - DRUGS_SHOWN) + Style.RESET_ALL)
+    print(Style.DIM + tr("database.disclaimer") + Style.RESET_ALL)
+
+
+def db_pocket():
+    """Un fármaco dentro de su proteína: qué aminoácidos lo rodean y cómo lo sujetan."""
+    pdb_id = input(tr("prompts.pdb_id")).strip()
+    if not pdb_id:
+        return
+    try:
+        structure = RCSB().structure(pdb_id)
+    except DNAinventError as exc:
+        error(tr.error(exc))
+        return
+    conn = database()
+    names = {r["uniprot_id"]: r["symbol"] for r in
+             conn.execute("SELECT uniprot_id, symbol FROM genes WHERE uniprot_id IS NOT NULL")}
+    print("\n" + Style.BRIGHT + f"{pdb_id.upper()}: {structure.title.capitalize()}" + Style.RESET_ALL)
+    chains = [f"{chain} = {acc}" + (f" ({names[acc]})" if acc in names else "")
+              for chain, acc in structure.chain_accessions.items()]
+    if chains:
+        print("  " + tr("database.pocket.chains", list=", ".join(chains)))
+
+    found = ligand_tools.find_ligands(structure)
+    if not found:
+        warning(tr("database.pocket.no_ligands"))
+        return
+    print("\n" + tr("database.pocket.ligands"))
+    for number, lig in enumerate(found, start=1):
+        print(f"  {number:>2}] {lig.code} ({tr('database.pocket.chain')} {lig.chain}{lig.resi}) · "
+              f"{tr(f'database.ligand_kinds.{lig.kind}')} · {tr.count(len(lig.heavy_atoms), 'atom')}")
+    ligand = found[ask_int(tr("prompts.choose_ligand"), minimum=1, maximum=len(found)) - 1]
+
+    pocket = ligand_tools.pocket(structure, ligand)
+    print("\n" + tr("database.pocket.residues", code=ligand.code, count=len(pocket)))
+    colors = {"covalent": Fore.MAGENTA, "hbond": Fore.CYAN, "hydrophobic": Fore.YELLOW, "contact": ""}
+    for residue in pocket[:POCKET_SHOWN]:
+        kind = colors[residue.kind] + tr(f"database.contact_kinds.{residue.kind}") + Style.RESET_ALL
+        print(f"  {residue.resn.capitalize()}{residue.resi} ({residue.chain}) · {kind} · "
+              f"{tr.decimal(residue.distance, 1)} Å")
+    if any(r.kind == "covalent" for r in pocket):
+        print("\n  " + tr("database.pocket.covalent_note"))
+    print(Style.DIM + tr("database.pocket.note") + Style.RESET_ALL)
+
+
 def database_menu():
     menu("app.database_title", {
         "1": ("menu.database.import", db_import),
         "2": ("menu.database.gene", db_gene),
         "3": ("menu.database.compare", db_compare),
         "4": ("menu.database.search", db_search),
-        "5": ("menu.database.list", db_list),
+        "5": ("menu.database.disease", db_disease),
+        "6": ("menu.database.pocket", db_pocket),
+        "7": ("menu.database.list", db_list),
     }, back_key="menu.back")
 
 

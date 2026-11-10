@@ -11,6 +11,9 @@ __pycache__/
 # Capturas de tools/microscope_render_test.py
 test_frames/
 
+# Respuestas guardadas por tools/chembl_check.py
+chembl_check/
+
 # Bases de datos locales (se crean a partir de schema.sql)
 *.db
 *.sqlite

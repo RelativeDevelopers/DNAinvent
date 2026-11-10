@@ -130,7 +130,7 @@ def parse_summary(uid: str, doc: dict) -> dict | None:
             continue
         xrefs = {x.get("db_source"): x.get("db_id") for x in trait.get("trait_xrefs") or []}
         traits.append({"name": name, "mondo_id": xrefs.get("MONDO"),
-                       "medgen_id": xrefs.get("MedGen")})
+                       "medgen_id": xrefs.get("MedGen"), "mesh_id": xrefs.get("MeSH")})
 
     snv = SIMPLE_SNV.fullmatch(hgvs["hgvs_c"])
     return dict(
@@ -352,7 +352,7 @@ def _link_diseases(conn, variant_id, gene_id, traits, rcvs, source_id) -> int:
                 continue
             trait = by_medgen.get(c.medgen_id) or by_name.get(c.name.lower()) or {}
             candidates.append(({"name": trait.get("name") or c.name,
-                                "mondo_id": trait.get("mondo_id")},
+                                "mondo_id": trait.get("mondo_id"), "mesh_id": trait.get("mesh_id")},
                                classify_effect(c.significance), c.significance,
                                c.review_status, c.rcv))
     else:
@@ -388,9 +388,12 @@ def _upsert_disease(conn, trait) -> tuple[int, int]:
         if row is not None and trait.get("mondo_id") and not row["mondo_id"]:
             conn.execute("UPDATE diseases SET mondo_id = ? WHERE id = ?", (trait["mondo_id"], row["id"]))
     if row is not None:
+        if trait.get("mesh_id"):
+            conn.execute("UPDATE diseases SET mesh_id = COALESCE(mesh_id, ?) WHERE id = ?",
+                         (trait["mesh_id"], row["id"]))
         return row["id"], 0
-    disease_id = conn.execute("INSERT INTO diseases (mondo_id, name_en) VALUES (?, ?)",
-                              (trait.get("mondo_id"), trait["name"])).lastrowid
+    disease_id = conn.execute("INSERT INTO diseases (mondo_id, mesh_id, name_en) VALUES (?, ?, ?)",
+                              (trait.get("mondo_id"), trait.get("mesh_id"), trait["name"])).lastrowid
     conn.execute("INSERT INTO search_index (kind, ref_id, text) VALUES ('disease', ?, ?)",
                  (disease_id, trait["name"]))
     return disease_id, 1

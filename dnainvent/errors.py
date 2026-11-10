@@ -34,6 +34,8 @@ Lista de códigos (cada uno debe tener su texto en todos los idiomas):
     variant_not_supported       hgvs
     variant_outside_cds         hgvs, start, end
     variant_mismatch            hgvs, accession, position, found, expected
+    invalid_pdb_id              pdb_id
+    structure_not_found         accession
 """
 
 ERROR_CODES = frozenset({
@@ -43,7 +45,8 @@ ERROR_CODES = frozenset({
     "invalid_accession", "protein_not_found", "service_unavailable",
     "invalid_email", "search_failed", "search_timeout", "prediction_too_long",
     "prediction_failed", "gene_not_found", "sequence_not_found", "variant_not_found",
-    "variant_not_supported", "variant_outside_cds", "variant_mismatch",
+    "variant_not_supported", "variant_outside_cds", "variant_mismatch", "invalid_pdb_id",
+    "structure_not_found",
 })
 
 

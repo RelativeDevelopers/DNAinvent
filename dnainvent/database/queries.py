@@ -102,7 +102,7 @@ def variant_diseases(conn: sqlite3.Connection, variant_id: int) -> list[sqlite3.
 
 
 def search(conn: sqlite3.Connection, text: str, limit: int = 20) -> list[sqlite3.Row]:
-    """Busca genes y enfermedades por palabras (sin importar acentos ni mayúsculas).
+    """Busca genes, enfermedades y fármacos por palabras (sin importar acentos ni mayúsculas).
     'anemia' encuentra 'Sickle cell anemia'; 'hemo' encuentra 'hemoglobin' (prefijo)."""
     words = re.findall(r"\w+", text, flags=re.UNICODE)
     if not words:
@@ -110,13 +110,14 @@ def search(conn: sqlite3.Connection, text: str, limit: int = 20) -> list[sqlite3
     query = " ".join(f'"{w}"*' for w in words)      # cada palabra como prefijo, todas a la vez
     return conn.execute(
         """SELECT si.kind, si.ref_id,
-                  COALESCE(g.symbol || ' · ' || g.name, d.name_en) AS label,
+                  COALESCE(g.symbol || ' · ' || g.name, d.name_en, dr.name) AS label,
                   (SELECT COUNT(*) FROM variant_diseases vd WHERE vd.disease_id = d.id) AS variants
            FROM search_index si
            LEFT JOIN genes g ON si.kind = 'gene' AND g.id = si.ref_id
            LEFT JOIN diseases d ON si.kind = 'disease' AND d.id = si.ref_id
+           LEFT JOIN drugs dr ON si.kind = 'drug' AND dr.id = si.ref_id
            WHERE search_index MATCH ?
-           ORDER BY si.kind DESC, si.rank LIMIT ?""", (query, limit)).fetchall()
+           ORDER BY CASE si.kind WHEN 'gene' THEN 0 WHEN 'disease' THEN 1 ELSE 2 END, si.rank LIMIT ?""", (query, limit)).fetchall()
 
 
 def genes_for_disease(conn: sqlite3.Connection, disease_id: int) -> list[sqlite3.Row]:
@@ -127,3 +128,62 @@ def genes_for_disease(conn: sqlite3.Connection, disease_id: int) -> list[sqlite3
            FROM variant_diseases vd JOIN variants v ON v.id = vd.variant_id
            JOIN genes g ON g.id = v.gene_id
            WHERE vd.disease_id = ? GROUP BY g.id ORDER BY causal DESC""", (disease_id,)).fetchall()
+
+
+# ---------------------------------------------------------------------- fármacos
+
+def gene_drugs(conn: sqlite3.Connection, gene_id: int) -> list[sqlite3.Row]:
+    """Fármacos que actúan sobre la proteína del gen: primero los aprobados."""
+    return conn.execute(
+        """SELECT dr.*, dt.action, dt.mechanism FROM drug_targets dt
+           JOIN drugs dr ON dr.id = dt.drug_id WHERE dt.gene_id = ?
+           ORDER BY COALESCE(dr.max_phase, -1) DESC, dr.withdrawn, dr.name""", (gene_id,)).fetchall()
+
+
+def disease_drugs(conn: sqlite3.Connection, disease_id: int) -> list[sqlite3.Row]:
+    """Fármacos indicados para una enfermedad, con la fase PARA ESA enfermedad y su mecanismo
+    (la diana puede ser otra proteína: la hidroxiurea y la anemia falciforme)."""
+    return conn.execute(
+        """SELECT dr.*, dd.max_phase AS phase_for_disease, dd.indication, dd.evidence,
+                  (SELECT group_concat(COALESCE(dm.mechanism, dm.target_name), '; ')
+                   FROM drug_mechanisms dm WHERE dm.drug_id = dr.id) AS mechanisms
+           FROM drug_diseases dd JOIN drugs dr ON dr.id = dd.drug_id
+           WHERE dd.disease_id = ?
+           ORDER BY dd.max_phase = 4 AND dd.evidence = 'label' DESC, dr.withdrawn,
+                    COALESCE(dd.max_phase, -1) DESC, dr.name""", (disease_id,)).fetchall()
+
+
+def disease_status(conn: sqlite3.Connection, disease_id: int) -> str:
+    """En qué punto está el tratamiento de una enfermedad, según los fármacos guardados:
+
+        approved    hay al menos un fármaco aprobado para ELLA (fase 4 según su ficha técnica) y
+                    no retirado
+        withdrawn   los aprobados para ella se retiraron
+        trials      hay fármacos en ensayo clínico para ella (también los de fase 4 que solo
+                    vienen de ensayos: aprobados para otra cosa y probados en esta)
+        none        no hay ningún fármaco guardado para ella
+
+    Aprobado significa que la TRATA, no que la cure. Solo cuenta lo importado de ChEMBL."""
+    rows = conn.execute(
+        "SELECT dd.max_phase, dd.evidence, dr.withdrawn FROM drug_diseases dd "
+        "JOIN drugs dr ON dr.id = dd.drug_id WHERE dd.disease_id = ?", (disease_id,)).fetchall()
+    approved = [r for r in rows if r["max_phase"] == 4 and r["evidence"] == "label"]
+    if any(not r["withdrawn"] for r in approved):
+        return "approved"
+    if approved:
+        return "withdrawn"
+    if any(r["max_phase"] is not None and r["max_phase"] > 0 for r in rows):
+        return "trials"
+    return "none"
+
+
+def find_disease(conn: sqlite3.Connection, text: str) -> list[sqlite3.Row]:
+    """Enfermedades por nombre (palabras como prefijo), las que tienen más variantes primero."""
+    rows = search(conn, text, limit=50)
+    ids = [r["ref_id"] for r in rows if r["kind"] == "disease"]
+    if not ids:
+        return []
+    marks = ",".join("?" * len(ids))
+    return conn.execute(
+        f"""SELECT d.*, (SELECT COUNT(*) FROM variant_diseases vd WHERE vd.disease_id = d.id) AS variants
+            FROM diseases d WHERE d.id IN ({marks}) ORDER BY variants DESC, d.name_en""", ids).fetchall()

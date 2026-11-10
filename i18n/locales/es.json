@@ -45,7 +45,9 @@
       "gene": "Ver un gen guardado",
       "compare": "Sana frente a variante",
       "search": "Buscar genes y enfermedades",
-      "list": "Genes guardados"
+      "list": "Genes guardados",
+      "disease": "Una enfermedad y sus tratamientos",
+      "pocket": "Un fármaco dentro de su proteína (PDB)"
     }
   },
   "common": {
@@ -75,7 +77,11 @@
     "taxon": "Organismo: número de taxón del NCBI (Intro = humano, 9606; ratón = 10090): ",
     "variant": "Variante (c.20A>T, p.Glu7Val, rs334...; Intro = las que causan alguna enfermedad): ",
     "choose_variant": "Elige una variante: ",
-    "search_text": "Buscar un gen o una enfermedad (los nombres están en inglés): "
+    "search_text": "Buscar un gen o una enfermedad (los nombres están en inglés): ",
+    "disease_text": "Enfermedad, en inglés (p. ej. sickle, thalassemia, Li-Fraumeni; Intro = volver): ",
+    "choose_disease": "Elige una enfermedad: ",
+    "pdb_id": "ID de una estructura del PDB (p. ej. 5E83, hemoglobina S con voxelotor; Intro = volver): ",
+    "choose_ligand": "Elige una molécula: "
   },
   "complement": {
     "helix": "Doble hélice (hebras antiparalelas):",
@@ -182,7 +188,9 @@
     "variant_not_found": "No existe la variante {variant}.",
     "variant_not_supported": "Por ahora solo se pueden situar en la secuencia las sustituciones de una base dentro de la región codificante (como c.20A>T); {hgvs} no lo es.",
     "variant_outside_cds": "{hgvs} cae fuera de la región codificante ({start}..{end}).",
-    "variant_mismatch": "En {accession} la posición {position} es {found}, no {expected}: {hgvs} no corresponde a esta versión de la secuencia."
+    "variant_mismatch": "En {accession} la posición {position} es {found}, no {expected}: {hgvs} no corresponde a esta versión de la secuencia.",
+    "invalid_pdb_id": "«{pdb_id}» no es un ID del PDB válido (son 4 caracteres, como 5E83).",
+    "structure_not_found": "No se ha encontrado la estructura {accession} en formato PDB (las muy grandes solo existen en mmCIF)."
   },
   "kinds": {
     "dna": "ADN",
@@ -503,6 +511,10 @@
     "variant_risk_factor": {
       "one": "{n} factor de riesgo",
       "other": "{n} factores de riesgo"
+    },
+    "atom": {
+      "one": "{n} átomo",
+      "other": "{n} átomos"
     }
   },
   "microscope": {
@@ -914,7 +926,12 @@
       "variants": "Buscando las variantes de {symbol} en ClinVar…",
       "summaries": "Leyendo variantes: {done} de {total}…",
       "conditions": "Leyendo la clasificación de cada enfermedad: {done} de {total}…",
-      "saving": "Guardando {count} variantes…"
+      "saving": "Guardando {count} variantes…",
+      "drug_targets": "Buscando la proteína de {symbol} en UniProt y sus dianas en ChEMBL…",
+      "disease_drugs": "Buscando fármacos para «{disease}»…",
+      "drugs": "Leyendo {count} fármacos…",
+      "indications": "Leyendo para qué enfermedades está indicado cada uno…",
+      "chembl_retry": "ChEMBL va lento: intento {attempt} de {max} dentro de {wait} s…"
     },
     "imported_gene": "Gen {symbol} guardado: {name}.",
     "clinvar_offer": "¿Importar también sus variantes de ClinVar? Puede tardar un minuto",
@@ -1021,6 +1038,97 @@
       "gene": "Gen",
       "disease": "Enfermedad",
       "genes": "Genes: {list}"
+    },
+    "chembl_offer": "¿Importar también sus fármacos de ChEMBL (los que actúan sobre su proteína y los indicados para sus enfermedades)?",
+    "chembl_citation": "Fármacos: ChEMBL (CC BY-SA 3.0) · proteínas: UniProt (CC BY 4.0).",
+    "disclaimer": "Esto es divulgación, no consejo médico. Ante cualquier duda de salud, consulta a un profesional sanitario.",
+    "drug_stats": {
+      "protein": "Proteína (UniProt):",
+      "targets": "Dianas en ChEMBL:",
+      "drugs": "Fármacos guardados:",
+      "linked": "Indicaciones para enfermedades guardadas:",
+      "no_protein": "No se ha encontrado su proteína en UniProt: no se pueden buscar fármacos que actúen sobre ella."
+    },
+    "drugs": {
+      "gene_title": "Fármacos que actúan sobre su proteína:",
+      "withdrawn": "retirado en algún país",
+      "approved_year": "aprobado por primera vez en {year}"
+    },
+    "phase": {
+      "approved": "aprobado",
+      "phase3": "ensayo de fase 3",
+      "phase2": "ensayo de fase 2",
+      "phase1": "ensayo de fase 1",
+      "early": "fase 1 temprana",
+      "unknown": "preclínico o sin datos",
+      "phase4_trial": "ensayo de fase 4 (aprobado para otra cosa)"
+    },
+    "actions": {
+      "inhibitor": "inhibidor",
+      "agonist": "agonista",
+      "antagonist": "antagonista",
+      "modulator": "modulador",
+      "activator": "activador",
+      "blocker": "bloqueador",
+      "opener": "abridor",
+      "stabiliser": "estabilizador",
+      "binding_agent": "se une a ella",
+      "positive_modulator": "modulador alostérico positivo",
+      "negative_modulator": "modulador alostérico negativo",
+      "cross_linking": "agente entrecruzante",
+      "substrate": "sustrato",
+      "releasing_agent": "liberador",
+      "degrader": "degradador",
+      "positive_mod": "modulador positivo",
+      "negative_mod": "modulador negativo",
+      "exogenous_gene": "terapia génica: añade una copia del gen",
+      "partial_agonist": "agonista parcial",
+      "inverse_agonist": "agonista inverso",
+      "antisense": "inhibidor antisentido",
+      "rnai": "inhibidor por ARN de interferencia",
+      "chelating": "quelante",
+      "disrupting": "disruptor",
+      "hydrolytic_enzyme": "enzima hidrolítica",
+      "vaccine_antigen": "antígeno de vacuna",
+      "exogenous_protein": "proteína añadida",
+      "gene_editing": "edición genética"
+    },
+    "status": {
+      "approved": "Hay tratamiento aprobado. Aprobado quiere decir que la trata, no necesariamente que la cure.",
+      "withdrawn": "Hubo tratamientos aprobados, pero se retiraron.",
+      "trials": "No hay tratamiento aprobado; hay candidatos en ensayo clínico.",
+      "none": "No hay ningún fármaco guardado para esta enfermedad: puede que no exista o que aún no se haya importado."
+    },
+    "status_short": {
+      "approved": "con tratamiento aprobado",
+      "withdrawn": "tratamientos retirados",
+      "trials": "en ensayo clínico",
+      "none": "sin fármacos guardados"
+    },
+    "disease": {
+      "drugs": "Fármacos (fase para esta enfermedad):",
+      "search_drugs": "No hay fármacos guardados para esta enfermedad. ¿Buscarlos en ChEMBL?",
+      "more_drugs": "… y {count} más (en ensayo o probados en ensayos)."
+    },
+    "pocket": {
+      "chains": "Cadenas (UniProt): {list}",
+      "chain": "cadena",
+      "ligands": "Moléculas dentro de la estructura:",
+      "no_ligands": "Esta estructura no tiene ninguna molécula aparte de la proteína (y el agua).",
+      "residues": "Aminoácidos que rodean {code} ({count}), del contacto más fuerte al más débil:",
+      "covalent_note": "Hay un enlace covalente: la molécula está unida químicamente a la proteína, no solo encajada.",
+      "note": "Distancias medidas en el cristal, no es una simulación. Datos: RCSB PDB (dominio público)."
+    },
+    "ligand_kinds": {
+      "drug": "fármaco u otra molécula de interés",
+      "cofactor": "cofactor",
+      "additive": "aditivo del experimento"
+    },
+    "contact_kinds": {
+      "covalent": "enlace covalente",
+      "hbond": "puente de hidrógeno",
+      "hydrophobic": "contacto hidrófobo",
+      "contact": "contacto"
     }
   }
 }
