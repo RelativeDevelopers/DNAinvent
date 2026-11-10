@@ -1,10 +1,35 @@
-# 🧬 DNAinvent
+<p align="center">
+  <img src="docs/logo.png" alt="Logo de DNAinvent" width="140">
+</p>
+
+<h1 align="center">DNAinvent</h1>
+
+<p align="center"><strong>Herramientas para secuencias de ADN y ARN.</strong></p>
+
+<p align="center">
+  <a href="https://relativedevelopers.com/dnainvent/"><strong>🌐 Página web de DNAinvent</strong></a>
+  &nbsp;·&nbsp;
+  <a href="https://relativedevelopers.com/">Relative Developers</a>
+</p>
+
+<p align="center">
+  <img alt="Web, Windows, macOS y Linux" src="https://img.shields.io/badge/plataformas-web%20%C2%B7%20ordenador-3b82f6">
+  <img alt="Python 3.11 o superior" src="https://img.shields.io/badge/python-3.11%2B-3776ab">
+  <img alt="Gratis" src="https://img.shields.io/badge/precio-gratis-22c55e">
+  <img alt="Catalán, castellano e inglés" src="https://img.shields.io/badge/idiomas-ca%20%C2%B7%20es%20%C2%B7%20en-8b5cf6">
+</p>
+
+---
 
 **Escribe una secuencia de ADN y explórala de todas las formas posibles:** transcríbela, tradúcela a proteína, edítala con CRISPR, descubre qué proteína real se le parece… y viaja dentro de ella con un **microscopio 3D**, desde la doble hélice hasta los quarks de un protón.
 
-DNAinvent funciona en la consola y habla **català**, **castellano** e **English**.
+DNAinvent funciona **en el navegador** y **en la consola de tu ordenador**, y habla **català**,
+**castellano** e **English**.
 
-> Una app de [Relative Developers](https://relativedevelopers.com/dnainvent/).
+> 🌐 **¿Sin instalar nada?** Úsalo directamente desde la
+> [página web de DNAinvent](https://relativedevelopers.com/dnainvent/): pulsa **«Abrir DNAinvent»**.
+> La web tiene la doble hélice en 3D, el microscopio 3D, la proteína 3D y la página divulgativa
+> *Qué es el ADN*. Este repositorio es el programa completo para tu ordenador.
 
 ---
 
@@ -56,29 +81,38 @@ Importa genes reales del NCBI con sus variantes y las enfermedades asociadas, y 
 ## 🚀 Instalación
 
 ### 1. Lo que necesitas
-- **Python 3** instalado en tu ordenador.
+- **Python 3.11 o superior** ([descárgalo aquí](https://www.python.org/downloads/); en Windows,
+  marca *Add Python to PATH* al instalarlo).
+- **Git** ([descárgalo aquí](https://git-scm.com/downloads)), o descarga los proyectos como ZIP.
 - El proyecto **AtomicWorld**, que aporta la física atómica del microscopio. Si solo quieres la consola, no hace falta (ver paso 3).
 
 ### 2. Descarga los proyectos
-Coloca DNAinvent y AtomicWorld uno al lado del otro, así:
+DNAinvent y AtomicWorld tienen que quedar uno al lado del otro, así:
 
 ```
-Documents/
+Relative_Developers/
 ├── project-DNAinvent/DNAinvent
 └── project-AtomicWorld/AtomicWorld
 ```
 
+Abre una terminal en la carpeta donde quieras guardarlos y ejecuta:
+
 ```bash
-cd Documents/project-DNAinvent
-git clone https://github.com/<tu-usuario>/DNAinvent.git
+mkdir Relative_Developers
+cd Relative_Developers
+git clone https://github.com/RelativeDevelopers/DNAinvent.git project-DNAinvent/DNAinvent
+git clone https://github.com/RelativeDevelopers/AtomicWorld.git project-AtomicWorld/AtomicWorld
 ```
 
-> También puedes descargarlo como ZIP desde el botón verde **Code → Download ZIP** de GitHub.
+> También puedes descargarlos como ZIP con el botón verde **Code → Download ZIP** de cada
+> repositorio ([DNAinvent](https://github.com/RelativeDevelopers/DNAinvent) y
+> [AtomicWorld](https://github.com/RelativeDevelopers/AtomicWorld)) y descomprimirlos en esas carpetas.
 
 ### 3. Instala las dependencias
 Entra en la carpeta de DNAinvent y ejecuta:
 
 ```bash
+cd project-DNAinvent/DNAinvent
 pip install -r requirements.txt
 ```
 
@@ -201,7 +235,7 @@ tools/         scripts auxiliares
 
 **¿Quieres añadir un idioma?** Copia `i18n/locales/es.json` con el código del nuevo idioma y traduce los textos. Los tests comprueban que no falte ninguno.
 
-La versión web de DNAinvent está en su propio repositorio, `dnainvent_web`, que usa este como paquete.
+La versión web de DNAinvent está en su propio repositorio, `DNAinvent_web`, que usa este como paquete.
 
 ---
 
@@ -215,4 +249,7 @@ La versión web de DNAinvent está en su propio repositorio, `dnainvent_web`, qu
 
 ---
 
-<p align="center">Hecho con 🧬 y curiosidad por <a href="https://relativedevelopers.com/dnainvent/">Relative Developers</a></p>
+<p align="center">
+  Hecho con 🧬 y curiosidad por <a href="https://relativedevelopers.com/">Relative Developers</a> ·
+  Aplicaciones gratuitas para explorar la ciencia
+</p>
