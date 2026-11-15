@@ -1,7 +1,7 @@
 # DNAinvent como paquete de Python, para que otros proyectos lo usen sin copiar el código.
 # La web (repositorio dnainvent_web) lo instala con:
 #     pip install -e ../../DNAinvent       (en tu ordenador, desde dnainvent_web/dnainvent)
-#     pip install "dnainvent @ git+https://github.com/aluskabarbera/DNAinvent.git"   (en el servidor)
+#     pip install "dnainvent @ git+https://github.com/RelativeDevelopers/DNAinvent.git"   (en el servidor)
 
 [build-system]
 requires = ["setuptools>=68"]

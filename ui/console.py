@@ -861,6 +861,14 @@ def db_search():
         if row["kind"] == "gene":
             print("  " + Fore.CYAN + tr("database.search.gene") + Style.RESET_ALL + " " + row["label"])
             continue
+        if row["kind"] == "drug":
+            drug = conn.execute("SELECT * FROM drugs WHERE id = ?", (row["ref_id"],)).fetchone()
+            print("  " + Fore.GREEN + tr("database.search.drug") + Style.RESET_ALL + " "
+                  + row["label"].capitalize() + " · " + phase_text(drug["max_phase"], None))
+            genes = [g["symbol"] for g in queries.drug_genes(conn, row["ref_id"])]
+            if genes:
+                print("      " + tr("database.search.drug_genes", list=", ".join(genes)))
+            continue
         print("  " + Fore.MAGENTA + tr("database.search.disease") + Style.RESET_ALL + " " + row["label"])
         genes = [f"{g['symbol']} ({tr.count(g['causal'], 'variant_causal')})"
                  for g in queries.genes_for_disease(conn, row["ref_id"])]

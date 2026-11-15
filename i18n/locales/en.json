@@ -1037,7 +1037,9 @@
       "none": "No results.",
       "gene": "Gene",
       "disease": "Disease",
-      "genes": "Genes: {list}"
+      "drug": "Drug",
+      "genes": "Genes: {list}",
+      "drug_genes": "Acts on: {list}"
     },
     "chembl_offer": "Also import its drugs from ChEMBL (those acting on its protein and those indicated for its diseases)?",
     "chembl_citation": "Drugs: ChEMBL (CC BY-SA 3.0) · proteins: UniProt (CC BY 4.0).",

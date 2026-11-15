@@ -1037,7 +1037,9 @@
       "none": "Sin resultados.",
       "gene": "Gen",
       "disease": "Enfermedad",
-      "genes": "Genes: {list}"
+      "drug": "Fármaco",
+      "genes": "Genes: {list}",
+      "drug_genes": "Actúa sobre: {list}"
     },
     "chembl_offer": "¿Importar también sus fármacos de ChEMBL (los que actúan sobre su proteína y los indicados para sus enfermedades)?",
     "chembl_citation": "Fármacos: ChEMBL (CC BY-SA 3.0) · proteínas: UniProt (CC BY 4.0).",

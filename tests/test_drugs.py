@@ -280,6 +280,21 @@ def test_search_finds_drugs(conn, provider):
     assert [(r["kind"], r["label"]) for r in queries.search(conn, "voxel")] == [("drug", "VOXELOTOR")]
 
 
+def test_console_search_shows_drugs_as_drugs(conn, provider, monkeypatch, capsys):
+    """El buscador de la consola no confunde un fármaco con una enfermedad."""
+    from i18n import Translator
+    from ui import console
+
+    provider.import_disease_drugs(conn, SICKLE)
+    monkeypatch.setattr(console, "_database", conn)
+    monkeypatch.setattr(console, "tr", Translator("es"))
+    monkeypatch.setattr("builtins.input", lambda prompt="": "voxel")
+    console.db_search()
+    out = capsys.readouterr().out
+    assert "Fármaco" in out and "Voxelotor" in out
+    assert "Enfermedad" not in out
+
+
 def test_paging(provider, monkeypatch):
     pages = {0: {"targets": [{"target_chembl_id": "A"}, {"target_chembl_id": "B"}], "page_meta": {"total_count": 3}},
              2: {"targets": [{"target_chembl_id": "C"}], "page_meta": {"total_count": 3}}}

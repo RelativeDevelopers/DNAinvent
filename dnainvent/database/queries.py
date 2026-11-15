@@ -140,6 +140,14 @@ def gene_drugs(conn: sqlite3.Connection, gene_id: int) -> list[sqlite3.Row]:
            ORDER BY COALESCE(dr.max_phase, -1) DESC, dr.withdrawn, dr.name""", (gene_id,)).fetchall()
 
 
+def drug_genes(conn: sqlite3.Connection, drug_id: int) -> list[sqlite3.Row]:
+    """Genes guardados sobre cuya proteína actúa el fármaco, con el tipo de acción."""
+    return conn.execute(
+        """SELECT g.symbol, g.name, dt.action FROM drug_targets dt
+           JOIN genes g ON g.id = dt.gene_id WHERE dt.drug_id = ? ORDER BY g.symbol""",
+        (drug_id,)).fetchall()
+
+
 def disease_drugs(conn: sqlite3.Connection, disease_id: int) -> list[sqlite3.Row]:
     """Fármacos indicados para una enfermedad, con la fase PARA ESA enfermedad y su mecanismo
     (la diana puede ser otra proteína: la hidroxiurea y la anemia falciforme)."""

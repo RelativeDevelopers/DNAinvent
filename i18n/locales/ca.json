@@ -1037,7 +1037,9 @@
       "none": "Cap resultat.",
       "gene": "Gen",
       "disease": "Malaltia",
-      "genes": "Gens: {list}"
+      "drug": "Fàrmac",
+      "genes": "Gens: {list}",
+      "drug_genes": "Actua sobre: {list}"
     },
     "chembl_offer": "Vols importar també els seus fàrmacs de ChEMBL (els que actuen sobre la seva proteïna i els indicats per a les seves malalties)?",
     "chembl_citation": "Fàrmacs: ChEMBL (CC BY-SA 3.0) · proteïnes: UniProt (CC BY 4.0).",
