@@ -931,7 +931,8 @@
       "disease_drugs": "Looking up drugs for “{disease}”…",
       "drugs": "Reading {count} drugs…",
       "indications": "Reading what each one is indicated for…",
-      "chembl_retry": "ChEMBL is slow: attempt {attempt} of {max} in {wait} s…"
+      "chembl_retry": "ChEMBL is slow: attempt {attempt} of {max} in {wait} s…",
+      "orphanet": "Downloading Orphanet data ({file})…"
     },
     "imported_gene": "Gene {symbol} saved: {name}.",
     "clinvar_offer": "Also import its ClinVar variants? It may take a minute",

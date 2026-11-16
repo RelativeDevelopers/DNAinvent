@@ -21,7 +21,7 @@ import sqlite3
 from pathlib import Path
 
 SCHEMA_PATH = Path(__file__).with_name("schema.sql")
-SCHEMA_VERSION = 4
+SCHEMA_VERSION = 5
 
 # Fuentes conocidas: código -> (nombre, url, licencia, uso comercial permitido)
 KNOWN_SOURCES = {
@@ -32,6 +32,7 @@ KNOWN_SOURCES = {
     "chembl": ("ChEMBL", "https://www.ebi.ac.uk/chembl/", "CC-BY-SA-3.0", 1),
     "manual": ("DNAinvent (añadido a mano)", None, "public-domain", 1),
     "uniprot": ("UniProt", "https://www.uniprot.org/", "CC-BY-4.0", 1),
+    "orphanet": ("Orphanet (Orphadata)", "https://www.orphadata.com/", "CC-BY-4.0", 1),
 }
 
 # Columnas añadidas en cada versión del esquema (para actualizar bases de datos antiguas)
@@ -57,6 +58,15 @@ _MIGRATIONS = {
                PRIMARY KEY (drug_id, target_chembl_id, mechanism))""",
     ],
     4: ["ALTER TABLE drug_diseases ADD COLUMN evidence TEXT"],
+    5: [
+        "ALTER TABLE diseases ADD COLUMN orpha_codes TEXT",
+        "ALTER TABLE diseases ADD COLUMN inheritance TEXT",
+        "ALTER TABLE diseases ADD COLUMN onset TEXT",
+        "ALTER TABLE diseases ADD COLUMN prevalence_class TEXT",
+        "ALTER TABLE diseases ADD COLUMN prevalence_type TEXT",
+        "ALTER TABLE diseases ADD COLUMN prevalence_geo TEXT",
+        "ALTER TABLE variants ADD COLUMN freq_source TEXT",
+    ],
 }
 
 

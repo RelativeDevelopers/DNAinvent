@@ -305,7 +305,8 @@ def test_real_clinvar_summary():
     assert lp["clinical_significance"] == "likely pathogenic"
     assert lp["review_status"] == "criteria provided, single submitter"
     assert lp["traits"] == [{"name": "Hb SS disease", "mondo_id": "MONDO:0011382",
-                            "medgen_id": "C0002895", "mesh_id": None}]
+                            "medgen_id": "C0002895", "mesh_id": None,
+                            "orpha_codes": "232|275752"}]
     lb = parse_summary("5022597", REAL_SAMPLE["5022597"])
     assert (lb["hgvs_p"], lb["traits"]) == ("p.Leu4=", [])     # "Inborn genetic diseases" es genérico
     deletion = parse_summary("5019560", REAL_SAMPLE["5019560"])
@@ -418,6 +419,49 @@ def test_parse_real_vcv():
     assert lynch.review_status == "reviewed by expert panel"
 
 
+def test_real_vcv_frequency():
+    """La frecuencia en la población viene en el mismo XML VCV (aquí, de TOPMed)."""
+    freqs = clinvar.parse_vcv_frequencies((DATA / "clinvar_vcv_msh2.xml").read_bytes())
+    assert freqs == {90868: (0.00001, "Trans-Omics for Precision Medicine (TOPMed)")}
+
+
+def test_frequency_prefers_gnomad():
+    xml = b"""<ClinVarResult-Set><VariationArchive VariationID="7"><SimpleAllele>
+      <AlleleFrequencyList>
+        <AlleleFrequency Value="0.02" Source="1000 Genomes Project"/>
+        <AlleleFrequency Value="0.011" Source="The Genome Aggregation Database (gnomAD), exomes"/>
+        <AlleleFrequency Value="0.013" Source="The Genome Aggregation Database (gnomAD)"/>
+        <AlleleFrequency Value="raro" Source="gnomAD"/>
+      </AlleleFrequencyList></SimpleAllele></VariationArchive>
+      <VariationArchive VariationID="8"/></ClinVarResult-Set>"""
+    assert clinvar.parse_vcv_frequencies(xml) == {7: (0.013, "The Genome Aggregation Database (gnomAD)")}
+
+
+def test_import_saves_frequency_and_orphanet(conn, fake, monkeypatch):
+    real_vcv = vcv_xml
+
+    def with_freq(ids):
+        raw = real_vcv(ids).decode()
+        return raw.replace('<VariationArchive VariationID="101" Accession="VCV000000101">',
+                           '<VariationArchive VariationID="101" Accession="VCV000000101"><SimpleAllele>'
+                           '<AlleleFrequencyList><AlleleFrequency Value="0.0123" Source="gnomAD"/>'
+                           '</AlleleFrequencyList></SimpleAllele>').encode()
+
+    monkeypatch.setitem(globals(), "vcv_xml", with_freq)
+    docs = dict(CLINVAR_DOCS)
+    docs["101"] = cv_doc("NM_000518.5(HBB):c.20A>T (p.Glu7Val)", "single nucleotide variant",
+                         "Pathogenic", [("Hb SS disease", [{"db_source": "MedGen", "db_id": "C1"},
+                                                           {"db_source": "Orphanet", "db_id": "232"},
+                                                           {"db_source": "Orphanet", "db_id": "275752"}])])
+    fake.docs = docs
+    stats = ClinVarProvider(http=fake, api_key="", sleep=lambda s: None).import_variants(conn, "HBB")
+    assert stats.with_frequency == 1
+    row = conn.execute("SELECT population_freq, freq_source FROM variants WHERE clinvar_id = 101").fetchone()
+    assert tuple(row) == (0.0123, "gnomAD")
+    disease = conn.execute("SELECT orpha_codes FROM diseases WHERE name_en = 'Hb SS disease'").fetchone()
+    assert disease["orpha_codes"] == "232|275752"
+
+
 def test_vcv_records_that_were_not_requested_are_ignored(cv):
     stats = clinvar.ImportStats()
     cv.http = lambda url: vcv_xml([101, 90868])        # ClinVar se equivoca y añade otra
@@ -524,14 +568,14 @@ def test_migration_from_version_1(tmp_path):
                   .replace("    clinical_significance TEXT,                -- 'pathogenic', 'protective'... para esta enfermedad\n", "")
                   .replace("    review_status   TEXT,                      -- 'criteria provided, single submitter'...\n", "")
                   .replace("    rcv_accession   TEXT,                      -- 'RCV000016574'\n", "")
-                  .replace("PRAGMA user_version = 4;", ""))
+                  .replace("PRAGMA user_version = 5;", ""))
     raw = sqlite3.connect(path)
     raw.executescript(old_schema)
     raw.close()
     connection = open_database(path)
     columns = {r[1] for r in connection.execute("PRAGMA table_info(variant_diseases)")}
     assert {"clinical_significance", "review_status", "rcv_accession"} <= columns
-    assert connection.execute("PRAGMA user_version").fetchone()[0] == 4
+    assert connection.execute("PRAGMA user_version").fetchone()[0] == 5
     connection.close()
     open_database(path).close()                       # abrirla otra vez no falla
 

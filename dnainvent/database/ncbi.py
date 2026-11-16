@@ -101,8 +101,26 @@ class NCBIProvider(EUtilsClient):
 
     # ------------------------------------------------------------------ Gene
     def search_gene(self, symbol: str, taxon_id: int = HUMAN) -> int | None:
-        data = self.json("esearch.fcgi", {"db": "gene", "term": f"{symbol}[sym] AND {taxon_id}[taxid]"})
-        ids = data.get("esearchresult", {}).get("idlist", [])
+        """ID de NCBI Gene del gen con ese símbolo.
+
+        Primero por el símbolo OFICIAL ([pref]). [sym] incluye también los alias, y no basta:
+        «HTT» es además un alias de SLC6A4 (5-HTT), que salía el primero. Si solo responde
+        [sym], se elige el resultado cuyo símbolo coincide exactamente."""
+        def search(field: str) -> list[str]:
+            data = self.json("esearch.fcgi", {"db": "gene",
+                                              "term": f"{symbol}[{field}] AND {taxon_id}[taxid]"})
+            return data.get("esearchresult", {}).get("idlist", [])
+
+        ids = search("pref")
+        if ids:
+            return int(ids[0])
+        ids = search("sym")
+        if len(ids) > 1:
+            result = self.json("esummary.fcgi", {"db": "gene", "id": ",".join(ids[:20])}).get("result", {})
+            exact = [uid for uid in result.get("uids", [])
+                     if (result.get(uid, {}).get("name") or "").upper() == symbol.upper()]
+            if exact:
+                return int(exact[0])
         return int(ids[0]) if ids else None
 
     def fetch_gene_summary(self, gene_id: int) -> dict:

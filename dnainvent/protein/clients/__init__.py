@@ -9,7 +9,7 @@ import urllib.request
 
 from ... import __version__
 
-USER_AGENT = f"DNAinvent/{__version__} (+https://github.com/aluskabarbera/DNAinvent)"
+USER_AGENT = f"DNAinvent/{__version__} (+https://github.com/RelativeDevelopers/DNAinvent)"
 TIMEOUT = 30          # segundos
 
 

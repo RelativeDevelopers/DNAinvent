@@ -17,6 +17,9 @@ la global para cada enfermedad, saldría que HbS causa la malaria. Así que el e
 (causal / factor de riesgo / protectora) se saca de cada RCV. Si el RCV no se puede leer, la
 enfermedad se enlaza igualmente, pero sin efecto (NULL): se sabe que se estudió, no qué hace.
 
+Frecuencia en la población: el mismo XML VCV trae <AlleleFrequencyList>, con el estudio de
+origen (gnomAD, 1000 Genomes, TOPMed...). Se guarda una por variante (parse_vcv_frequencies).
+
 Se guardan solo las variantes descritas sobre un ARNm de este gen (las que DNAinvent puede
 situar en la secuencia). Las grandes deleciones de cromosoma y las de genes vecinos se
 cuentan, pero no se guardan.
@@ -37,6 +40,8 @@ Progress = Callable[[str, dict], None]
 SEARCH_PAGE = 5000        # IDs por petición esearch
 SUMMARY_BATCH = 200       # IDs por petición esummary
 VCV_BATCH = 25            # IDs por petición efetch (el XML de algunas variantes es grande)
+VCV_RETRY_BATCH = 5       # si un lote falla, se repite en trozos de este tamaño
+RETRY_PAUSE = 5           # s de espera antes de repetir un lote fallido
 
 # NM_000518.5(HBB):c.20A>T (p.Glu7Val)
 HGVS_NAME = re.compile(r"(?P<acc>[NX][MR]_\d+)\.(?P<ver>\d+)\((?P<gene>[^)]+)\):"
@@ -52,6 +57,11 @@ NON_DISEASE_TRAITS = {"not provided", "not specified", "see cases",
                       "inborn genetic diseases", ""}
 
 EFFECT_STRENGTH = {"causal": 3, "risk_factor": 2, "protective": 1, None: 0}
+
+# Qué estudio de frecuencias se prefiere cuando hay varios (el primero que aparezca en el
+# nombre, en minúsculas): gnomAD es el más grande; luego los demás proyectos de población.
+# Dentro del mismo estudio, mejor el genoma completo que solo los exomas.
+FREQUENCY_PREFERENCE = ("gnomad", "1000 genomes", "topmed", "exac", "go-esp")
 
 
 def _no_progress(key: str, data: dict) -> None:
@@ -70,6 +80,7 @@ class ImportStats:
     condition_batches_failed: int = 0   # lotes de RCV que no llegaron o no se pudieron leer
     unexpected_records: int = 0  # registros que ClinVar devolvió sin haberlos pedido (descartados)
     new_diseases: int = 0
+    with_frequency: int = 0      # variantes con frecuencia en la población
     gene_imported: bool = False
 
 
@@ -129,8 +140,12 @@ def parse_summary(uid: str, doc: dict) -> dict | None:
         if name.lower() in NON_DISEASE_TRAITS:
             continue
         xrefs = {x.get("db_source"): x.get("db_id") for x in trait.get("trait_xrefs") or []}
+        # Orphanet puede venir varias veces (anemia falciforme: 232 y 275752)
+        orpha = [str(x["db_id"]) for x in trait.get("trait_xrefs") or []
+                 if x.get("db_source") == "Orphanet" and x.get("db_id")]
         traits.append({"name": name, "mondo_id": xrefs.get("MONDO"),
-                       "medgen_id": xrefs.get("MedGen"), "mesh_id": xrefs.get("MeSH")})
+                       "medgen_id": xrefs.get("MedGen"), "mesh_id": xrefs.get("MeSH"),
+                       "orpha_codes": "|".join(dict.fromkeys(orpha)) or None})
 
     snv = SIMPLE_SNV.fullmatch(hgvs["hgvs_c"])
     return dict(
@@ -187,6 +202,46 @@ def parse_vcv(raw: bytes) -> dict[int, list[Condition]]:
     return out
 
 
+def parse_vcv_frequencies(raw: bytes) -> dict[int, tuple[float, str]]:
+    """XML VCV de ClinVar -> {ID de variante: (frecuencia, estudio)}.
+
+    <VariationArchive VariationID="90868"> ... <SimpleAllele> ...
+        <AlleleFrequencyList>
+          <AlleleFrequency Value="0.00001" Source="Trans-Omics for Precision Medicine (TOPMed)"/>
+
+    Si hay varias, se elige según FREQUENCY_PREFERENCE, luego genomas antes que exomas y, a
+    igualdad, la mayor."""
+    try:
+        root = ET.fromstring(raw)
+    except ET.ParseError:
+        raise ServiceError("service_unavailable", service="ClinVar") from None
+    archives = [root] if root.tag == "VariationArchive" else root.iter("VariationArchive")
+    out: dict[int, tuple[float, str]] = {}
+    for archive in archives:
+        try:
+            variation_id = int(archive.get("VariationID", ""))
+        except ValueError:
+            continue
+        best = None
+        for item in archive.iter("AlleleFrequency"):
+            try:
+                value = float(item.get("Value", ""))
+            except ValueError:
+                continue
+            if not 0 <= value <= 1:
+                continue
+            source = (item.get("Source") or "").strip()
+            low = source.lower()
+            rank = next((i for i, name in enumerate(FREQUENCY_PREFERENCE) if name in low),
+                        len(FREQUENCY_PREFERENCE))
+            key = (rank, "exome" in low, -value)
+            if best is None or key < best[0]:
+                best = (key, value, source)
+        if best is not None:
+            out[variation_id] = (best[1], best[2] or None)
+    return out
+
+
 # ---------------------------------------------------------------------- proveedor
 class ClinVarProvider(EUtilsClient):
     service = "ClinVar"
@@ -213,29 +268,45 @@ class ClinVarProvider(EUtilsClient):
         return docs
 
     def fetch_conditions(self, ids: list[int], progress: Progress = _no_progress,
-                         stats: ImportStats | None = None) -> dict[int, list[Condition]]:
+                         stats: ImportStats | None = None,
+                         frequencies: dict | None = None) -> dict[int, list[Condition]]:
         """Registros RCV de cada variante. Si un lote falla, sus variantes quedan sin
         clasificación por enfermedad, pero el resto de la importación sigue (y se cuenta en
         stats, para avisar).
 
         is_variationid=true es imprescindible: sin él, ClinVar no lee los números como IDs de
         variante y devuelve OTRAS variantes (al pedir unas de TP53 llegaban de MSH2 y BRCA1).
-        Por si acaso, solo se aceptan los registros que se han pedido."""
+        Por si acaso, solo se aceptan los registros que se han pedido.
+
+        Si se pasa `frequencies` (un diccionario), se rellena con la frecuencia en la población
+        de cada variante, que viene en el mismo XML."""
         stats = stats if stats is not None else ImportStats()
         out: dict[int, list[Condition]] = {}
-        for i in range(0, len(ids), VCV_BATCH):
-            chunk = ids[i:i + VCV_BATCH]
+
+        def fetch(chunk: list[int]) -> bool:
             try:
                 raw = self.request("efetch.fcgi", {"db": "clinvar", "rettype": "vcv",
                                                    "is_variationid": "true",
                                                    "id": ",".join(map(str, chunk))})
                 records = parse_vcv(raw)
+                found = parse_vcv_frequencies(raw) if frequencies is not None else {}
             except ServiceError:
-                stats.condition_batches_failed += 1
-            else:
-                wanted = set(chunk)
-                stats.unexpected_records += sum(1 for v in records if v not in wanted)
-                out.update((v, c) for v, c in records.items() if v in wanted)
+                return False
+            wanted = set(chunk)
+            stats.unexpected_records += sum(1 for v in records if v not in wanted)
+            out.update((v, c) for v, c in records.items() if v in wanted)
+            if frequencies is not None:
+                frequencies.update((v, f) for v, f in found.items() if v in wanted)
+            return True
+
+        for i in range(0, len(ids), VCV_BATCH):
+            chunk = ids[i:i + VCV_BATCH]
+            if not fetch(chunk):
+                # Suele ser un XML enorme o cortado (BRCA1): se repite en trozos pequeños
+                self.sleep(RETRY_PAUSE)
+                for j in range(0, len(chunk), VCV_RETRY_BATCH):
+                    if not fetch(chunk[j:j + VCV_RETRY_BATCH]):
+                        stats.condition_batches_failed += 1
             progress("database.stage.conditions", {"done": i + len(chunk), "total": len(ids)})
         return out
 
@@ -271,7 +342,9 @@ class ClinVarProvider(EUtilsClient):
             else:
                 variants.append(variant)
 
-        conditions = self.fetch_conditions([v["clinvar_id"] for v in variants], progress, stats)
+        frequencies: dict[int, tuple[float, str]] = {}
+        conditions = self.fetch_conditions([v["clinvar_id"] for v in variants], progress, stats,
+                                           frequencies)
         progress("database.stage.saving", {"count": len(variants)})
         with conn:
             clinvar_src = get_or_create_source(conn, "clinvar")
@@ -279,6 +352,11 @@ class ClinVarProvider(EUtilsClient):
             for variant in variants:
                 seq_id = _ensure_transcript(conn, variant, gene_id, refseq_src)
                 variant_id = _upsert_variant(conn, variant, gene_id, seq_id, clinvar_src)
+                if variant["clinvar_id"] in frequencies:
+                    value, study = frequencies[variant["clinvar_id"]]
+                    conn.execute("UPDATE variants SET population_freq = ?, freq_source = ? "
+                                 "WHERE id = ?", (value, study, variant_id))
+                    stats.with_frequency += 1
                 stats.saved += 1
                 stats.pathogenic += classify_effect(variant["clinical_significance"]) == "causal"
                 rcvs = conditions.get(variant["clinvar_id"])
@@ -352,7 +430,8 @@ def _link_diseases(conn, variant_id, gene_id, traits, rcvs, source_id) -> int:
                 continue
             trait = by_medgen.get(c.medgen_id) or by_name.get(c.name.lower()) or {}
             candidates.append(({"name": trait.get("name") or c.name,
-                                "mondo_id": trait.get("mondo_id"), "mesh_id": trait.get("mesh_id")},
+                                "mondo_id": trait.get("mondo_id"), "mesh_id": trait.get("mesh_id"),
+                                "orpha_codes": trait.get("orpha_codes")},
                                classify_effect(c.significance), c.significance,
                                c.review_status, c.rcv))
     else:
@@ -391,9 +470,14 @@ def _upsert_disease(conn, trait) -> tuple[int, int]:
         if trait.get("mesh_id"):
             conn.execute("UPDATE diseases SET mesh_id = COALESCE(mesh_id, ?) WHERE id = ?",
                          (trait["mesh_id"], row["id"]))
+        if trait.get("orpha_codes"):
+            conn.execute("UPDATE diseases SET orpha_codes = COALESCE(orpha_codes, ?) WHERE id = ?",
+                         (trait["orpha_codes"], row["id"]))
         return row["id"], 0
-    disease_id = conn.execute("INSERT INTO diseases (mondo_id, mesh_id, name_en) VALUES (?, ?, ?)",
-                              (trait.get("mondo_id"), trait.get("mesh_id"), trait["name"])).lastrowid
+    disease_id = conn.execute(
+        "INSERT INTO diseases (mondo_id, mesh_id, orpha_codes, name_en) VALUES (?, ?, ?, ?)",
+        (trait.get("mondo_id"), trait.get("mesh_id"), trait.get("orpha_codes"),
+         trait["name"])).lastrowid
     conn.execute("INSERT INTO search_index (kind, ref_id, text) VALUES ('disease', ?, ?)",
                  (disease_id, trait["name"]))
     return disease_id, 1

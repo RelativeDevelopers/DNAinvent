@@ -931,7 +931,8 @@
       "disease_drugs": "Buscant fàrmacs per a «{disease}»…",
       "drugs": "Llegint {count} fàrmacs…",
       "indications": "Llegint per a quines malalties està indicat cadascun…",
-      "chembl_retry": "ChEMBL va lent: intent {attempt} de {max} d'aquí a {wait} s…"
+      "chembl_retry": "ChEMBL va lent: intent {attempt} de {max} d'aquí a {wait} s…",
+      "orphanet": "Baixant les dades d'Orphanet ({file})…"
     },
     "imported_gene": "Gen {symbol} desat: {name}.",
     "clinvar_offer": "Vols importar també les seves variants de ClinVar? Pot trigar un minut",

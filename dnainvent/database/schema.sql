@@ -1,5 +1,5 @@
 -- =====================================================================
--- DNAinvent — esquema de la base de datos de secuencias reales (versión 4)
+-- DNAinvent — esquema de la base de datos de secuencias reales (versión 5)
 -- SQLite (módulo sqlite3 de la biblioteca estándar, sin dependencias)
 --
 -- Idea general:
@@ -120,7 +120,8 @@ CREATE TABLE variants (
     cosmic_id       TEXT,
     population_freq REAL,                      -- frecuencia alélica global (gnomAD), 0..1
     review_status   TEXT,                      -- revisión de la clasificación global (ClinVar)
-    source_id       INTEGER NOT NULL REFERENCES sources(id)
+    source_id       INTEGER NOT NULL REFERENCES sources(id),
+    freq_source     TEXT                       -- estudio de population_freq: 'gnomAD exomes'...
 );
 CREATE INDEX idx_variants_gene ON variants(gene_id);
 CREATE INDEX idx_variants_rs   ON variants(dbsnp_rs);
@@ -136,7 +137,14 @@ CREATE TABLE diseases (
     name_en         TEXT NOT NULL,
     name_es         TEXT,
     name_ca         TEXT,
-    category        TEXT                       -- 'cancer', 'neurodegenerative', 'blood'... (nivel alto)
+    category        TEXT,                      -- 'cancer', 'neurodegenerative', 'blood'... (nivel alto)
+    -- Orphanet (Orphadata, CC BY 4.0): solo enfermedades raras
+    orpha_codes     TEXT,                      -- '232|275752' (ClinVar puede dar varios)
+    inheritance     TEXT,                      -- 'Autosomal recessive|...' (nombres de Orphanet, en inglés)
+    onset           TEXT,                      -- 'Childhood|Infancy'
+    prevalence_class TEXT,                     -- '1-5 / 10 000'
+    prevalence_type TEXT,                      -- 'Point prevalence', 'Birth prevalence'...
+    prevalence_geo  TEXT                       -- 'Worldwide', 'Europe'...
 );
 CREATE INDEX idx_diseases_parent ON diseases(parent_id);
 
@@ -246,4 +254,4 @@ CREATE VIRTUAL TABLE search_index USING fts5(
     tokenize = 'unicode61 remove_diacritics 2'
 );
 
-PRAGMA user_version = 4;
+PRAGMA user_version = 5;
