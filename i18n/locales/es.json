@@ -1255,11 +1255,12 @@
       "approved": "Tratamiento: ✔ hay fármacos aprobados",
       "withdrawn": "Tratamiento: ⚠ los fármacos aprobados se retiraron",
       "trials": "Tratamiento: en ensayo clínico, todavía sin aprobados",
-      "none": "Tratamiento: las fuentes no tienen fármacos para ella"
+      "none": "Tratamiento: no hemos encontrado fármacos para ella en ChEMBL (puede que estén registrados con otro nombre de la enfermedad)",
+      "none_known": "Tratamiento: no hay fármacos aprobados para ella"
     },
     "approved_note": "(Aprobado = la trata, no necesariamente la cura.)",
     "cause": "Actúan sobre la causa",
-    "symptoms": "Alivian síntomas o complicaciones",
+    "symptoms": "Otros tratamientos (no actúan sobre la causa)",
     "trials": "En ensayo: {count}",
     "withdrawn": {
       "worldwide": "⚠ retirado en todo el mundo en {year}",
@@ -1291,6 +1292,12 @@
       "variant": "Fuentes: ClinVar y RefSeq (dominio público); frecuencias de {source}.",
       "disease": "Fuentes: ClinVar (dominio público), Orphanet (CC BY 4.0), ChEMBL (CC BY-SA 3.0).",
       "drug": "Fuentes: ChEMBL (CC BY-SA 3.0), RCSB PDB."
-    }
+    },
+    "did_you_know": "¿Sabías que…?",
+    "why": "Por qué funciona",
+    "text_sources": "Fuentes del texto:",
+    "acts_on_complex_gene": "Actúa sobre un complejo de proteínas que incluye la de {list}",
+    "registered_as": "(en ChEMBL, para «{disease}»)",
+    "special": "Una mutación que no sale en la lista"
   }
 }

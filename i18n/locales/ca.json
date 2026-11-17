@@ -1255,11 +1255,12 @@
       "approved": "Tractament: ✔ hi ha fàrmacs aprovats",
       "withdrawn": "Tractament: ⚠ els fàrmacs aprovats es van retirar",
       "trials": "Tractament: en assaig clínic, encara sense aprovats",
-      "none": "Tractament: les fonts no tenen fàrmacs per a aquesta malaltia"
+      "none": "Tractament: no hem trobat fàrmacs per a aquesta malaltia a ChEMBL (potser hi són amb un altre nom de la malaltia)",
+      "none_known": "Tractament: no hi ha fàrmacs aprovats per a ella"
     },
     "approved_note": "(Aprovat = la tracta, no necessàriament la cura.)",
     "cause": "Actuen sobre la causa",
-    "symptoms": "Alleugen símptomes o complicacions",
+    "symptoms": "Altres tractaments (no actuen sobre la causa)",
     "trials": "En assaig: {count}",
     "withdrawn": {
       "worldwide": "⚠ retirat a tot el món el {year}",
@@ -1291,6 +1292,12 @@
       "variant": "Fonts: ClinVar i RefSeq (domini públic); freqüències de {source}.",
       "disease": "Fonts: ClinVar (domini públic), Orphanet (CC BY 4.0), ChEMBL (CC BY-SA 3.0).",
       "drug": "Fonts: ChEMBL (CC BY-SA 3.0), RCSB PDB."
-    }
+    },
+    "did_you_know": "Sabies que…?",
+    "why": "Per què funciona",
+    "text_sources": "Fonts del text:",
+    "acts_on_complex_gene": "Actua sobre un complex de proteïnes que inclou la de {list}",
+    "registered_as": "(a ChEMBL, per a «{disease}»)",
+    "special": "Una mutació que no surt a la llista"
   }
 }

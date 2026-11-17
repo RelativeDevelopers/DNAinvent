@@ -169,6 +169,36 @@ def test_disease_card_groups_drugs(conn):
     assert card["genes"][0]["symbol"] == "HBB"
 
 
+def test_disease_card_uses_the_name_chembl_knows(conn):
+    """ClinVar dice «beta Thalassemia» y ChEMBL tiene sus fármacos en «Thalassemia» y
+    «Beta-thalassemia major» (curated.DISEASE_EQUIVALENTS)."""
+    thal = conn.execute("SELECT id FROM diseases WHERE name_en = 'beta Thalassemia'").fetchone()[0]
+    with conn:
+        general = conn.execute("INSERT INTO diseases (name_en) VALUES ('Thalassemia')").lastrowid
+        major = conn.execute("INSERT INTO diseases (name_en) VALUES ('Beta-thalassemia major')").lastrowid
+    assert cards.disease_card(conn, thal)["status"] == "none"
+    add_drug(conn, "DEFERIPRONE", "CHEMBL70927", general, year=1999)
+    # beti-cel: ChEMBL lo tiene en fase 4 solo «de ensayo»; curated.APPROVALS sabe que está aprobado
+    add_drug(conn, "BETIBEGLOGENE AUTOTEMCEL", "CHEMBL4594311", major, molecule_type="Gene",
+             phase=4, evidence="trials", year=2019)
+    card = cards.disease_card(conn, thal)
+    assert card["status"] == "approved"
+    assert [d["name"] for d in card["approved_cause"]] == ["BETIBEGLOGENE AUTOTEMCEL"]
+    assert card["approved_cause"][0]["registered_as"]["en"] == "Beta-thalassemia major"
+    assert card["approved_cause"][0]["withdrawal"]["where"] == "eu"
+    assert [d["name"] for d in card["approved_symptoms"]] == ["DEFERIPRONE"]
+    assert card["approved_symptoms"][0]["registered_as"]["es"] == "Talasemia"
+
+
+def test_curated_approvals_and_cause():
+    assert cards.is_approved_for("CHEMBL4298128", "Cystic fibrosis", 3, "trials")      # elexacaftor
+    assert not cards.is_approved_for("CHEMBL4298128", "Hb SS disease", 3, "trials")
+    assert cards.is_approved_for("CHEMBL1", "Anything", 4, "label")
+    assert not cards.is_approved_for("CHEMBL1", "Anything", 4, "trials")
+    from dnainvent.database.curated import CAUSE
+    assert "CHEMBL2108278" in CAUSE              # eteplirsén: hace saltar un exón de DMD
+
+
 def test_drug_card(conn):
     gene, _, sickle = ids(conn)
     drug = add_drug(conn, "VOXELOTOR", "CHEMBL4101807", sickle, gene_id=gene, target="Hemoglobin HbA",

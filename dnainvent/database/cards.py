@@ -22,8 +22,10 @@ Reglas para no contar cosas falsas (decididas con Alexei el 17-11-2026):
   («fiables»); los demás se cuentan aparte, para los detalles técnicos.
 
 * Fármacos de una enfermedad: aprobado = con ficha técnica para ESA enfermedad (no basta un
-  ensayo de fase 4). «Actúan sobre la causa» si actúan sobre la proteína de un gen de la
-  enfermedad o son terapia génica o celular; si no, «alivian síntomas o complicaciones».
+  ensayo de fase 4), o en curated.APPROVALS. «Actúan sobre la causa» si actúan sobre la
+  proteína de un gen de la enfermedad, son terapia génica o celular o están en curated.CAUSE;
+  si no, «otros tratamientos». Si ChEMBL registra la enfermedad con otro nombre
+  (curated.DISEASE_EQUIVALENTS), se enseñan también esos fármacos, diciendo con qué nombre.
 
 * «Retirado»: ChEMBL no dice dónde. Si curated.WITHDRAWALS no lo sabe, «en algún país».
 """
@@ -32,8 +34,8 @@ import re
 import sqlite3
 
 from ..errors import DNAinventError
-from . import queries
-from .curated import STRUCTURES, WITHDRAWALS
+from . import queries, texts
+from .curated import APPROVALS, CAUSE, DISEASE_EQUIVALENTS, STRUCTURES, WITHDRAWALS
 from .variants import locate, side_by_side
 
 COLORS = ("pathogenic", "uncertain", "benign", "special", "unclassified")
@@ -132,9 +134,15 @@ def withdrawal(drug) -> dict | None:
 
 
 def disease_name(disease) -> dict:
-    """{'en': ..., 'es': ..., 'ca': ...}: los que no estén traducidos son None (la consola pone
-    el inglés con la marca «(nombre en inglés)»)."""
-    return {"en": disease["name_en"], "es": disease["name_es"], "ca": disease["name_ca"]}
+    """{'en': nombre de ClinVar, 'es': ..., 'ca': ..., 'label_en': ...}. La traducción viene de la
+    base de datos o de los textos escritos a mano (texts/*.json); si no hay, None y la consola
+    pone el inglés con la marca «(nombre en inglés)». 'en' es siempre el de ClinVar (para
+    ordenar y buscar); 'label_en' es el escrito a mano, más legible, si lo hay."""
+    name = disease["name_en"]
+    return {"en": name,
+            "es": disease["name_es"] or texts.disease_name(name, "es"),
+            "ca": disease["name_ca"] or texts.disease_name(name, "ca"),
+            "label_en": texts.disease_name(name, "en")}
 
 
 def _trusted_rcvs(conn: sqlite3.Connection) -> str:
@@ -256,7 +264,51 @@ def variant_card(conn: sqlite3.Connection, variant_id: int) -> dict:
 def _drug_entry(drug, cause: bool) -> dict:
     return {"id": drug["id"], "name": drug["name"], "chembl_id": drug["chembl_id"],
             "first_approval": drug["first_approval"], "molecule_type": drug["molecule_type"],
-            "withdrawal": withdrawal(drug), "mechanisms": drug["mechanisms"], "cause": cause}
+            "withdrawal": withdrawal(drug), "mechanisms": drug["mechanisms"], "cause": cause,
+            "registered_as": drug["registered_as"]}
+
+
+def is_approved_for(chembl_id: str | None, disease_name_en: str, max_phase, evidence) -> bool:
+    """Aprobado para esa enfermedad: ficha técnica según ChEMBL, o curated.APPROVALS."""
+    return (max_phase == 4 and evidence == "label") \
+        or disease_name_en in APPROVALS.get(chembl_id or "", {})
+
+
+def disease_drug_rows(conn: sqlite3.Connection, disease) -> list[dict]:
+    """Los fármacos de la enfermedad y, si ChEMBL la registra con otro nombre, también los de
+    ese nombre. Cada fármaco una vez, con su mejor fase; 'registered_as' es None o el nombre
+    (disease_name) con el que está en ChEMBL."""
+    rows: dict[int, dict] = {}
+    names = [disease["name_en"]] + DISEASE_EQUIVALENTS.get(disease["name_en"], [])
+    for position, name in enumerate(names):
+        other = disease if position == 0 else conn.execute(
+            "SELECT * FROM diseases WHERE name_en = ?", (name,)).fetchone()
+        if other is None:
+            continue
+        for drug in queries.disease_drugs(conn, other["id"]):
+            entry = dict(drug)
+            entry["approved"] = is_approved_for(drug["chembl_id"], name, drug["phase_for_disease"],
+                                                drug["evidence"])
+            entry["registered_as"] = None if position == 0 else disease_name(other)
+            rank = (entry["approved"], entry["phase_for_disease"] or 0, position == 0)
+            current = rows.get(drug["id"])
+            if current is None or rank > current["_rank"]:
+                entry["_rank"] = rank
+                rows[drug["id"]] = entry
+    return list(rows.values())
+
+
+def treatment_status(drugs: list[dict]) -> str:
+    """approved · withdrawn (los aprobados se retiraron) · trials · none. Como
+    queries.disease_status, pero con lo escrito a mano en curated."""
+    approved = [d for d in drugs if d["approved"]]
+    if any(withdrawal(d) is None for d in approved):
+        return "approved"
+    if approved:
+        return "withdrawn"
+    if any((d["phase_for_disease"] or 0) > 0 for d in drugs):
+        return "trials"
+    return "none"
 
 
 def disease_card(conn: sqlite3.Connection, disease_id: int) -> dict:
@@ -264,15 +316,16 @@ def disease_card(conn: sqlite3.Connection, disease_id: int) -> dict:
     genes = [dict(g) for g in queries.genes_for_disease(conn, disease_id) if g["causal"]]
     gene_ids = {g["id"] for g in genes}
 
+    drugs = disease_drug_rows(conn, disease)
     approved_cause, approved_symptoms, trials = [], [], []
-    for drug in queries.disease_drugs(conn, disease_id):
+    for drug in drugs:
         targets = {r[0] for r in conn.execute("SELECT gene_id FROM drug_targets WHERE drug_id = ?",
                                               (drug["id"],))}
         actions = " ".join((r[0] or "").lower() for r in conn.execute(
             "SELECT action FROM drug_mechanisms WHERE drug_id = ?", (drug["id"],)))
         cause = bool(targets & gene_ids) or (drug["molecule_type"] or "").lower() in CAUSE_MOLECULE_TYPES \
-            or "gene" in actions
-        if drug["phase_for_disease"] == 4 and drug["evidence"] == "label":
+            or "gene" in actions or drug["chembl_id"] in CAUSE
+        if drug["approved"]:
             (approved_cause if cause else approved_symptoms).append(_drug_entry(drug, cause))
         elif drug["phase_for_disease"] is not None and drug["phase_for_disease"] > 0:
             trials.append(_drug_entry(drug, cause))
@@ -286,7 +339,7 @@ def disease_card(conn: sqlite3.Connection, disease_id: int) -> dict:
         "orpha_codes": [c for c in (disease["orpha_codes"] or "").split("|") if c],
         "genes": genes, "inheritance": inheritance(disease["inheritance"]),
         "onset": [p for p in (disease["onset"] or "").split("|") if p],
-        "prevalence": prevalence(disease), "status": queries.disease_status(conn, disease_id),
+        "prevalence": prevalence(disease), "status": treatment_status(drugs),
         "approved_cause": order(approved_cause), "approved_symptoms": order(approved_symptoms),
         "trials": sorted(trials, key=lambda d: d["name"]),
     }
@@ -311,13 +364,18 @@ def drug_card(conn: sqlite3.Connection, drug_id: int) -> dict:
            FROM drug_diseases dd JOIN diseases d ON d.id = dd.disease_id WHERE dd.drug_id = ?
            ORDER BY dd.max_phase = 4 AND dd.evidence = 'label' DESC, dd.max_phase DESC, d.name_en""",
         (drug_id,)).fetchall()
+    structure = STRUCTURES.get(drug["chembl_id"] or "")
     return {
         "id": drug["id"], "name": drug["name"], "chembl_id": drug["chembl_id"],
         "molecule_type": drug["molecule_type"], "first_approval": drug["first_approval"],
         "max_phase": drug["max_phase"], "withdrawal": withdrawal(drug),
         "mechanisms": unique, "genes": genes,
-        "diseases": [{"id": d["id"], "name": disease_name(d),
-                      "approved": d["max_phase"] == 4 and d["evidence"] == "label",
-                      "phase": d["max_phase"]} for d in diseases],
-        "structure": STRUCTURES.get(drug["chembl_id"] or ""),
+        "complex": any("COMPLEX" in (m["target_type"] or "") for m in unique),
+        "diseases": sorted(({"id": d["id"], "name": disease_name(d),
+                             "approved": is_approved_for(drug["chembl_id"], d["name_en"],
+                                                         d["max_phase"], d["evidence"]),
+                             "phase": d["max_phase"]} for d in diseases),
+                           key=lambda d: not d["approved"]),
+        "structure": structure["pdb"] if structure else None,
+        "ligand": structure.get("ligand") if structure else None,
     }

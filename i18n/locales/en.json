@@ -1255,11 +1255,12 @@
       "approved": "Treatment: ✔ there are approved drugs",
       "withdrawn": "Treatment: ⚠ the approved drugs were withdrawn",
       "trials": "Treatment: in clinical trials, none approved yet",
-      "none": "Treatment: the sources have no drugs for it"
+      "none": "Treatment: we found no drugs for it in ChEMBL (they may be listed under another name of the disease)",
+      "none_known": "Treatment: there are no approved drugs for it"
     },
     "approved_note": "(Approved = it treats it, not necessarily cures it.)",
     "cause": "Act on the cause",
-    "symptoms": "Relieve symptoms or complications",
+    "symptoms": "Other treatments (not acting on the cause)",
     "trials": "In trials: {count}",
     "withdrawn": {
       "worldwide": "⚠ withdrawn worldwide in {year}",
@@ -1291,6 +1292,12 @@
       "variant": "Sources: ClinVar and RefSeq (public domain); frequencies from {source}.",
       "disease": "Sources: ClinVar (public domain), Orphanet (CC BY 4.0), ChEMBL (CC BY-SA 3.0).",
       "drug": "Sources: ChEMBL (CC BY-SA 3.0), RCSB PDB."
-    }
+    },
+    "did_you_know": "Did you know…?",
+    "why": "Why it works",
+    "text_sources": "Sources of the text:",
+    "acts_on_complex_gene": "Acts on a protein complex that includes the protein of {list}",
+    "registered_as": "(in ChEMBL, for “{disease}”)",
+    "special": "A mutation that is not in the list"
   }
 }

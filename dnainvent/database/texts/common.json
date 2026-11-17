@@ -1,0 +1,540 @@
+{
+  "_about": "Fuentes de los textos escritos a mano (iguales en los tres idiomas). Claves como en es.json.",
+  "genes": {
+    "HBB": {
+      "sources": [
+        "https://www.ncbi.nlm.nih.gov/gene/3043",
+        "https://pmc.ncbi.nlm.nih.gov/articles/PMC1140959"
+      ]
+    },
+    "CFTR": {
+      "sources": [
+        "https://www.ncbi.nlm.nih.gov/gene/1080",
+        "https://medlineplus.gov/genetics/condition/cystic-fibrosis"
+      ]
+    },
+    "BRCA1": {
+      "sources": [
+        "https://www.ncbi.nlm.nih.gov/gene/672",
+        "https://www.cancer.gov/about-cancer/causes-prevention/genetics/brca-fact-sheet"
+      ]
+    },
+    "BRCA2": {
+      "sources": [
+        "https://www.ncbi.nlm.nih.gov/gene/675",
+        "https://www.cancer.gov/about-cancer/causes-prevention/genetics/brca-fact-sheet"
+      ]
+    },
+    "TP53": {
+      "sources": [
+        "https://www.ncbi.nlm.nih.gov/gene/7157",
+        "https://elifesciences.org/articles/11994"
+      ]
+    },
+    "HTT": {
+      "sources": [
+        "https://www.ncbi.nlm.nih.gov/gene/3064",
+        "https://medlineplus.gov/genetics/gene/htt"
+      ]
+    },
+    "DMD": {
+      "sources": [
+        "https://www.ncbi.nlm.nih.gov/gene/1756",
+        "https://medlineplus.gov/genetics/gene/dmd",
+        "https://www.parentprojectmd.org/about-duchenne/genetic-causes/types-of-genetic-variants/"
+      ]
+    },
+    "F8": {
+      "sources": [
+        "https://www.ncbi.nlm.nih.gov/gene/2157",
+        "https://medlineplus.gov/genetics/gene/f8",
+        "https://pediatric.testcatalog.org/show/F8INV"
+      ]
+    },
+    "PAH": {
+      "sources": [
+        "https://www.ncbi.nlm.nih.gov/gene/5053",
+        "https://medlineplus.gov/genetics/gene/pah",
+        "https://medlineplus.gov/ency/article/001166.htm"
+      ]
+    },
+    "APOE": {
+      "sources": [
+        "https://www.ncbi.nlm.nih.gov/gene/348",
+        "https://www.medlineplus.gov/genetics/gene/apoe/"
+      ]
+    },
+    "LDLR": {
+      "sources": [
+        "https://www.ncbi.nlm.nih.gov/gene/3949",
+        "https://medlineplus.gov/genetics/condition/familial-hypercholesterolemia"
+      ]
+    },
+    "SMN1": {
+      "sources": [
+        "https://www.ncbi.nlm.nih.gov/gene/6606",
+        "https://medlineplus.gov/genetics/gene/smn1"
+      ]
+    },
+    "G6PD": {
+      "sources": [
+        "https://www.ncbi.nlm.nih.gov/gene/2539",
+        "https://medlineplus.gov/genetics/condition/glucose-6-phosphate-dehydrogenase-deficiency"
+      ]
+    },
+    "LCT": {
+      "sources": [
+        "https://www.ncbi.nlm.nih.gov/gene/3938",
+        "https://medlineplus.gov/genetics/condition/lactose-intolerance",
+        "https://pubmed.ncbi.nlm.nih.gov/17159977/"
+      ]
+    }
+  },
+  "variants": {
+    "HBB:c.20A>T": {
+      "sources": [
+        "https://www.ncbi.nlm.nih.gov/clinvar/variation/15333/",
+        "https://www.genome.gov/25520257/online-education-kit-1956-cause-of-disease-traced-to-alteration"
+      ]
+    },
+    "HBB:c.19G>A": {
+      "sources": [
+        "https://www.ncbi.nlm.nih.gov/clinvar/?term=rs33930165"
+      ]
+    },
+    "CFTR:c.1521_1523del": {
+      "sources": [
+        "https://www.ncbi.nlm.nih.gov/clinvar/variation/7105/"
+      ]
+    },
+    "CFTR:c.1652G>A": {
+      "sources": [
+        "https://www.ncbi.nlm.nih.gov/clinvar/variation/7120/"
+      ]
+    },
+    "BRCA1:c.68_69del": {
+      "sources": [
+        "https://www.ncbi.nlm.nih.gov/clinvar/variation/17662/",
+        "https://www.cancer.gov/about-cancer/causes-prevention/genetics/brca-fact-sheet"
+      ]
+    },
+    "BRCA1:c.5266dup": {
+      "sources": [
+        "https://www.ncbi.nlm.nih.gov/clinvar/variation/17677/",
+        "https://www.cancer.gov/about-cancer/causes-prevention/genetics/brca-fact-sheet"
+      ]
+    },
+    "BRCA2:c.5946del": {
+      "sources": [
+        "https://www.ncbi.nlm.nih.gov/clinvar/variation/9325/",
+        "https://www.cancer.gov/about-cancer/causes-prevention/genetics/brca-fact-sheet"
+      ]
+    },
+    "TP53:c.524G>A": {
+      "sources": [
+        "https://www.ncbi.nlm.nih.gov/clinvar/variation/12374/"
+      ]
+    },
+    "TP53:c.818G>A": {
+      "sources": [
+        "https://www.ncbi.nlm.nih.gov/clinvar/variation/12366/"
+      ]
+    },
+    "PAH:c.1222C>T": {
+      "sources": [
+        "https://www.ncbi.nlm.nih.gov/clinvar/variation/577/",
+        "https://medlineplus.gov/genetics/gene/pah"
+      ]
+    },
+    "APOE:c.388T>C": {
+      "sources": [
+        "https://www.ncbi.nlm.nih.gov/clinvar/variation/17864/",
+        "https://www.medlineplus.gov/genetics/gene/apoe/"
+      ]
+    },
+    "APOE:c.526C>T": {
+      "sources": [
+        "https://www.ncbi.nlm.nih.gov/clinvar/variation/17848/",
+        "https://www.medlineplus.gov/genetics/gene/apoe/"
+      ]
+    },
+    "G6PD:c.653C>T": {
+      "sources": [
+        "https://www.ncbi.nlm.nih.gov/clinvar/variation/100057/"
+      ]
+    }
+  },
+  "drugs": {
+    "CHEMBL5095474": {
+      "sources": [
+        "https://asbmb.org/asbmb-today/science/120823/fda-approves-crispr-cas9-therapy-for-sickle-cell"
+      ]
+    },
+    "CHEMBL4650269": {
+      "sources": [
+        "https://asbmb.org/asbmb-today/science/120823/fda-approves-crispr-cas9-therapy-for-sickle-cell"
+      ]
+    },
+    "CHEMBL4594311": {
+      "sources": [
+        "https://en.wikipedia.org/wiki/Betibeglogene_autotemcel"
+      ]
+    },
+    "CHEMBL4101807": {
+      "sources": [
+        "https://go.drugbank.com/drugs/DB14975",
+        "https://www.pfizer.com/news/press-release/press-release-detail/pfizer-voluntarily-withdraws-all-lots-sickle-cell-disease"
+      ]
+    },
+    "CHEMBL467": {
+      "sources": [
+        "https://pubmed.ncbi.nlm.nih.gov/1641648/"
+      ]
+    },
+    "CHEMBL930": {
+      "sources": [
+        "https://drugcentral.org/label/d5a783f4-12ef-4326-8faa-40018e45ba3b/view"
+      ]
+    },
+    "CHEMBL4297734": {
+      "sources": [
+        "https://sicklecellanemianews.com/adakveo-crizanlizumab/",
+        "https://www.novartis.com/news/european-commission-ec-adopts-decision-endorsing-chmp-recommendation-revoke-conditional-marketing-authorization-adakveo-crizanlizumab"
+      ]
+    },
+    "CHEMBL70927": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL70927/"
+      ]
+    },
+    "CHEMBL2010601": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL2010601/"
+      ]
+    },
+    "CHEMBL2103870": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL2103870/"
+      ]
+    },
+    "CHEMBL3544914": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL3544914/"
+      ]
+    },
+    "CHEMBL4298128": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL4298128/",
+        "https://investors.vrtx.com/news-releases/news-release-details/fda-approves-trikafta-elexacaftortezacaftorivacaftor-and"
+      ]
+    },
+    "CHEMBL5314934": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL5314934/",
+        "https://investors.vrtx.com/news-releases/news-release-details/vertex-announces-us-fda-approval-alyftrektm-once-daily-next"
+      ]
+    },
+    "CHEMBL1201431": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL1201431/"
+      ]
+    },
+    "CHEMBL1747": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL1747/"
+      ]
+    },
+    "CHEMBL521686": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL521686/",
+        "https://www.cancer.gov/about-cancer/causes-prevention/genetics/brca-fact-sheet"
+      ]
+    },
+    "CHEMBL3137320": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL3137320/",
+        "https://www.cancer.gov/about-cancer/causes-prevention/genetics/brca-fact-sheet"
+      ]
+    },
+    "CHEMBL1094636": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL1094636/"
+      ]
+    },
+    "CHEMBL1173055": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL1173055/"
+      ]
+    },
+    "CHEMBL117785": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL117785/"
+      ]
+    },
+    "CHEMBL2108278": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL2108278/",
+        "https://www.parentprojectmd.org/about-duchenne/genetic-causes/types-of-genetic-variants/"
+      ]
+    },
+    "CHEMBL4297762": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL4297762/"
+      ]
+    },
+    "CHEMBL4298062": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL4298062/"
+      ]
+    },
+    "CHEMBL4297566": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL4297566/"
+      ]
+    },
+    "CHEMBL256997": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL256997/",
+        "https://www.ema.europa.eu/en/medicines/human/EPAR/translarna"
+      ]
+    },
+    "CHEMBL1201891": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL1201891/"
+      ]
+    },
+    "CHEMBL2348780": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL2348780/"
+      ]
+    },
+    "CHEMBL1213492": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL1213492/"
+      ]
+    },
+    "CHEMBL4650241": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL4650241/",
+        "https://www.epocrates.com/online/article/fda-adds-boxed-warning-to-elevidys-limits-use-to-ambulatory-dmd-patients"
+      ]
+    },
+    "CHEMBL4297579": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL4297579/",
+        "https://www.bleeding.org/news/biomarin-pulls-roctavian-hemophilia-a-gene-therapy-from-us-market"
+      ]
+    },
+    "CHEMBL3833393": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL3833393/"
+      ]
+    },
+    "CHEMBL3990039": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL3990039/"
+      ]
+    },
+    "CHEMBL4297730": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL4297730/"
+      ]
+    },
+    "CHEMBL877": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL877/"
+      ]
+    },
+    "CHEMBL2108334": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL2108334/"
+      ]
+    },
+    "CHEMBL5095451": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL5095451/"
+      ]
+    },
+    "CHEMBL3990034": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL3990034/",
+        "https://www.aabb.org/news-resources/news/article/2025/02/25/pfizer-halts-production-of-fda-approved-hemophilia-b-gene-therapy"
+      ]
+    },
+    "CHEMBL1201774": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL1201774/"
+      ]
+    },
+    "CHEMBL4297802": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL4297802/"
+      ]
+    },
+    "CHEMBL1496": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL1496/"
+      ]
+    },
+    "CHEMBL1138": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL1138/"
+      ]
+    },
+    "CHEMBL2109540": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL2109540/"
+      ]
+    },
+    "CHEMBL2364655": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL2364655/"
+      ]
+    },
+    "CHEMBL3545191": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL3545191/"
+      ]
+    },
+    "CHEMBL672": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL672/"
+      ]
+    },
+    "CHEMBL3301572": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL3301572/",
+        "https://medlineplus.gov/genetics/gene/smn1"
+      ]
+    },
+    "CHEMBL4297528": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL4297528/",
+        "https://medlineplus.gov/genetics/gene/smn1"
+      ]
+    },
+    "CHEMBL4297240": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL4297240/"
+      ]
+    },
+    "CHEMBL2109137": {
+      "same_as": "factor_viii"
+    },
+    "CHEMBL4297873": {
+      "same_as": "factor_viii"
+    },
+    "CHEMBL2108175": {
+      "same_as": "factor_viii"
+    },
+    "CHEMBL2108286": {
+      "same_as": "factor_viii"
+    },
+    "CHEMBL2108319": {
+      "same_as": "factor_viii"
+    },
+    "CHEMBL4297945": {
+      "same_as": "factor_viii"
+    },
+    "CHEMBL4594603": {
+      "same_as": "factor_viii"
+    },
+    "CHEMBL4594584": {
+      "same_as": "factor_viii"
+    },
+    "CHEMBL5315069": {
+      "same_as": "factor_viii"
+    },
+    "CHEMBL5315071": {
+      "same_as": "factor_viii"
+    },
+    "CHEMBL5095275": {
+      "same_as": "factor_viii"
+    },
+    "CHEMBL2109205": {
+      "same_as": "factor_ix"
+    },
+    "CHEMBL4297986": {
+      "same_as": "factor_ix"
+    },
+    "CHEMBL5315076": {
+      "same_as": "factor_ix"
+    },
+    "CHEMBL4594598": {
+      "same_as": "factor_ix"
+    },
+    "CHEMBL2108348": {
+      "same_as": "factor_ix"
+    },
+    "CHEMBL5315075": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL5315075/"
+      ]
+    },
+    "CHEMBL4298126": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL4298126/"
+      ]
+    },
+    "CHEMBL5315078": {
+      "sources": [
+        "https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL5315078/"
+      ]
+    }
+  },
+  "shared": {
+    "factor_viii": {
+      "sources": [
+        "https://medlineplus.gov/genetics/gene/f8",
+        "https://www.ncbi.nlm.nih.gov/gene/2157"
+      ]
+    },
+    "factor_ix": {
+      "sources": [
+        "https://www.ncbi.nlm.nih.gov/gene/2158"
+      ]
+    }
+  },
+  "disease_notes": {
+    "G6PD deficiency": {
+      "sources": [
+        "https://medlineplus.gov/genetics/condition/glucose-6-phosphate-dehydrogenase-deficiency"
+      ]
+    },
+    "Anemia, nonspherocytic hemolytic, due to G6PD deficiency": {
+      "sources": [
+        "https://medlineplus.gov/genetics/condition/glucose-6-phosphate-dehydrogenase-deficiency"
+      ]
+    },
+    "G6PD deficient hemolytic anemia": {
+      "sources": [
+        "https://medlineplus.gov/genetics/condition/glucose-6-phosphate-dehydrogenase-deficiency"
+      ]
+    },
+    "Congenital lactase deficiency": {
+      "sources": [
+        "https://medlineplus.gov/genetics/condition/lactose-intolerance"
+      ]
+    },
+    "Li-Fraumeni syndrome": {
+      "sources": [
+        "https://medlineplus.gov/genetics/condition/li-fraumeni-syndrome"
+      ]
+    },
+    "Li-Fraumeni syndrome 1": {
+      "sources": [
+        "https://medlineplus.gov/genetics/condition/li-fraumeni-syndrome"
+      ]
+    },
+    "Hereditary breast ovarian cancer syndrome": {
+      "sources": [
+        "https://www.cancer.gov/about-cancer/causes-prevention/genetics/brca-fact-sheet"
+      ]
+    },
+    "Phenylketonuria": {
+      "sources": [
+        "https://medlineplus.gov/ency/article/001166.htm"
+      ]
+    }
+  }
+}

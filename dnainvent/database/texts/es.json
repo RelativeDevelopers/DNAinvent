@@ -1,0 +1,732 @@
+{
+  "genes": {
+    "HBB": {
+      "name": "Hemoglobina, subunidad beta",
+      "summary": "Fabrica la cadena beta de la hemoglobina, la proteína de los glóbulos rojos que lleva el oxígeno de los pulmones a todo el cuerpo. Cada molécula de hemoglobina tiene cuatro cadenas: dos alfa y dos beta.",
+      "did_you_know": [
+        "Quien tiene una sola copia de HbS («rasgo falciforme») normalmente no tiene la enfermedad y está en parte protegido frente a la malaria. Por eso HbS es frecuente en África, Oriente Medio y la India: ayudó a sobrevivir a la malaria. Con dos copias aparece la anemia falciforme."
+      ]
+    },
+    "CFTR": {
+      "name": "Regulador de la conductancia transmembrana de la fibrosis quística (CFTR)",
+      "summary": "Fabrica un canal que deja pasar el cloruro (la mitad de la sal) a través de la membrana de las células que hacen moco, sudor y jugos digestivos. El agua sigue a la sal, y así el moco se mantiene fluido. Si el canal falla, el moco se vuelve espeso y pegajoso, y tapona los pulmones y el páncreas: es la fibrosis quística.",
+      "did_you_know": [
+        "El sudor de las personas con fibrosis quística es muy salado, porque el canal CFTR tampoco recupera la sal del sudor. Por eso la «prueba del sudor» todavía se usa para diagnosticarla.",
+        "Es una de las enfermedades hereditarias graves más frecuentes en personas de origen europeo: 1 de cada 2.500 a 3.500 recién nacidos. Es mucho menos frecuente en personas de origen africano o asiático."
+      ]
+    },
+    "BRCA1": {
+      "name": "BRCA1, reparación del ADN",
+      "summary": "Fabrica una proteína que repara el ADN cuando se rompen sus dos hebras, copiando la información de la otra copia del cromosoma. Es un «supresor de tumores»: si las dos copias del gen fallan en una célula, los errores se acumulan y puede aparecer un cáncer. Heredar una copia alterada aumenta mucho el riesgo de cáncer de mama y de ovario.",
+      "did_you_know": [
+        "Más del 60 % de las mujeres con una variante dañina en BRCA1 o BRCA2 tendrán cáncer de mama a lo largo de la vida, frente al 13 % de la población general. En el cáncer de ovario, el riesgo con BRCA1 es del 39 al 58 %, frente a alrededor del 1 %.",
+        "Tener la variante no significa tener cáncer: aumenta el riesgo. Por eso se ofrecen revisiones más frecuentes desde jóvenes y, a veces, cirugía para reducir el riesgo."
+      ]
+    },
+    "BRCA2": {
+      "name": "BRCA2, reparación del ADN",
+      "summary": "Trabaja con BRCA1 en la misma reparación del ADN: lleva la proteína RAD51 hasta el sitio de la rotura para que pueda copiar la información de la otra copia del cromosoma. Una copia alterada aumenta el riesgo de cáncer de mama, ovario, próstata y páncreas. Si las dos copias están alteradas desde el nacimiento, aparece un tipo de anemia de Fanconi.",
+      "did_you_know": [
+        "BRCA2 también importa en los hombres: con una variante dañina, el riesgo de cáncer de próstata hasta los 80 años sube al 19-61 % (frente a un 11 %) y el de cáncer de mama masculino, que es muy raro, al 2-7 %."
+      ]
+    },
+    "TP53": {
+      "name": "Proteína tumoral p53",
+      "summary": "Fabrica p53, el «guardián del genoma». Cuando el ADN de una célula se daña, p53 frena la división para dar tiempo a repararlo y, si el daño es demasiado, hace que la célula se autodestruya. Es el gen más alterado en los cánceres humanos. Quien hereda una copia alterada tiene el síndrome de Li-Fraumeni, con un riesgo muy alto de varios cánceres desde joven.",
+      "did_you_know": [
+        "Los elefantes casi no tienen cáncer a pesar de su tamaño. Una de las razones: tienen unas 20 copias de TP53 (nosotros, una por cromosoma), y sus células dañadas se autodestruyen con más facilidad."
+      ]
+    },
+    "HTT": {
+      "name": "Huntingtina",
+      "summary": "Fabrica la huntingtina, una proteína grande que abunda en las neuronas. Todavía no se sabe del todo qué hace, pero es necesaria para el desarrollo del cerebro. Una forma alargada de la proteína se pega en grumos y va dañando las neuronas que controlan el movimiento: es la enfermedad de Huntington.",
+      "special": "La mutación de la enfermedad de Huntington no es una letra cambiada: es un trío de letras, CAG, que se repite demasiadas veces al principio del gen. Lo normal es de 10 a 35 repeticiones; con 36 a 39 la enfermedad puede aparecer o no, y con 40 o más aparece casi siempre. Cada CAG añade una glutamina a la proteína.",
+      "did_you_know": [
+        "Al pasar de padres a hijos, la repetición CAG a menudo se alarga, y cuantas más repeticiones, antes suele empezar la enfermedad. Con más de 60 aparece la forma juvenil, en la infancia o la adolescencia."
+      ]
+    },
+    "DMD": {
+      "name": "Distrofina",
+      "summary": "Fabrica la distrofina, una proteína larga que hace de muelle entre el esqueleto interno de cada fibra muscular y su membrana. Sin ella, el músculo se rompe un poco cada vez que se contrae y poco a poco se sustituye por grasa y cicatriz: es la distrofia muscular de Duchenne. Si la distrofina es más corta pero funciona en parte, es la de Becker, más leve.",
+      "special": "La mayoría de los casos (del 60 al 70 %) no se deben a una letra cambiada, sino a deleciones: se pierde uno o varios de los 79 exones del gen. Si al perderlos se descoloca la lectura del ARNm de tres en tres letras, no se fabrica distrofina (Duchenne). Si la lectura sigue en su sitio, sale una distrofina más corta (Becker). Los fármacos que hacen «saltar» un exón se basan en esto.",
+      "did_you_know": [
+        "Es el gen humano más grande que se conoce. Está en el cromosoma X, y por eso la distrofia de Duchenne afecta casi solo a chicos, que tienen un único cromosoma X."
+      ]
+    },
+    "F8": {
+      "name": "Factor VIII de la coagulación",
+      "summary": "Fabrica el factor VIII, una de las proteínas de la coagulación. Viaja por la sangre unido al factor de von Willebrand y, cuando se rompe un vaso, se suelta y ayuda al factor IX a poner en marcha la reacción en cadena que forma el coágulo. Sin él, las heridas sangran mucho tiempo y hay sangrados dentro de las articulaciones y los músculos: es la hemofilia A.",
+      "special": "En casi la mitad de los casos de hemofilia A grave, el gen no tiene una letra cambiada: tiene un trozo dado la vuelta (una inversión, sobre todo en el intrón 22). Un trozo del gen se parece mucho a otro que está más allá; se emparejan por error y el principio del gen queda girado y separado del final.",
+      "did_you_know": [
+        "Como el gen está en el cromosoma X, la hemofilia A afecta casi solo a hombres. Las mujeres con una copia alterada son portadoras y algunas tienen sangrados leves."
+      ]
+    },
+    "PAH": {
+      "name": "Fenilalanina hidroxilasa",
+      "summary": "Fabrica una enzima del hígado que transforma la fenilalanina, un aminoácido que está en todas las proteínas de la comida, en tirosina. Si la enzima no funciona, la fenilalanina se acumula y daña el cerebro en desarrollo: es la fenilcetonuria.",
+      "did_you_know": [
+        "A los recién nacidos se les toman unas gotas de sangre para buscar la fenilcetonuria. Si se detecta a tiempo y se sigue una dieta muy baja en fenilalanina, el niño se desarrolla con normalidad.",
+        "Los refrescos y chicles con aspartamo avisan de que «contienen una fuente de fenilalanina»: el aspartamo se descompone en fenilalanina, y las personas con fenilcetonuria deben evitarlo."
+      ]
+    },
+    "APOE": {
+      "name": "Apolipoproteína E",
+      "summary": "Fabrica una proteína que se une a las grasas para formar las lipoproteínas que llevan el colesterol por la sangre, y que sirve de «etiqueta» para que el hígado las recoja. También transporta colesterol en el cerebro. Tiene tres formas comunes, ε2, ε3 y ε4, que cambian el riesgo de alzhéimer y de algunos problemas de colesterol.",
+      "did_you_know": [
+        "Las tres formas se diferencian solo en dos aminoácidos de los 317 de la proteína. La más común es ε3. Llevar ε4 aumenta el riesgo de alzhéimer, pero no lo decide: muchas personas con ε4 nunca lo tienen."
+      ]
+    },
+    "LDLR": {
+      "name": "Receptor de las lipoproteínas de baja densidad (LDL)",
+      "summary": "Fabrica el receptor que, en la superficie de las células del hígado, atrapa las partículas LDL de la sangre (el «colesterol malo») y las mete dentro para deshacerlas. Con una copia alterada hay menos receptores, y el colesterol LDL está alto desde el nacimiento: es la hipercolesterolemia familiar, que aumenta el riesgo de infarto a edades jóvenes.",
+      "did_you_know": [
+        "La hipercolesterolemia familiar afecta a 1 de cada 200 a 250 personas en la mayoría de países, y es la enfermedad hereditaria más frecuente del corazón y los vasos. Muchas personas no saben que la tienen."
+      ]
+    },
+    "SMN1": {
+      "name": "Supervivencia de la motoneurona 1",
+      "summary": "Fabrica la proteína SMN, que necesitan las motoneuronas, las neuronas de la médula espinal que mandan las órdenes a los músculos. Sin SMN, las motoneuronas mueren y los músculos se debilitan: es la atrofia muscular espinal (AME), que en su forma más grave empieza en los primeros meses de vida.",
+      "special": "En alrededor del 95 % de los casos de AME, a las dos copias de SMN1 les falta un trozo (casi siempre el exón 7) o el gen entero.",
+      "did_you_know": [
+        "Tenemos un gen casi gemelo, SMN2, que se diferencia de SMN1 en muy pocas letras. Por una de ellas, casi todo su ARNm pierde el exón 7 y solo sale un poco de proteína completa. Quien tiene más copias de SMN2 suele tener una AME más leve. Dos de los fármacos, nusinersén y risdiplam, hacen que SMN2 fabrique más proteína completa."
+      ]
+    },
+    "G6PD": {
+      "name": "Glucosa-6-fosfato deshidrogenasa",
+      "summary": "Fabrica una enzima que protege a los glóbulos rojos de la oxidación. Si falta, algunas infecciones, algunos medicamentos o comer habas pueden romper de golpe muchos glóbulos rojos y causar una anemia: es el déficit de G6PD, también llamado favismo.",
+      "did_you_know": [
+        "Unos 400 millones de personas en el mundo tienen déficit de G6PD, sobre todo en África, Asia, el Mediterráneo y Oriente Medio. Como pasa con HbS en la hemoglobina, se cree que protege en parte frente a la malaria."
+      ]
+    },
+    "LCT": {
+      "name": "Lactasa",
+      "summary": "Fabrica la lactasa, la enzima del intestino delgado que corta la lactosa (el azúcar de la leche) en dos azúcares más pequeños que se pueden absorber. Si falta desde el nacimiento, el bebé no puede digerir la leche: es el déficit congénito de lactasa, muy raro.",
+      "special": "Lo que más cambia entre personas no está dentro de LCT, sino al lado: en el gen vecino MCM6 hay un «interruptor» que mantiene encendida la lactasa en los adultos (la persistencia de la lactasa). La variante europea más conocida es la -13910C>T (rs4988235). No es una enfermedad, sino un rasgo.",
+      "did_you_know": [
+        "Lo normal en los mamíferos es que la lactasa se apague después de la infancia: alrededor del 65 % de las personas digieren peor la lactosa de adultas. La persistencia de la lactasa apareció varias veces por separado, en pueblos ganaderos de Europa y de África, con variantes distintas del mismo interruptor."
+      ]
+    }
+  },
+  "variants": {
+    "HBB:c.20A>T": "La variante de la anemia falciforme. Una sola letra del ADN (A→T) cambia un aminoácido: cuando la hemoglobina suelta el oxígeno, se pega en largas fibras y deforma el glóbulo rojo en forma de hoz.",
+    "HBB:c.19G>A": "Cambia el mismo aminoácido que HbS, pero por lisina. Sola da una anemia leve; junto con HbS causa la enfermedad SC.",
+    "CFTR:c.1521_1523del": "La variante más frecuente de la fibrosis quística. Faltan tres letras del ADN y, con ellas, un aminoácido (la fenilalanina 508). La proteína se pliega mal y la célula la destruye antes de que llegue a la membrana.",
+    "CFTR:c.1652G>A": "El canal llega a la membrana, pero su «puerta» casi no se abre. Fue la primera variante con un fármaco que actúa sobre la causa: el ivacaftor, aprobado en 2012, que mantiene la puerta abierta.",
+    "BRCA1:c.68_69del": "Faltan dos letras al principio del gen, se descoloca la lectura del ARNm y la proteína sale cortada e inútil. Junto con 5382insC y 6174delT (de BRCA2), es una de las tres variantes frecuentes en personas de origen judío asquenazí.",
+    "BRCA1:c.5266dup": "Una letra de más (una C repetida) descoloca la lectura del ARNm y la proteína sale cortada. Es frecuente en personas de origen judío asquenazí y en Europa del Este.",
+    "BRCA2:c.5946del": "Falta una letra (una T), se descoloca la lectura del ARNm y la proteína sale cortada. Es una de las tres variantes frecuentes en personas de origen judío asquenazí.",
+    "TP53:c.524G>A": "Cambia la arginina 175 por histidina. La proteína p53 se deforma y ya no puede agarrarse al ADN para frenar la célula. Es uno de los cambios de TP53 más frecuentes en los cánceres.",
+    "TP53:c.818G>A": "Cambia la arginina 273, uno de los aminoácidos que tocan directamente el ADN. La proteína conserva su forma, pero no consigue agarrarse al ADN. Es otro de los cambios más frecuentes en los cánceres.",
+    "PAH:c.1222C>T": "Cambia la arginina 408 por triptófano y la enzima casi no funciona: da la fenilcetonuria clásica, la más grave. Es la variante más frecuente en muchas poblaciones.",
+    "APOE:c.388T>C": "Es lo que convierte ε3 en ε4 (cambia una cisteína por arginina). Una copia aumenta el riesgo de alzhéimer de inicio tardío y dos copias, más todavía. Es el factor de riesgo genético común más fuerte del alzhéimer, pero no lo decide.",
+    "APOE:c.526C>T": "Es lo que convierte ε3 en ε2 (cambia una arginina por cisteína). ε2 se asocia a un riesgo algo menor de alzhéimer, pero con dos copias puede aparecer la hiperlipoproteinemia tipo 3, con colesterol y triglicéridos altos.",
+    "G6PD:c.653C>T": "La variante G6PD Mediterránea, frecuente en el Mediterráneo, Oriente Medio y la India. La enzima queda casi sin actividad, y comer habas o tomar ciertos medicamentos puede romper los glóbulos rojos."
+  },
+  "diseases": {
+    "Hb SS disease": "Anemia falciforme (drepanocitosis)",
+    "beta Thalassemia": "Talasemia beta",
+    "Beta-thalassemia HBB/LCRB": "Talasemia beta (HBB/LCRB)",
+    "Dominant beta-thalassemia": "Talasemia beta dominante",
+    "Beta zero thalassemia": "Talasemia beta cero",
+    "Beta-thalassemia major": "Talasemia beta mayor",
+    "Beta thalassemia intermedia": "Talasemia beta intermedia",
+    "Hemoglobin E/beta- thalassemia": "Talasemia beta con hemoglobina E",
+    "alpha Thalassemia": "Talasemia alfa",
+    "Sickle cell-hemoglobin C disease": "Enfermedad de la hemoglobina SC",
+    "Sickle cell-Hemoglobin O Arab disease": "Enfermedad de la hemoglobina S/O-Arab",
+    "Hemoglobin D disease": "Enfermedad de la hemoglobina D",
+    "Hemoglobin E disease": "Enfermedad de la hemoglobina E",
+    "Hemoglobinopathy": "Hemoglobinopatía",
+    "Inherited hemoglobinopathy": "Hemoglobinopatía hereditaria",
+    "HBB-related hemoglobinopathies": "Hemoglobinopatías relacionadas con HBB",
+    "Hereditary persistence of fetal hemoglobin": "Persistencia hereditaria de la hemoglobina fetal",
+    "Fetal hemoglobin quantitative trait locus 1": "Nivel de hemoglobina fetal (rasgo cuantitativo 1)",
+    "Heinz body anemia": "Anemia con cuerpos de Heinz",
+    "Hemolytic anemia": "Anemia hemolítica",
+    "Anemia": "Anemia",
+    "METHEMOGLOBINEMIA, BETA TYPE": "Metahemoglobinemia (tipo beta)",
+    "Erythrocytosis, familial, 6": "Eritrocitosis familiar 6",
+    "Erythrocyte disorder": "Trastorno de los glóbulos rojos",
+    "Atypical hemolytic-uremic syndrome": "Síndrome hemolítico urémico atípico",
+    "Malaria, resistance to": "Malaria (resistencia)",
+    "Malaria, susceptibility to": "Malaria (susceptibilidad)",
+    "HEMOGLOBIN S": "Hemoglobina S",
+    "HBB-related disorder": "Trastorno relacionado con HBB",
+    "6-Pyruvoyl-tetrahydrobiopterin synthase deficiency": "Déficit de 6-piruvoil-tetrahidropterina sintasa",
+    "APOE-related disorder": "Trastorno relacionado con APOE",
+    "Abnormal bleeding": "Sangrado anormal",
+    "Abnormal circulating lipid concentration": "Grasas en sangre alteradas",
+    "Abnormality of coagulation": "Alteración de la coagulación",
+    "Abnormality of metabolism/homeostasis": "Alteración del metabolismo",
+    "Abnormality of the musculature": "Alteración de los músculos",
+    "Acute myeloid leukemia": "Leucemia mieloide aguda",
+    "Acute rhabdomyolysis": "Rabdomiólisis aguda (rotura de músculo)",
+    "Adenocarcinoma": "Adenocarcinoma",
+    "Adenocarcinoma of the large intestine": "Adenocarcinoma de intestino grueso",
+    "Adenoid cystic carcinoma": "Carcinoma adenoide quístico",
+    "Adrenal cortex carcinoma": "Cáncer de la corteza suprarrenal",
+    "Adrenocortical carcinoma, hereditary": "Cáncer de la corteza suprarrenal hereditario",
+    "Alveolar rhabdomyosarcoma": "Rabdomiosarcoma alveolar",
+    "Alzheimer disease": "Enfermedad de Alzheimer",
+    "Alzheimer disease 2": "Enfermedad de Alzheimer (tipo 2, de inicio tardío)",
+    "Alzheimer disease 4": "Enfermedad de Alzheimer (tipo 4)",
+    "Anaplastic/large cell medulloblastoma": "Meduloblastoma anaplásico o de células grandes",
+    "Anemia, nonspherocytic hemolytic, due to G6PD deficiency": "Anemia hemolítica por déficit de G6PD",
+    "Arrhythmogenic right ventricular cardiomyopathy": "Miocardiopatía arritmogénica del ventrículo derecho",
+    "Astrocytoma": "Astrocitoma",
+    "Astrocytoma IDH-mutant": "Astrocitoma con mutación de IDH",
+    "Astrocytoma, IDH-mutant, grade 3": "Astrocitoma con mutación de IDH, grado 3",
+    "Atypical endometrial hyperplasia": "Hiperplasia endometrial atípica",
+    "Atypical teratoid rhabdoid tumor": "Tumor teratoide/rabdoide atípico",
+    "Autosomal dominant BRCA2-related cancer types": "Cánceres hereditarios relacionados con BRCA2",
+    "Autosomal dominant LDLR-related disorders": "Trastornos dominantes relacionados con LDLR",
+    "Autosomal dominant inheritance": "Herencia autosómica dominante (sin enfermedad concreta)",
+    "Autosomal recessive PAH-related disorders": "Trastornos recesivos relacionados con PAH",
+    "B-cell chronic lymphocytic leukemia": "Leucemia linfocítica crónica de células B",
+    "BAP1-related tumor predisposition syndrome": "Predisposición a tumores por BAP1",
+    "BRCA1-related cancer predisposition": "Predisposición al cáncer por BRCA1",
+    "BRCA1-related disorder": "Trastorno relacionado con BRCA1",
+    "BRCA2-related cancer predisposition": "Predisposición al cáncer por BRCA2",
+    "BRCA2-related disorder": "Trastorno relacionado con BRCA2",
+    "Basal cell carcinoma, susceptibility to, 7": "Carcinoma basocelular (predisposición, tipo 7)",
+    "Becker muscular dystrophy": "Distrofia muscular de Becker",
+    "Becker muscular dystrophy, Cardiomyopathy, Duchenne muscular dystrophy, Dystrophin deficiency": "Distrofinopatías (Duchenne, Becker, miocardiopatía)",
+    "Bone marrow failure syndrome 5": "Insuficiencia de la médula ósea (tipo 5)",
+    "Bone osteosarcoma": "Osteosarcoma",
+    "Breast and/or ovarian cancer": "Cáncer de mama u ovario",
+    "Breast cancer, susceptibility to": "Cáncer de mama (predisposición)",
+    "Breast carcinoma": "Carcinoma de mama",
+    "Breast ductal adenocarcinoma": "Carcinoma ductal de mama",
+    "Breast neoplasm": "Tumor de mama",
+    "Breast phyllodes tumor": "Tumor filoides de mama",
+    "Breast-ovarian cancer, familial, susceptibility to, 1": "Cáncer de mama y ovario familiar (predisposición, tipo 1, BRCA1)",
+    "Breast-ovarian cancer, familial, susceptibility to, 2": "Cáncer de mama y ovario familiar (predisposición, tipo 2, BRCA2)",
+    "Breast-ovarian cancer, familial, susceptibility to, 3": "Cáncer de mama y ovario familiar (predisposición, tipo 3)",
+    "Bronchiectasis with or without elevated sweat chloride 1": "Bronquiectasias, con o sin sudor salado (tipo 1)",
+    "Burkitt lymphoma": "Linfoma de Burkitt",
+    "CFTR-related disorder": "Trastorno relacionado con CFTR",
+    "Cancer or benign tumor": "Cáncer o tumor benigno",
+    "Carcinoma of colon": "Cáncer de colon",
+    "Carcinoma of esophagus": "Cáncer de esófago",
+    "Cardiomyopathy": "Miocardiopatía",
+    "Cardiovascular phenotype": "Rasgo cardiovascular",
+    "Central nervous system mesenchymal non-meningothelial tumor": "Tumor mesenquimal del sistema nervioso central",
+    "Cerebral palsy": "Parálisis cerebral",
+    "Cervical cancer": "Cáncer de cuello de útero",
+    "Cholangiocarcinoma": "Colangiocarcinoma (cáncer de vías biliares)",
+    "Chordoma": "Cordoma",
+    "Choroid plexus carcinoma": "Carcinoma de plexos coroideos",
+    "Chronic pancreatitis": "Pancreatitis crónica",
+    "Classic Hodgkin lymphoma": "Linfoma de Hodgkin clásico",
+    "Clear cell sarcoma": "Sarcoma de células claras",
+    "Colon adenocarcinoma": "Adenocarcinoma de colon",
+    "Colonic neoplasm": "Tumor de colon",
+    "Colorectal cancer": "Cáncer colorrectal",
+    "Colorectal cancer, susceptibility to, 1": "Cáncer colorrectal (predisposición, tipo 1)",
+    "Conduction disorder of the heart": "Trastorno de la conducción del corazón",
+    "Congenital anemia": "Anemia congénita",
+    "Congenital bilateral absence of vas deferens": "Ausencia congénita de los conductos deferentes",
+    "Congenital bilateral aplasia of vas deferens from CFTR mutation": "Ausencia congénita de los conductos deferentes (por CFTR)",
+    "Congenital lactase deficiency": "Déficit congénito de lactasa",
+    "Congenital nonspherocytic hemolytic anemia": "Anemia hemolítica congénita no esferocítica",
+    "Cowden syndrome 1": "Síndrome de Cowden (tipo 1)",
+    "Cystic fibrosis": "Fibrosis quística",
+    "Cystic fibrosis diagnostic test": "Prueba de diagnóstico de la fibrosis quística",
+    "DMD-related disorder": "Trastorno relacionado con DMD",
+    "DMD-related muscular dystrophy": "Distrofia muscular por DMD",
+    "Delta-beta-thalassemia": "Talasemia delta-beta",
+    "Desmoplastic small round cell tumor": "Tumor desmoplásico de células pequeñas y redondas",
+    "Diamond-Blackfan anemia": "Anemia de Diamond-Blackfan",
+    "Diffuse glioma, H3 G34 mutant": "Glioma difuso con mutación H3 G34",
+    "Diffuse intrinsic pontine glioma": "Glioma difuso intrínseco de tronco (DIPG)",
+    "Diffuse midline glioma, H3 K27-altered": "Glioma difuso de línea media, H3 K27 alterado",
+    "Diffuse midline glioma, H3 K27M-mutant": "Glioma difuso de línea media con mutación H3 K27M",
+    "Diffuse pediatric-type high-grade glioma, H3-wildtype and IDH-wildtype": "Glioma difuso pediátrico de alto grado (H3 e IDH normales)",
+    "Dilated and arrhythmogenic cardiomyopathy": "Miocardiopatía dilatada y arritmogénica",
+    "Dilated cardiomyopathy 1A": "Miocardiopatía dilatada (tipo 1A)",
+    "Dilated cardiomyopathy 3B": "Miocardiopatía dilatada ligada al X (tipo 3B)",
+    "Duchenne and Becker muscular dystrophy": "Distrofia muscular de Duchenne y de Becker",
+    "Duchenne muscular dystrophy": "Distrofia muscular de Duchenne",
+    "Duchenne or Becker muscular dystrophy": "Distrofia muscular de Duchenne o de Becker",
+    "Duodenal stenosis": "Estenosis duodenal",
+    "Dysgerminoma": "Disgerminoma",
+    "Dyslipidemia": "Dislipemia (grasas en sangre alteradas)",
+    "Dystonia, early-onset, and/or spastic paraplegia": "Distonía de inicio temprano o paraplejia espástica",
+    "Dystrophinopathies": "Distrofinopatías",
+    "Early-onset coronary artery disease": "Enfermedad coronaria precoz",
+    "Elevated circulating creatine kinase activity": "Creatina cinasa alta en sangre",
+    "Embryonal rhabdomyosarcoma": "Rabdomiosarcoma embrionario",
+    "Embryonal tumor with multilayered rosettes": "Tumor embrionario con rosetas multicapa",
+    "Endometrial cancer": "Cáncer de endometrio",
+    "Endometrial carcinoma": "Carcinoma de endometrio",
+    "Ewing sarcoma": "Sarcoma de Ewing",
+    "F8-related disorder": "Trastorno relacionado con F8",
+    "F8-related disorders": "Trastornos relacionados con F8",
+    "FLG-related disorder": "Trastorno relacionado con FLG",
+    "Factor VII deficiency": "Déficit de factor VII",
+    "Factor VIII deficiency": "Déficit de factor VIII (hemofilia A)",
+    "Familial aortopathy": "Aortopatía familiar",
+    "Familial cancer of breast": "Cáncer de mama familiar",
+    "Familial colorectal cancer type X": "Cáncer colorrectal familiar tipo X",
+    "Familial hemolytic anemia": "Anemia hemolítica familiar",
+    "Familial hypercholesterolemia": "Hipercolesterolemia familiar",
+    "Familial pancreatic carcinoma": "Cáncer de páncreas familiar",
+    "Familial prostate cancer": "Cáncer de próstata familiar",
+    "Familial restrictive cardiomyopathy": "Miocardiopatía restrictiva familiar",
+    "Familial type 3 hyperlipoproteinemia": "Hiperlipoproteinemia familiar tipo 3",
+    "Fanconi anemia": "Anemia de Fanconi",
+    "Fanconi anemia complementation group D1": "Anemia de Fanconi (grupo D1, BRCA2)",
+    "Fanconi anemia, complementation group S": "Anemia de Fanconi (grupo S, BRCA1)",
+    "Fetal anomalies with a likely genetic cause": "Anomalías fetales de probable causa genética",
+    "Fetal cystic hygroma": "Higroma quístico fetal",
+    "Focal-onset seizure": "Crisis epiléptica focal",
+    "G6PD TOMAH": "Variante G6PD Tomah",
+    "G6PD deficiency": "Déficit de G6PD (favismo)",
+    "G6PD deficient hemolytic anemia": "Anemia hemolítica por déficit de G6PD",
+    "G6PD-related disorder": "Trastorno relacionado con G6PD",
+    "G6PD-related disorders": "Trastornos relacionados con G6PD",
+    "Gallbladder cancer": "Cáncer de vesícula biliar",
+    "Gastric cancer": "Cáncer de estómago",
+    "Genetic non-acquired premature ovarian failure": "Insuficiencia ovárica prematura genética",
+    "Glioma susceptibility 1": "Glioma (predisposición, tipo 1)",
+    "Glomerulopathy with fibronectin deposits 2": "Glomerulopatía con depósitos de fibronectina (tipo 2)",
+    "Granulomatous disease, chronic, X-linked": "Enfermedad granulomatosa crónica ligada al X",
+    "HTT-related disorder": "Trastorno relacionado con HTT",
+    "Heart failure": "Insuficiencia cardiaca",
+    "Hemoglobin E": "Hemoglobina E",
+    "Hemolytic anemia, G6PD deficient (favism)": "Anemia hemolítica por déficit de G6PD (favismo)",
+    "Hemorrhage": "Hemorragia",
+    "Hepatoblastoma": "Hepatoblastoma",
+    "Hepatocellular carcinoma": "Cáncer de hígado (hepatocarcinoma)",
+    "Hereditary breast ovarian cancer syndrome": "Síndrome de cáncer de mama y ovario hereditario",
+    "Hereditary cancer": "Cáncer hereditario",
+    "Hereditary cancer-predisposing syndrome": "Predisposición hereditaria al cáncer",
+    "Hereditary factor IX deficiency disease": "Hemofilia B",
+    "Hereditary factor VIII deficiency disease": "Hemofilia A",
+    "Hereditary nonpolyposis colon cancer": "Cáncer de colon hereditario no polipósico (Lynch)",
+    "Hereditary nonpolyposis colorectal carcinoma": "Cáncer colorrectal hereditario no polipósico (Lynch)",
+    "Hereditary pancreatitis": "Pancreatitis hereditaria",
+    "Hereditary skeletal muscle disorder": "Trastorno hereditario de los músculos",
+    "Hereditary thrombophilia": "Trombofilia hereditaria (tendencia a los trombos)",
+    "High-grade astrocytoma with piloid features": "Astrocitoma de alto grado con rasgos piloides",
+    "Homozygous familial hypercholesterolemia": "Hipercolesterolemia familiar homocigota",
+    "Huntington disease": "Enfermedad de Huntington",
+    "Hypercholesterolemia": "Hipercolesterolemia (colesterol alto)",
+    "Hypercholesterolemia, autosomal dominant, type B": "Hipercolesterolemia dominante tipo B",
+    "Hypercholesterolemia, familial, 1": "Hipercolesterolemia familiar (tipo 1, LDLR)",
+    "Hypercholesterolemia, familial, 4": "Hipercolesterolemia familiar (tipo 4)",
+    "Hyperlipidemia": "Hiperlipemia (grasas altas en sangre)",
+    "Hyperlipoproteinemia": "Hiperlipoproteinemia",
+    "Hyperphenylalaninemia": "Hiperfenilalaninemia",
+    "Hypertrophic cardiomyopathy": "Miocardiopatía hipertrófica",
+    "Hypertrophic cardiomyopathy 26": "Miocardiopatía hipertrófica (tipo 26)",
+    "IDH-wildtype glioblastoma": "Glioblastoma (IDH normal)",
+    "Infant-type hemispheric glioma": "Glioma hemisférico infantil",
+    "Infiltrating duct carcinoma of breast": "Carcinoma ductal infiltrante de mama",
+    "Inherited breast cancer and ovarian cancer": "Cáncer de mama y ovario hereditario",
+    "Inherited ovarian cancer (without breast cancer)": "Cáncer de ovario hereditario (sin cáncer de mama)",
+    "Inherited prostate cancer": "Cáncer de próstata hereditario",
+    "Intellectual disability": "Discapacidad intelectual",
+    "Interstitial lung disease due to ABCA3 deficiency": "Enfermedad pulmonar intersticial por déficit de ABCA3",
+    "Invasive lobular breast carcinoma": "Carcinoma lobulillar infiltrante de mama",
+    "Invasive medullary breast carcinoma": "Carcinoma medular de mama",
+    "Juvenile type testicular granulosa cell tumor": "Tumor testicular de células de la granulosa juvenil",
+    "Kabuki syndrome 1": "Síndrome de Kabuki (tipo 1)",
+    "Kugelberg-Welander disease": "Atrofia muscular espinal tipo 3 (Kugelberg-Welander)",
+    "LCT-related disorder": "Trastorno relacionado con LCT",
+    "LDLR & LDLR-AS1-related disorders": "Trastornos relacionados con LDLR y LDLR-AS1",
+    "LDLR-related disorder": "Trastorno relacionado con LDLR",
+    "LDLR-related familial hypercholesterolemia": "Hipercolesterolemia familiar por LDLR",
+    "Li-Fraumeni syndrome": "Síndrome de Li-Fraumeni",
+    "Li-Fraumeni syndrome 1": "Síndrome de Li-Fraumeni (tipo 1, TP53)",
+    "Lipoprotein glomerulopathy": "Glomerulopatía por lipoproteínas",
+    "Long QT syndrome": "Síndrome de QT largo",
+    "Lopes-Maciel-Rodan syndrome": "Síndrome de Lopes-Maciel-Rodan",
+    "Low grade glioma": "Glioma de bajo grado",
+    "Lung adenocarcinoma": "Adenocarcinoma de pulmón",
+    "Lung cancer": "Cáncer de pulmón",
+    "Lymphoma": "Linfoma",
+    "Lynch syndrome 1": "Síndrome de Lynch (tipo 1)",
+    "Major depressive disorder": "Depresión mayor",
+    "Male infertility": "Infertilidad masculina",
+    "Malignant germ cell tumor": "Tumor maligno de células germinales",
+    "Malignant glioma": "Glioma maligno",
+    "Malignant lymphoma, large B-cell, diffuse": "Linfoma difuso de células B grandes",
+    "Malignant peripheral nerve sheath tumor": "Tumor maligno de la vaina de los nervios",
+    "Malignant spindle cell neoplasm": "Tumor maligno de células fusiformes",
+    "Malignant tumor of breast": "Cáncer de mama",
+    "Malignant tumor of esophagus": "Cáncer de esófago",
+    "Malignant tumor of pancreas": "Cáncer de páncreas",
+    "Malignant tumor of urinary bladder": "Cáncer de vejiga",
+    "Medulloblastoma": "Meduloblastoma",
+    "Medulloblastoma SHH activated": "Meduloblastoma (grupo SHH)",
+    "Medulloblastoma SHH activated and TP53 mutant": "Meduloblastoma (grupo SHH, TP53 mutado)",
+    "Medulloblastoma SHH activated and TP53 wild-type": "Meduloblastoma (grupo SHH, TP53 normal)",
+    "Medulloblastoma WNT activated": "Meduloblastoma (grupo WNT)",
+    "Medulloblastoma non-WNT/non-SHH": "Meduloblastoma (ni WNT ni SHH)",
+    "Megacolon": "Megacolon",
+    "Melanoma": "Melanoma",
+    "Melanoma-pancreatic cancer syndrome": "Síndrome de melanoma y cáncer de páncreas",
+    "Meningioma": "Meningioma",
+    "Mesothelioma": "Mesotelioma",
+    "Microprolactinoma": "Microprolactinoma",
+    "Mild hemophilia A": "Hemofilia A leve",
+    "Mild hyperphenylalaninemia": "Hiperfenilalaninemia leve",
+    "Mitochondrial disease": "Enfermedad mitocondrial",
+    "Monogenic short statue": "Talla baja de causa genética",
+    "Multiple myeloma": "Mieloma múltiple",
+    "Muscle weakness": "Debilidad muscular",
+    "Muscular dystrophy": "Distrofia muscular",
+    "Myopathy": "Miopatía",
+    "NICE approved PARP inhibitor treatment": "Candidata a inhibidores de PARP (según NICE)",
+    "Nasal polyposis": "Pólipos nasales",
+    "Nasopharyngeal carcinoma": "Cáncer de nasofaringe",
+    "Neoplasm": "Tumor (en general)",
+    "Nephroblastoma": "Tumor de Wilms (nefroblastoma)",
+    "Nephronophthisis 14": "Nefronoptisis (tipo 14)",
+    "Neuroblastoma": "Neuroblastoma",
+    "Neuroendocrine tumor of pancreas": "Tumor neuroendocrino de páncreas",
+    "Neuromuscular disease caused by qualitative or quantitative defects of dystrophin": "Enfermedad neuromuscular por defectos de la distrofina",
+    "Obstructive azoospermia": "Azoospermia obstructiva",
+    "Osteosarcoma": "Osteosarcoma",
+    "Ovarian cancer": "Cáncer de ovario",
+    "Ovarian carcinoma": "Carcinoma de ovario",
+    "Ovarian mucinous adenocarcinoma": "Adenocarcinoma mucinoso de ovario",
+    "Ovarian neoplasm": "Tumor de ovario",
+    "Ovarian serous cystadenocarcinoma": "Cistoadenocarcinoma seroso de ovario",
+    "Ovarian serous surface papillary adenocarcinoma": "Adenocarcinoma papilar seroso de ovario",
+    "Ovarian sex cord-stromal tumor": "Tumor de los cordones sexuales del ovario",
+    "PAH-related disorder": "Trastorno relacionado con PAH",
+    "Pancreatic cancer, susceptibility to, 2": "Cáncer de páncreas (predisposición, tipo 2, BRCA2)",
+    "Pancreatic cancer, susceptibility to, 4": "Cáncer de páncreas (predisposición, tipo 4)",
+    "Pancreatic ductal adenocarcinoma": "Adenocarcinoma ductal de páncreas",
+    "Pancreatitis": "Pancreatitis",
+    "Peritoneum cancer": "Cáncer de peritoneo",
+    "Periventricular nodular heterotopia": "Heterotopía nodular periventricular",
+    "Phenylketonuria": "Fenilcetonuria",
+    "Pilocytic astrocytoma": "Astrocitoma pilocítico",
+    "Pituitary hormone deficiency, combined, 2": "Déficit combinado de hormonas de la hipófisis (tipo 2)",
+    "Pleomorphic xanthoastrocytoma": "Xantoastrocitoma pleomórfico",
+    "Pleuropulmonary blastoma": "Blastoma pleuropulmonar",
+    "Polydactyly": "Polidactilia (dedos de más)",
+    "Primary ciliary dyskinesia": "Discinesia ciliar primaria",
+    "Primary degenerative dementia of the Alzheimer type, presenile onset": "Alzheimer de inicio temprano (antes de los 65 años)",
+    "Primary dilated cardiomyopathy": "Miocardiopatía dilatada",
+    "Primary familial dilated cardiomyopathy": "Miocardiopatía dilatada familiar",
+    "Primary familial hypertrophic cardiomyopathy": "Miocardiopatía hipertrófica familiar",
+    "Primary intracranial sarcoma, DICER1-mutant": "Sarcoma intracraneal con mutación de DICER1",
+    "Progressive muscular dystrophy": "Distrofia muscular progresiva",
+    "Propionic acidemia": "Acidemia propiónica",
+    "Prostate cancer": "Cáncer de próstata",
+    "Prostate neoplasm": "Tumor de próstata",
+    "Pseudomonas aeruginosa, susceptibility to chronic infection by, in cystic fibrosis": "Infección crónica por Pseudomonas en la fibrosis quística (predisposición)",
+    "Pulmonary hypertension, primary, 1": "Hipertensión pulmonar primaria (tipo 1)",
+    "Punctate palmoplantar keratoderma type 2": "Queratodermia palmoplantar punteada (tipo 2)",
+    "RASopathy": "Rasopatía",
+    "Rare neuromuscular disorders": "Enfermedades neuromusculares raras",
+    "Recurrent pancreatitis": "Pancreatitis recurrente",
+    "Respiratory ciliopathies including non-CF bronchiectasis": "Ciliopatías respiratorias (bronquiectasias sin fibrosis quística)",
+    "Restrictive cardiomyopathy": "Miocardiopatía restrictiva",
+    "Rhabdomyosarcoma": "Rabdomiosarcoma",
+    "Sarcoma": "Sarcoma",
+    "Schizophrenia": "Esquizofrenia",
+    "Severe hemophilia A": "Hemofilia A grave",
+    "Signet ring cell carcinoma": "Carcinoma de células en anillo de sello",
+    "Spermatogenic failure, Y-linked, 2": "Fallo en la producción de espermatozoides ligado al Y (tipo 2)",
+    "Spinal muscular atrophy": "Atrofia muscular espinal",
+    "Spinal muscular atrophy, type II": "Atrofia muscular espinal tipo 2",
+    "Spinal muscular atrophy, type IV": "Atrofia muscular espinal tipo 4 (adulta)",
+    "Spindle cell sarcoma": "Sarcoma de células fusiformes",
+    "Squamous cell carcinoma": "Carcinoma epidermoide",
+    "Squamous cell carcinoma of the head and neck": "Carcinoma epidermoide de cabeza y cuello",
+    "Squamous cell lung carcinoma": "Carcinoma epidermoide de pulmón",
+    "Syndromic X-linked intellectual disability Najm type": "Discapacidad intelectual ligada al X, tipo Najm",
+    "Synovial sarcoma": "Sarcoma sinovial",
+    "TP53-related disorder": "Trastorno relacionado con TP53",
+    "Thalassemia": "Talasemia",
+    "Thrombocytopenia": "Trombocitopenia (pocas plaquetas)",
+    "Thrombophilia, X-linked, due to factor 8 defect": "Trombofilia ligada al X por el factor VIII",
+    "Thymoma": "Timoma",
+    "Thyroid gland undifferentiated (anaplastic) carcinoma": "Cáncer anaplásico de tiroides",
+    "Triple-negative breast cancer": "Cáncer de mama triple negativo",
+    "Type 2 diabetes mellitus": "Diabetes tipo 2",
+    "Undifferentiated embryonal sarcoma of the liver": "Sarcoma embrionario indiferenciado del hígado",
+    "Uterine carcinosarcoma": "Carcinosarcoma de útero",
+    "Uterine corpus cancer": "Cáncer del cuerpo del útero",
+    "Uveal melanoma": "Melanoma de úvea (del ojo)",
+    "Von Hippel-Lindau syndrome": "Síndrome de Von Hippel-Lindau",
+    "Werdnig-Hoffmann disease": "Atrofia muscular espinal tipo 1 (Werdnig-Hoffmann)",
+    "Wilms tumor 1": "Tumor de Wilms (tipo 1)",
+    "X-linked DMD-related disorders": "Trastornos relacionados con DMD ligados al X",
+    "atorvastatin response - Efficacy": "Respuesta a la atorvastatina (eficacia)",
+    "ivacaftor / lumacaftor response - Efficacy": "Respuesta a ivacaftor y lumacaftor (eficacia)",
+    "ivacaftor / tezacaftor response - Efficacy": "Respuesta a ivacaftor y tezacaftor (eficacia)",
+    "ivacaftor response - Efficacy": "Respuesta al ivacaftor (eficacia)"
+  },
+  "drugs": {
+    "CHEMBL5095474": {
+      "name": "Exagamglogén autotemcel (Casgevy)",
+      "why": "Terapia de edición genética. Se sacan células madre de la sangre del paciente y, con CRISPR, se desactiva BCL11A, el gen que apaga la hemoglobina fetal después de nacer. Con las células ya editadas, el cuerpo vuelve a fabricar hemoglobina fetal, que no forma fibras. Fue la primera terapia con CRISPR aprobada: Reino Unido, noviembre de 2023; EE. UU., diciembre de 2023."
+    },
+    "CHEMBL4650269": {
+      "name": "Lovotibeglogén autotemcel (Lyfgenia)",
+      "why": "Terapia génica. Un virus inofensivo (un lentivirus) añade a las células madre del paciente una copia modificada del gen de la beta-globina, que fabrica una hemoglobina que frena la formación de fibras. Aprobada en EE. UU. en diciembre de 2023."
+    },
+    "CHEMBL4594311": {
+      "name": "Betibeglogén autotemcel (Zynteglo)",
+      "why": "Terapia génica para la talasemia beta: añade a las células madre del paciente una copia del gen HBB que funciona. Aprobada en la UE en 2019 y en EE. UU. en 2022. En la UE se retiró en 2022 a petición del fabricante, por motivos comerciales, no de seguridad."
+    },
+    "CHEMBL4101807": {
+      "name": "Voxelotor",
+      "why": "Se unía a la hemoglobina, a sus cadenas alfa (no a la beta que fabrica HBB), y hacía que soltara menos el oxígeno. Así la HbS no formaba fibras. Se retiró en todo el mundo en 2024 porque los estudios posteriores mostraron más muertes y más crisis de dolor que sin el fármaco."
+    },
+    "CHEMBL467": {
+      "name": "Hidroxiurea",
+      "why": "Hace que el cuerpo vuelva a fabricar hemoglobina fetal, la que tenemos antes de nacer, que no forma fibras: cuanta más hay, menos se deforman los glóbulos rojos. Su diana directa es una enzima que fabrica las piezas del ADN (la ribonucleótido reductasa); cómo eso aumenta la hemoglobina fetal no se conoce del todo."
+    },
+    "CHEMBL930": {
+      "name": "Glutamina",
+      "why": "Los glóbulos rojos falciformes se dañan con facilidad por oxidación. La glutamina les da más defensas antioxidantes. Su ficha técnica dice que el mecanismo no se conoce del todo. Reduce las complicaciones agudas."
+    },
+    "CHEMBL4297734": {
+      "name": "Crizanlizumab",
+      "why": "Es un anticuerpo que tapa la P-selectina, una proteína de la pared de los vasos sanguíneos a la que se pegan las células de la sangre. Así se atascan menos los vasos y hay menos crisis de dolor. La UE retiró su autorización en 2023 porque un ensayo grande (STAND) no confirmó el beneficio; en EE. UU. seguía aprobado en 2024."
+    },
+    "CHEMBL70927": {
+      "name": "Deferiprona",
+      "why": "No actúa sobre la enfermedad: retira el hierro que se acumula en el cuerpo con las transfusiones de sangre. Se une al hierro, que se elimina por la orina."
+    },
+    "CHEMBL2010601": {
+      "name": "Ivacaftor (Kalydeco)",
+      "why": "Es un «potenciador»: se une al canal CFTR que ya está en la membrana y mantiene su puerta abierta más tiempo, para que pase el cloruro. Solo sirve para variantes con el canal en su sitio, como G551D; para ΔF508 se combina con «correctores» que llevan el canal hasta la membrana. Aprobado en 2012."
+    },
+    "CHEMBL2103870": {
+      "name": "Lumacaftor (con ivacaftor: Orkambi)",
+      "why": "Es un «corrector»: ayuda a la proteína CFTR con ΔF508 a plegarse mejor, para que la célula no la destruya y llegue a la membrana. Allí, el ivacaftor abre la puerta del canal. Aprobado en 2015 para personas con dos copias de ΔF508."
+    },
+    "CHEMBL3544914": {
+      "name": "Tezacaftor",
+      "why": "Otro «corrector» para ΔF508, con menos interacciones con otros medicamentos que el lumacaftor. Se toma con ivacaftor (2018) y, desde 2019, también con elexacaftor e ivacaftor."
+    },
+    "CHEMBL4298128": {
+      "name": "Elexacaftor (con tezacaftor e ivacaftor: Trikafta / Kaftrio)",
+      "why": "Un segundo «corrector» que se une a la proteína CFTR en otro sitio que el tezacaftor: juntos la pliegan mucho mejor, y el ivacaftor la abre. Sirve a quien tiene al menos una copia de ΔF508, alrededor de 9 de cada 10 personas con fibrosis quística. Aprobado en 2019."
+    },
+    "CHEMBL5314934": {
+      "name": "Vanzacaftor (con tezacaftor y deutivacaftor: Alyftrek)",
+      "why": "Un corrector nuevo que se toma con tezacaftor y deutivacaftor, una versión del ivacaftor que dura más en el cuerpo. Basta con una toma al día. Aprobado en EE. UU. en diciembre de 2024."
+    },
+    "CHEMBL1201431": {
+      "name": "Dornasa alfa (Pulmozyme)",
+      "why": "Es una enzima que se inhala. Corta el ADN que sueltan los glóbulos blancos muertos en los pulmones, que hace el moco todavía más espeso. Así el moco se vuelve más fluido y se expulsa mejor. No actúa sobre CFTR."
+    },
+    "CHEMBL1747": {
+      "name": "Tobramicina",
+      "why": "Antibiótico que se inhala contra Pseudomonas aeruginosa, la bacteria que infecta de forma crónica los pulmones de muchas personas con fibrosis quística, porque el moco espeso no la deja salir."
+    },
+    "CHEMBL521686": {
+      "name": "Olaparib (Lynparza)",
+      "why": "Las células del cáncer con BRCA roto no reparan bien las roturas del ADN y dependen de otra vía de reparación, la de la proteína PARP. El olaparib bloquea PARP: las células sanas, que tienen BRCA, sobreviven, pero las del cáncer acumulan tantos daños que mueren («letalidad sintética»). Fue el primer inhibidor de PARP aprobado, en 2014."
+    },
+    "CHEMBL3137320": {
+      "name": "Talazoparib (Talzenna)",
+      "why": "Inhibidor de PARP, como el olaparib, que además deja la proteína PARP «atrapada» sobre el ADN, lo que daña todavía más a las células sin BRCA. Aprobado en 2018 para el cáncer de mama de personas con una variante de BRCA heredada."
+    },
+    "CHEMBL1094636": {
+      "name": "Niraparib (Zejula)",
+      "why": "Inhibidor de PARP que se usa sobre todo como mantenimiento en el cáncer de ovario, después de la quimioterapia, para que el tumor tarde más en volver. Funciona mejor cuando el tumor tiene BRCA alterado. Aprobado en 2017."
+    },
+    "CHEMBL1173055": {
+      "name": "Rucaparib (Rubraca)",
+      "why": "Inhibidor de PARP que aprovecha la misma debilidad de las células con BRCA roto. Aprobado en 2016 para cánceres de ovario y, después, de próstata con BRCA alterado."
+    },
+    "CHEMBL117785": {
+      "name": "Tetrabenazina",
+      "why": "Reduce la dopamina que liberan las neuronas, al bloquear la proteína (VMAT2) que la guarda en vesículas. Con menos dopamina se reducen los movimientos involuntarios (corea) de la enfermedad de Huntington. No frena la enfermedad. Aprobada en EE. UU. en 2008."
+    },
+    "CHEMBL2108278": {
+      "name": "Eteplirsén (Exondys 51)",
+      "why": "Es un trocito de ARN sintético que tapa el exón 51 del ARNm de la distrofina para que la célula se lo salte. En personas con ciertas deleciones, así se recupera la lectura y se fabrica una distrofina más corta, como en la distrofia de Becker. Sirve a alrededor del 13 % de los pacientes. Aprobado en EE. UU. en 2016 por vía acelerada: aumenta algo la distrofina, pero aún se está comprobando cuánto mejora la fuerza."
+    },
+    "CHEMBL4297762": {
+      "name": "Golodirsén (Vyondys 53)",
+      "why": "Como el eteplirsén, pero hace saltar el exón 53; sirve a alrededor del 8 % de los pacientes con Duchenne. Aprobado en EE. UU. en 2019 por vía acelerada."
+    },
+    "CHEMBL4298062": {
+      "name": "Viltolarsén (Viltepso)",
+      "why": "Hace saltar el exón 53, como el golodirsén. Aprobado en Japón y en EE. UU. en 2020, por vía acelerada."
+    },
+    "CHEMBL4297566": {
+      "name": "Casimersén (Amondys 45)",
+      "why": "Hace saltar el exón 45; sirve a alrededor del 8 % de los pacientes con Duchenne. Aprobado en EE. UU. en 2021 por vía acelerada."
+    },
+    "CHEMBL256997": {
+      "name": "Atalureno (Translarna)",
+      "why": "Para la Duchenne causada por una variante sin sentido, que pone un «stop» antes de tiempo en el ARNm. El atalureno hace que el ribosoma lea a través de ese stop y termine la distrofina. Tuvo una autorización condicional en la UE desde 2014, pero no se confirmó que funcionara y caducó en 2025. Nunca se aprobó en EE. UU."
+    },
+    "CHEMBL1201891": {
+      "name": "Deflazacort",
+      "why": "Es un corticoide: reduce la inflamación que acompaña al daño muscular y retrasa la pérdida de fuerza. Los corticoides son desde hace décadas el tratamiento básico de la Duchenne, aunque tienen efectos secundarios (peso, huesos, crecimiento)."
+    },
+    "CHEMBL2348780": {
+      "name": "Vamorolona (Agamree)",
+      "why": "Un corticoide modificado que reduce la inflamación como los demás, pero con menos efectos sobre los huesos y el crecimiento. Aprobado en 2023."
+    },
+    "CHEMBL1213492": {
+      "name": "Givinostat (Duvyzat)",
+      "why": "Bloquea unas enzimas, las desacetilasas de histonas (HDAC), que en la Duchenne están demasiado activas. Así reduce la inflamación y la sustitución del músculo por grasa y cicatriz. No sustituye a la distrofina. Aprobado en EE. UU. en 2024."
+    },
+    "CHEMBL4650241": {
+      "name": "Delandistrogén moxeparvovec (Elevidys)",
+      "why": "Terapia génica: un virus inofensivo (AAV) lleva a los músculos una «microdistrofina», una versión recortada del gen que cabe dentro del virus. Aprobada en EE. UU. en 2023. En noviembre de 2025 se limitó a pacientes de 4 años o más que todavía caminan, con un aviso por casos de daño grave en el hígado, algunos mortales."
+    },
+    "CHEMBL4297579": {
+      "name": "Valoctocogén roxaparvovec (Roctavian)",
+      "why": "Terapia génica para la hemofilia A: un virus inofensivo (AAV5) lleva al hígado una copia del gen del factor VIII, y el hígado empieza a fabricarlo. Una sola dosis. Aprobada en la UE en 2022 y en EE. UU. en 2023. El fabricante la retiró del mercado en 2026 por motivos comerciales, no de seguridad."
+    },
+    "CHEMBL3833393": {
+      "name": "Emicizumab (Hemlibra)",
+      "why": "Es un anticuerpo con dos brazos distintos: uno agarra el factor IX activado y el otro el factor X, y los junta, que es justo el trabajo del factor VIII que falta. Se pincha bajo la piel cada una a cuatro semanas, y funciona también en personas que han hecho defensas (inhibidores) contra el factor VIII. Aprobado en 2017."
+    },
+    "CHEMBL3990039": {
+      "name": "Marstacimab (Hympavzi)",
+      "why": "Es un anticuerpo que bloquea el TFPI, un «freno» natural de la coagulación. Al quitar el freno, la sangre coagula mejor aunque falte factor VIII o IX. Sirve para prevenir sangrados en la hemofilia A y B. Aprobado en 2024."
+    },
+    "CHEMBL4297730": {
+      "name": "Concizumab (Alhemo)",
+      "why": "Como el marstacimab, es un anticuerpo que bloquea el TFPI, el freno natural de la coagulación, para prevenir sangrados en la hemofilia A y B. Se pincha bajo la piel una vez al día."
+    },
+    "CHEMBL877": {
+      "name": "Ácido tranexámico",
+      "why": "Impide que el coágulo se deshaga demasiado pronto. Se usa sobre todo para sangrados de la boca, la nariz o la menstruación, y antes de ir al dentista. No sustituye al factor que falta."
+    },
+    "CHEMBL2108334": {
+      "name": "Eptacog alfa activado (NovoSeven)",
+      "why": "Es el factor VII ya activado, que pone en marcha la coagulación saltándose los factores VIII y IX. Se usa en personas con hemofilia que han hecho defensas (inhibidores) contra el factor que se les pone."
+    },
+    "CHEMBL5095451": {
+      "name": "Etranacogén dezaparvovec (Hemgenix)",
+      "why": "Terapia génica para la hemofilia B: un virus inofensivo (AAV5) lleva al hígado una copia muy activa del gen del factor IX (la variante «Padua»). Una sola dosis. Aprobada en EE. UU. en 2022."
+    },
+    "CHEMBL3990034": {
+      "name": "Fidanacogén elaparvovec (Beqvez)",
+      "why": "Terapia génica para la hemofilia B, con la misma idea que el etranacogén: lleva al hígado el gen del factor IX «Padua». Aprobada en 2024; el fabricante la retiró en todo el mundo en febrero de 2025 por motivos comerciales."
+    },
+    "CHEMBL1201774": {
+      "name": "Sapropterina (Kuvan)",
+      "why": "Es una forma sintética de BH4, la molécula ayudante que necesita la fenilalanina hidroxilasa para trabajar. Con algunas variantes de PAH, la enzima funciona mejor si tiene más BH4 y baja la fenilalanina. Solo ayuda a una parte de los pacientes (los que «responden»), y se toma junto con la dieta. Aprobada en 2007."
+    },
+    "CHEMBL4297802": {
+      "name": "Pegvaliasa (Palynziq)",
+      "why": "Es una enzima de origen bacteriano que deshace la fenilalanina de la sangre en otra sustancia que no daña. No arregla la enzima PAH: hace su trabajo por otro camino. Se pincha a diario, solo en adultos, y puede causar reacciones alérgicas graves. Aprobada en 2018."
+    },
+    "CHEMBL1496": {
+      "name": "Rosuvastatina",
+      "why": "Es una estatina: bloquea la enzima con la que el hígado fabrica colesterol. Al tener menos, el hígado pone más receptores LDL en su superficie y retira más colesterol LDL de la sangre. Es el tratamiento básico de la hipercolesterolemia familiar, aunque necesita algo de receptor LDL que funcione."
+    },
+    "CHEMBL1138": {
+      "name": "Ezetimiba",
+      "why": "Bloquea la proteína del intestino que absorbe el colesterol de la comida y de la bilis. Se suele combinar con una estatina para bajar más el colesterol LDL."
+    },
+    "CHEMBL2109540": {
+      "name": "Alirocumab (Praluent)",
+      "why": "Es un anticuerpo contra PCSK9, una proteína que hace que el hígado destruya sus receptores LDL. Con PCSK9 bloqueada, hay más receptores y el colesterol LDL baja mucho. Se pincha cada dos o cuatro semanas. Aprobado en 2015."
+    },
+    "CHEMBL2364655": {
+      "name": "Evolocumab (Repatha)",
+      "why": "Como el alirocumab, es un anticuerpo contra PCSK9: deja más receptores LDL en el hígado y baja mucho el colesterol LDL. Aprobado en 2015."
+    },
+    "CHEMBL3545191": {
+      "name": "Evinacumab (Evkeeza)",
+      "why": "Es un anticuerpo contra ANGPTL3, una proteína que frena la eliminación de grasas de la sangre. Baja el colesterol LDL por un camino que no necesita los receptores LDL, y por eso sirve incluso en la hipercolesterolemia familiar homocigota, cuando casi no hay receptores. Aprobado en 2021."
+    },
+    "CHEMBL672": {
+      "name": "Fenofibrato",
+      "why": "Activa PPAR-alfa, una proteína del hígado que hace que se quemen más grasas: baja sobre todo los triglicéridos. Se usa en la hiperlipoproteinemia tipo 3, ligada a APOE ε2."
+    },
+    "CHEMBL3301572": {
+      "name": "Nusinersén (Spinraza)",
+      "why": "Es un trocito de ARN sintético que se une al ARNm de SMN2, el gen casi gemelo de SMN1, para que no pierda el exón 7. Así SMN2 fabrica más proteína SMN completa. Se pone en el líquido de la médula espinal, con una punción lumbar, cada cuatro meses. Aprobado en 2016."
+    },
+    "CHEMBL4297528": {
+      "name": "Risdiplam (Evrysdi)",
+      "why": "Hace lo mismo que el nusinersén, que SMN2 fabrique más proteína SMN completa, pero es una molécula pequeña que se toma por la boca cada día y llega a todo el cuerpo. Aprobado en 2020."
+    },
+    "CHEMBL4297240": {
+      "name": "Onasemnogén abeparvovec (Zolgensma)",
+      "why": "Terapia génica: un virus inofensivo (AAV9) lleva a las motoneuronas una copia del gen SMN1 que funciona. Es una sola infusión, para niños pequeños; cuanto antes se pone, mejor. Aprobado en EE. UU. en 2019."
+    },
+    "CHEMBL2109137": {
+      "name": "Moroctocog alfa"
+    },
+    "CHEMBL4297873": {
+      "name": "Octocog alfa"
+    },
+    "CHEMBL2108175": {
+      "name": "Factor VIII humano (de plasma)"
+    },
+    "CHEMBL2108286": {
+      "name": "Turoctocog alfa"
+    },
+    "CHEMBL2108319": {
+      "name": "Simoctocog alfa"
+    },
+    "CHEMBL4297945": {
+      "name": "Efmoroctocog alfa"
+    },
+    "CHEMBL4594603": {
+      "name": "Lonoctocog alfa"
+    },
+    "CHEMBL4594584": {
+      "name": "Factor VIII pegilado"
+    },
+    "CHEMBL5315069": {
+      "name": "Damoctocog alfa pegol"
+    },
+    "CHEMBL5315071": {
+      "name": "Turoctocog alfa pegol"
+    },
+    "CHEMBL5095275": {
+      "name": "Efanesoctocog alfa"
+    },
+    "CHEMBL2109205": {
+      "name": "Factor IX recombinante (nonacog alfa)"
+    },
+    "CHEMBL4297986": {
+      "name": "Factor IX humano (de plasma)"
+    },
+    "CHEMBL5315076": {
+      "name": "Albutrepenonacog alfa"
+    },
+    "CHEMBL4594598": {
+      "name": "Eftrenonacog alfa"
+    },
+    "CHEMBL2108348": {
+      "name": "Nonacog beta pegol"
+    },
+    "CHEMBL5315075": {
+      "name": "Susoctocog alfa (Obizur)",
+      "why": "Es factor VIII de cerdo fabricado en el laboratorio. Se usa en la hemofilia A adquirida, cuando el propio sistema de defensa ataca al factor VIII humano: como es un poco distinto, las defensas lo reconocen peor."
+    },
+    "CHEMBL4298126": {
+      "name": "Factor de von Willebrand humano"
+    },
+    "CHEMBL5315078": {
+      "name": "Eptacog beta activado"
+    }
+  },
+  "disease_notes": {
+    "G6PD deficiency": "No hay fármacos que la traten: lo importante es evitar lo que rompe los glóbulos rojos (habas, algunos medicamentos como la primaquina o la rasburicasa, la naftalina). En una crisis grave puede hacer falta una transfusión.",
+    "Anemia, nonspherocytic hemolytic, due to G6PD deficiency": "No hay fármacos que la traten: lo importante es evitar lo que rompe los glóbulos rojos (habas, algunos medicamentos como la primaquina o la rasburicasa, la naftalina). En una crisis grave puede hacer falta una transfusión.",
+    "G6PD deficient hemolytic anemia": "No hay fármacos que la traten: lo importante es evitar lo que rompe los glóbulos rojos (habas, algunos medicamentos como la primaquina o la rasburicasa, la naftalina). En una crisis grave puede hacer falta una transfusión.",
+    "Congenital lactase deficiency": "No se trata con fármacos: desde el nacimiento, el bebé toma una leche especial sin lactosa. Es muy rara; donde más casos hay es en Finlandia (1 de cada 60.000 recién nacidos).",
+    "Li-Fraumeni syndrome": "No hay un fármaco para el síndrome en sí: se hacen revisiones frecuentes para encontrar pronto los tumores, y se evitan las radiografías y la radioterapia cuando se puede, porque la radiación daña más a las células sin p53.",
+    "Li-Fraumeni syndrome 1": "No hay un fármaco para el síndrome en sí: se hacen revisiones frecuentes para encontrar pronto los tumores, y se evitan las radiografías y la radioterapia cuando se puede, porque la radiación daña más a las células sin p53.",
+    "Hereditary breast ovarian cancer syndrome": "Los fármacos aprobados tratan los cánceres que aparecen. A las personas con la variante y sin cáncer se les ofrecen revisiones más frecuentes (resonancia y mamografía) y, a veces, cirugía para reducir el riesgo.",
+    "Phenylketonuria": "El tratamiento principal no es un fármaco: es una dieta muy baja en fenilalanina desde los primeros días de vida, con una fórmula especial que aporta el resto de las proteínas."
+  },
+  "shared": {
+    "factor_viii": "Es el propio factor VIII que falta, fabricado en células cultivadas en el laboratorio (recombinante) o purificado de plasma donado. Se pone en una vena para cortar un sangrado o, varias veces por semana, para prevenirlos. Las versiones más nuevas duran más en la sangre y se pinchan menos veces.",
+    "factor_ix": "Es el propio factor IX que falta en la hemofilia B, fabricado en el laboratorio o purificado de plasma donado. Se pone en una vena para cortar un sangrado o para prevenirlos. Las versiones más nuevas duran más en la sangre."
+  }
+}
