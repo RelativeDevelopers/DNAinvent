@@ -171,7 +171,7 @@ def test_links():
     assert variant == [("ClinVar", "https://www.ncbi.nlm.nih.gov/clinvar/variation/15333/"),
                        ("dbSNP", "https://www.ncbi.nlm.nih.gov/snp/rs334")]
     disease = cards.disease_links({"mondo_id": "MONDO:0011382", "orpha_codes": ["232"]})
-    assert ("Orphanet", "https://www.orpha.net/en/disease/detail/232") in disease
+    assert ("Orphanet 232", "https://www.orpha.net/en/disease/detail/232") in disease
     drug = cards.drug_links({"chembl_id": "CHEMBL4101807", "structure": "5E83"})
     assert drug[1] == ("RCSB PDB", "https://www.rcsb.org/structure/5E83")
     assert cards.variant_links({}) == []

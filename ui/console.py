@@ -48,39 +48,10 @@ DRUGS_SHOWN = 15          # fármacos en una lista
 DISEASES_WITH_DRUGS = 5   # al importar un gen, de cuántas de sus enfermedades se buscan fármacos
 POCKET_SHOWN = 15         # aminoácidos del bolsillo de un fármaco
 
-# Tipo de acción de ChEMBL -> clave de i18n (database.actions.*); el resto, tal cual
-ACTION_KEYS = {"inhibitor": "inhibitor", "agonist": "agonist", "antagonist": "antagonist",
-               "modulator": "modulator", "activator": "activator", "blocker": "blocker",
-               "opener": "opener", "stabiliser": "stabiliser", "binding agent": "binding_agent",
-               "positive allosteric modulator": "positive_modulator",
-               "negative allosteric modulator": "negative_modulator",
-               "cross-linking agent": "cross_linking", "substrate": "substrate",
-               "releasing agent": "releasing_agent", "degrader": "degrader",
-               "positive modulator": "positive_mod", "negative modulator": "negative_mod",
-               "exogenous gene": "exogenous_gene", "partial agonist": "partial_agonist",
-               "inverse agonist": "inverse_agonist", "antisense inhibitor": "antisense",
-               "rnai inhibitor": "rnai", "chelating agent": "chelating", "disrupting agent": "disrupting",
-               "hydrolytic enzyme": "hydrolytic_enzyme", "vaccine antigen": "vaccine_antigen",
-               "exogenous protein": "exogenous_protein", "gene editing": "gene_editing"}
-
-# Clasificación de ClinVar -> clave de i18n (database.significance.*)
-SIGNIFICANCE_KEYS = {
-    "pathogenic": "pathogenic", "likely pathogenic": "likely_pathogenic",
-    "pathogenic/likely pathogenic": "pathogenic_likely_pathogenic",
-    "uncertain significance": "uncertain", "likely benign": "likely_benign",
-    "benign": "benign", "benign/likely benign": "benign_likely_benign",
-    "conflicting classifications of pathogenicity": "conflicting",
-    "protective": "protective", "risk factor": "risk_factor", "other": "other",
-    "drug response": "drug_response", "association": "association", "affects": "affects",
-    "not provided": "not_provided", "oncogenic": "oncogenic", "likely oncogenic": "likely_oncogenic",
-    "pathogenic, low penetrance": "pathogenic_low_penetrance",
-    "likely pathogenic, low penetrance": "likely_pathogenic_low_penetrance",
-    "established risk allele": "established_risk_allele", "likely risk allele": "likely_risk_allele",
-    "uncertain risk allele": "uncertain_risk_allele",
-    "tier i - strong": "tier_1", "tier ii - potential": "tier_2", "tier iii - unknown": "tier_3",
-    "tier iv - benign/likely benign": "tier_4",
-    "no classification for the single variant": "no_single_classification",
-}
+# Las claves de i18n de las clasificaciones de ClinVar y de las acciones de ChEMBL están en el
+# núcleo (cards), para que la web use las mismas.
+ACTION_KEYS = cards.ACTION_KEYS
+SIGNIFICANCE_KEYS = cards.SIGNIFICANCE_KEYS
 SIGNIFICANCE_COLORS = {"pathogenic": Fore.RED, "likely_pathogenic": Fore.RED,
                        "pathogenic_likely_pathogenic": Fore.RED, "oncogenic": Fore.RED,
                        "likely_oncogenic": Fore.RED, "pathogenic_low_penetrance": Fore.RED,

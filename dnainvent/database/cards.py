@@ -69,6 +69,63 @@ GENERIC_DISEASE = re.compile(r"(-related (disorder|condition)s?$|^hereditary can
 CAUSE_MOLECULE_TYPES = {"gene", "cell"}
 
 
+# Tipo de acción de ChEMBL -> clave de i18n (database.actions.*); el resto, tal cual
+ACTION_KEYS = {"inhibitor": "inhibitor", "agonist": "agonist", "antagonist": "antagonist",
+               "modulator": "modulator", "activator": "activator", "blocker": "blocker",
+               "opener": "opener", "stabiliser": "stabiliser", "binding agent": "binding_agent",
+               "positive allosteric modulator": "positive_modulator",
+               "negative allosteric modulator": "negative_modulator",
+               "cross-linking agent": "cross_linking", "substrate": "substrate",
+               "releasing agent": "releasing_agent", "degrader": "degrader",
+               "positive modulator": "positive_mod", "negative modulator": "negative_mod",
+               "exogenous gene": "exogenous_gene", "partial agonist": "partial_agonist",
+               "inverse agonist": "inverse_agonist", "antisense inhibitor": "antisense",
+               "rnai inhibitor": "rnai", "chelating agent": "chelating", "disrupting agent": "disrupting",
+               "hydrolytic enzyme": "hydrolytic_enzyme", "vaccine antigen": "vaccine_antigen",
+               "exogenous protein": "exogenous_protein", "gene editing": "gene_editing"}
+
+# Clasificación de ClinVar -> clave de i18n (database.significance.*)
+SIGNIFICANCE_KEYS = {
+    "pathogenic": "pathogenic", "likely pathogenic": "likely_pathogenic",
+    "pathogenic/likely pathogenic": "pathogenic_likely_pathogenic",
+    "uncertain significance": "uncertain", "likely benign": "likely_benign",
+    "benign": "benign", "benign/likely benign": "benign_likely_benign",
+    "conflicting classifications of pathogenicity": "conflicting",
+    "protective": "protective", "risk factor": "risk_factor", "other": "other",
+    "drug response": "drug_response", "association": "association", "affects": "affects",
+    "not provided": "not_provided", "oncogenic": "oncogenic", "likely oncogenic": "likely_oncogenic",
+    "pathogenic, low penetrance": "pathogenic_low_penetrance",
+    "likely pathogenic, low penetrance": "likely_pathogenic_low_penetrance",
+    "established risk allele": "established_risk_allele", "likely risk allele": "likely_risk_allele",
+    "uncertain risk allele": "uncertain_risk_allele",
+    "tier i - strong": "tier_1", "tier ii - potential": "tier_2", "tier iii - unknown": "tier_3",
+    "tier iv - benign/likely benign": "tier_4",
+    "no classification for the single variant": "no_single_classification",
+}
+
+
+def significance_parts(value: str | None) -> list[dict]:
+    """Clasificación de ClinVar en trozos traducibles. ClinVar a veces junta varias
+    («pathogenic; other», «pathogenic/likely pathogenic/pathogenic, low penetrance»):
+    [{'key': 'pathogenic'}, {'sep': '; '}, {'key': 'other'}]. Lo desconocido va en 'text'."""
+    if not value:
+        return [{"key": "none"}]
+    if value in SIGNIFICANCE_KEYS:
+        return [{"key": SIGNIFICANCE_KEYS[value]}]
+    out = []
+    for i, part in enumerate(re.split(r"(; |/)", value)):
+        if i % 2:
+            out.append({"sep": part})
+        else:
+            key = SIGNIFICANCE_KEYS.get(part)
+            out.append({"key": key} if key else {"text": part})
+    return out
+
+
+def action_key(action: str | None) -> str | None:
+    return ACTION_KEYS.get((action or "").lower())
+
+
 # ---------------------------------------------------------------------- piezas
 def color(significance: str | None) -> str:
     """Clasificación de ClinVar -> uno de COLORS. Si junta varias, manda la más grave
@@ -411,7 +468,7 @@ def disease_links(card: dict) -> list[tuple[str, str]]:
     if card.get("mondo_id"):
         out.append(("MONDO", f"https://monarchinitiative.org/{card['mondo_id']}"))
     for code in card.get("orpha_codes", [])[:2]:
-        out.append(("Orphanet", f"https://www.orpha.net/en/disease/detail/{code}"))
+        out.append((f"Orphanet {code}", f"https://www.orpha.net/en/disease/detail/{code}"))
     return out
 
 
