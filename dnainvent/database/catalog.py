@@ -27,11 +27,14 @@ caído...), al volver a ejecutarlo continúa donde lo dejó. Un paso que falla n
 para los demás.
 """
 
+import os
 import sqlite3
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Callable
 
 from .. import __version__
+from . import SCHEMA_VERSION
 from ..errors import DNAinventError
 from . import queries
 from .chembl import ChEMBLProvider
@@ -122,6 +125,29 @@ class CatalogReport:
     @property
     def failed(self) -> list[StepResult]:
         return [s for s in self.steps if s.status == "failed"]
+
+
+def catalog_path() -> Path:
+    """Dónde está el catálogo: DNAINVENT_CATALOG o ~/.dnainvent/catalog.db."""
+    return Path(os.environ.get("DNAINVENT_CATALOG") or Path.home() / ".dnainvent" / "catalog.db")
+
+
+class CatalogTooOld(Exception):
+    """El catálogo se hizo con una versión anterior del esquema: hay que reconstruirlo."""
+
+
+def open_catalog(path: str | Path | None = None) -> sqlite3.Connection | None:
+    """Abre el catálogo SOLO PARA LEER (la consola y la web no lo modifican nunca).
+    None si no existe; CatalogTooOld si es de un esquema anterior."""
+    path = Path(path) if path is not None else catalog_path()
+    if not path.is_file():
+        return None
+    conn = sqlite3.connect(f"file:{path.as_posix()}?mode=ro", uri=True, check_same_thread=False)
+    conn.row_factory = sqlite3.Row
+    if conn.execute("PRAGMA user_version").fetchone()[0] < SCHEMA_VERSION:
+        conn.close()
+        raise CatalogTooOld(str(path))
+    return conn
 
 
 def catalog_genes(conn: sqlite3.Connection) -> list[str]:

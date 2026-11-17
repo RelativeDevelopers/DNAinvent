@@ -41,6 +41,7 @@
     },
     "back": "Tornar",
     "database": {
+      "catalog": "Gens de sèrie (fitxes)",
       "import": "Importar un gen",
       "gene": "Veure un gen desat",
       "compare": "Sana davant de variant",
@@ -241,7 +242,8 @@
     "T": "Treonina",
     "W": "Triptòfan",
     "Y": "Tirosina",
-    "V": "Valina"
+    "V": "Valina",
+    "stop": "Codó d'aturada"
   },
   "web": {
     "tagline": "Llegeix, codifica, compara i edita seqüències d'ADN.",
@@ -515,6 +517,10 @@
     "atom": {
       "one": "{n} àtom",
       "other": "{n} àtoms"
+    },
+    "more_disease": {
+      "one": "{n} malaltia més",
+      "other": "{n} malalties més"
     }
   },
   "microscope": {
@@ -1132,6 +1138,159 @@
       "hbond": "pont d'hidrogen",
       "hydrophobic": "contacte hidròfob",
       "contact": "contacte"
+    }
+  },
+  "cards": {
+    "title": "Gens de sèrie",
+    "catalog_missing": "Encara no hi ha el catàleg de gens de sèrie ({path}). Per crear-lo, executa tools\\build_catalog.bat (necessita connexió i la primera vegada triga una estona).",
+    "catalog_old": "El catàleg de gens de sèrie és d'una versió antiga. Torna a executar tools\\build_catalog.bat.",
+    "choose_gene": "Tria un gen (número; Intro per tornar): ",
+    "chromosome": "Cromosoma {chromosome}",
+    "known": "Variants conegudes: {total}",
+    "named": "Amb nom propi: {list}",
+    "colors": {
+      "pathogenic": "Causen malaltia",
+      "uncertain": "D'efecte incert",
+      "benign": "Sanes (benignes)",
+      "special": "Especials (protegeixen o augmenten el risc)",
+      "unclassified": "Sense classificar"
+    },
+    "color_one": {
+      "pathogenic": "Causa malaltia",
+      "uncertain": "Efecte incert",
+      "benign": "Sana (benigna)",
+      "special": "Especial",
+      "unclassified": "Sense classificar"
+    },
+    "main_diseases": "Malalties principals",
+    "no_diseases": "No hi ha malalties amb registres revisats.",
+    "english_name": "(nom en anglès)",
+    "inheritance": {
+      "autosomal_recessive": "autosòmica recessiva",
+      "autosomal_dominant": "autosòmica dominant",
+      "x_recessive": "recessiva lligada al cromosoma X",
+      "x_dominant": "dominant lligada al cromosoma X",
+      "y_linked": "lligada al cromosoma Y",
+      "mitochondrial": "mitocondrial",
+      "multifactorial": "multifactorial (diversos gens i l'ambient)",
+      "semi_dominant": "semidominant"
+    },
+    "inheritance_help": {
+      "autosomal_recessive": "calen les dues còpies del gen alterades",
+      "autosomal_dominant": "n'hi ha prou amb una còpia alterada",
+      "x_recessive": "afecta sobretot els homes, que només tenen un cromosoma X",
+      "x_dominant": "n'hi ha prou amb una còpia alterada del cromosoma X"
+    },
+    "inheritance_line": "Herència: {list}",
+    "prevalence": "{range} de cada {per} {who}{place}",
+    "who": {
+      "point": "persones",
+      "birth": "nadons",
+      "annual": "persones l'any (casos nous)",
+      "lifetime": "persones al llarg de la vida",
+      "other": "persones"
+    },
+    "place": {
+      "worldwide": " (al món)",
+      "europe": " (a Europa)",
+      "other": " ({place})"
+    },
+    "prevalence_line": "Freqüència: {text}",
+    "onset_line": "Edat d'inici: {list}",
+    "onset": {
+      "antenatal": "abans de néixer",
+      "neonatal": "en néixer",
+      "infancy": "primer any de vida",
+      "childhood": "infància",
+      "adolescent": "adolescència",
+      "adult": "edat adulta",
+      "elderly": "vellesa",
+      "all_ages": "qualsevol edat"
+    },
+    "menu": {
+      "variants": "Veure variants",
+      "diseases": "Veure malalties",
+      "drugs": "Veure fàrmacs",
+      "technical": "Veure detalls tècnics",
+      "structure": "Veure el fàrmac dins la seva proteïna ({pdb})",
+      "drug": "Veure un fàrmac"
+    },
+    "choose_disease": "Tria una malaltia (número; Intro per tornar): ",
+    "choose_drug": "Tria un fàrmac (número; Intro per tornar): ",
+    "review": "Nivell de revisió",
+    "review_levels": {
+      "guideline": "guia clínica oficial",
+      "expert_panel": "revisada per un panel d'experts",
+      "multiple": "diversos laboratoris d'acord",
+      "single": "un laboratori, amb criteris",
+      "conflicting": "laboratoris en desacord",
+      "no_criteria": "sense criteris explicats",
+      "other": "una altra revisió"
+    },
+    "review_note": "El nivell de revisió mesura quant s'ha revisat la classificació, no la probabilitat que sigui certa.",
+    "clinvar_says": "(ClinVar: «{significance}»)",
+    "change": "El canvi",
+    "healthy": "sana",
+    "mutated": "amb la variant",
+    "codon_line": "{label}{codon}  →  {amino}",
+    "no_change": "No es pot mostrar codó a codó: no és el canvi d'una sola lletra dins la part del gen que fabrica la proteïna.",
+    "frequency": "Freqüència: 1 de cada {n} còpies del gen ({source})",
+    "frequency_percent": "Freqüència: el {percent} % de les còpies del gen ({source})",
+    "no_frequency": "Freqüència a la població: sense dades",
+    "per_disease": "Per a cada malaltia",
+    "no_variant_diseases": "Cap registre revisat no la relaciona amb una malaltia concreta.",
+    "other_diseases": "I {more} en registres sense revisar o que ajunten diverses malalties (als detalls tècnics).",
+    "technical": {
+      "title": "Detalls tècnics",
+      "hgvs": "Nom oficial (HGVS): {accession}:{hgvs_c} {hgvs_p}",
+      "dbsnp": "dbSNP: {rs}",
+      "clinvar": "ClinVar: {id}",
+      "review": "Revisió a ClinVar: {status}",
+      "records": "Registres de ClinVar (RCV) d'aquesta variant:",
+      "record": "{rcv} · {disease} · {significance} · {review} %{many}",
+      "many": " · ajunta diverses malalties"
+    },
+    "genes": "Gens: {list}",
+    "treatment": {
+      "approved": "Tractament: ✔ hi ha fàrmacs aprovats",
+      "withdrawn": "Tractament: ⚠ els fàrmacs aprovats es van retirar",
+      "trials": "Tractament: en assaig clínic, encara sense aprovats",
+      "none": "Tractament: les fonts no tenen fàrmacs per a aquesta malaltia"
+    },
+    "approved_note": "(Aprovat = la tracta, no necessàriament la cura.)",
+    "cause": "Actuen sobre la causa",
+    "symptoms": "Alleugen símptomes o complicacions",
+    "trials": "En assaig: {count}",
+    "withdrawn": {
+      "worldwide": "⚠ retirat a tot el món el {year}",
+      "eu": "⚠ retirat a la Unió Europea el {year}",
+      "some_year": "⚠ retirat en algun país ({year})",
+      "some": "⚠ retirat en algun país"
+    },
+    "molecule": {
+      "small_molecule": "molècula petita",
+      "antibody": "anticòs",
+      "protein": "proteïna",
+      "enzyme": "enzim",
+      "gene": "teràpia gènica",
+      "cell": "teràpia cel·lular",
+      "oligonucleotide": "oligonucleòtid",
+      "oligosaccharide": "oligosacàrid",
+      "unknown": "tipus desconegut"
+    },
+    "approved_year": "Aprovat el {year}",
+    "acts_on": "Actua sobre: {target} · {action}",
+    "acts_on_gene": "Actua sobre la proteïna de {list}",
+    "no_mechanism": "Com actua: ChEMBL no ho indica.",
+    "for_diseases": "Per a",
+    "in_trials": "en assaig",
+    "gene_drugs": "Fàrmacs que actuen sobre la proteïna de {symbol}",
+    "no_gene_drugs": "Cap fàrmac no actua directament sobre aquesta proteïna: mira els fàrmacs de les seves malalties.",
+    "sources": {
+      "gene": "Fonts: NCBI Gene i ClinVar (domini públic), Orphanet (CC BY 4.0).",
+      "variant": "Fonts: ClinVar i RefSeq (domini públic); freqüències de {source}.",
+      "disease": "Fonts: ClinVar (domini públic), Orphanet (CC BY 4.0), ChEMBL (CC BY-SA 3.0).",
+      "drug": "Fonts: ChEMBL (CC BY-SA 3.0), RCSB PDB."
     }
   }
 }

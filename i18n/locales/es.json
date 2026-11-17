@@ -41,6 +41,7 @@
     },
     "back": "Volver",
     "database": {
+      "catalog": "Genes de serie (fichas)",
       "import": "Importar un gen",
       "gene": "Ver un gen guardado",
       "compare": "Sana frente a variante",
@@ -241,7 +242,8 @@
     "T": "Treonina",
     "W": "Triptófano",
     "Y": "Tirosina",
-    "V": "Valina"
+    "V": "Valina",
+    "stop": "Codón de parada"
   },
   "web": {
     "tagline": "Lee, codifica, compara y edita secuencias de ADN.",
@@ -515,6 +517,10 @@
     "atom": {
       "one": "{n} átomo",
       "other": "{n} átomos"
+    },
+    "more_disease": {
+      "one": "{n} enfermedad más",
+      "other": "{n} enfermedades más"
     }
   },
   "microscope": {
@@ -1132,6 +1138,159 @@
       "hbond": "puente de hidrógeno",
       "hydrophobic": "contacto hidrófobo",
       "contact": "contacto"
+    }
+  },
+  "cards": {
+    "title": "Genes de serie",
+    "catalog_missing": "Todavía no está el catálogo de genes de serie ({path}). Para crearlo, ejecuta tools\\build_catalog.bat (necesita conexión y la primera vez tarda un rato).",
+    "catalog_old": "El catálogo de genes de serie es de una versión antigua. Vuelve a ejecutar tools\\build_catalog.bat.",
+    "choose_gene": "Elige un gen (número; Intro para volver): ",
+    "chromosome": "Cromosoma {chromosome}",
+    "known": "Variantes conocidas: {total}",
+    "named": "Con nombre propio: {list}",
+    "colors": {
+      "pathogenic": "Causan enfermedad",
+      "uncertain": "De efecto incierto",
+      "benign": "Sanas (benignas)",
+      "special": "Especiales (protegen o aumentan el riesgo)",
+      "unclassified": "Sin clasificar"
+    },
+    "color_one": {
+      "pathogenic": "Causa enfermedad",
+      "uncertain": "Efecto incierto",
+      "benign": "Sana (benigna)",
+      "special": "Especial",
+      "unclassified": "Sin clasificar"
+    },
+    "main_diseases": "Enfermedades principales",
+    "no_diseases": "No hay enfermedades con registros revisados.",
+    "english_name": "(nombre en inglés)",
+    "inheritance": {
+      "autosomal_recessive": "autosómica recesiva",
+      "autosomal_dominant": "autosómica dominante",
+      "x_recessive": "recesiva ligada al cromosoma X",
+      "x_dominant": "dominante ligada al cromosoma X",
+      "y_linked": "ligada al cromosoma Y",
+      "mitochondrial": "mitocondrial",
+      "multifactorial": "multifactorial (varios genes y el ambiente)",
+      "semi_dominant": "semidominante"
+    },
+    "inheritance_help": {
+      "autosomal_recessive": "hacen falta las dos copias del gen alteradas",
+      "autosomal_dominant": "basta con una copia alterada",
+      "x_recessive": "afecta sobre todo a los hombres, que solo tienen un cromosoma X",
+      "x_dominant": "basta con una copia alterada del cromosoma X"
+    },
+    "inheritance_line": "Herencia: {list}",
+    "prevalence": "{range} de cada {per} {who}{place}",
+    "who": {
+      "point": "personas",
+      "birth": "recién nacidos",
+      "annual": "personas al año (casos nuevos)",
+      "lifetime": "personas a lo largo de su vida",
+      "other": "personas"
+    },
+    "place": {
+      "worldwide": " (en el mundo)",
+      "europe": " (en Europa)",
+      "other": " ({place})"
+    },
+    "prevalence_line": "Frecuencia: {text}",
+    "onset_line": "Edad de inicio: {list}",
+    "onset": {
+      "antenatal": "antes de nacer",
+      "neonatal": "al nacer",
+      "infancy": "primer año de vida",
+      "childhood": "infancia",
+      "adolescent": "adolescencia",
+      "adult": "edad adulta",
+      "elderly": "vejez",
+      "all_ages": "cualquier edad"
+    },
+    "menu": {
+      "variants": "Ver variantes",
+      "diseases": "Ver enfermedades",
+      "drugs": "Ver fármacos",
+      "technical": "Ver detalles técnicos",
+      "structure": "Ver el fármaco dentro de su proteína ({pdb})",
+      "drug": "Ver un fármaco"
+    },
+    "choose_disease": "Elige una enfermedad (número; Intro para volver): ",
+    "choose_drug": "Elige un fármaco (número; Intro para volver): ",
+    "review": "Nivel de revisión",
+    "review_levels": {
+      "guideline": "guía clínica oficial",
+      "expert_panel": "revisada por un panel de expertos",
+      "multiple": "varios laboratorios de acuerdo",
+      "single": "un laboratorio, con criterios",
+      "conflicting": "laboratorios en desacuerdo",
+      "no_criteria": "sin criterios explicados",
+      "other": "otra revisión"
+    },
+    "review_note": "El nivel de revisión mide cuánto se ha revisado la clasificación, no la probabilidad de que sea cierta.",
+    "clinvar_says": "(ClinVar: «{significance}»)",
+    "change": "El cambio",
+    "healthy": "sana",
+    "mutated": "con la variante",
+    "codon_line": "{label}{codon}  →  {amino}",
+    "no_change": "No se puede enseñar codón a codón: no es el cambio de una sola letra dentro de la parte del gen que fabrica la proteína.",
+    "frequency": "Frecuencia: 1 de cada {n} copias del gen ({source})",
+    "frequency_percent": "Frecuencia: el {percent} % de las copias del gen ({source})",
+    "no_frequency": "Frecuencia en la población: sin datos",
+    "per_disease": "Para cada enfermedad",
+    "no_variant_diseases": "Ningún registro revisado la relaciona con una enfermedad concreta.",
+    "other_diseases": "Y {more} en registros sin revisar o que juntan varias enfermedades (en los detalles técnicos).",
+    "technical": {
+      "title": "Detalles técnicos",
+      "hgvs": "Nombre oficial (HGVS): {accession}:{hgvs_c} {hgvs_p}",
+      "dbsnp": "dbSNP: {rs}",
+      "clinvar": "ClinVar: {id}",
+      "review": "Revisión en ClinVar: {status}",
+      "records": "Registros de ClinVar (RCV) de esta variante:",
+      "record": "{rcv} · {disease} · {significance} · {review} %{many}",
+      "many": " · junta varias enfermedades"
+    },
+    "genes": "Genes: {list}",
+    "treatment": {
+      "approved": "Tratamiento: ✔ hay fármacos aprobados",
+      "withdrawn": "Tratamiento: ⚠ los fármacos aprobados se retiraron",
+      "trials": "Tratamiento: en ensayo clínico, todavía sin aprobados",
+      "none": "Tratamiento: las fuentes no tienen fármacos para ella"
+    },
+    "approved_note": "(Aprobado = la trata, no necesariamente la cura.)",
+    "cause": "Actúan sobre la causa",
+    "symptoms": "Alivian síntomas o complicaciones",
+    "trials": "En ensayo: {count}",
+    "withdrawn": {
+      "worldwide": "⚠ retirado en todo el mundo en {year}",
+      "eu": "⚠ retirado en la Unión Europea en {year}",
+      "some_year": "⚠ retirado en algún país ({year})",
+      "some": "⚠ retirado en algún país"
+    },
+    "molecule": {
+      "small_molecule": "molécula pequeña",
+      "antibody": "anticuerpo",
+      "protein": "proteína",
+      "enzyme": "enzima",
+      "gene": "terapia génica",
+      "cell": "terapia celular",
+      "oligonucleotide": "oligonucleótido",
+      "oligosaccharide": "oligosacárido",
+      "unknown": "tipo desconocido"
+    },
+    "approved_year": "Aprobado en {year}",
+    "acts_on": "Actúa sobre: {target} · {action}",
+    "acts_on_gene": "Actúa sobre la proteína de {list}",
+    "no_mechanism": "Cómo actúa: ChEMBL no lo indica.",
+    "for_diseases": "Para",
+    "in_trials": "en ensayo",
+    "gene_drugs": "Fármacos que actúan sobre la proteína de {symbol}",
+    "no_gene_drugs": "Ningún fármaco actúa directamente sobre esta proteína: mira los fármacos de sus enfermedades.",
+    "sources": {
+      "gene": "Fuentes: NCBI Gene y ClinVar (dominio público), Orphanet (CC BY 4.0).",
+      "variant": "Fuentes: ClinVar y RefSeq (dominio público); frecuencias de {source}.",
+      "disease": "Fuentes: ClinVar (dominio público), Orphanet (CC BY 4.0), ChEMBL (CC BY-SA 3.0).",
+      "drug": "Fuentes: ChEMBL (CC BY-SA 3.0), RCSB PDB."
     }
   }
 }

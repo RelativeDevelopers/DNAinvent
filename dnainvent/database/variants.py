@@ -104,9 +104,12 @@ def locate(conn: sqlite3.Connection, variant_id: int) -> tuple[VariantEffect, st
     kind = ("synonymous" if ref_aa == alt_aa else "nonsense" if alt_aa == "*"
             else "stop_lost" if ref_aa == "*" else "missense")
 
-    with conn:
-        conn.execute("UPDATE variants SET position = ?, ref_allele = ?, alt_allele = ? WHERE id = ?",
-                     (position, ref, alt, variant_id))
+    try:                # se guarda para la próxima vez; el catálogo se abre solo para leer
+        with conn:
+            conn.execute("UPDATE variants SET position = ?, ref_allele = ?, alt_allele = ? WHERE id = ?",
+                         (position, ref, alt, variant_id))
+    except sqlite3.OperationalError:
+        pass
     effect = VariantEffect(accession, hgvs, position, codon_number, ref_codon, alt_codon,
                            ref_aa, alt_aa, kind)
     return effect, residues, cds_start

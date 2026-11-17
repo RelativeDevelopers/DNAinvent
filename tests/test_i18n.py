@@ -138,6 +138,9 @@ def test_missing_key_falls_back_to_key():
 def test_amino_acid_name():
     assert Translator("es").amino_acid("Q") == "Glutamina (Gln)"
     assert Translator("en").amino_acid("Q") == "Glutamine (Gln)"
+    # La parada de las variantes sin sentido (HBB p.Lys18Ter): antes cerraba la consola
+    assert Translator("es").amino_acid("*") == "Codón de parada (Ter)"
+    assert Translator("ca").amino_acid("*") == "Codó d'aturada (Ter)"
 
 
 @pytest.mark.parametrize("language", LANGUAGES)

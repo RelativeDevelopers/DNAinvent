@@ -159,8 +159,11 @@ class Translator:
         return self(f"errors.{code}", **params)
 
     def amino_acid(self, letter: str) -> str:
-        """Nombre del aminoácido con su código de 3 letras: "Glutamina (Gln)"."""
+        """Nombre del aminoácido con su código de 3 letras: "Glutamina (Gln)".
+        La parada ('*', como en p.Lys18Ter) es "Codón de parada (Ter)"."""
         from dnainvent.constants import AMINO_ACID_CODES
+        if letter == "*":
+            return f"{self('amino_acids.stop')} (Ter)"
         return f"{self(f'amino_acids.{letter}')} ({AMINO_ACID_CODES[letter]})"
 
 

@@ -11,7 +11,8 @@ from colorama import Fore, Style, init
 
 from dnainvent import DNAinventError, alignment, bits, crispr, sequences, tools
 from dnainvent.constants import AMINO_ACID_CODES
-from dnainvent.database import default_path, open_database, queries
+from dnainvent.database import cards, default_path, open_database, queries
+from dnainvent.database.catalog import CatalogTooOld, catalog_path, open_catalog
 from dnainvent.database.chembl import ChEMBLProvider
 from dnainvent.database.clinvar import ClinVarProvider
 from dnainvent.database.ncbi import HUMAN, NCBIProvider
@@ -765,11 +766,16 @@ def db_gene():
         print(Style.DIM + tr("database.disclaimer") + Style.RESET_ALL)
 
 
-def choose_variant(gene):
-    """Busca variantes del gen por texto y deja elegir una. Devuelve la fila o None."""
-    conn = database()
+def choose_variant(gene, conn=None, featured: bool = False):
+    """Busca variantes del gen por texto y deja elegir una. Devuelve la fila o None.
+    conn: la base de datos del usuario (por defecto) o el catálogo de genes de serie.
+    featured: sin texto, enseña las conocidas y mejor revisadas (cards.featured_variants)."""
+    conn = conn if conn is not None else database()
     text = input(tr("prompts.variant")).strip()
-    found = queries.find_variants(conn, gene["id"], text, causal_only=not text, limit=VARIANTS_SHOWN)
+    if not text and featured:
+        found = cards.featured_variants(conn, gene["id"], VARIANTS_SHOWN)
+    else:
+        found = queries.find_variants(conn, gene["id"], text, causal_only=not text, limit=VARIANTS_SHOWN)
     if not found:
         warning(tr("database.variants.none"))
         return None
@@ -965,14 +971,16 @@ def db_disease():
 def db_pocket():
     """Un fármaco dentro de su proteína: qué aminoácidos lo rodean y cómo lo sujetan."""
     pdb_id = input(tr("prompts.pdb_id")).strip()
-    if not pdb_id:
-        return
+    if pdb_id:
+        show_pocket(pdb_id, database())
+
+
+def show_pocket(pdb_id: str, conn):
     try:
         structure = RCSB().structure(pdb_id)
     except DNAinventError as exc:
         error(tr.error(exc))
         return
-    conn = database()
     names = {r["uniprot_id"]: r["symbol"] for r in
              conn.execute("SELECT uniprot_id, symbol FROM genes WHERE uniprot_id IS NOT NULL")}
     print("\n" + Style.BRIGHT + f"{pdb_id.upper()}: {structure.title.capitalize()}" + Style.RESET_ALL)
@@ -1003,8 +1011,397 @@ def db_pocket():
     print(Style.DIM + tr("database.pocket.note") + Style.RESET_ALL)
 
 
+# ---------- Genes de serie: las fichas ----------
+# Leen el catálogo (~/.dnainvent/catalog.db, solo lectura). Los datos salen de
+# dnainvent.database.cards, que también usará la web: aquí solo se pintan.
+
+_catalog = None
+CARD_COLORS = {"pathogenic": Fore.RED, "uncertain": Fore.YELLOW, "benign": Fore.GREEN,
+               "special": Fore.MAGENTA, "unclassified": Style.DIM}
+CARD_WIDTH = 64
+ONSET_KEYS = {"antenatal": "antenatal", "neonatal": "neonatal", "infancy": "infancy",
+              "childhood": "childhood", "adolescent": "adolescent", "adult": "adult",
+              "elderly": "elderly", "all ages": "all_ages"}
+FREQUENCY_STUDIES = (("gnomad", "gnomAD"), ("1000 genomes", "1000 Genomes"), ("topmed", "TOPMed"),
+                     ("exac", "ExAC"), ("go-esp", "GO-ESP"))
+
+
+def catalog():
+    """El catálogo de genes de serie, abierto la primera vez que hace falta (None si no está)."""
+    global _catalog
+    if _catalog is None:
+        try:
+            _catalog = open_catalog()
+        except CatalogTooOld:
+            warning(tr("cards.catalog_old"))
+            return None
+        if _catalog is None:
+            warning(tr("cards.catalog_missing", path=catalog_path()))
+    return _catalog
+
+
+def card_header(title: str, right: str = ""):
+    print("\n " + "═" * CARD_WIDTH)
+    gap = max(1, CARD_WIDTH - 2 - len(title) - len(right))
+    print("  " + Style.BRIGHT + title + Style.RESET_ALL + " " * gap + right)
+    print(" " + "═" * CARD_WIDTH)
+
+
+def card_footer(sources_key: str, **params):
+    print(" " + "─" * CARD_WIDTH)
+    print(Style.DIM + "  " + tr("database.disclaimer") + "\n  " + tr(sources_key, **params) + Style.RESET_ALL)
+
+
+def colored(color_key: str, text: str) -> str:
+    return CARD_COLORS[color_key] + "●" + Style.RESET_ALL + " " + text
+
+
+def disease_label(name: dict) -> str:
+    """El nombre en el idioma del usuario; si no está traducido, el inglés con la marca."""
+    own = name.get(tr.language)
+    if own:
+        return own
+    mark = tr("cards.english_name")
+    return f"{name['en']} {Style.DIM}{mark}{Style.RESET_ALL}" if mark else name["en"]
+
+
+def drug_label(name: str) -> str:
+    return name.capitalize()
+
+
+def thousands(number_text: str) -> str:
+    """'10 000' (Orphanet) -> '10.000' en castellano y catalán, '10,000' en inglés."""
+    sep = "." if tr.decimal_separator == "," else ","
+    return number_text.strip().replace(" ", sep)
+
+
+def prevalence_text(p: dict | None) -> str | None:
+    if not p or "/" not in p["class"]:
+        return None
+    left, right = (part.strip() for part in p["class"].split("/", 1))
+    place = p["place"]
+    place_text = (tr(f"cards.place.{place}") if place in ("worldwide", "europe")
+                  else tr("cards.place.other", place=place) if place else "")
+    return tr("cards.prevalence", range=left, per=thousands(right),
+              who=tr(f"cards.who.{p['type']}"), place=place_text)
+
+
+def inheritance_text(keys: list[str], explain: bool = False) -> str:
+    parts = []
+    for key in keys:
+        text = tr(f"cards.inheritance.{key}")
+        if text == f"cards.inheritance.{key}":
+            text = key                                  # un tipo que aún no está traducido
+        help_key = f"cards.inheritance_help.{key}"
+        if explain and tr(help_key) != help_key:
+            text += f" ({tr(help_key)})"
+        parts.append(text)
+    return ", ".join(parts)
+
+
+def withdrawal_text(w: dict | None) -> str:
+    if not w:
+        return ""
+    if w["scope"] == "worldwide":
+        text = tr("cards.withdrawn.worldwide", year=str(w["year"]))
+    elif w.get("where") == "eu":
+        text = tr("cards.withdrawn.eu", year=str(w["year"]))
+    elif w.get("year"):
+        text = tr("cards.withdrawn.some_year", year=str(w["year"]))
+    else:
+        text = tr("cards.withdrawn.some")
+    return Fore.RED + text + Style.RESET_ALL
+
+
+def review_bar(percent: int, key: str) -> str:
+    filled = percent // 5
+    return (f"{tr('cards.review'):<20}" + "█" * filled + Style.DIM + "░" * (20 - filled) + Style.RESET_ALL
+            + f"  {percent} %\n  {'':<20}" + tr(f"cards.review_levels.{key}"))
+
+
+def frequency_study(card: dict) -> str:
+    """'The Genome Aggregation Database (gnomAD), exomes' -> 'gnomAD'"""
+    low = (card["frequency_source"] or "").lower()
+    return next((name for word, name in FREQUENCY_STUDIES if word in low), card["frequency_source"] or "gnomAD")
+
+
+def frequency_text(card: dict) -> str:
+    f = card["frequency"]
+    if not f:
+        return tr("cards.no_frequency")
+    source = frequency_study(card)
+    if f["value"] >= 0.1:
+        return tr("cards.frequency_percent", percent=tr.decimal(f["value"] * 100, 1, trim=True), source=source)
+    return tr("cards.frequency", n=tr.number(f["one_in"]), source=source)
+
+
+def molecule_text(molecule_type: str | None) -> str:
+    key = (molecule_type or "unknown").lower().replace(" ", "_")
+    text = tr(f"cards.molecule.{key}")
+    return molecule_type or "" if text == f"cards.molecule.{key}" else text
+
+
+def card_choice(options: list[tuple[str, str]]) -> str:
+    """Pinta [1] Opción  [2] Otra  [0] Volver y devuelve la tecla elegida ('0' = volver)."""
+    print("\n  " + "  ".join(f"[{k}] {label}" for k, label in options) + f"  [0] {tr('menu.back')}")
+    keys = {k for k, _ in options}
+    while True:
+        choice = input(tr("common.choose_option")).strip()
+        if choice in keys or choice in ("0", ""):
+            return choice or "0"
+        print(tr("common.invalid_option"))
+
+
+def pick(items: list, prompt_key: str):
+    """Pide un número de la lista; None si se deja vacío."""
+    if not items:
+        return None
+    while True:
+        text = input(tr(prompt_key)).strip()
+        if text in ("", "0"):
+            return None
+        if text.isdigit() and 1 <= int(text) <= len(items):
+            return items[int(text) - 1]
+        print(tr("common.invalid_option"))
+
+
+def db_catalog():
+    """Los 14 genes de serie; desde cada gen se llega a sus variantes, enfermedades y fármacos."""
+    conn = catalog()
+    if conn is None:
+        return
+    while True:
+        genes = queries.genes(conn)
+        print("\n        " + tr("cards.title"))
+        for number, gene in enumerate(genes, start=1):
+            print(f"    {number:>2}] {Fore.CYAN}{gene['symbol']:<6}{Style.RESET_ALL} {gene['name']} · "
+                  + tr.count(gene["variant_count"], "variant"))
+        gene = pick(genes, "cards.choose_gene")
+        if gene is None:
+            return
+        show_gene_card(gene["id"])
+
+
+def show_gene_card(gene_id: int):
+    conn = catalog()
+    card = cards.gene_card(conn, gene_id)
+    card_header(f"{card['symbol']} · {card['name']}", tr("cards.chromosome", chromosome=card["chromosome"] or "?"))
+    print("\n  " + tr("cards.known", total=tr.number(card["total"])))
+    for key in cards.COLORS:
+        if card["colors"][key]:
+            print("   " + colored(key, f"{tr(f'cards.colors.{key}'):<44}{tr.number(card['colors'][key]):>7}"))
+    if card["known_variants"]:
+        names = ", ".join(dict.fromkeys(v["common_name"] for v in card["known_variants"]))
+        print("\n  " + tr("cards.named", list=names))
+    print("\n  " + Style.BRIGHT + tr("cards.main_diseases") + Style.RESET_ALL)
+    if not card["diseases"]:
+        print("   " + tr("cards.no_diseases"))
+    for number, d in enumerate(card["diseases"], start=1):
+        extra = [inheritance_text(d["inheritance"])] if d["inheritance"] else []
+        if prevalence_text(d["prevalence"]):
+            extra.append(prevalence_text(d["prevalence"]))
+        tail = (Style.DIM + "  · " + " · ".join(extra) + Style.RESET_ALL) if extra else ""
+        print(f"   {number}. {disease_label(d['name'])}{tail}")
+    card_footer("cards.sources.gene")
+
+    while True:
+        choice = card_choice([("1", tr("cards.menu.variants")), ("2", tr("cards.menu.diseases")),
+                              ("3", tr("cards.menu.drugs"))])
+        if choice == "0":
+            return
+        if choice == "1":
+            variant = choose_variant({"id": card["id"]}, conn, featured=True)
+            if variant is not None:
+                show_variant_card(variant["id"])
+        elif choice == "2":
+            for number, d in enumerate(card["diseases"], start=1):
+                print(f"   {number}] {disease_label(d['name'])}")
+            disease = pick(card["diseases"], "cards.choose_disease")
+            if disease is not None:
+                show_disease_card(disease["id"])
+        else:
+            drugs = queries.gene_drugs(conn, card["id"])
+            if not drugs:
+                print("\n  " + tr("cards.no_gene_drugs"))
+                continue
+            print("\n  " + tr("cards.gene_drugs", symbol=card["symbol"]))
+            for number, drug in enumerate(drugs[:DRUGS_SHOWN], start=1):
+                print(f"   {number:>2}] {drug_label(drug['name'])} · {phase_text(drug['max_phase'])}"
+                      + (" · " + withdrawal_text(cards.withdrawal(drug)) if cards.withdrawal(drug) else ""))
+            drug = pick(drugs[:DRUGS_SHOWN], "cards.choose_drug")
+            if drug is not None:
+                show_drug_card(drug["id"])
+
+
+def show_variant_card(variant_id: int):
+    conn = catalog()
+    card = cards.variant_card(conn, variant_id)
+    title = (f"{card['common_name']} · " if card["common_name"] else "") + \
+        f"{card['gene']} {card['hgvs_c']} {card['hgvs_p'] or ''}".strip()
+    card_header(title)
+    print("\n  " + colored(card["color"], tr(f"cards.color_one.{card['color']}"))
+          + "   " + Style.DIM + tr("cards.clinvar_says", significance=card["significance"] or "-") + Style.RESET_ALL)
+    print("  " + review_bar(card["review"], card["review_key"]))
+
+    change = card["change"]
+    print("\n  " + Style.BRIGHT + tr("cards.change") + Style.RESET_ALL)
+    if change:
+        e = change["effect"]
+        for label, codon, aa in ((tr("cards.healthy"), e.ref_codon, e.ref_aa), (tr("cards.mutated"), e.alt_codon, e.alt_aa)):
+            print("   " + tr("cards.codon_line", label=f"{label:<16}", codon=codon, amino=tr.amino_acid(aa)))
+        print("   " + Style.DIM + tr(f"database.variant_kinds.{e.kind}") + Style.RESET_ALL)
+    else:
+        print("   " + tr("cards.no_change"))
+    print("\n  " + frequency_text(card))
+
+    print("\n  " + Style.BRIGHT + tr("cards.per_disease") + Style.RESET_ALL)
+    if not card["diseases"]:
+        print("   " + tr("cards.no_variant_diseases"))
+    for d in card["diseases"]:
+        effect = tr(f"database.effects.{d['effect'] or 'none'}")
+        print("   " + colored(d["color"], f"{disease_label(d['name'])} · {effect}") + Style.DIM
+              + f"  {d['review']} %" + Style.RESET_ALL)
+    if card["other_diseases"]:
+        print(Style.DIM + "   " + tr("cards.other_diseases", more=tr.count(card["other_diseases"], "more_disease"))
+              + Style.RESET_ALL)
+    print(Style.DIM + "\n  " + tr("cards.review_note") + Style.RESET_ALL)
+    card_footer("cards.sources.variant", source=frequency_study(card))
+
+    while True:
+        options = [("1", tr("cards.menu.technical"))]
+        if card["diseases"]:
+            options.append(("2", tr("cards.menu.diseases")))
+        choice = card_choice(options)
+        if choice == "0":
+            return
+        if choice == "1":
+            show_variant_technical(card)
+        else:
+            for number, d in enumerate(card["diseases"], start=1):
+                print(f"   {number}] {disease_label(d['name'])}")
+            disease = pick(card["diseases"], "cards.choose_disease")
+            if disease is not None:
+                show_disease_card(disease["id"])
+
+
+def show_variant_technical(card: dict):
+    conn = catalog()
+    print("\n  " + Style.BRIGHT + tr("cards.technical.title") + Style.RESET_ALL)
+    print("   " + tr("cards.technical.hgvs", accession=card["accession"], hgvs_c=card["hgvs_c"],
+                     hgvs_p=card["hgvs_p"] or ""))
+    if card["dbsnp"]:
+        print("   " + tr("cards.technical.dbsnp", rs=card["dbsnp"]))
+    if card["clinvar_id"]:
+        print("   " + tr("cards.technical.clinvar", id=f"VCV{card['clinvar_id']:09d}"))
+    review = conn.execute("SELECT review_status FROM variants WHERE id = ?", (card["id"],)).fetchone()[0]
+    print("   " + tr("cards.technical.review", status=review or "-"))
+    rows = conn.execute(
+        """SELECT vd.rcv_accession, vd.clinical_significance, vd.review_status, d.name_en,
+                  (SELECT COUNT(DISTINCT x.disease_id) FROM variant_diseases x
+                   WHERE x.rcv_accession = vd.rcv_accession) AS diseases
+           FROM variant_diseases vd JOIN diseases d ON d.id = vd.disease_id
+           WHERE vd.variant_id = ? ORDER BY vd.rcv_accession, d.name_en""", (card["id"],)).fetchall()
+    if rows:
+        print("   " + tr("cards.technical.records"))
+        for r in rows:
+            many = tr("cards.technical.many") if r["diseases"] > 1 else ""
+            print(Style.DIM + "    " + tr("cards.technical.record", rcv=r["rcv_accession"] or "-",
+                                          disease=r["name_en"], significance=r["clinical_significance"] or "-",
+                                          review=cards.review_level(r["review_status"])[0], many=many)
+                  + Style.RESET_ALL)
+
+
+def show_disease_card(disease_id: int):
+    conn = catalog()
+    card = cards.disease_card(conn, disease_id)
+    name = disease_label(card["name"])
+    right = f"({card['name']['en']})" if card["name"].get(tr.language) and tr.language != "en" else ""
+    card_header(name, right)
+    if card["genes"]:
+        print("\n  " + tr("cards.genes", list=", ".join(g["symbol"] for g in card["genes"])))
+    if card["inheritance"]:
+        print("  " + tr("cards.inheritance_line", list=inheritance_text(card["inheritance"], explain=True)))
+    if card["onset"]:
+        onset = [tr(f"cards.onset.{ONSET_KEYS[o.lower()]}") if o.lower() in ONSET_KEYS else o for o in card["onset"]]
+        print("  " + tr("cards.onset_line", list=", ".join(onset)))
+    if prevalence_text(card["prevalence"]):
+        print("  " + tr("cards.prevalence_line", text=prevalence_text(card["prevalence"])))
+
+    print("\n  " + Style.BRIGHT + tr(f"cards.treatment.{card['status']}") + Style.RESET_ALL)
+    if card["status"] in ("approved", "withdrawn"):
+        print("  " + Style.DIM + tr("cards.approved_note") + Style.RESET_ALL)
+    listed = []
+    for group, key in (("approved_cause", "cards.cause"), ("approved_symptoms", "cards.symptoms")):
+        if not card[group]:
+            continue
+        print("\n  " + tr(key))
+        for drug in card[group]:
+            listed.append(drug)
+            year = f" ({drug['first_approval']})" if drug["first_approval"] else ""
+            print(f"   {len(listed):>2}] {Fore.CYAN}{drug_label(drug['name'])}{Style.RESET_ALL}{year}"
+                  + Style.DIM + f" · {molecule_text(drug['molecule_type'])}" + Style.RESET_ALL
+                  + (f"  {withdrawal_text(drug['withdrawal'])}" if drug["withdrawal"] else ""))
+    if card["trials"]:
+        print("\n  " + tr("cards.trials", count=len(card["trials"])) + Style.DIM + "  "
+              + ", ".join(drug_label(d["name"]) for d in card["trials"][:8])
+              + ("…" if len(card["trials"]) > 8 else "") + Style.RESET_ALL)
+    card_footer("cards.sources.disease")
+
+    while listed:
+        drug = pick(listed, "cards.choose_drug")
+        if drug is None:
+            return
+        show_drug_card(drug["id"])
+
+
+def show_drug_card(drug_id: int):
+    conn = catalog()
+    card = cards.drug_card(conn, drug_id)
+    card_header(drug_label(card["name"]), molecule_text(card["molecule_type"]))
+    if card["withdrawal"]:
+        print("\n  " + withdrawal_text(card["withdrawal"]))
+    if card["first_approval"]:
+        print(("\n  " if not card["withdrawal"] else "  ") + tr("cards.approved_year", year=str(card["first_approval"])))
+
+    print()
+    if card["genes"]:
+        print("  " + tr("cards.acts_on_gene", list=", ".join(g["symbol"] for g in card["genes"])))
+    if card["mechanisms"]:
+        for m in card["mechanisms"]:
+            print("  " + tr("cards.acts_on", target=m["target_name"] or "?", action=action_text(m["action"])))
+    else:
+        print("  " + tr("cards.no_mechanism"))
+
+    if card["diseases"]:
+        print("\n  " + tr("cards.for_diseases") + ":")
+        for d in card["diseases"][:DRUGS_SHOWN]:
+            state = "" if d["approved"] else Style.DIM + f" ({tr('cards.in_trials')})" + Style.RESET_ALL
+            print(f"   · {disease_label(d['name'])}{state}")
+    card_footer("cards.sources.drug")
+
+    while True:
+        options = [("1", tr("cards.menu.structure", pdb=card["structure"]))] if card["structure"] else []
+        if card["diseases"]:
+            options.append(("2", tr("cards.menu.diseases")))
+        if not options:
+            return
+        choice = card_choice(options)
+        if choice == "0":
+            return
+        if choice == "1":
+            show_pocket(card["structure"], conn)
+        else:
+            shown = card["diseases"][:DRUGS_SHOWN]
+            for number, d in enumerate(shown, start=1):
+                print(f"   {number}] {disease_label(d['name'])}")
+            disease = pick(shown, "cards.choose_disease")
+            if disease is not None:
+                show_disease_card(disease["id"])
+
+
 def database_menu():
     menu("app.database_title", {
+        "C": ("menu.database.catalog", db_catalog),
         "1": ("menu.database.import", db_import),
         "2": ("menu.database.gene", db_gene),
         "3": ("menu.database.compare", db_compare),

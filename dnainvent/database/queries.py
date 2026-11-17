@@ -123,7 +123,7 @@ def search(conn: sqlite3.Connection, text: str, limit: int = 20) -> list[sqlite3
 def genes_for_disease(conn: sqlite3.Connection, disease_id: int) -> list[sqlite3.Row]:
     """Genes con variantes de esa enfermedad y cuántas causales tiene cada uno."""
     return conn.execute(
-        """SELECT g.symbol, g.name, COUNT(CASE WHEN vd.effect = 'causal' THEN 1 END) AS causal,
+        """SELECT g.id, g.symbol, g.name, COUNT(CASE WHEN vd.effect = 'causal' THEN 1 END) AS causal,
                   COUNT(*) AS total
            FROM variant_diseases vd JOIN variants v ON v.id = vd.variant_id
            JOIN genes g ON g.id = v.gene_id

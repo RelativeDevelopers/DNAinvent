@@ -41,6 +41,7 @@
     },
     "back": "Back",
     "database": {
+      "catalog": "Built-in genes (cards)",
       "import": "Import a gene",
       "gene": "View a saved gene",
       "compare": "Healthy vs. variant",
@@ -241,7 +242,8 @@
     "T": "Threonine",
     "W": "Tryptophan",
     "Y": "Tyrosine",
-    "V": "Valine"
+    "V": "Valine",
+    "stop": "Stop codon"
   },
   "web": {
     "tagline": "Read, encode, compare and edit DNA sequences.",
@@ -515,6 +517,10 @@
     "atom": {
       "one": "{n} atom",
       "other": "{n} atoms"
+    },
+    "more_disease": {
+      "one": "{n} more disease",
+      "other": "{n} more diseases"
     }
   },
   "microscope": {
@@ -1132,6 +1138,159 @@
       "hbond": "hydrogen bond",
       "hydrophobic": "hydrophobic contact",
       "contact": "contact"
+    }
+  },
+  "cards": {
+    "title": "Built-in genes",
+    "catalog_missing": "The built-in gene catalogue is not there yet ({path}). To create it, run tools\\build_catalog.bat (it needs a connection and takes a while the first time).",
+    "catalog_old": "The built-in gene catalogue is from an old version. Run tools\\build_catalog.bat again.",
+    "choose_gene": "Choose a gene (number; Enter to go back): ",
+    "chromosome": "Chromosome {chromosome}",
+    "known": "Known variants: {total}",
+    "named": "With their own name: {list}",
+    "colors": {
+      "pathogenic": "Cause disease",
+      "uncertain": "Uncertain effect",
+      "benign": "Healthy (benign)",
+      "special": "Special (protect or raise the risk)",
+      "unclassified": "Not classified"
+    },
+    "color_one": {
+      "pathogenic": "Causes disease",
+      "uncertain": "Uncertain effect",
+      "benign": "Healthy (benign)",
+      "special": "Special",
+      "unclassified": "Not classified"
+    },
+    "main_diseases": "Main diseases",
+    "no_diseases": "There are no diseases with reviewed records.",
+    "english_name": "",
+    "inheritance": {
+      "autosomal_recessive": "autosomal recessive",
+      "autosomal_dominant": "autosomal dominant",
+      "x_recessive": "X-linked recessive",
+      "x_dominant": "X-linked dominant",
+      "y_linked": "Y-linked",
+      "mitochondrial": "mitochondrial",
+      "multifactorial": "multifactorial (several genes and the environment)",
+      "semi_dominant": "semi-dominant"
+    },
+    "inheritance_help": {
+      "autosomal_recessive": "both copies of the gene must be altered",
+      "autosomal_dominant": "one altered copy is enough",
+      "x_recessive": "mostly affects men, who have only one X chromosome",
+      "x_dominant": "one altered copy of the X chromosome is enough"
+    },
+    "inheritance_line": "Inheritance: {list}",
+    "prevalence": "{range} in every {per} {who}{place}",
+    "who": {
+      "point": "people",
+      "birth": "newborns",
+      "annual": "people per year (new cases)",
+      "lifetime": "people over their lifetime",
+      "other": "people"
+    },
+    "place": {
+      "worldwide": " (worldwide)",
+      "europe": " (in Europe)",
+      "other": " ({place})"
+    },
+    "prevalence_line": "How common: {text}",
+    "onset_line": "Age of onset: {list}",
+    "onset": {
+      "antenatal": "before birth",
+      "neonatal": "at birth",
+      "infancy": "first year of life",
+      "childhood": "childhood",
+      "adolescent": "adolescence",
+      "adult": "adulthood",
+      "elderly": "old age",
+      "all_ages": "any age"
+    },
+    "menu": {
+      "variants": "See variants",
+      "diseases": "See diseases",
+      "drugs": "See drugs",
+      "technical": "See technical details",
+      "structure": "See the drug inside its protein ({pdb})",
+      "drug": "See a drug"
+    },
+    "choose_disease": "Choose a disease (number; Enter to go back): ",
+    "choose_drug": "Choose a drug (number; Enter to go back): ",
+    "review": "Review level",
+    "review_levels": {
+      "guideline": "official practice guideline",
+      "expert_panel": "reviewed by an expert panel",
+      "multiple": "several laboratories agree",
+      "single": "one laboratory, with criteria",
+      "conflicting": "laboratories disagree",
+      "no_criteria": "no criteria given",
+      "other": "other review"
+    },
+    "review_note": "The review level measures how much the classification has been reviewed, not the probability that it is right.",
+    "clinvar_says": "(ClinVar: “{significance}”)",
+    "change": "The change",
+    "healthy": "healthy",
+    "mutated": "with the variant",
+    "codon_line": "{label}{codon}  →  {amino}",
+    "no_change": "It cannot be shown codon by codon: it is not a single-letter change inside the part of the gene that makes the protein.",
+    "frequency": "How common: 1 in every {n} copies of the gene ({source})",
+    "frequency_percent": "How common: {percent} % of the copies of the gene ({source})",
+    "no_frequency": "Frequency in the population: no data",
+    "per_disease": "For each disease",
+    "no_variant_diseases": "No reviewed record links it to a specific disease.",
+    "other_diseases": "And {more} in unreviewed records or records that group several diseases (in the technical details).",
+    "technical": {
+      "title": "Technical details",
+      "hgvs": "Official name (HGVS): {accession}:{hgvs_c} {hgvs_p}",
+      "dbsnp": "dbSNP: {rs}",
+      "clinvar": "ClinVar: {id}",
+      "review": "ClinVar review: {status}",
+      "records": "ClinVar records (RCV) for this variant:",
+      "record": "{rcv} · {disease} · {significance} · {review} %{many}",
+      "many": " · groups several diseases"
+    },
+    "genes": "Genes: {list}",
+    "treatment": {
+      "approved": "Treatment: ✔ there are approved drugs",
+      "withdrawn": "Treatment: ⚠ the approved drugs were withdrawn",
+      "trials": "Treatment: in clinical trials, none approved yet",
+      "none": "Treatment: the sources have no drugs for it"
+    },
+    "approved_note": "(Approved = it treats it, not necessarily cures it.)",
+    "cause": "Act on the cause",
+    "symptoms": "Relieve symptoms or complications",
+    "trials": "In trials: {count}",
+    "withdrawn": {
+      "worldwide": "⚠ withdrawn worldwide in {year}",
+      "eu": "⚠ withdrawn in the European Union in {year}",
+      "some_year": "⚠ withdrawn in some country ({year})",
+      "some": "⚠ withdrawn in some country"
+    },
+    "molecule": {
+      "small_molecule": "small molecule",
+      "antibody": "antibody",
+      "protein": "protein",
+      "enzyme": "enzyme",
+      "gene": "gene therapy",
+      "cell": "cell therapy",
+      "oligonucleotide": "oligonucleotide",
+      "oligosaccharide": "oligosaccharide",
+      "unknown": "unknown type"
+    },
+    "approved_year": "Approved in {year}",
+    "acts_on": "Acts on: {target} · {action}",
+    "acts_on_gene": "Acts on the protein of {list}",
+    "no_mechanism": "How it works: ChEMBL does not say.",
+    "for_diseases": "For",
+    "in_trials": "in trials",
+    "gene_drugs": "Drugs that act on the protein of {symbol}",
+    "no_gene_drugs": "No drug acts directly on this protein: look at the drugs for its diseases.",
+    "sources": {
+      "gene": "Sources: NCBI Gene and ClinVar (public domain), Orphanet (CC BY 4.0).",
+      "variant": "Sources: ClinVar and RefSeq (public domain); frequencies from {source}.",
+      "disease": "Sources: ClinVar (public domain), Orphanet (CC BY 4.0), ChEMBL (CC BY-SA 3.0).",
+      "drug": "Sources: ChEMBL (CC BY-SA 3.0), RCSB PDB."
     }
   }
 }
