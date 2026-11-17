@@ -148,17 +148,23 @@ class NCBIProvider(EUtilsClient):
         return summary
 
     def find_reference_transcript(self, symbol: str, taxon_id: int, gene_id: int) -> str | None:
-        """Accesión.versión del ARNm de referencia: RefSeq Select o, si no hay, el primer NM_."""
+        """Accesión.versión del ARNm de referencia: RefSeq Select o, si no hay, el primer NM_.
+
+        Siempre entre los ARN que NCBI Gene enlaza a ESTE gen (elink). La búsqueda por nombre
+        («HTT[Gene Name]») incluye los alias de otros genes: para HTT devolvía el ARNm de
+        SLC6A4 (alias 5-HTT), NM_001045, y se guardaba como referencia de la huntingtina."""
+        links = self.json("elink.fcgi", {"dbfrom": "gene", "db": "nuccore", "id": gene_id,
+                                         "linkname": "gene_nuccore_refseqrna"})
+        own = [str(uid) for linkset in links.get("linksets", [])
+               for db in linkset.get("linksetdbs", []) for uid in db.get("links", [])]
         term = (f"{symbol}[Gene Name] AND txid{taxon_id}[Organism:noexp] "
                 "AND refseq_select[filter] AND biomol_mrna[prop]")
-        uids = self.json("esearch.fcgi", {"db": "nuccore", "term": term}) \
-            .get("esearchresult", {}).get("idlist", [])
-        if not uids:
-            links = self.json("elink.fcgi", {"dbfrom": "gene", "db": "nuccore", "id": gene_id,
-                                             "linkname": "gene_nuccore_refseqrna"})
-            for linkset in links.get("linksets", []):
-                for db in linkset.get("linksetdbs", []):
-                    uids.extend(db.get("links", []))
+        select = [str(uid) for uid in self.json("esearch.fcgi", {"db": "nuccore", "term": term})
+                  .get("esearchresult", {}).get("idlist", [])]
+        if own:
+            uids = [uid for uid in select if uid in own] or own
+        else:
+            uids = select          # sin enlaces (raro): lo de antes, mejor que nada
         if not uids:
             return None
         result = self.json("esummary.fcgi", {"db": "nuccore", "id": ",".join(map(str, uids))}) \

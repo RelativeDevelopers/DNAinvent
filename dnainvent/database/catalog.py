@@ -10,11 +10,15 @@ Pasos de cada gen, en orden:
     gene           NCBI Gene: el gen, su ARNm de referencia y su proteína
     variants       ClinVar: todas sus variantes, con la clasificación por enfermedad y la
                    frecuencia en la población
+    complete       vuelve a buscar en ClinVar y recupera las variantes del gen que falten
+                   (resúmenes que no llegaron); también arregla catálogos antiguos
     sequences      las secuencias de los ARNm sobre los que se describen las variantes (para
                    poder comparar sana frente a variante sin conexión)
     gene_drugs     ChEMBL: fármacos que actúan sobre su proteína
     disease_drugs  ChEMBL: fármacos para sus enfermedades principales
 Y al final, para todo el catálogo:
+    combined       quita los registros de ClinVar que son combinaciones de variantes y se
+                   guardaron como una sola (catálogos hechos antes de filtrarlas)
     orphanet       herencia, edad de inicio y prevalencia de las enfermedades raras
     common_names   nombres conocidos de algunas variantes (HbS, ΔF508...)
 
@@ -31,7 +35,7 @@ from .. import __version__
 from ..errors import DNAinventError
 from . import queries
 from .chembl import ChEMBLProvider
-from .clinvar import ClinVarProvider
+from .clinvar import ClinVarProvider, is_combined
 from .ncbi import HUMAN, NCBIProvider
 from .orphanet import OrphanetProvider
 from .records import now_iso
@@ -40,7 +44,7 @@ Progress = Callable[[str, dict], None]
 
 CATALOG_GENES = ("HBB", "CFTR", "BRCA1", "BRCA2", "TP53", "HTT", "DMD", "F8", "PAH", "APOE",
                  "LDLR", "SMN1", "G6PD", "LCT")
-GENE_STEPS = ("gene", "variants", "sequences", "gene_drugs", "disease_drugs")
+GENE_STEPS = ("gene", "variants", "complete", "sequences", "gene_drugs", "disease_drugs")
 DISEASES_WITH_DRUGS = 5       # enfermedades de cada gen para las que se buscan fármacos
 
 # Nombres conocidos de variantes: (gen, HGVS c., HGVS p., nombre). Se buscan primero por c. y,
@@ -50,6 +54,9 @@ DISEASES_WITH_DRUGS = 5       # enfermedades de cada gen para las que se buscan 
 #              antigua, sin la metionina inicial; 7 en HGVS).
 #   185delAG, 5382insC (BRCA1) y 6174delT (BRCA2): las tres variantes fundadoras asquenazíes,
 #              con su nombre antiguo (numeración de BIC).
+#   G6PD Mediterranean: ClinVar la nombra sobre el transcrito antiguo NM_000402.4 (c.653C>T,
+#              p.Ser218Phe); en el actual es c.563C>T (p.Ser188Phe). Es la misma variante
+#              (rs5030868), así que se aceptan las dos formas.
 COMMON_NAMES = (
     ("HBB", "c.20A>T", "p.Glu7Val", "HbS"),
     ("HBB", "c.19G>A", "p.Glu7Lys", "HbC"),
@@ -63,6 +70,7 @@ COMMON_NAMES = (
     ("PAH", "c.1222C>T", "p.Arg408Trp", "R408W"),
     ("APOE", "c.388T>C", "p.Cys130Arg", "APOE ε4"),
     ("APOE", "c.526C>T", "p.Arg176Cys", "APOE ε2"),
+    ("G6PD", "c.653C>T", "p.Ser218Phe", "G6PD Mediterranean"),
     ("G6PD", "c.563C>T", "p.Ser188Phe", "G6PD Mediterranean"),
 )
 
@@ -85,6 +93,12 @@ def _no_progress(key: str, data: dict) -> None:
     pass
 
 
+def _belongs_to(description: str | None, symbol: str) -> bool:
+    """¿La definición de RefSeq es de ese gen? Llevan el símbolo entre paréntesis:
+    «Homo sapiens huntingtin (HTT), transcript variant 2, mRNA»."""
+    return description is None or f"({symbol.upper()})" in description.upper()
+
+
 class StepIncomplete(Exception):
     """Un paso que ha ido a medias: no se apunta como hecho, para repetirlo la próxima vez.
     El texto es para quien construye el catálogo (herramienta de desarrollo, en castellano)."""
@@ -103,6 +117,7 @@ class CatalogReport:
     steps: list[StepResult] = field(default_factory=list)
     missing_names: list[tuple[str, str]] = field(default_factory=list)   # (gen, nombre) no encontrados
     removed_genes: list[str] = field(default_factory=list)              # genes borrados por limpieza
+    repaired: list[str] = field(default_factory=list)                   # ARNm de referencia corregidos
 
     @property
     def failed(self) -> list[StepResult]:
@@ -137,6 +152,7 @@ class CatalogBuilder:
         self.diseases_with_drugs = diseases_with_drugs
         self.announce = announce or (lambda result: None)
         self.on_gene = on_gene or (lambda symbol: None)     # antes de empezar cada gen ('*': el final)
+        self.repaired: list[str] = []      # genes con un ARNm de referencia equivocado, ya quitado
         conn.executescript(_TABLES)
 
     # ------------------------------------------------------------------ pasos
@@ -199,6 +215,16 @@ class CatalogBuilder:
                     "SELECT DISTINCT symbol FROM catalog_steps WHERE symbol != '*'").fetchall():
                 if self._gene_id(symbol) is None:
                     self.conn.execute("DELETE FROM catalog_steps WHERE symbol = ?", (symbol,))
+        # Un ARNm de referencia que no es del gen (HTT tenía el de SLC6A4): se quita y se
+        # repiten el gen y la búsqueda de fármacos por su proteína. Las variantes no cambian.
+        for row in self.conn.execute("SELECT id, symbol FROM genes").fetchall():
+            mrna = self._reference_mrna(row["id"])
+            if mrna is not None and not _belongs_to(mrna["description"], row["symbol"]):
+                self._drop_reference(row["id"])
+                with self.conn:
+                    self.conn.execute("DELETE FROM catalog_steps WHERE symbol = ? AND step IN "
+                                      "('gene', 'gene_drugs')", (row["symbol"],))
+                self.repaired.append(f"{row['symbol']} ({mrna['accession']}.{mrna['version']})")
         return removed
 
     def _step(self, report: CatalogReport, symbol: str, step: str, action, redo: bool) -> bool:
@@ -221,23 +247,87 @@ class CatalogBuilder:
         self.announce(result)
         return result.status != "failed"
 
+    def _reference_mrna(self, gene_id: int):
+        return self.conn.execute("SELECT id, accession, version, description FROM sequences "
+                                 "WHERE gene_id = ? AND is_reference = 1 AND mol_type = 'mrna'",
+                                 (gene_id,)).fetchone()
+
     def _import_gene(self, symbol: str) -> str:
-        gene_id = self._gene_id(symbol) or self.ncbi.import_gene(self.conn, symbol, HUMAN, self.progress)
+        gene_id = self._gene_id(symbol)
+        if gene_id is None or self._reference_mrna(gene_id) is None:
+            gene_id = self.ncbi.import_gene(self.conn, symbol, HUMAN, self.progress)
         row = self.conn.execute("SELECT symbol, name FROM genes WHERE id = ?", (gene_id,)).fetchone()
         if (row["symbol"] or "").upper() != symbol.upper():
             found = row["symbol"]
             self.forget_gene(gene_id)
             raise StepIncomplete(f"el NCBI ha devuelto {found} en lugar de {symbol}")
-        return row["name"] or ""
+        mrna = self._reference_mrna(gene_id)
+        if mrna is not None and not _belongs_to(mrna["description"], symbol):
+            self._drop_reference(gene_id)
+            raise StepIncomplete(f"el ARNm de referencia {mrna['accession']}.{mrna['version']} "
+                                 f"no es de {symbol}: «{mrna['description']}»")
+        detail = row["name"] or ""
+        return f"{detail} · {mrna['accession']}.{mrna['version']}" if mrna else detail
+
+    def _drop_reference(self, gene_id: int) -> None:
+        """Quita un ARNm de referencia equivocado y su proteína (las variantes no lo usan: se
+        describen sobre los ARNm del gen de verdad). Si alguna lo usara, solo se desmarca."""
+        c = self.conn
+        with c:
+            for seq in c.execute("SELECT id FROM sequences WHERE gene_id = ? AND is_reference = 1",
+                                 (gene_id,)).fetchall():
+                used = c.execute("SELECT 1 FROM variants WHERE sequence_id = ? LIMIT 1",
+                                 (seq["id"],)).fetchone()
+                if used:
+                    c.execute("UPDATE sequences SET is_reference = 0 WHERE id = ?", (seq["id"],))
+                    continue
+                c.execute("DELETE FROM sequence_links WHERE from_sequence_id = ? OR to_sequence_id = ?",
+                          (seq["id"], seq["id"]))
+                c.execute("DELETE FROM sequence_tags WHERE sequence_id = ?", (seq["id"],))
+                c.execute("UPDATE drugs SET sequence_id = NULL WHERE sequence_id = ?", (seq["id"],))
+                c.execute("DELETE FROM sequences WHERE id = ?", (seq["id"],))
+
+    @staticmethod
+    def _describe(stats) -> str:
+        """«838 guardadas de 1180 (300 sin ARNm, 40 combinaciones...); 343 con frecuencia»"""
+        reasons = [(stats.not_on_mrna, "sin ARNm"), (stats.combined, "combinaciones"),
+                   (stats.other_gene, "de otro gen"), (stats.summaries_missing, "sin respuesta")]
+        why = ", ".join(f"{n} {label}" for n, label in reasons if n)
+        return (f"{stats.saved} guardadas de {stats.found}" + (f" ({why})" if why else "")
+                + f"; {stats.with_frequency} con frecuencia")
+
+    def _check_import(self, stats) -> None:
+        if stats.summaries_missing:
+            raise StepIncomplete(f"{self._describe(stats)}; faltan {stats.summaries_missing} "
+                                 "resúmenes de ClinVar")
 
     def _variants(self, symbol: str) -> str:
         stats = self.clinvar.import_variants(self.conn, symbol, max_variants=self.max_variants,
                                              progress=self.progress)
-        detail = f"{stats.saved} guardadas de {stats.found}; {stats.with_frequency} con frecuencia"
+        detail = self._describe(stats)
+        self._check_import(stats)
         if stats.condition_batches_failed:
             # Sin la clasificación por enfermedad el gen queda cojo: que se repita
             raise StepIncomplete(f"{stats.condition_batches_failed} lotes de RCV fallidos")
         return detail
+
+    def _complete(self, symbol: str) -> str:
+        """Pide otra vez a ClinVar la lista de variantes del gen e importa las que no están
+        guardadas. Casi todas resultan ser de las que no se guardan nunca (sin ARNm,
+        combinaciones); las demás son las que se perdieron."""
+        gene_id = self._gene_id(symbol)
+        ids = self.clinvar.search_variant_ids(symbol, self.max_variants)
+        have = {str(r[0]) for r in self.conn.execute(
+            "SELECT clinvar_id FROM variants WHERE gene_id = ? AND clinvar_id IS NOT NULL", (gene_id,))}
+        missing = [uid for uid in ids if uid not in have]
+        if not missing:
+            return "no falta ninguna"
+        stats = self.clinvar.import_variants(self.conn, symbol, progress=self.progress,
+                                             only_ids=missing)
+        self._check_import(stats)
+        if stats.condition_batches_failed:
+            raise StepIncomplete(f"{stats.condition_batches_failed} lotes de RCV fallidos")
+        return f"{stats.saved} recuperadas de {len(missing)} revisadas"
 
     def _sequences(self, symbol: str) -> str:
         gene_id = self._gene_id(symbol)
@@ -273,6 +363,24 @@ class CatalogBuilder:
             raise StepIncomplete(f"{failed} de {len(diseases)} enfermedades sin respuesta de ChEMBL")
         return f"{len(diseases)} enfermedades"
 
+    def _remove_combined(self) -> str:
+        """Los catálogos hechos antes de filtrar las combinaciones (clinvar.is_combined) las
+        tienen guardadas como variantes sueltas. Todas quedaron con el tipo 'other': se vuelve
+        a pedir su resumen (200 por consulta) y se borran las que lo son."""
+        rows = self.conn.execute("SELECT id, clinvar_id FROM variants WHERE variant_type = 'other' "
+                                 "AND clinvar_id IS NOT NULL").fetchall()
+        by_clinvar = {str(r["clinvar_id"]): r["id"] for r in rows}
+        docs = self.clinvar.fetch_summaries(list(by_clinvar), self.progress)
+        combined = [by_clinvar[uid] for uid, doc in docs if uid in by_clinvar and is_combined(doc)]
+        with self.conn:
+            for variant_id in combined:
+                self.conn.execute("DELETE FROM variant_diseases WHERE variant_id = ?", (variant_id,))
+                self.conn.execute("DELETE FROM variants WHERE id = ?", (variant_id,))
+        if len(docs) < len(by_clinvar):
+            raise StepIncomplete(f"ClinVar solo ha respondido {len(docs)} de {len(by_clinvar)}; "
+                                 f"borradas {len(combined)}")
+        return f"{len(combined)} combinaciones borradas de {len(by_clinvar)} registros revisados"
+
     def _orphanet(self) -> str:
         stats = self.orphanet.apply(self.conn, self.progress)
         with self.conn:
@@ -284,28 +392,28 @@ class CatalogBuilder:
 
     def apply_common_names(self, report: CatalogReport | None = None) -> tuple[int, int]:
         """Pone los nombres conocidos (HbS...). Devuelve (encontrados, de los genes guardados)."""
-        found = total = 0
+        results: dict[tuple[str, str], bool] = {}      # (gen, nombre) -> encontrado
         with self.conn:
             for symbol, hgvs_c, hgvs_p, name in COMMON_NAMES:
                 gene_id = self._gene_id(symbol)
                 if gene_id is None:
                     continue
-                total += 1
                 changed = self.conn.execute("UPDATE variants SET common_name = ? WHERE gene_id = ? "
                                             "AND hgvs_c = ?", (name, gene_id, hgvs_c)).rowcount
                 if not changed:
                     changed = self.conn.execute("UPDATE variants SET common_name = ? WHERE gene_id = ? "
                                                 "AND hgvs_p = ?", (name, gene_id, hgvs_p)).rowcount
-                if changed:
-                    found += 1
-                elif report is not None:
-                    report.missing_names.append((symbol, name))
-        return found, total
+                # Un nombre puede tener varias formas (G6PD): basta con encontrar una
+                results[(symbol, name)] = results.get((symbol, name), False) or bool(changed)
+        if report is not None:
+            report.missing_names.extend(key for key, ok in results.items() if not ok)
+        return sum(results.values()), len(results)
 
     # ------------------------------------------------------------------ todo
     def run(self, genes=CATALOG_GENES, redo: bool = False) -> CatalogReport:
         report = CatalogReport()
         report.removed_genes = self.clean()
+        report.repaired = list(self.repaired)
         with self.conn:
             self.conn.execute("INSERT OR REPLACE INTO catalog_info VALUES ('dnainvent_version', ?)",
                               (__version__,))
@@ -314,6 +422,7 @@ class CatalogBuilder:
             self.on_gene(symbol)
             actions = {"gene": lambda: self._import_gene(symbol),
                        "variants": lambda: self._variants(symbol),
+                       "complete": lambda: self._complete(symbol),
                        "sequences": lambda: self._sequences(symbol),
                        "gene_drugs": lambda: self._gene_drugs(symbol),
                        "disease_drugs": lambda: self._disease_drugs(symbol)}
@@ -322,6 +431,7 @@ class CatalogBuilder:
                 if not ok and step in ("gene", "variants"):
                     break        # sin el gen o sus variantes, los demás pasos no tienen sentido
         self.on_gene("*")
+        self._step(report, "*", "combined", self._remove_combined, redo)
         # Orphanet y los nombres se rehacen siempre: son rápidos (caché) y dependen de lo nuevo
         self._step(report, "*", "orphanet", self._orphanet, redo=True)
         self._step(report, "*", "common_names",

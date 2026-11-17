@@ -39,6 +39,7 @@ from .ncbi import HUMAN, NCBIProvider
 Progress = Callable[[str, dict], None]
 SEARCH_PAGE = 5000        # IDs por petición esearch
 SUMMARY_BATCH = 200       # IDs por petición esummary
+SUMMARY_RETRY_BATCH = 20  # los que no llegaron se piden otra vez en lotes de este tamaño
 VCV_BATCH = 25            # IDs por petición efetch (el XML de algunas variantes es grande)
 VCV_RETRY_BATCH = 5       # si un lote falla, se repite en trozos de este tamaño
 RETRY_PAUSE = 5           # s de espera antes de repetir un lote fallido
@@ -51,6 +52,13 @@ SIMPLE_SNV = re.compile(r"c\.-?\*?\d+([ACGT])>([ACGT])")
 VARIANT_TYPES = {"single nucleotide variant": "snv", "deletion": "deletion",
                  "insertion": "insertion", "indel": "indel", "duplication": "duplication",
                  "copy number loss": "cnv", "copy number gain": "cnv"}
+
+# Registros que no son UNA variante sino una combinación (dos variantes en la misma persona):
+# «HbS junto con HbC», un haplotipo... Su primera variante se llama igual que la variante
+# suelta, así que si se guardaran aparecería HbS cinco veces, con clasificaciones que en
+# realidad son de la combinación.
+COMBINED_TYPES = {"compound heterozygote", "diplotype", "haplotype", "phase unknown",
+                  "distinct chromosomes"}
 
 # Rasgos que ClinVar usa cuando no hay una enfermedad concreta
 NON_DISEASE_TRAITS = {"not provided", "not specified", "see cases",
@@ -74,6 +82,8 @@ class ImportStats:
     saved: int = 0
     pathogenic: int = 0          # patogénicas o probablemente patogénicas (global)
     not_on_mrna: int = 0         # grandes deleciones, cromosoma... (no se guardan)
+    combined: int = 0            # combinaciones de variantes (haplotipos...): no se guardan
+    summaries_missing: int = 0   # IDs cuyo resumen no llegó ni repitiendo (se pierden)
     other_gene: int = 0          # descritas sobre el ARNm de un gen vecino
     filtered: int = 0            # descartadas por only_pathogenic
     with_conditions: int = 0     # variantes con clasificación por enfermedad (RCV)
@@ -119,8 +129,17 @@ def classify_effect(significance: str | None) -> str | None:
     return None
 
 
+def is_combined(doc: dict) -> bool:
+    """¿El registro describe varias variantes a la vez (genotipo o haplotipo)?"""
+    return (len(doc.get("variation_set") or []) > 1
+            or (doc.get("obj_type") or "").strip().lower() in COMBINED_TYPES)
+
+
 def parse_summary(uid: str, doc: dict) -> dict | None:
-    """Un documento esummary de ClinVar, listo para guardar (None si no está en un ARNm)."""
+    """Un documento esummary de ClinVar, listo para guardar. None si no está en un ARNm o si
+    es una combinación de variantes (is_combined)."""
+    if is_combined(doc):
+        return None
     vset = (doc.get("variation_set") or [{}])[0]
     hgvs = parse_variation_name(vset.get("variation_name")) or parse_variation_name(doc.get("title"))
     if hgvs is None:
@@ -258,14 +277,36 @@ class ClinVarProvider(EUtilsClient):
                 break
         return ids
 
-    def fetch_summaries(self, ids: list[str], progress: Progress = _no_progress) -> list[tuple[str, dict]]:
-        docs = []
+    def _summaries(self, chunk: list[str]) -> dict[str, dict]:
+        try:
+            result = self.json("esummary.fcgi", {"db": "clinvar", "id": ",".join(chunk)}).get("result", {})
+        except ServiceError:
+            return {}
+        # Un registro que ClinVar no ha podido dar llega como {"uid": ..., "error": "..."}
+        return {uid: result[uid] for uid in result.get("uids", [])
+                if isinstance(result.get(uid), dict) and "error" not in result[uid]}
+
+    def fetch_summaries(self, ids: list[str], progress: Progress = _no_progress,
+                        stats: ImportStats | None = None) -> list[tuple[str, dict]]:
+        """Resúmenes de ClinVar, en lotes de 200.
+
+        A veces un lote llega con MENOS registros de los pedidos, sin ningún error: antes esas
+        variantes se perdían en silencio (así faltó G6PD Mediterranean, ClinVar 100057). Ahora
+        las que faltan se piden otra vez en lotes pequeños y, si aun así no llegan, se cuentan
+        en stats.summaries_missing."""
+        got: dict[str, dict] = {}
         for i in range(0, len(ids), SUMMARY_BATCH):
             chunk = ids[i:i + SUMMARY_BATCH]
-            result = self.json("esummary.fcgi", {"db": "clinvar", "id": ",".join(chunk)}).get("result", {})
-            docs.extend((uid, result[uid]) for uid in result.get("uids", []) if uid in result)
+            got.update(self._summaries(chunk))
             progress("database.stage.summaries", {"done": i + len(chunk), "total": len(ids)})
-        return docs
+        missing = [uid for uid in ids if uid not in got]
+        if missing:
+            self.sleep(RETRY_PAUSE)
+            for i in range(0, len(missing), SUMMARY_RETRY_BATCH):
+                got.update(self._summaries(missing[i:i + SUMMARY_RETRY_BATCH]))
+        if stats is not None:
+            stats.summaries_missing += sum(1 for uid in ids if uid not in got)
+        return [(uid, got[uid]) for uid in ids if uid in got]
 
     def fetch_conditions(self, ids: list[int], progress: Progress = _no_progress,
                          stats: ImportStats | None = None,
@@ -312,8 +353,11 @@ class ClinVarProvider(EUtilsClient):
 
     def import_variants(self, conn: sqlite3.Connection, symbol: str, only_pathogenic: bool = False,
                         max_variants: int | None = None, progress: Progress = _no_progress,
-                        gene_provider: NCBIProvider | None = None) -> ImportStats:
-        """Importa las variantes de ClinVar de un gen humano (y el gen, si aún no está)."""
+                        gene_provider: NCBIProvider | None = None,
+                        only_ids: list[str] | None = None) -> ImportStats:
+        """Importa las variantes de ClinVar de un gen humano (y el gen, si aún no está).
+
+        Con only_ids no se busca: se importan solo esas (para completar un gen ya importado)."""
         stats = ImportStats()
         gene = conn.execute("SELECT id, symbol FROM genes WHERE symbol = ? COLLATE NOCASE "
                             "AND taxon_id = ?", (symbol, HUMAN)).fetchone()
@@ -327,13 +371,15 @@ class ClinVarProvider(EUtilsClient):
         symbol = conn.execute("SELECT symbol FROM genes WHERE id = ?", (gene_id,)).fetchone()[0]
 
         progress("database.stage.variants", {"symbol": symbol})
-        ids = self.search_variant_ids(symbol, max_variants)
+        ids = list(only_ids) if only_ids is not None else self.search_variant_ids(symbol, max_variants)
         stats.found = len(ids)
 
         variants = []
-        for uid, doc in self.fetch_summaries(ids, progress):
+        for uid, doc in self.fetch_summaries(ids, progress, stats):
             variant = parse_summary(uid, doc)
-            if variant is None:
+            if variant is None and is_combined(doc):
+                stats.combined += 1
+            elif variant is None:
                 stats.not_on_mrna += 1
             elif variant["gene"].upper() != symbol.upper():
                 stats.other_gene += 1

@@ -152,6 +152,9 @@ class FakeNCBI:
             return json.dumps({"esearchresult": {"idlist": ["3043"]}}).encode()
         if db == "gene" and endpoint == "esummary.fcgi":
             return json.dumps(GENE_SUMMARY).encode()
+        if endpoint == "elink.fcgi":          # los ARN de RefSeq enlazados al gen
+            assert q["dbfrom"] == "gene" and q["linkname"] == "gene_nuccore_refseqrna"
+            return json.dumps({"linksets": [{"linksetdbs": [{"links": ["28302128"]}]}]}).encode()
         if db == "nuccore" and endpoint == "esearch.fcgi":
             return json.dumps({"esearchresult": {"idlist": ["28302128"]}}).encode()
         if db == "nuccore" and endpoint == "esummary.fcgi":

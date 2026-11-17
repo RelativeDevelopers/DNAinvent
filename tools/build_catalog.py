@@ -31,8 +31,10 @@ from dnainvent.database.orphanet import OrphanetProvider  # noqa: E402
 from i18n import Translator  # noqa: E402
 
 STEP_NAMES = {"gene": "gen (NCBI)", "variants": "variantes (ClinVar)",
+              "complete": "variantes que faltaban (ClinVar)",
               "sequences": "secuencias (RefSeq)", "gene_drugs": "fármacos de su proteína (ChEMBL)",
               "disease_drugs": "fármacos de sus enfermedades (ChEMBL)",
+              "combined": "combinaciones de variantes (ClinVar)",
               "orphanet": "herencia y prevalencia (Orphanet)", "common_names": "nombres conocidos"}
 MARKS = {"done": "✔", "skipped": "·", "failed": "✘"}
 
@@ -113,6 +115,8 @@ def main() -> int:
         conn.close()
 
     minutes = (time.monotonic() - started) / 60
+    if report.repaired:
+        print("\nARNm de referencia equivocado, corregido en: " + ", ".join(report.repaired))
     if report.removed_genes:
         print("\nGenes borrados porque no son del catálogo: " + ", ".join(report.removed_genes))
     size = out.stat().st_size / 1_000_000

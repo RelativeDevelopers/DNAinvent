@@ -181,8 +181,9 @@ def test_build_catalog(tmp_path, fake):
     report = make_builder(conn, fake, tmp_path, chembl).run(["HBB"])
     assert not report.failed, report.failed
     assert [(s.step, s.status) for s in report.steps] == [
-        ("gene", "done"), ("variants", "done"), ("sequences", "done"), ("gene_drugs", "done"),
-        ("disease_drugs", "done"), ("orphanet", "done"), ("common_names", "done")]
+        ("gene", "done"), ("variants", "done"), ("complete", "done"), ("sequences", "done"),
+        ("gene_drugs", "done"),
+        ("disease_drugs", "done"), ("combined", "done"), ("orphanet", "done"), ("common_names", "done")]
     assert catalog_genes(conn) == ["HBB"]
 
     # Nombre conocido; los de otros genes no están en este catálogo y no se cuentan
@@ -223,8 +224,9 @@ def test_build_resumes_where_it_stopped(tmp_path, fake):
     chembl = FakeChEMBL()
     report = make_builder(conn, fake, tmp_path, chembl).run(["HBB"])
     statuses = {s.step: s.status for s in report.steps}
-    assert statuses == {"gene": "skipped", "variants": "skipped", "sequences": "skipped",
-                        "gene_drugs": "skipped", "disease_drugs": "done",
+    assert statuses == {"gene": "skipped", "variants": "skipped", "complete": "skipped",
+                        "sequences": "skipped",
+                        "gene_drugs": "skipped", "disease_drugs": "done", "combined": "skipped",
                         "orphanet": "done", "common_names": "done"}
     assert fake.calls == [] and chembl.gene_calls == []
     assert catalog_genes(conn) == ["HBB"]
@@ -249,6 +251,64 @@ def test_unknown_gene_stops_only_that_gene(tmp_path, fake):
     assert [(s.step, s.status) for s in noexiste] == [("gene", "failed")]
     assert "gene_not_found" in noexiste[0].detail
     assert catalog_genes(conn) == ["HBB"]
+    conn.close()
+
+
+def test_reference_transcript_is_one_of_the_gene_own_rnas():
+    """HTT: la búsqueda por nombre devolvía el ARNm de SLC6A4 (alias 5-HTT). Solo vale un ARN
+    que NCBI Gene enlace a ese gen."""
+    import json
+    from urllib.parse import parse_qs, urlparse
+
+    def http(url):
+        q = {k: v[0] for k, v in parse_qs(urlparse(url).query).items()}
+        if "elink" in url:
+            return json.dumps({"linksets": [{"linksetdbs": [{"links": ["222", "333"]}]}]}).encode()
+        if "esearch" in url:                    # RefSeq Select «de HTT»: el de SLC6A4 y el bueno
+            return json.dumps({"esearchresult": {"idlist": ["111", "222"]}}).encode()
+        names = {"111": "NM_001045.6", "222": "NM_001388492.1", "333": "NM_002111.8"}
+        uids = q["id"].split(",")
+        return json.dumps({"result": {"uids": uids,
+                                      **{u: {"accessionversion": names[u]} for u in uids}}}).encode()
+
+    provider = NCBIProvider(http=http, api_key="", sleep=lambda s: None)
+    assert provider.find_reference_transcript("HTT", 9606, 3064) == "NM_001388492.1"
+
+
+def test_clean_repairs_a_wrong_reference_mrna(tmp_path, fake):
+    """El catálogo real quedó con el ARNm de SLC6A4 como referencia de HTT: se quita, y se
+    repiten solo el gen y los fármacos de su proteína."""
+    conn = open_database(tmp_path / "catalog.db")
+    builder = make_builder(conn, fake, tmp_path)
+    builder.run(["HBB"])
+    conn.execute("UPDATE sequences SET description = 'Homo sapiens solute carrier family 6 member 4 "
+                 "(SLC6A4), mRNA' WHERE is_reference = 1 AND mol_type = 'mrna'")
+    conn.commit()
+    variants = conn.execute("SELECT COUNT(*) FROM variants").fetchone()[0]
+
+    builder = make_builder(conn, fake, tmp_path)
+    report = builder.run(["HBB"])
+    assert report.repaired == ["HBB (NM_000518.5)"] and not report.failed
+    statuses = {s.step: s.status for s in report.steps if s.symbol == "HBB"}
+    assert statuses == {"gene": "done", "variants": "skipped", "complete": "skipped",
+                        "sequences": "skipped", "gene_drugs": "done", "disease_drugs": "skipped"}
+    mrna = conn.execute("SELECT description FROM sequences WHERE is_reference = 1 "
+                        "AND mol_type = 'mrna'").fetchall()
+    assert [m[0] for m in mrna] == ["Homo sapiens hemoglobin subunit beta (HBB), mRNA"]
+    assert conn.execute("SELECT COUNT(*) FROM variants").fetchone()[0] == variants
+    conn.close()
+
+
+def test_common_name_with_two_spellings_counts_once(tmp_path, fake):
+    conn = open_database(tmp_path / "catalog.db")
+    builder = make_builder(conn, fake, tmp_path)
+    builder.run(["HBB"])
+    conn.execute("UPDATE genes SET symbol = 'G6PD'")
+    conn.execute("UPDATE variants SET hgvs_c = 'c.653C>T', hgvs_p = 'p.Ser218Phe' WHERE hgvs_c = 'c.20A>T'")
+    conn.commit()
+    from dnainvent.database.catalog import CatalogReport
+    report = CatalogReport()
+    assert builder.apply_common_names(report) == (1, 1) and report.missing_names == []
     conn.close()
 
 
@@ -339,7 +399,7 @@ def test_clean_removes_foreign_genes_and_forgets_their_steps(tmp_path, fake):
 
     assert builder.clean() == ["SLC6A4"]
     for table in ("genes", "variants", "variant_diseases", "sequences", "diseases", "catalog_steps"):
-        expected = 2 if table == "catalog_steps" else 0          # quedan los dos pasos de '*'
+        expected = 3 if table == "catalog_steps" else 0          # quedan los tres pasos de '*'
         assert conn.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0] == expected, table
     assert conn.execute("SELECT COUNT(*) FROM search_index WHERE kind IN ('gene', 'disease')").fetchone()[0] == 0
     conn.close()
@@ -355,4 +415,125 @@ def test_unexpected_error_fails_only_its_step(tmp_path, fake):
     statuses = {s.step: s.status for s in report.steps}
     assert statuses["gene_drugs"] == "failed" and statuses["disease_drugs"] == "done"
     assert "error interno: TypeError" in report.failed[0].detail
+    conn.close()
+
+
+# ---------------------------------------------------------------- combinaciones de variantes
+
+def combined_doc():
+    """Como el registro real 446748: «HbS junto con otra variante», una persona con las dos."""
+    doc = cv_doc("NM_000518.5(HBB):c.20A>T (p.Glu7Val)", "Compound heterozygote", "other", [])
+    doc["variation_set"].append({"variation_name": "NM_000518.5(HBB):c.433A>T (p.Lys145Ter)",
+                                 "variation_xrefs": []})
+    return doc
+
+
+def test_combined_records_are_not_single_variants():
+    from dnainvent.database.clinvar import is_combined, parse_summary
+    assert is_combined(combined_doc()) and parse_summary("446748", combined_doc()) is None
+    haplotype = cv_doc("NM_000041.4(APOE):c.388T>C (p.Cys130Arg)", "Haplotype", "association", [])
+    assert is_combined(haplotype)
+    single = cv_doc("NM_000518.5(HBB):c.20A>T (p.Glu7Val)", "single nucleotide variant", "Pathogenic", [])
+    assert not is_combined(single) and parse_summary("15333", single)["hgvs_c"] == "c.20A>T"
+
+
+def test_catalog_removes_combined_records_saved_by_older_versions(tmp_path, fake):
+    conn = open_database(tmp_path / "catalog.db")
+    make_builder(conn, fake, tmp_path).run(["HBB"])
+    # Un catálogo antiguo: la combinación guardada como si fuera HbS, con tipo 'other'
+    hbs = conn.execute("SELECT * FROM variants WHERE hgvs_c = 'c.20A>T'").fetchone()
+    conn.execute("INSERT INTO variants (gene_id, sequence_id, hgvs_c, hgvs_p, variant_type, clinvar_id, "
+                 "source_id, common_name) VALUES (?, ?, 'c.20A>T', 'p.Glu7Val', 'other', 446748, ?, 'HbS')",
+                 (hbs["gene_id"], hbs["sequence_id"], hbs["source_id"]))
+    conn.execute("DELETE FROM catalog_steps WHERE step = 'combined'")
+    conn.commit()
+    fake.docs = dict(fake.docs, **{"446748": combined_doc()})
+
+    report = make_builder(conn, fake, tmp_path).run(["HBB"])
+    step = next(s for s in report.steps if s.step == "combined")
+    assert (step.status, step.detail) == ("done", "1 combinaciones borradas de 1 registros revisados")
+    assert [r[0] for r in conn.execute("SELECT clinvar_id FROM variants WHERE hgvs_c = 'c.20A>T'")] == [101]
+
+    # Ya hecho: la siguiente vez no vuelve a preguntar a ClinVar
+    fake.calls.clear()
+    report = make_builder(conn, fake, tmp_path).run(["HBB"])
+    assert next(s for s in report.steps if s.step == "combined").status == "skipped"
+    assert fake.calls == []
+    conn.close()
+
+
+# ---------------------------------------------------------------- resúmenes que no llegan
+
+class ForgetfulNCBI(FakeNCBI):
+    """ClinVar a veces responde un lote de esummary con MENOS registros de los pedidos, sin
+    error. Así se perdió G6PD Mediterranean (ClinVar 100057) en el catálogo real."""
+
+    def __init__(self, docs, drop, times=1):
+        super().__init__(docs)
+        self.drop, self.times = drop, times
+
+    def __call__(self, url):
+        import json
+        raw = super().__call__(url)
+        if "db=clinvar" in url and "esummary" in url and self.times > 0 and self.drop in url:
+            self.times -= 1
+            data = json.loads(raw)
+            data["result"]["uids"].remove(self.drop)
+            del data["result"][self.drop]
+            return json.dumps(data).encode()
+        return raw
+
+
+def test_missing_summaries_are_retried(fake):
+    from dnainvent.database.clinvar import ImportStats
+    forgetful = ForgetfulNCBI(fake.docs, drop="101")
+    stats = ImportStats()
+    docs = ClinVarProvider(http=forgetful, api_key="", sleep=lambda s: None) \
+        .fetch_summaries(sorted(fake.docs), stats=stats)
+    assert [uid for uid, _ in docs] == sorted(fake.docs)          # en orden y sin perder ninguno
+    assert stats.summaries_missing == 0
+
+
+def test_summaries_that_never_arrive_fail_the_step(tmp_path, fake):
+    conn = open_database(tmp_path / "catalog.db")
+    ncbi = NCBIProvider(http=fake, api_key="", sleep=lambda s: None)
+    forgetful = ForgetfulNCBI(fake.docs, drop="101", times=99)
+    builder = CatalogBuilder(conn, ncbi=ncbi,
+                             clinvar=ClinVarProvider(http=forgetful, api_key="", sleep=lambda s: None),
+                             chembl=FakeChEMBL(),
+                             orphanet=OrphanetProvider(http=orphanet_http(), cache=Cache(tmp_path)))
+    report = builder.run(["HBB"])
+    step = next(s for s in report.steps if s.step == "variants")
+    assert step.status == "failed" and "faltan 1 resúmenes de ClinVar" in step.detail
+    conn.close()
+
+
+def test_complete_recovers_variants_lost_by_older_versions(tmp_path, fake):
+    """Un catálogo hecho antes del arreglo: le falta una variante. El paso «complete» la
+    recupera sin volver a importar el gen entero."""
+    conn = open_database(tmp_path / "catalog.db")
+    make_builder(conn, fake, tmp_path).run(["HBB"])
+    hbs = conn.execute("SELECT id FROM variants WHERE clinvar_id = 101").fetchone()["id"]
+    conn.execute("DELETE FROM variant_diseases WHERE variant_id = ?", (hbs,))
+    conn.execute("DELETE FROM variants WHERE id = ?", (hbs,))
+    conn.execute("DELETE FROM catalog_steps WHERE step = 'complete'")
+    conn.commit()
+    before = conn.execute("SELECT COUNT(*) FROM variants").fetchone()[0]
+
+    fake.calls.clear()
+    report = make_builder(conn, fake, tmp_path).run(["HBB"])
+    step = next(s for s in report.steps if s.step == "complete")
+    assert step.status == "done" and step.detail.startswith("1 recuperadas de ")
+    assert conn.execute("SELECT COUNT(*) FROM variants").fetchone()[0] == before + 1
+    row = conn.execute("SELECT common_name FROM variants WHERE clinvar_id = 101").fetchone()
+    assert row["common_name"] == "HbS"                             # y recupera su nombre
+    assert next(s for s in report.steps if s.step == "variants").status == "skipped"
+    conn.close()
+
+
+def test_variants_detail_explains_what_was_not_saved(tmp_path, fake):
+    conn = open_database(tmp_path / "catalog.db")
+    report = make_builder(conn, fake, tmp_path).run(["HBB"])
+    detail = next(s for s in report.steps if s.step == "variants").detail
+    assert " guardadas de " in detail and "sin ARNm" in detail and "con frecuencia" in detail
     conn.close()
