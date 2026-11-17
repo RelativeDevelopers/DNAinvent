@@ -1298,6 +1298,63 @@
     "text_sources": "Sources of the text:",
     "acts_on_complex_gene": "Acts on a protein complex that includes the protein of {list}",
     "registered_as": "(in ChEMBL, for “{disease}”)",
-    "special": "A mutation that is not in the list"
+    "special": "A mutation that is not in the list",
+    "protein3d": {
+      "menu": "See the change in the 3D protein",
+      "title": "{label} in the 3D protein",
+      "model": "Structure: {model} (AlphaFold DB), the healthy protein predicted by AlphaFold",
+      "position": "Amino acid {number} of {length}",
+      "confidence": "{band} in this region (pLDDT {value})",
+      "burial": {
+        "buried": "Where it is: inside the protein ({neighbors} amino acids around it)",
+        "partial": "Where it is: half hidden, neither fully inside nor fully outside ({neighbors} amino acids around it)",
+        "exposed": "Where it is: on the surface of the protein ({neighbors} amino acids around it)",
+        "disordered": "Where it is: in a region with no fixed shape"
+      },
+      "contacts": "Touching it: {list}",
+      "what_changes": "What changes in the amino acid",
+      "changes": {
+        "loses_negative": "it loses a negative charge",
+        "loses_positive": "it loses a positive charge",
+        "gains_negative": "it gains a negative charge",
+        "gains_positive": "it gains a positive charge",
+        "charge_reversed": "its charge flips sign",
+        "hydrophobic_to_polar": "it goes from repelling water to getting on well with it",
+        "polar_to_hydrophobic": "it goes from getting on well with water to repelling it",
+        "bigger": "it is quite a lot bigger",
+        "smaller": "it is quite a lot smaller",
+        "to_proline": "it becomes a proline, which is rigid",
+        "from_glycine": "it was a glycine, the smallest and most flexible one",
+        "cysteine": "it gains or loses a cysteine, which can bond to others"
+      },
+      "meaning": {
+        "surface_sticky": "On the surface, an amino acid that repels water can make the protein stick to others.",
+        "surface_charge": "On the surface, changes of charge can change how it binds to other molecules.",
+        "buried": "Inside the protein, a change like this often destabilizes the fold: the protein may fold badly or last less.",
+        "to_proline": "Proline is rigid and often breaks the protein's helices.",
+        "from_glycine": "In place of a glycine, another amino acid may not fit or may take away flexibility.",
+        "cysteine": "Cysteines form bridges with each other: gaining or losing one can change those bridges.",
+        "nonsense": "A stop codon appears here: the protein is cut short and the next {lost} amino acids are not made ({percent}%). Often the cell does not even make it, because it destroys that mRNA.",
+        "frameshift": "From here on the reading of the mRNA shifts: the next {lost} amino acids come out wrong and a stop soon appears.",
+        "deletion": "This amino acid is missing in the protein with the variant.",
+        "insertion": "The variant adds one or more amino acids at this point.",
+        "disordered": "AlphaFold has low confidence in this region: it is usually a part with no fixed shape, and its drawing is only a guide."
+      },
+      "note": "AlphaFold shows the healthy protein. These programs cannot predict the shape with the variant well, so we do not draw it: we only mark where the change is.",
+      "sources": "Sources: AlphaFold DB (CC BY 4.0; Jumper et al. 2021, Varadi et al. 2024), RefSeq and UniProt.",
+      "open": "Open in the 3D microscope",
+      "loading": "Downloading the structure from AlphaFold DB…",
+      "reasons": {
+        "no_change": "This variant does not change a specific amino acid of the protein.",
+        "no_uniprot": "We do not have this gene's protein in UniProt.",
+        "too_long": "This protein has {length} amino acids and AlphaFold DB does not publish models longer than 2,700: there is no 3D view.",
+        "service": "The structure could not be downloaded: {error}",
+        "not_in_structure": "This amino acid is not in the AlphaFold structure.",
+        "mismatch": "The amino acid in the structure is not the one the variant says (another version of the protein): we do not mark it, to avoid pointing at the wrong place."
+      }
+    },
+    "links": {
+      "title": "Links:"
+    }
   }
 }

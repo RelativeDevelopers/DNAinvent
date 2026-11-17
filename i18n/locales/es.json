@@ -1298,6 +1298,63 @@
     "text_sources": "Fuentes del texto:",
     "acts_on_complex_gene": "Actúa sobre un complejo de proteínas que incluye la de {list}",
     "registered_as": "(en ChEMBL, para «{disease}»)",
-    "special": "Una mutación que no sale en la lista"
+    "special": "Una mutación que no sale en la lista",
+    "protein3d": {
+      "menu": "Ver el cambio en la proteína 3D",
+      "title": "{label} en la proteína 3D",
+      "model": "Estructura: {model} (AlphaFold DB), la proteína sana predicha por AlphaFold",
+      "position": "Aminoácido {number} de {length}",
+      "confidence": "{band} en esta zona (pLDDT {value})",
+      "burial": {
+        "buried": "Dónde está: en el interior de la proteína ({neighbors} aminoácidos alrededor)",
+        "partial": "Dónde está: medio escondido, ni del todo dentro ni del todo fuera ({neighbors} aminoácidos alrededor)",
+        "exposed": "Dónde está: en la superficie de la proteína ({neighbors} aminoácidos alrededor)",
+        "disordered": "Dónde está: en una zona sin forma fija"
+      },
+      "contacts": "Lo tocan: {list}",
+      "what_changes": "Qué cambia en el aminoácido",
+      "changes": {
+        "loses_negative": "pierde una carga negativa",
+        "loses_positive": "pierde una carga positiva",
+        "gains_negative": "gana una carga negativa",
+        "gains_positive": "gana una carga positiva",
+        "charge_reversed": "su carga cambia de signo",
+        "hydrophobic_to_polar": "pasa de repeler el agua a llevarse bien con ella",
+        "polar_to_hydrophobic": "pasa de llevarse bien con el agua a repelerla",
+        "bigger": "es bastante más grande",
+        "smaller": "es bastante más pequeño",
+        "to_proline": "pasa a ser una prolina, que es rígida",
+        "from_glycine": "era una glicina, la más pequeña y flexible",
+        "cysteine": "gana o pierde una cisteína, que puede unirse a otras"
+      },
+      "meaning": {
+        "surface_sticky": "En la superficie, un aminoácido que repele el agua puede hacer que la proteína se pegue a otras.",
+        "surface_charge": "En la superficie, los cambios de carga pueden cambiar cómo se une a otras moléculas.",
+        "buried": "En el interior, un cambio así suele desestabilizar el plegamiento: la proteína puede plegarse mal o durar menos.",
+        "to_proline": "La prolina es rígida y suele romper las hélices de la proteína.",
+        "from_glycine": "En el sitio de una glicina, otro aminoácido puede no caber o quitarle flexibilidad.",
+        "cysteine": "Las cisteínas forman puentes entre sí: ganar o perder una puede cambiar esos puentes.",
+        "nonsense": "Aquí aparece un codón de parada: la proteína se corta y no se fabrican los {lost} aminoácidos siguientes (el {percent} %). A menudo la célula ni siquiera la fabrica, porque destruye ese ARNm.",
+        "frameshift": "Desde aquí se descoloca la lectura del ARNm: los {lost} aminoácidos siguientes salen mal y pronto aparece una parada.",
+        "deletion": "Este aminoácido falta en la proteína con la variante.",
+        "insertion": "La variante añade uno o más aminoácidos en este punto.",
+        "disordered": "AlphaFold tiene poca confianza en esta zona: suele ser una parte sin forma fija, y su dibujo es orientativo."
+      },
+      "note": "AlphaFold enseña la proteína sana. La forma con la variante no se puede predecir bien con estos programas, así que no la dibujamos: solo marcamos dónde está el cambio.",
+      "sources": "Fuentes: AlphaFold DB (CC BY 4.0; Jumper et al. 2021, Varadi et al. 2024), RefSeq y UniProt.",
+      "open": "Abrir en el microscopio 3D",
+      "loading": "Descargando la estructura de AlphaFold DB…",
+      "reasons": {
+        "no_change": "Esta variante no cambia un aminoácido concreto de la proteína.",
+        "no_uniprot": "No tenemos la proteína de este gen en UniProt.",
+        "too_long": "Esta proteína tiene {length} aminoácidos y AlphaFold DB no publica modelos de más de 2.700: no hay vista 3D.",
+        "service": "No se ha podido descargar la estructura: {error}",
+        "not_in_structure": "Este aminoácido no está en la estructura de AlphaFold.",
+        "mismatch": "El aminoácido de la estructura no es el que dice la variante (otra versión de la proteína): no lo marcamos para no señalar un sitio equivocado."
+      }
+    },
+    "links": {
+      "title": "Enlaces:"
+    }
   }
 }

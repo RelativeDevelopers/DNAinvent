@@ -12,7 +12,7 @@ from colorama import Fore, Style, init
 
 from dnainvent import DNAinventError, alignment, bits, crispr, sequences, tools
 from dnainvent.constants import AMINO_ACID_CODES
-from dnainvent.database import cards, default_path, open_database, queries, texts
+from dnainvent.database import cards, default_path, open_database, protein3d, queries, texts
 from dnainvent.database.catalog import CatalogTooOld, catalog_path, open_catalog
 from dnainvent.database.chembl import ChEMBLProvider
 from dnainvent.database.clinvar import ClinVarProvider
@@ -1085,6 +1085,13 @@ def paragraph(text: str, indent: str = "  ") -> str:
     return textwrap.fill(text, width=CARD_WIDTH, initial_indent=indent, subsequent_indent=indent)
 
 
+def print_links(links: list[tuple[str, str]]):
+    """Las páginas de las fuentes de la ficha (cards.*_links)."""
+    if links:
+        print(Style.DIM + "  " + tr("cards.links.title") + "\n"
+              + "\n".join(f"   {name}: {url}" for name, url in links) + Style.RESET_ALL)
+
+
 def print_text_sources(section: str, key: str):
     urls = texts.sources(section, key)
     if urls:
@@ -1239,6 +1246,7 @@ def show_gene_card(gene_id: int):
             print(textwrap.fill(fact, width=CARD_WIDTH, initial_indent="   · ", subsequent_indent="     "))
     card_footer("cards.sources.gene")
     print_text_sources("genes", card["symbol"])
+    print_links(cards.gene_links(card))
 
     while True:
         choice = card_choice([("1", tr("cards.menu.variants")), ("2", tr("cards.menu.diseases")),
@@ -1306,22 +1314,111 @@ def show_variant_card(variant_id: int):
     print(Style.DIM + "\n  " + tr("cards.review_note") + Style.RESET_ALL)
     card_footer("cards.sources.variant", source=frequency_study(card))
     print_text_sources("variants", f"{card['gene']}:{card['hgvs_c']}")
+    print_links(cards.variant_links(card))
 
+    in_3d = protein3d.variant_change(conn, card["id"]) is not None
     while True:
         options = [("1", tr("cards.menu.technical"))]
         if card["diseases"]:
             options.append(("2", tr("cards.menu.diseases")))
+        if in_3d:
+            options.append(("3", tr("cards.protein3d.menu")))
         choice = card_choice(options)
         if choice == "0":
             return
         if choice == "1":
             show_variant_technical(card)
+        elif choice == "3":
+            show_variant_3d(card)
         else:
             for number, d in enumerate(card["diseases"], start=1):
                 print(f"   {number}] {disease_label(d['name'])}")
             disease = pick(card["diseases"], "cards.choose_disease")
             if disease is not None:
                 show_disease_card(disease["id"])
+
+
+def residue_name(letter: str, number: int) -> str:
+    return f"{AMINO_ACID_CODES.get(letter, 'Xaa')}{number}"
+
+
+def show_variant_3d(card: dict, afdb=None):
+    """El aminoácido de la variante en la estructura de AlphaFold de la proteína sana: dónde
+    está, qué cambia y, si se quiere, el microscopio 3D con el sitio marcado."""
+    conn = catalog()
+    print("\n  " + Style.DIM + tr("cards.protein3d.loading") + Style.RESET_ALL)
+    site = protein3d.variant_site(conn, card["id"], afdb if afdb is not None else AlphaFoldDB())
+    print("\n  " + Style.BRIGHT + tr("cards.protein3d.title", label=site.get("label", "")) + Style.RESET_ALL)
+    if not site["available"]:
+        reason = site["reason"]
+        params = {"length": tr.number(site.get("length", 0))} if reason == "too_long" else {}
+        if reason == "service":
+            params = {"error": tr.error(site["error"])}
+        print(paragraph(tr(f"cards.protein3d.reasons.{reason}", **params)))
+        return
+    print("   " + tr("cards.protein3d.model", model=f"{site['model_id']}-v{site['version']}"))
+    print("   " + tr("cards.protein3d.position", number=site["number"], length=tr.number(site["length"])))
+    print("   " + tr(f"cards.protein3d.burial.{site['burial']}", neighbors=site["neighbors"]))
+    if site["plddt"] is not None:
+        print("   " + tr("cards.protein3d.confidence", band=tr(f"protein.confidence.{site['confidence']}"),
+                         value=tr.decimal(site["plddt"], 0)))
+    if site["contacts"]:
+        print("   " + tr("cards.protein3d.contacts",
+                         list=", ".join(residue_name(c["residue"], c["number"]) for c in site["contacts"])))
+    if site["changes"]:
+        print("\n  " + tr("cards.protein3d.what_changes"))
+        for key in site["changes"]:
+            print("   · " + tr(f"cards.protein3d.changes.{key}"))
+    meaning = [tr(f"cards.protein3d.meaning.{key}", **params) for key, params in site_meanings(site)]
+    if meaning:
+        print("\n" + paragraph(" ".join(meaning)))
+    print("\n" + Style.DIM + paragraph(tr("cards.protein3d.note")) + Style.RESET_ALL)
+    print(Style.DIM + "  " + tr("cards.protein3d.sources") + Style.RESET_ALL)
+
+    if card_choice([("1", tr("cards.protein3d.open"))]) == "1":
+        open_site_in_microscope(site)
+
+
+def site_meanings(site: dict) -> list[tuple[str, dict]]:
+    """Qué significa el cambio en ese sitio (claves de cards.protein3d.meaning)."""
+    out, changes = [], set(site["changes"])
+    charge = {"loses_negative", "loses_positive", "gains_negative", "gains_positive", "charge_reversed"}
+    if site["kind"] in ("nonsense", "frameshift"):
+        params = {"lost": tr.number(site["lost"])}
+        if site["kind"] == "nonsense":
+            params["percent"] = tr.decimal(site["lost"] / site["length"] * 100, 0)
+        out.append((site["kind"], params))
+    elif site["kind"] in ("deletion", "insertion"):
+        out.append((site["kind"], {}))
+    if site["burial"] == "disordered":
+        out.append(("disordered", {}))
+    elif site["burial"] == "exposed":
+        if "polar_to_hydrophobic" in changes:
+            out.append(("surface_sticky", {}))
+        elif changes & charge:
+            out.append(("surface_charge", {}))
+    elif site["burial"] == "buried" and changes & (charge | {"hydrophobic_to_polar", "bigger", "to_proline"}):
+        out.append(("buried", {}))
+    for key in ("to_proline", "from_glycine", "cysteine"):
+        if key in changes:
+            out.append((key, {}))
+    return out
+
+
+def open_site_in_microscope(site: dict):
+    from dnainvent.protein.session import Panel, write_session
+    missing = launcher.missing_dependencies()
+    if missing:
+        error(tr("microscope.missing", packages=missing))
+        print(tr("microscope.install"))
+        return
+    label = f"{site['gene']} · {site['uniprot']} · AlphaFold"
+    panel = Panel(site["structure"], label, {site["index"]: site["label"]}, site["start"], site["count"])
+    session = write_session([panel])
+    print(tr("protein.microscope.window", first=site["start"] + 1, last=site["start"] + site["count"],
+             length=site["length"]))
+    launcher.open_protein_microscope(session, tr.language)
+    print(tr("microscope.opening"))
 
 
 def show_variant_technical(card: dict):
@@ -1406,6 +1503,7 @@ def draw_disease_card(card: dict) -> list:
     card_footer("cards.sources.disease")
     if note:
         print_text_sources("disease_notes", card["name"]["en"])
+    print_links(cards.disease_links(card))
     return listed
 
 
@@ -1441,6 +1539,7 @@ def show_drug_card(drug_id: int):
             print(f"   · {disease_label(d['name'])}{state}")
     card_footer("cards.sources.drug")
     print_text_sources("drugs", card["chembl_id"] or "")
+    print_links(cards.drug_links(card))
 
     while True:
         options = [("1", tr("cards.menu.structure", pdb=card["structure"]))] if card["structure"] else []

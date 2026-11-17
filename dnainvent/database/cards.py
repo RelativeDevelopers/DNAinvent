@@ -379,3 +379,46 @@ def drug_card(conn: sqlite3.Connection, drug_id: int) -> dict:
         "structure": structure["pdb"] if structure else None,
         "ligand": structure.get("ligand") if structure else None,
     }
+
+
+# ---------------------------------------------------------------------- enlaces
+# Las páginas de las fuentes de cada ficha, para ir a ver los datos originales.
+NCBI = "https://www.ncbi.nlm.nih.gov"
+
+
+def gene_links(card: dict) -> list[tuple[str, str]]:
+    out = []
+    if card.get("ncbi_gene_id"):
+        out.append(("NCBI Gene", f"{NCBI}/gene/{card['ncbi_gene_id']}"))
+    if card.get("uniprot_id"):
+        out.append(("UniProt", f"https://www.uniprot.org/uniprotkb/{card['uniprot_id']}"))
+        out.append(("AlphaFold DB", f"https://alphafold.ebi.ac.uk/entry/{card['uniprot_id']}"))
+    out.append(("ClinVar", f"{NCBI}/clinvar/?term={card['symbol']}%5Bgene%5D"))
+    return out
+
+
+def variant_links(card: dict) -> list[tuple[str, str]]:
+    out = []
+    if card.get("clinvar_id"):
+        out.append(("ClinVar", f"{NCBI}/clinvar/variation/{card['clinvar_id']}/"))
+    if card.get("dbsnp"):
+        out.append(("dbSNP", f"{NCBI}/snp/{card['dbsnp']}"))
+    return out
+
+
+def disease_links(card: dict) -> list[tuple[str, str]]:
+    out = []
+    if card.get("mondo_id"):
+        out.append(("MONDO", f"https://monarchinitiative.org/{card['mondo_id']}"))
+    for code in card.get("orpha_codes", [])[:2]:
+        out.append(("Orphanet", f"https://www.orpha.net/en/disease/detail/{code}"))
+    return out
+
+
+def drug_links(card: dict) -> list[tuple[str, str]]:
+    out = []
+    if card.get("chembl_id"):
+        out.append(("ChEMBL", f"https://www.ebi.ac.uk/chembl/compound_report_card/{card['chembl_id']}/"))
+    if card.get("structure"):
+        out.append(("RCSB PDB", f"https://www.rcsb.org/structure/{card['structure']}"))
+    return out

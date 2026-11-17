@@ -1298,6 +1298,63 @@
     "text_sources": "Fonts del text:",
     "acts_on_complex_gene": "Actua sobre un complex de proteïnes que inclou la de {list}",
     "registered_as": "(a ChEMBL, per a «{disease}»)",
-    "special": "Una mutació que no surt a la llista"
+    "special": "Una mutació que no surt a la llista",
+    "protein3d": {
+      "menu": "Veure el canvi a la proteïna 3D",
+      "title": "{label} a la proteïna 3D",
+      "model": "Estructura: {model} (AlphaFold DB), la proteïna sana predita per AlphaFold",
+      "position": "Aminoàcid {number} de {length}",
+      "confidence": "{band} en aquesta zona (pLDDT {value})",
+      "burial": {
+        "buried": "On és: a l'interior de la proteïna ({neighbors} aminoàcids al voltant)",
+        "partial": "On és: mig amagat, ni del tot dins ni del tot fora ({neighbors} aminoàcids al voltant)",
+        "exposed": "On és: a la superfície de la proteïna ({neighbors} aminoàcids al voltant)",
+        "disordered": "On és: en una zona sense forma fixa"
+      },
+      "contacts": "El toquen: {list}",
+      "what_changes": "Què canvia en l'aminoàcid",
+      "changes": {
+        "loses_negative": "perd una càrrega negativa",
+        "loses_positive": "perd una càrrega positiva",
+        "gains_negative": "guanya una càrrega negativa",
+        "gains_positive": "guanya una càrrega positiva",
+        "charge_reversed": "la seva càrrega canvia de signe",
+        "hydrophobic_to_polar": "passa de repel·lir l'aigua a portar-s'hi bé",
+        "polar_to_hydrophobic": "passa de portar-se bé amb l'aigua a repel·lir-la",
+        "bigger": "és força més gran",
+        "smaller": "és força més petit",
+        "to_proline": "passa a ser una prolina, que és rígida",
+        "from_glycine": "era una glicina, la més petita i flexible",
+        "cysteine": "guanya o perd una cisteïna, que es pot unir a d'altres"
+      },
+      "meaning": {
+        "surface_sticky": "A la superfície, un aminoàcid que repel·leix l'aigua pot fer que la proteïna s'enganxi a d'altres.",
+        "surface_charge": "A la superfície, els canvis de càrrega poden canviar com s'uneix a altres molècules.",
+        "buried": "A l'interior, un canvi així sol desestabilitzar el plegament: la proteïna es pot plegar malament o durar menys.",
+        "to_proline": "La prolina és rígida i sol trencar les hèlixs de la proteïna.",
+        "from_glycine": "Al lloc d'una glicina, un altre aminoàcid pot no cabre-hi o treure-li flexibilitat.",
+        "cysteine": "Les cisteïnes formen ponts entre elles: guanyar-ne o perdre'n una pot canviar aquests ponts.",
+        "nonsense": "Aquí apareix un codó d'aturada: la proteïna es talla i no es fabriquen els {lost} aminoàcids següents (el {percent} %). Sovint la cèl·lula ni tan sols la fabrica, perquè destrueix aquest ARNm.",
+        "frameshift": "Des d'aquí es descol·loca la lectura de l'ARNm: els {lost} aminoàcids següents surten malament i aviat apareix una aturada.",
+        "deletion": "Aquest aminoàcid falta a la proteïna amb la variant.",
+        "insertion": "La variant afegeix un o més aminoàcids en aquest punt.",
+        "disordered": "AlphaFold té poca confiança en aquesta zona: sol ser una part sense forma fixa, i el seu dibuix és orientatiu."
+      },
+      "note": "AlphaFold mostra la proteïna sana. La forma amb la variant no es pot predir bé amb aquests programes, així que no la dibuixem: només marquem on és el canvi.",
+      "sources": "Fonts: AlphaFold DB (CC BY 4.0; Jumper et al. 2021, Varadi et al. 2024), RefSeq i UniProt.",
+      "open": "Obrir al microscopi 3D",
+      "loading": "Descarregant l'estructura d'AlphaFold DB…",
+      "reasons": {
+        "no_change": "Aquesta variant no canvia un aminoàcid concret de la proteïna.",
+        "no_uniprot": "No tenim la proteïna d'aquest gen a UniProt.",
+        "too_long": "Aquesta proteïna té {length} aminoàcids i AlphaFold DB no publica models de més de 2.700: no hi ha vista 3D.",
+        "service": "No s'ha pogut descarregar l'estructura: {error}",
+        "not_in_structure": "Aquest aminoàcid no és a l'estructura d'AlphaFold.",
+        "mismatch": "L'aminoàcid de l'estructura no és el que diu la variant (una altra versió de la proteïna): no el marquem per no assenyalar un lloc equivocat."
+      }
+    },
+    "links": {
+      "title": "Enllaços:"
+    }
   }
 }
