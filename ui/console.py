@@ -608,8 +608,8 @@ class DatabaseProgress:
         self.same_line = None
 
 
-def significance(value: str | None) -> str:
-    """Clasificación de ClinVar en el idioma del usuario (y en color)."""
+def significance(value: str | None, colors: bool = True) -> str:
+    """Clasificación de ClinVar en el idioma del usuario (y en color, si colors)."""
     if not value:
         return tr("database.significance.none")
 
@@ -617,6 +617,8 @@ def significance(value: str | None) -> str:
         key = SIGNIFICANCE_KEYS.get(part)
         if key is None:
             return part
+        if not colors:
+            return tr(f"database.significance.{key}")
         return SIGNIFICANCE_COLORS.get(key, "") + tr(f"database.significance.{key}") + Style.RESET_ALL
 
     if value in SIGNIFICANCE_KEYS:
@@ -1305,14 +1307,20 @@ def show_variant_card(variant_id: int):
     if not card["diseases"]:
         print("   " + tr("cards.no_variant_diseases"))
     for d in card["diseases"]:
-        effect = tr(f"database.effects.{d['effect'] or 'none'}")
+        # Si ClinVar no la da como causa, factor de riesgo o protección, se dice lo que ClinVar
+        # dice de ella («benigna», «respuesta a un fármaco»…), no «sin efecto claro»
+        effect = tr(f"database.effects.{d['effect']}") if d["effect"] else \
+            significance(d["significance"], colors=False)
         print("   " + colored(d["color"], f"{disease_label(d['name'])} · {effect}") + Style.DIM
               + f"  {d['review']} %" + Style.RESET_ALL)
     if card["other_diseases"]:
         print(Style.DIM + "   " + tr("cards.other_diseases", more=tr.count(card["other_diseases"], "more_disease"))
               + Style.RESET_ALL)
     print(Style.DIM + "\n  " + tr("cards.review_note") + Style.RESET_ALL)
-    card_footer("cards.sources.variant", source=frequency_study(card))
+    if card["frequency"]:
+        card_footer("cards.sources.variant", source=frequency_study(card))
+    else:
+        card_footer("cards.sources.variant_no_frequency")
     print_text_sources("variants", f"{card['gene']}:{card['hgvs_c']}")
     print_links(cards.variant_links(card))
 

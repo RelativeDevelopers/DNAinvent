@@ -286,3 +286,20 @@ def test_console_card_of_a_nonsense_variant(conn, console_on_catalog, capsys):
     console_on_catalog(["1", "1", "c.52A>T", "0", "0", ""])
     out = capsys.readouterr().out
     assert "AAG" in out and "TAG" in out and "Codón de parada (Ter)" in out
+
+
+def test_console_variant_without_frequency_and_with_drug_response(conn, console_on_catalog, capsys):
+    """Sin frecuencia, el pie no dice «frecuencias de gnomAD»; una enfermedad que ClinVar no da
+    como causa ni factor de riesgo dice lo que ClinVar dice («respuesta a fármacos»), no «sin
+    efecto claro»."""
+    gene, hbs, _ = ids(conn)
+    disease = conn.execute("SELECT disease_id FROM variant_diseases WHERE variant_id = ? LIMIT 1",
+                           (hbs,)).fetchone()[0]
+    with conn:
+        conn.execute("UPDATE variants SET population_freq = NULL, freq_source = NULL WHERE id = ?", (hbs,))
+        conn.execute("UPDATE variant_diseases SET effect = NULL, clinical_significance = 'drug response' "
+                     "WHERE variant_id = ? AND disease_id = ?", (hbs, disease))
+    console_on_catalog(["1", "1", "", "1", "0", "0", ""])
+    out = capsys.readouterr().out
+    assert "ClinVar no la tiene" in out and "frecuencias de" not in out
+    assert "respuesta a fármacos" in out and "sin efecto claro" not in out

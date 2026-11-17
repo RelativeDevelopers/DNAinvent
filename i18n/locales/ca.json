@@ -1236,7 +1236,7 @@
     "no_change": "No es pot mostrar codó a codó: no és el canvi d'una sola lletra dins la part del gen que fabrica la proteïna.",
     "frequency": "Freqüència: 1 de cada {n} còpies del gen ({source})",
     "frequency_percent": "Freqüència: el {percent} % de les còpies del gen ({source})",
-    "no_frequency": "Freqüència a la població: sense dades",
+    "no_frequency": "Freqüència a la població: ClinVar no la té",
     "per_disease": "Per a cada malaltia",
     "no_variant_diseases": "Cap registre revisat no la relaciona amb una malaltia concreta.",
     "other_diseases": "I {more} en registres sense revisar o que ajunten diverses malalties (als detalls tècnics).",
@@ -1291,7 +1291,8 @@
       "gene": "Fonts: NCBI Gene i ClinVar (domini públic), Orphanet (CC BY 4.0).",
       "variant": "Fonts: ClinVar i RefSeq (domini públic); freqüències de {source}.",
       "disease": "Fonts: ClinVar (domini públic), Orphanet (CC BY 4.0), ChEMBL (CC BY-SA 3.0).",
-      "drug": "Fonts: ChEMBL (CC BY-SA 3.0), RCSB PDB."
+      "drug": "Fonts: ChEMBL (CC BY-SA 3.0), RCSB PDB.",
+      "variant_no_frequency": "Fonts: ClinVar i RefSeq (domini públic)."
     },
     "did_you_know": "Sabies que…?",
     "why": "Per què funciona",

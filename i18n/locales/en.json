@@ -1236,7 +1236,7 @@
     "no_change": "It cannot be shown codon by codon: it is not a single-letter change inside the part of the gene that makes the protein.",
     "frequency": "How common: 1 in every {n} copies of the gene ({source})",
     "frequency_percent": "How common: {percent} % of the copies of the gene ({source})",
-    "no_frequency": "Frequency in the population: no data",
+    "no_frequency": "Frequency in the population: not available in ClinVar",
     "per_disease": "For each disease",
     "no_variant_diseases": "No reviewed record links it to a specific disease.",
     "other_diseases": "And {more} in unreviewed records or records that group several diseases (in the technical details).",
@@ -1291,7 +1291,8 @@
       "gene": "Sources: NCBI Gene and ClinVar (public domain), Orphanet (CC BY 4.0).",
       "variant": "Sources: ClinVar and RefSeq (public domain); frequencies from {source}.",
       "disease": "Sources: ClinVar (public domain), Orphanet (CC BY 4.0), ChEMBL (CC BY-SA 3.0).",
-      "drug": "Sources: ChEMBL (CC BY-SA 3.0), RCSB PDB."
+      "drug": "Sources: ChEMBL (CC BY-SA 3.0), RCSB PDB.",
+      "variant_no_frequency": "Sources: ClinVar and RefSeq (public domain)."
     },
     "did_you_know": "Did you know…?",
     "why": "Why it works",
