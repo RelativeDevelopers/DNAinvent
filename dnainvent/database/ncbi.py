@@ -147,6 +147,35 @@ class NCBIProvider(EUtilsClient):
             summary["assembly"] = info.get("chraccver")     # p. ej. NC_000011.10
         return summary
 
+    def gene_overview(self, symbol: str, taxon_id: int = HUMAN) -> dict | None:
+        """Ficha básica de un gen SIN importarlo (la web la usa para los genes que no son de serie):
+        símbolo oficial, nombre, cromosoma y banda, otros nombres, el resumen de NCBI (en inglés),
+        los números de OMIM y cuántos registros de ClinVar lo mencionan. None si no existe.
+
+        Son 3-5 peticiones (búsqueda, resumen y recuento de ClinVar): unas 1-2 s sin API key."""
+        gene_id = self.search_gene(symbol, taxon_id)
+        if gene_id is None:
+            return None
+        doc = self.json("esummary.fcgi", {"db": "gene", "id": gene_id}).get("result", {}).get(str(gene_id))
+        if not doc:
+            return None
+        official = doc.get("name") or symbol
+        aliases = [a.strip() for a in (doc.get("otheraliases") or "").split(",") if a.strip()]
+        return {
+            "ncbi_gene_id": int(gene_id), "symbol": official, "name": doc.get("description") or None,
+            "chromosome": doc.get("chromosome") or None, "map_location": doc.get("maplocation") or None,
+            "aliases": aliases, "summary": doc.get("summary") or None,
+            "mim": [str(m) for m in doc.get("mim") or []],
+            "taxon_id": int((doc.get("organism") or {}).get("taxid", 0)) or None,
+            "clinvar_records": self.clinvar_count(official),
+        }
+
+    def clinvar_count(self, symbol: str) -> int:
+        """Cuántos registros de ClinVar mencionan el gen (incluye cambios grandes que abarcan
+        varios genes, así que es una cifra orientativa)."""
+        data = self.json("esearch.fcgi", {"db": "clinvar", "term": f"{symbol}[gene]", "retmax": 0})
+        return int(data.get("esearchresult", {}).get("count", 0))
+
     def find_reference_transcript(self, symbol: str, taxon_id: int, gene_id: int) -> str | None:
         """Accesión.versión del ARNm de referencia: RefSeq Select o, si no hay, el primer NM_.
 

@@ -479,3 +479,15 @@ def drug_links(card: dict) -> list[tuple[str, str]]:
     if card.get("structure"):
         out.append(("RCSB PDB", f"https://www.rcsb.org/structure/{card['structure']}"))
     return out
+
+
+def overview_links(gene: dict) -> list[tuple[str, str]]:
+    """Enlaces de la ficha básica de un gen que no es de serie (ncbi.gene_overview)."""
+    symbol = gene["symbol"]
+    out = [("NCBI Gene", f"{NCBI}/gene/{gene['ncbi_gene_id']}"),
+           ("ClinVar", f"{NCBI}/clinvar/?term={symbol}%5Bgene%5D")]
+    out += [(f"OMIM {mim}", f"https://omim.org/entry/{mim}") for mim in gene.get("mim", [])[:2]]
+    out.append(("UniProt", f"https://www.uniprot.org/uniprotkb?query=gene_exact%3A{symbol}"
+                           f"+AND+organism_id%3A{gene.get('taxon_id') or 9606}"))
+    return out
+
