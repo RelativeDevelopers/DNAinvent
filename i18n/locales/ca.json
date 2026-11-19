@@ -9,7 +9,8 @@
     "tools_title": "DNAtools",
     "bits_title": "Ésser a partir de bits",
     "goodbye": "Fins aviat!",
-    "database_title": "Base de dades"
+    "database_title": "Base de dades",
+    "anatomy_title": "Cos humà"
   },
   "menu": {
     "main": {
@@ -24,7 +25,8 @@
       "exit": "Sortir",
       "microscope": "Microscopi 3D: de l'hèlix als quarks",
       "protein": "Proteïna 3D: de l'ADN a l'estructura",
-      "database": "Base de dades de gens reals (NCBI i ClinVar)"
+      "database": "Base de dades de gens reals (NCBI i ClinVar)",
+      "anatomy": "Cos humà: anatomia 3D, cèl·lules i gens"
     },
     "tools": {
       "find": "Cercar una seqüència",
@@ -49,6 +51,12 @@
       "list": "Gens desats",
       "disease": "Una malaltia i els seus tractaments",
       "pocket": "Un fàrmac dins de la seva proteïna (PDB)"
+    },
+    "anatomy": {
+      "search": "Cercar una part del cos",
+      "systems": "Recórrer per sistemes (ossos, músculs, òrgans...)",
+      "viewer": "Obrir el cos en 3D",
+      "last": "Fitxa de l'últim que vas triar al visor 3D"
     }
   },
   "common": {
@@ -521,6 +529,14 @@
     "more_disease": {
       "one": "{n} malaltia més",
       "other": "{n} malalties més"
+    },
+    "piece": {
+      "one": "{n} peça 3D",
+      "other": "{n} peces 3D"
+    },
+    "cell_type": {
+      "one": "{n} tipus de cèl·lula",
+      "other": "{n} tipus de cèl·lula"
     }
   },
   "microscope": {
@@ -1356,6 +1372,107 @@
     },
     "links": {
       "title": "Enllaços:"
+    }
+  },
+  "anatomy": {
+    "missing": "«Cos humà» encara no està preparat en aquest ordinador ({path}). Es prepara una vegada amb tools/build_anatomy (vegeu el README).",
+    "old": "«Cos humà» es va preparar amb una versió anterior. Torna a executar tools/build_anatomy.",
+    "ask_search": "Part del cos (p. ex. cor, fèmur, bíceps; també en anglès): ",
+    "no_results": "No hi ha cap part del cos que es digui «{text}». Prova amb una altra paraula (també en anglès).",
+    "choose": "Número (Enter per tornar): ",
+    "choose_system": "Sistema (Enter per tornar): ",
+    "filter": "Filtra pel nom (Enter = totes): ",
+    "more": "… i {count} més. Escriu una paraula per filtrar.",
+    "no_selection": "Encara no has triat res al visor 3D (fes clic sobre una peça).",
+    "viewer_opening": "S'obre el cos en 3D en una altra finestra. Fes clic sobre una peça per triar-la; després, aquí, l'opció 4 et mostra la seva fitxa.",
+    "viewer_missing": "Per veure el cos en 3D cal instal·lar: {packages} (pip install numpy moderngl pyglet pillow)",
+    "systems": {
+      "skeletal": "Ossos",
+      "muscular": "Músculs",
+      "connective": "Lligaments i tendons",
+      "heart": "Cor",
+      "arteries": "Artèries",
+      "veins": "Venes",
+      "nervous": "Sistema nerviós",
+      "respiratory": "Aparell respiratori",
+      "digestive": "Aparell digestiu",
+      "urinary": "Aparell urinari",
+      "reproductive": "Aparell reproductor",
+      "endocrine": "Glàndules endocrines",
+      "lymphatic": "Sistema limfàtic",
+      "senses": "Òrgans dels sentits",
+      "skin": "Pell",
+      "other": "Altres parts"
+    },
+    "tissues": {
+      "skeletal_muscle": "múscul esquelètic",
+      "bone": "os",
+      "cartilage": "cartílag",
+      "tooth": "dent",
+      "dense_connective": "tendons i lligaments",
+      "artery": "artèria",
+      "vein": "vena",
+      "nerve": "nervi",
+      "brain": "encèfal i medul·la espinal",
+      "skin": "pell"
+    },
+    "card": {
+      "system": "Sistema",
+      "size": "Mida",
+      "size_value": "uns {cm} cm de llarg",
+      "pieces": "En 3D",
+      "kind": "Què és",
+      "part_of": "Forma part de",
+      "parts": "Les seves parts",
+      "cells_title": "Cèl·lules i gens",
+      "cells_own": "Cèl·lules d'aquesta part del cos i gens que les distingeixen (Human Reference Atlas):",
+      "cells_own_parts": "Cèl·lules de les seves diferents parts i gens que les distingeixen (Human Reference Atlas):",
+      "cells_organ": "Les taules no tenen aquesta part en concret. Són les de «{name}», de què forma part (Human Reference Atlas):",
+      "cells_tissue": "Cèl·lules típiques del teixit «{tissue}» (no d'aquesta peça en concret) i els seus gens més coneguts:",
+      "no_cells": "Encara no hi ha dades de cèl·lules per a aquesta part del cos.",
+      "more_genes": "+{count}",
+      "more_cells": "… i {count} més ([5] per veure-les totes).",
+      "series": "★ = gen de sèrie: té fitxa completa a «Gens reals» (opció 9 → C).",
+      "what_genes": "Els gens marcadors són els que més s'activen en aquella cèl·lula i serveixen per reconèixer-la; no són els únics que fa servir.",
+      "disclaimer": "Divulgació sobre un cos de referència (home adult). No serveix per diagnosticar. Davant de qualsevol dubte de salut, consulta un professional sanitari.",
+      "sources": "Fonts: forma 3D de BodyParts3D (© DBCLS, CC BY 4.0); cèl·lules i gens: {cells}.",
+      "sources_asctb": "Human Reference Atlas, taules ASCT+B v2.0 (HuBMAP, CC BY 4.0)",
+      "sources_tissue": "taula pròpia a partir de la Cell Ontology i el Human Protein Atlas",
+      "menu": {
+        "view3d": "Veure en 3D",
+        "parts": "Les seves parts",
+        "part_of": "De què forma part",
+        "gene": "Gen de sèrie",
+        "cells": "Totes les cèl·lules"
+      },
+      "choose_part": "Número de la part (Enter per tornar): ",
+      "choose_gene": "Número del gen (Enter per tornar): "
+    },
+    "viewer": {
+      "title": "DNAinvent · Cos humà",
+      "layers": "Capes (clic per encendre o apagar)",
+      "help": [
+        "Arrossegar: girar · Clic dret i arrossegar: moure · Roda: apropar",
+        "Clic en una peça: triar-la · F: centrar-la · I: veure només el triat",
+        "C: colors · A: totes les capes · R: vista inicial · L: idioma · H: ajuda · Esc: sortir"
+      ],
+      "none": "Fes clic sobre una peça per saber què és",
+      "cells": "Cèl·lules: {list}",
+      "genes": "Gens: {list}",
+      "series": "★ Gens de sèrie: {list}",
+      "tissue": "(típiques del teixit «{tissue}»)",
+      "no_cells": "Encara no hi ha dades de cèl·lules d'aquesta part.",
+      "console": "Fitxa completa a la consola: Cos humà → 4",
+      "isolate_on": "Només el triat",
+      "isolate_off": "Tot el cos",
+      "colors_systems": "Colors per sistema",
+      "colors_plain": "Un sol color",
+      "language": "Català",
+      "all_layers": "Totes les capes enceses",
+      "reset": "Vista inicial",
+      "nothing_selected": "Primer tria una peça",
+      "loaded": "Cos humà: {pieces} peces i {triangles} triangles.",
+      "footer": "Cos de referència · divulgació, no diagnòstic · BodyParts3D © DBCLS (CC BY 4.0)"
     }
   }
 }

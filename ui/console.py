@@ -10,7 +10,8 @@ import textwrap
 
 from colorama import Fore, Style, init
 
-from dnainvent import DNAinventError, alignment, bits, crispr, sequences, tools
+from dnainvent import DNAinventError, alignment, anatomy, bits, crispr, sequences, tools
+from dnainvent.anatomy import cards as body_cards
 from dnainvent.constants import AMINO_ACID_CODES
 from dnainvent.database import cards, default_path, open_database, protein3d, queries, texts
 from dnainvent.database.catalog import CatalogTooOld, catalog_path, open_catalog
@@ -1553,6 +1554,222 @@ def database_menu():
     }, back_key="menu.back")
 
 
+# ---------- Cuerpo humano ----------
+BODY_RESULTS = 25          # resultados de una búsqueda
+BODY_LIST = 40             # piezas de un sistema que se enumeran
+BODY_CELLS = 8             # tipos de célula en la ficha (el resto, con [5])
+BODY_GENES = 8             # genes por célula
+_anatomy = None
+
+
+def anatomy_conn():
+    """«Cuerpo humano», abierto la primera vez que hace falta (None si no está preparado)."""
+    global _anatomy
+    if _anatomy is None:
+        try:
+            _anatomy = anatomy.open_anatomy()
+        except anatomy.AnatomyMissing as exc:
+            exists = anatomy.database_file().is_file()
+            warning(tr("anatomy.old") if exists else tr("anatomy.missing", path=exc))
+            return None
+    return _anatomy
+
+
+def series_symbols() -> frozenset:
+    from dnainvent.database.catalog import CATALOG_GENES
+    return frozenset(CATALOG_GENES)
+
+
+def body_label(item: dict) -> str:
+    """El nombre escrito a mano; si no lo hay, el inglés con la marca."""
+    if item.get("label"):
+        return item["label"]
+    mark = tr("cards.english_name")
+    return f"{item['name']} {Style.DIM}{mark}{Style.RESET_ALL}" if mark else item["name"]
+
+
+def anatomy_menu():
+    menu("app.anatomy_title", {
+        "1": ("menu.anatomy.search", anatomy_search),
+        "2": ("menu.anatomy.systems", anatomy_systems),
+        "3": ("menu.anatomy.viewer", lambda: open_body_3d()),
+        "4": ("menu.anatomy.last", anatomy_last),
+    }, back_key="menu.back")
+
+
+def anatomy_search():
+    conn = anatomy_conn()
+    if conn is None:
+        return
+    text = input(tr("anatomy.ask_search")).strip()
+    if not text:
+        return
+    results = body_cards.search(conn, text, tr.language, limit=BODY_RESULTS)
+    if not results:
+        print(tr("anatomy.no_results", text=text))
+        return
+    for number, item in enumerate(results, start=1):
+        system = tr(f"anatomy.systems.{item['system']}") if item["system"] else ""
+        print(f"   {number:>2}] {body_label(item)}{Style.DIM}  · {system} · "
+              f"{tr.count(item['pieces'], 'piece')}{Style.RESET_ALL}")
+    item = pick(results, "anatomy.choose")
+    if item is not None:
+        show_body_card(item["fma"])
+
+
+def anatomy_systems():
+    conn = anatomy_conn()
+    if conn is None:
+        return
+    systems = body_cards.systems(conn)
+    while True:
+        print("\n        " + tr("menu.anatomy.systems"))
+        for number, s in enumerate(systems, start=1):
+            name = tr(f"anatomy.systems.{s['key']}")
+            print(f"    {number:>2}] {name:<28}{Style.DIM}"
+                  f"{tr.count(s['pieces'], 'piece')}{Style.RESET_ALL}")
+        system = pick(systems, "anatomy.choose_system")
+        if system is None:
+            return
+        text = input(tr("anatomy.filter")).strip()
+        items = body_cards.system_concepts(conn, system["key"], tr.language, text)
+        for number, item in enumerate(items[:BODY_LIST], start=1):
+            print(f"   {number:>2}] {body_label(item)}")
+        if len(items) > BODY_LIST:
+            print("   " + tr("anatomy.more", count=len(items) - BODY_LIST))
+        item = pick(items[:BODY_LIST], "anatomy.choose")
+        if item is not None:
+            show_body_card(item["fma"])
+
+
+def open_body_3d(select: str | None = None):
+    missing = launcher.missing_body_dependencies()
+    if missing:
+        error(tr("anatomy.viewer_missing", packages=missing))
+        return
+    if anatomy_conn() is None:
+        return
+    launcher.open_body_viewer(tr.language, select)
+    print(tr("anatomy.viewer_opening"))
+
+
+def anatomy_last():
+    import json
+    conn = anatomy_conn()
+    if conn is None:
+        return
+    try:
+        chosen = json.loads(anatomy.selection_file().read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        chosen = None
+    if not chosen or not chosen.get("fma"):
+        print(tr("anatomy.no_selection"))
+        return
+    show_body_card(chosen["fma"])
+
+
+def print_body_cells(card: dict, everything: bool = False):
+    cells = card["cells"]
+    print("\n  " + Style.BRIGHT + tr("anatomy.card.cells_title") + Style.RESET_ALL)
+    if not cells["cells"]:
+        print(paragraph(tr("anatomy.card.no_cells")))
+        return
+    if cells["source"] == "tissue":
+        intro = tr("anatomy.card.cells_tissue", tissue=tr(f"anatomy.tissues.{cells['tissue']}"))
+    elif cells["source"] == "organ":
+        intro = tr("anatomy.card.cells_organ", name=cells["found_at"]["label"] or cells["found_at"]["name"])
+    else:
+        intro = tr("anatomy.card.cells_own_parts" if cells["in_parts"] else "anatomy.card.cells_own")
+    print(paragraph(intro))
+    shown = cells["cells"] if everything else cells["cells"][:BODY_CELLS]
+    for cell in shown:
+        print("   · " + body_label(cell))
+        if cell["genes"]:
+            genes = [(Fore.YELLOW + "★" + g["symbol"] + Style.RESET_ALL) if g["series"] else g["symbol"]
+                     for g in cell["genes"][:BODY_GENES]]
+            extra = len(cell["genes"]) - BODY_GENES
+            if extra > 0:
+                genes.append(tr("anatomy.card.more_genes", count=extra))
+            print("     " + Fore.CYAN + ", ".join(genes) + Style.RESET_ALL)
+    if len(cells["cells"]) > len(shown):
+        print("   " + tr("anatomy.card.more_cells", count=len(cells["cells"]) - len(shown)))
+    if card["series_genes"]:
+        print("\n  " + tr("anatomy.card.series"))
+    print(Style.DIM + paragraph(tr("anatomy.card.what_genes")) + Style.RESET_ALL)
+
+
+def show_body_card(fma: str):
+    conn = anatomy_conn()
+    card = body_cards.concept_card(conn, fma, tr.language, series_symbols())
+    if card is None:
+        return
+    system = tr(f"anatomy.systems.{card['system']}") if card["system"] else ""
+    card_header(card["label"] or card["name"], system)
+    if card["label"]:
+        print(Style.DIM + "  " + card["name"] + Style.RESET_ALL)
+    rows = [("anatomy.card.pieces", tr.count(card["pieces"], "piece"))]
+    if card["size_cm"]:
+        rows.append(("anatomy.card.size", tr("anatomy.card.size_value", cm=tr.decimal(card["size_cm"], 1, trim=True))))
+    if card["kinds"]:
+        rows.append(("anatomy.card.kind", ", ".join(k["label"] or k["name"] for k in card["kinds"][:3])))
+    if card["part_of"]:
+        rows.append(("anatomy.card.part_of", ", ".join(p["label"] or p["name"] for p in card["part_of"][:3])))
+    if card["parts"]:
+        names = [p["label"] or p["name"] for p in card["parts"][:6]]
+        more = len(card["parts"]) + card["more_parts"] - len(names)
+        rows.append(("anatomy.card.parts", ", ".join(names) + (f" (+{more})" if more > 0 else "")))
+    print()
+    print_labeled(rows, indent="  ")
+    print_body_cells(card)
+    sources = tr("anatomy.card.sources_tissue" if card["cells"]["source"] == "tissue" else "anatomy.card.sources_asctb")
+    print(" " + "─" * CARD_WIDTH)
+    print(Style.DIM + paragraph(tr("anatomy.card.disclaimer")) + "\n" + paragraph(tr("anatomy.card.sources", cells=sources))
+          + Style.RESET_ALL)
+    print_links(card["links"])
+
+    while True:
+        options = [("1", tr("anatomy.card.menu.view3d"))]
+        if card["parts"]:
+            options.append(("2", tr("anatomy.card.menu.parts")))
+        if card["part_of"]:
+            options.append(("3", tr("anatomy.card.menu.part_of")))
+        if card["series_genes"]:
+            options.append(("4", tr("anatomy.card.menu.gene")))
+        if len(card["cells"]["cells"]) > BODY_CELLS:
+            options.append(("5", tr("anatomy.card.menu.cells")))
+        choice = card_choice(options)
+        if choice == "0":
+            return
+        if choice == "1":
+            open_body_3d(fma)
+        elif choice in ("2", "3"):
+            items = card["parts"] if choice == "2" else card["part_of"]
+            for number, item in enumerate(items, start=1):
+                print(f"   {number:>2}] {body_label(item)}")
+            item = pick(items, "anatomy.card.choose_part")
+            if item is not None:
+                show_body_card(item["fma"])
+                return
+        elif choice == "4":
+            for number, symbol in enumerate(card["series_genes"], start=1):
+                print(f"   {number}] {symbol}")
+            symbol = pick(card["series_genes"], "anatomy.card.choose_gene")
+            if symbol is not None:
+                open_series_gene(symbol)
+        else:
+            print_body_cells(card, everything=True)
+
+
+def open_series_gene(symbol: str):
+    """La ficha completa de un gen de serie (la de «Genes reales»)."""
+    conn = catalog()
+    if conn is None:
+        return
+    gene = next((g for g in queries.genes(conn) if g["symbol"] == symbol), None)
+    if gene is not None:
+        show_gene_card(gene["id"])
+
+
 def option_language():
     choose_language()
     print(tr("language.changed"))
@@ -1735,6 +1952,7 @@ def run(language: str | None = None) -> None:
             "7": ("menu.main.microscope", option_microscope),
             "8": ("menu.main.protein", option_protein),
             "9": ("menu.main.database", database_menu),
+            "A": ("menu.main.anatomy", anatomy_menu),
             "*": ("menu.main.tools", tools_menu),
             "L": ("menu.main.language", option_language),
         }, back_key="menu.main.exit")

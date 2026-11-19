@@ -10,7 +10,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "dnainvent"
 dynamic = ["version"]
-description = "Herramientas para secuencias de ADN y ARN: traducción, alineamiento, binario, CRISPR/Cas9, microscopio 3D y base de datos de genes reales."
+description = "Herramientas para secuencias de ADN y ARN: traducción, alineamiento, binario, CRISPR/Cas9, microscopio 3D, base de datos de genes reales y cuerpo humano en 3D."
 readme = "README.md"
 requires-python = ">=3.11"
 authors = [{ name = "Alexei Barberà Roca", email = "relativedevelopers@gmail.com" }]
@@ -21,6 +21,8 @@ console = ["colorama>=0.4"]
 # dnainvent.scene: la molécula átomo a átomo para el microscopio 3D. La física del átomo hacia
 # abajo es la de AtomicWorld; instálalo antes desde su carpeta (ver README).
 scene = ["numpy>=1.26", "atomicworld[scene]"]
+# Solo para construir «Cuerpo humano» (tools/build_anatomy.py): reducir los triángulos.
+anatomy-build = ["numpy>=1.26", "fast-simplification>=0.1"]
 test = ["pytest>=8"]
 
 [tool.pytest.ini_options]
@@ -39,3 +41,4 @@ i18n = ["locales/*.json"]
 "dnainvent.scene" = ["templates/*.json"]
 "dnainvent.protein" = ["templates/*.json"]
 "dnainvent.database" = ["schema.sql", "texts/*.json"]
+"dnainvent.anatomy" = ["texts/*.json"]

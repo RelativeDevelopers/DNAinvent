@@ -112,6 +112,21 @@ enfermedades asociadas, y consultarlo sin conexión.
 - **Fármacos** (de ChEMBL): los que actúan sobre la proteína del gen y los indicados para cada enfermedad, en qué fase están y cómo actúan. Cada enfermedad dice si tiene tratamiento aprobado, en ensayo o nada todavía. *Aprobado quiere decir que la trata, no necesariamente que la cure. Es divulgación, no consejo médico.*
 - **Un fármaco dentro de su proteína:** a partir de una estructura del PDB (por ejemplo 5E83, la hemoglobina de la anemia falciforme con voxelotor), qué aminoácidos lo rodean y cómo lo sujetan: enlace covalente, puente de hidrógeno o contacto hidrófobo, con la distancia medida en el cristal.
 
+### 🫀 Cuerpo humano en 3D *(en desarrollo, versión 2.2)*
+El cuerpo de un hombre adulto de referencia, **pieza a pieza (2.234 piezas)**: huesos, músculos,
+corazón, arterias, venas, nervios, órganos… Pulsa cualquier pieza y te dice **qué es, qué células
+tiene y qué genes las distinguen**.
+- **Capas** que se encienden y apagan (15 sistemas), vista de una pieza sola y colores por sistema.
+- **Ficha de cada parte:** cuánto mide, de qué forma parte, sus partes y sus células, con los
+  **genes marcadores** de cada una. Los genes de serie llevan ★ y llevan a su ficha de «Genes reales».
+- **De dónde salen las células:** de las tablas del *Human Reference Atlas* cuando tienen esa parte
+  (corazón, pulmón, riñón, hígado, timo, próstata…); si no, de lo que forma parte (el ventrículo
+  → el corazón); y si tampoco, las **células típicas de su tejido** (músculo esquelético, hueso,
+  cartílago…), y la ficha lo dice claramente.
+- Buscador por nombre en castellano, catalán o inglés.
+
+> ⚠️ **Es divulgación sobre un cuerpo de referencia**, no sirve para diagnosticar.
+
 ---
 
 ## 🚀 Instalación
@@ -183,6 +198,7 @@ En el menú principal tienes todas las herramientas. Algunas destacadas:
 - **7] Microscopio 3D**
 - **8] Proteína 3D**
 - **9] Base de datos de genes** → **C] Genes de serie (fichas)** para los 14 genes de serie
+- **A] Cuerpo humano** — buscar una parte del cuerpo, recorrerlo por sistemas, abrirlo en 3D y ver la ficha de lo que elegiste en el visor
 - **L] Cambiar idioma**
 
 ### El microscopio directamente
@@ -215,6 +231,24 @@ El microscopio muestra hasta **60 pares de bases** (o 150 aminoácidos) a la vez
 | **C** | (comparando proteínas) pantalla partida ↔ superpuestas |
 | **V** | (pantalla partida) cambiar el lado que controlas |
 
+### El cuerpo humano directamente
+```bash
+python -m bodyviewer                      # el cuerpo entero
+python -m bodyviewer --select FMA7088     # con el corazón elegido (ID de la FMA)
+```
+
+| Ratón / tecla | Acción |
+|---|---|
+| **Arrastrar** · **Rueda** | girar · acercar |
+| **Clic derecho y arrastrar** (o Mayús + arrastrar) | mover |
+| **Clic en una pieza** · **Esc** | elegirla · soltarla (Esc otra vez: salir) |
+| **Clic en una capa** · **A** | encenderla o apagarla · todas encendidas |
+| **F** · **I** | centrar lo elegido · verlo solo |
+| **C** · **R** | colores por sistema o de un solo color · vista inicial |
+| **L** · **H** · **F11** | idioma · ayuda · pantalla completa |
+
+Al pulsar una pieza, la consola (**A] Cuerpo humano → 4**) enseña su ficha completa.
+
 ---
 
 ## 💡 Consejos
@@ -233,6 +267,7 @@ Casi todo funciona sin conexión. Solo se conecta a Internet para:
 - **Descargar estructuras con fármacos** del PDB (RCSB).
 - **Ver una mutación en la proteína 3D** (el modelo de AlphaFold DB se descarga la primera vez y se guarda).
 - **Construir el catálogo de genes de serie** (solo si lo haces tú: ver *Para desarrolladores*).
+- **Preparar «Cuerpo humano»** (una vez: descarga de GitHub las tablas del Human Reference Atlas y Uberon). Después funciona sin conexión.
 
 El EBI y el NCBI piden un correo de contacto en cada búsqueda; se usa el de Relative Developers (`relativedevelopers@gmail.com`), y puedes cambiarlo con la variable de entorno `DNAINVENT_EMAIL`. No se envía nada más.
 
@@ -306,6 +341,31 @@ del código:
 El código de la opción 9 está en `dnainvent/database/` (`catalog.py` construye el catálogo,
 `cards.py` prepara las fichas y `protein3d.py` sitúa la mutación en la proteína).
 
+### Preparar «Cuerpo humano»
+
+Se prepara una vez en `~/.dnainvent/anatomy/` (unos 20 MB; la variable `DNAINVENT_ANATOMY` permite
+otra carpeta):
+
+1. Descarga de https://dbarchive.biosciencedbc.jp/data/bodyparts3d/LATEST/ estos 8 archivos de
+   BodyParts3D 4.0 (sin descomprimir) en `../datos/bodyparts3d/`, al lado de la carpeta del programa:
+   `isa_parts_list_e.txt`, `partof_parts_list_e.txt`, `isa_inclusion_relation_list.txt`,
+   `partof_inclusion_relation_list.txt`, `isa_element_parts.txt`, `partof_element_parts.txt`,
+   `isa_BP3D_4.0_obj_99.zip` y `partof_BP3D_4.0_obj_99.zip`.
+2. Ejecuta:
+
+```bash
+pip install fast-simplification          # para reducir los triángulos (solo para prepararlo)
+python tools/build_anatomy.py            # en Windows: tools\build_anatomy.bat
+```
+
+Tarda menos de un minuto. Se queda con una cuarta parte de los triángulos (`--ratio` para más o
+menos detalle) y guarda una base de datos (`anatomy.db`) y las mallas de cada sistema
+(`meshes/*.dnab`, un formato propio que leen igual la consola y la web).
+
+El código está en `dnainvent/anatomy/` (`bodyparts3d.py` lee los modelos, `systems.py` reparte las
+piezas en capas, `cells.py` y `tissues.py` buscan sus células, `cards.py` prepara las fichas y
+`texts/` tiene los nombres escritos a mano); el visor, en `bodyviewer/`.
+
 ---
 
 ## 🙏 Créditos y datos
@@ -316,6 +376,7 @@ El código de la opción 9 está en `dnainvent/database/` (`catalog.py` construy
 - **Textos de los genes de serie** («¿Sabías que…?», «por qué funciona»): propios, escritos a partir de las fuentes que se citan en cada ficha.
 - **Fármacos:** ChEMBL, licencia CC BY-SA 3.0 (Zdrazil et al. 2024, *NAR*). **Proteínas de cada gen:** UniProt, CC BY 4.0. **Estructuras con fármacos:** RCSB PDB (dominio público).
 - **Modelo de la doble hélice:** inspirado en la idea de [codegiovanni/DNA_helix](https://github.com/codegiovanni/DNA_helix) (hélice paramétrica girada con una matriz de rotación). El código es propio y usa las medidas reales del ADN B.
+- **Cuerpo humano:** BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0 International. Células y genes: Human Reference Atlas, tablas ASCT+B v2.0 (HuBMAP; Börner et al. 2021, *Nature Cell Biology*), CC BY 4.0; Uberon (CC BY 3.0) y Cell Ontology (CC BY 4.0). Las células típicas de cada tejido son una tabla propia a partir de la Cell Ontology y el Human Protein Atlas.
 - **Microscopio 3D:** viene del proyecto *Microscopio de ADN* (DNAmicroscope) y comparte física y renderizado con el visor de **AtomicWorld**.
 
 ---

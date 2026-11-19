@@ -39,3 +39,20 @@ def protein_microscope_command(session: str, language: str, realistic: bool = Fa
 
 def open_protein_microscope(session: str, language: str) -> subprocess.Popen:
     return subprocess.Popen(protein_microscope_command(session, language), cwd=PROJECT_ROOT)
+
+
+# ---------- «Cuerpo humano» (python -m bodyviewer)
+BODY_PACKAGES = ("numpy", "moderngl", "pyglet", "PIL")
+
+
+def missing_body_dependencies() -> str:
+    return ", ".join(p for p in BODY_PACKAGES if importlib.util.find_spec(p) is None)
+
+
+def body_viewer_command(language: str, select: str | None = None) -> list[str]:
+    command = [sys.executable, "-m", "bodyviewer", "--lang", language]
+    return command + (["--select", select] if select else [])
+
+
+def open_body_viewer(language: str, select: str | None = None) -> subprocess.Popen:
+    return subprocess.Popen(body_viewer_command(language, select), cwd=PROJECT_ROOT)

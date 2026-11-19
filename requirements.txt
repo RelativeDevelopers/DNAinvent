@@ -10,3 +10,5 @@ numpy>=1.26
 moderngl>=5.10
 pyglet>=2.0
 pillow>=10.1
+# Solo para preparar «Cuerpo humano» (tools/build_anatomy): reducir los triángulos
+fast-simplification>=0.1

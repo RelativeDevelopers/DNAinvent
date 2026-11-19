@@ -9,7 +9,8 @@
     "tools_title": "DNAtools",
     "bits_title": "Being from bits",
     "goodbye": "See you next time!",
-    "database_title": "Database"
+    "database_title": "Database",
+    "anatomy_title": "Human body"
   },
   "menu": {
     "main": {
@@ -24,7 +25,8 @@
       "exit": "Exit",
       "microscope": "3D microscope: from the helix to the quarks",
       "protein": "3D protein: from DNA to structure",
-      "database": "Database of real genes (NCBI and ClinVar)"
+      "database": "Database of real genes (NCBI and ClinVar)",
+      "anatomy": "Human body: 3D anatomy, cells and genes"
     },
     "tools": {
       "find": "Find a sequence",
@@ -49,6 +51,12 @@
       "list": "Saved genes",
       "disease": "A disease and its treatments",
       "pocket": "A drug inside its protein (PDB)"
+    },
+    "anatomy": {
+      "search": "Search for a body part",
+      "systems": "Browse by system (bones, muscles, organs...)",
+      "viewer": "Open the body in 3D",
+      "last": "Card of what you last picked in the 3D viewer"
     }
   },
   "common": {
@@ -521,6 +529,14 @@
     "more_disease": {
       "one": "{n} more disease",
       "other": "{n} more diseases"
+    },
+    "piece": {
+      "one": "{n} 3D piece",
+      "other": "{n} 3D pieces"
+    },
+    "cell_type": {
+      "one": "{n} cell type",
+      "other": "{n} cell types"
     }
   },
   "microscope": {
@@ -1356,6 +1372,107 @@
     },
     "links": {
       "title": "Links:"
+    }
+  },
+  "anatomy": {
+    "missing": "\"Human body\" is not set up on this computer yet ({path}). Set it up once with tools/build_anatomy (see the README).",
+    "old": "\"Human body\" was set up with an older version. Run tools/build_anatomy again.",
+    "ask_search": "Body part (e.g. heart, femur, biceps): ",
+    "no_results": "No body part is called \"{text}\". Try another word.",
+    "choose": "Number (Enter to go back): ",
+    "choose_system": "System (Enter to go back): ",
+    "filter": "Filter by name (Enter = all): ",
+    "more": "… and {count} more. Type a word to filter.",
+    "no_selection": "You haven't picked anything in the 3D viewer yet (click on a piece).",
+    "viewer_opening": "Opening the body in 3D in another window. Click on a piece to pick it; then, here, option 4 shows its card.",
+    "viewer_missing": "To see the body in 3D you need to install: {packages} (pip install numpy moderngl pyglet pillow)",
+    "systems": {
+      "skeletal": "Bones",
+      "muscular": "Muscles",
+      "connective": "Ligaments and tendons",
+      "heart": "Heart",
+      "arteries": "Arteries",
+      "veins": "Veins",
+      "nervous": "Nervous system",
+      "respiratory": "Respiratory system",
+      "digestive": "Digestive system",
+      "urinary": "Urinary system",
+      "reproductive": "Reproductive system",
+      "endocrine": "Endocrine glands",
+      "lymphatic": "Lymphatic system",
+      "senses": "Sense organs",
+      "skin": "Skin",
+      "other": "Other parts"
+    },
+    "tissues": {
+      "skeletal_muscle": "skeletal muscle",
+      "bone": "bone",
+      "cartilage": "cartilage",
+      "tooth": "tooth",
+      "dense_connective": "tendons and ligaments",
+      "artery": "artery",
+      "vein": "vein",
+      "nerve": "nerve",
+      "brain": "brain and spinal cord",
+      "skin": "skin"
+    },
+    "card": {
+      "system": "System",
+      "size": "Size",
+      "size_value": "about {cm} cm long",
+      "pieces": "In 3D",
+      "kind": "What it is",
+      "part_of": "Part of",
+      "parts": "Its parts",
+      "cells_title": "Cells and genes",
+      "cells_own": "Cells of this body part and the genes that set them apart (Human Reference Atlas):",
+      "cells_own_parts": "Cells of its different parts and the genes that set them apart (Human Reference Atlas):",
+      "cells_organ": "The tables don't have this exact part. These are the cells of \"{name}\", which it is part of (Human Reference Atlas):",
+      "cells_tissue": "Typical cells of {tissue} tissue (not of this piece in particular) and their best-known genes:",
+      "no_cells": "There is no cell data for this body part yet.",
+      "more_genes": "+{count}",
+      "more_cells": "… and {count} more ([5] to see them all).",
+      "series": "★ = featured gene: it has a full card in \"Real genes\" (option 9 → C).",
+      "what_genes": "Marker genes are the ones most active in that cell and help recognise it; they are not the only ones it uses.",
+      "disclaimer": "Educational content about a reference body (adult male). It cannot be used for diagnosis. If you have any health concern, ask a healthcare professional.",
+      "sources": "Sources: 3D shape from BodyParts3D (© DBCLS, CC BY 4.0); cells and genes: {cells}.",
+      "sources_asctb": "Human Reference Atlas, ASCT+B tables v2.0 (HuBMAP, CC BY 4.0)",
+      "sources_tissue": "our own table based on the Cell Ontology and the Human Protein Atlas",
+      "menu": {
+        "view3d": "See in 3D",
+        "parts": "Its parts",
+        "part_of": "What it is part of",
+        "gene": "Featured gene",
+        "cells": "All the cells"
+      },
+      "choose_part": "Number of the part (Enter to go back): ",
+      "choose_gene": "Number of the gene (Enter to go back): "
+    },
+    "viewer": {
+      "title": "DNAinvent · Human body",
+      "layers": "Layers (click to switch on or off)",
+      "help": [
+        "Drag: rotate · Right-click and drag: move · Wheel: zoom",
+        "Click on a piece: pick it · F: centre it · I: show only what you picked",
+        "C: colours · A: all layers · R: start view · L: language · H: help · Esc: quit"
+      ],
+      "none": "Click on a piece to find out what it is",
+      "cells": "Cells: {list}",
+      "genes": "Genes: {list}",
+      "series": "★ Featured genes: {list}",
+      "tissue": "(typical of {tissue} tissue)",
+      "no_cells": "There is no cell data for this part yet.",
+      "console": "Full card in the console: Human body → 4",
+      "isolate_on": "Only what you picked",
+      "isolate_off": "Whole body",
+      "colors_systems": "Colours by system",
+      "colors_plain": "A single colour",
+      "language": "English",
+      "all_layers": "All layers on",
+      "reset": "Start view",
+      "nothing_selected": "Pick a piece first",
+      "loaded": "Human body: {pieces} pieces and {triangles} triangles.",
+      "footer": "Reference body · educational, not diagnostic · BodyParts3D © DBCLS (CC BY 4.0)"
     }
   }
 }

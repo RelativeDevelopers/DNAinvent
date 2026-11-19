@@ -9,7 +9,8 @@
     "tools_title": "DNAtools",
     "bits_title": "Ser a partir de bits",
     "goodbye": "¡Hasta la próxima!",
-    "database_title": "Base de datos"
+    "database_title": "Base de datos",
+    "anatomy_title": "Cuerpo humano"
   },
   "menu": {
     "main": {
@@ -24,7 +25,8 @@
       "exit": "Salir",
       "microscope": "Microscopio 3D: de la hélice a los quarks",
       "protein": "Proteína 3D: del ADN a la estructura",
-      "database": "Base de datos de genes reales (NCBI y ClinVar)"
+      "database": "Base de datos de genes reales (NCBI y ClinVar)",
+      "anatomy": "Cuerpo humano: anatomía 3D, células y genes"
     },
     "tools": {
       "find": "Buscar una secuencia",
@@ -49,6 +51,12 @@
       "list": "Genes guardados",
       "disease": "Una enfermedad y sus tratamientos",
       "pocket": "Un fármaco dentro de su proteína (PDB)"
+    },
+    "anatomy": {
+      "search": "Buscar una parte del cuerpo",
+      "systems": "Recorrer por sistemas (huesos, músculos, órganos...)",
+      "viewer": "Abrir el cuerpo en 3D",
+      "last": "Ficha de lo último que elegiste en el visor 3D"
     }
   },
   "common": {
@@ -521,6 +529,14 @@
     "more_disease": {
       "one": "{n} enfermedad más",
       "other": "{n} enfermedades más"
+    },
+    "piece": {
+      "one": "{n} pieza 3D",
+      "other": "{n} piezas 3D"
+    },
+    "cell_type": {
+      "one": "{n} tipo de célula",
+      "other": "{n} tipos de célula"
     }
   },
   "microscope": {
@@ -1356,6 +1372,107 @@
     },
     "links": {
       "title": "Enlaces:"
+    }
+  },
+  "anatomy": {
+    "missing": "«Cuerpo humano» todavía no está preparado en este ordenador ({path}). Se prepara una vez con tools/build_anatomy (ver el README).",
+    "old": "«Cuerpo humano» se preparó con una versión anterior. Vuelve a ejecutar tools/build_anatomy.",
+    "ask_search": "Parte del cuerpo (p. ej. corazón, fémur, bíceps; también en inglés): ",
+    "no_results": "No hay ninguna parte del cuerpo que se llame «{text}». Prueba con otra palabra (también en inglés).",
+    "choose": "Número (Enter para volver): ",
+    "choose_system": "Sistema (Enter para volver): ",
+    "filter": "Filtra por nombre (Enter = todas): ",
+    "more": "… y {count} más. Escribe una palabra para filtrar.",
+    "no_selection": "Todavía no has elegido nada en el visor 3D (pulsa sobre una pieza).",
+    "viewer_opening": "Abriendo el cuerpo en 3D en otra ventana. Pulsa sobre una pieza para elegirla; luego, aquí, la opción 4 te enseña su ficha.",
+    "viewer_missing": "Para ver el cuerpo en 3D hace falta instalar: {packages} (pip install numpy moderngl pyglet pillow)",
+    "systems": {
+      "skeletal": "Huesos",
+      "muscular": "Músculos",
+      "connective": "Ligamentos y tendones",
+      "heart": "Corazón",
+      "arteries": "Arterias",
+      "veins": "Venas",
+      "nervous": "Sistema nervioso",
+      "respiratory": "Aparato respiratorio",
+      "digestive": "Aparato digestivo",
+      "urinary": "Aparato urinario",
+      "reproductive": "Aparato reproductor",
+      "endocrine": "Glándulas endocrinas",
+      "lymphatic": "Sistema linfático",
+      "senses": "Órganos de los sentidos",
+      "skin": "Piel",
+      "other": "Otras partes"
+    },
+    "tissues": {
+      "skeletal_muscle": "músculo esquelético",
+      "bone": "hueso",
+      "cartilage": "cartílago",
+      "tooth": "diente",
+      "dense_connective": "tendones y ligamentos",
+      "artery": "arteria",
+      "vein": "vena",
+      "nerve": "nervio",
+      "brain": "encéfalo y médula espinal",
+      "skin": "piel"
+    },
+    "card": {
+      "system": "Sistema",
+      "size": "Tamaño",
+      "size_value": "unos {cm} cm de largo",
+      "pieces": "En 3D",
+      "kind": "Qué es",
+      "part_of": "Forma parte de",
+      "parts": "Sus partes",
+      "cells_title": "Células y genes",
+      "cells_own": "Células de esta parte del cuerpo y genes que las distinguen (Human Reference Atlas):",
+      "cells_own_parts": "Células de sus distintas partes y genes que las distinguen (Human Reference Atlas):",
+      "cells_organ": "Las tablas no tienen esta parte en concreto. Son las de «{name}», de lo que forma parte (Human Reference Atlas):",
+      "cells_tissue": "Células típicas del tejido «{tissue}» (no de esta pieza en concreto) y sus genes más conocidos:",
+      "no_cells": "Todavía no hay datos de células para esta parte del cuerpo.",
+      "more_genes": "+{count}",
+      "more_cells": "… y {count} más ([5] para verlas todas).",
+      "series": "★ = gen de serie: tiene ficha completa en «Genes reales» (opción 9 → C).",
+      "what_genes": "Los genes marcadores son los que más se activan en esa célula y sirven para reconocerla; no son los únicos que usa.",
+      "disclaimer": "Divulgación sobre un cuerpo de referencia (hombre adulto). No sirve para diagnosticar. Ante cualquier duda de salud, consulta a un profesional sanitario.",
+      "sources": "Fuentes: forma 3D de BodyParts3D (© DBCLS, CC BY 4.0); células y genes: {cells}.",
+      "sources_asctb": "Human Reference Atlas, tablas ASCT+B v2.0 (HuBMAP, CC BY 4.0)",
+      "sources_tissue": "tabla propia a partir de la Cell Ontology y el Human Protein Atlas",
+      "menu": {
+        "view3d": "Ver en 3D",
+        "parts": "Sus partes",
+        "part_of": "De qué forma parte",
+        "gene": "Gen de serie",
+        "cells": "Todas las células"
+      },
+      "choose_part": "Número de la parte (Enter para volver): ",
+      "choose_gene": "Número del gen (Enter para volver): "
+    },
+    "viewer": {
+      "title": "DNAinvent · Cuerpo humano",
+      "layers": "Capas (clic para encender o apagar)",
+      "help": [
+        "Arrastrar: girar · Clic derecho y arrastrar: mover · Rueda: acercar",
+        "Clic en una pieza: elegirla · F: centrarla · I: ver solo lo elegido",
+        "C: colores · A: todas las capas · R: vista inicial · L: idioma · H: ayuda · Esc: salir"
+      ],
+      "none": "Pulsa sobre una pieza para saber qué es",
+      "cells": "Células: {list}",
+      "genes": "Genes: {list}",
+      "series": "★ Genes de serie: {list}",
+      "tissue": "(típicas del tejido «{tissue}»)",
+      "no_cells": "Todavía no hay datos de células de esta parte.",
+      "console": "Ficha completa en la consola: Cuerpo humano → 4",
+      "isolate_on": "Solo lo elegido",
+      "isolate_off": "Todo el cuerpo",
+      "colors_systems": "Colores por sistema",
+      "colors_plain": "Un solo color",
+      "language": "Español",
+      "all_layers": "Todas las capas encendidas",
+      "reset": "Vista inicial",
+      "nothing_selected": "Primero elige una pieza",
+      "loaded": "Cuerpo humano: {pieces} piezas y {triangles} triángulos.",
+      "footer": "Cuerpo de referencia · divulgación, no diagnóstico · BodyParts3D © DBCLS (CC BY 4.0)"
     }
   }
 }
