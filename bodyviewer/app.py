@@ -38,7 +38,9 @@ class App(pyglet.window.Window):
         self.message, self.message_until = "", 0.0
         self.press = None
         self.dirty = True
-        print(tr("anatomy.viewer.loaded", pieces=len(scene.pieces), triangles=scene.triangles))
+        # (sin print: la consola que lo ha abierto está esperando una opción en la misma ventana)
+        self.keys = key.KeyStateHandler()
+        self.push_handlers(self.keys)
         if select:                           # desde la consola: se ve sola; con I, en su sitio
             self.renderer.isolate = True
             self.choose(select, frame=True)
@@ -76,6 +78,24 @@ class App(pyglet.window.Window):
         if self.message and time.time() > self.message_until:
             self.message = ""
             self.dirty = True
+        self.move(dt)
+
+    def move(self, dt):
+        """Las teclas del Microscopio 3D, mientras se mantienen: W/S acercarse y alejarse, A/D a
+        los lados, Espacio/C subir y bajar, Q/E y las flechas girar; Mayús, el triple de rápido."""
+        k = self.keys
+        axis = lambda plus, minus: (1 if k[plus] else 0) - (1 if k[minus] else 0)  # noqa: E731
+        speed = dt * (3 if k[key.LSHIFT] or k[key.RSHIFT] else 1)
+        px = 420 * speed
+        zoom, side, up = axis(key.W, key.S), axis(key.D, key.A), axis(key.SPACE, key.C)
+        turn = axis(key.E, key.Q) + axis(key.RIGHT, key.LEFT)
+        tilt = axis(key.UP, key.DOWN)
+        if zoom:
+            self.camera.zoom(zoom * 6 * speed)
+        if side or up:
+            self.camera.pan(-side * px, up * px, self.get_framebuffer_size()[1])
+        if turn or tilt:
+            self.camera.orbit(-turn * px, tilt * px)
 
     def on_draw(self):
         w, h = self.get_framebuffer_size()
@@ -140,7 +160,7 @@ class App(pyglet.window.Window):
             else:
                 self.close()
             return pyglet.event.EVENT_HANDLED
-        if symbol == key.F:
+        if symbol in (key.ENTER, key.RETURN):
             if r.selected:
                 self.camera.frame(*self.scene.bounds(r.selected))
             else:
@@ -154,11 +174,14 @@ class App(pyglet.window.Window):
                 self.flash(tr("anatomy.viewer.isolate_on" if r.isolate else "anatomy.viewer.isolate_off"))
             else:
                 self.flash(tr("anatomy.viewer.nothing_selected"))
-        elif symbol == key.C:
+        elif symbol == key.M:
             r.plain = not r.plain
             r.update_state()
             self.flash(tr("anatomy.viewer.colors_plain" if r.plain else "anatomy.viewer.colors_systems"))
-        elif symbol == key.A:
+        elif symbol == key.B:
+            r.light = not r.light
+            self.flash(tr("anatomy.viewer.light_on" if r.light else "anatomy.viewer.light_off"))
+        elif symbol == key.T:
             r.show_all()
             self.flash(tr("anatomy.viewer.all_layers"))
         elif symbol == key.R:
@@ -171,7 +194,7 @@ class App(pyglet.window.Window):
             self.flash(tr("anatomy.viewer.language"))
         elif symbol == key.H:
             self.hud.show_help = not self.hud.show_help
-        elif symbol == key.F11:
+        elif symbol in (key.F, key.F11):
             self.set_fullscreen(not self.fullscreen)
         self.dirty = True
 

@@ -1452,9 +1452,9 @@
       "title": "DNAinvent · Cos humà",
       "layers": "Capes (clic per encendre o apagar)",
       "help": [
-        "Arrossegar: girar · Clic dret i arrossegar: moure · Roda: apropar",
-        "Clic en una peça: triar-la · F: centrar-la · I: veure només el triat",
-        "C: colors · A: totes les capes · R: vista inicial · L: idioma · H: ajuda · Esc: sortir"
+        "W/S: apropar-te i allunyar-te · A/D: als costats · Espai/C: pujar i baixar · Q/E i fletxes: girar · Maj: ràpid",
+        "Arrossegar: girar · Clic dret i arrossegar: moure · Roda: apropar · Clic en una peça: triar-la",
+        "Enter: centrar · I: només el triat · M: colors · B: fons clar · T: totes les capes · R: vista inicial · L: idioma · F: pantalla completa · H: ajuda · Esc: sortir"
       ],
       "none": "Fes clic sobre una peça per saber què és",
       "cells": "Cèl·lules: {list}",
@@ -1472,7 +1472,9 @@
       "reset": "Vista inicial",
       "nothing_selected": "Primer tria una peça",
       "loaded": "Cos humà: {pieces} peces i {triangles} triangles.",
-      "footer": "Cos de referència · divulgació, no diagnòstic · BodyParts3D © DBCLS (CC BY 4.0)"
+      "footer": "Cos de referència · divulgació, no diagnòstic · BodyParts3D © DBCLS (CC BY 4.0)",
+      "light_on": "Fons clar",
+      "light_off": "Fons fosc"
     }
   }
 }

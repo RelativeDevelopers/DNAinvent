@@ -239,13 +239,14 @@ python -m bodyviewer --select FMA7088     # con el corazón elegido (ID de la FM
 
 | Ratón / tecla | Acción |
 |---|---|
-| **Arrastrar** · **Rueda** | girar · acercar |
-| **Clic derecho y arrastrar** (o Mayús + arrastrar) | mover |
+| **W** / **S** · **A** / **D** · **Espacio** / **C** | acercarte y alejarte · a los lados · subir y bajar (como en el microscopio) |
+| **Q** / **E** · **flechas** · **Mayús** | girar alrededor · girar · más rápido |
+| **Arrastrar** · **Rueda** · **clic derecho y arrastrar** | girar · acercar · mover |
 | **Clic en una pieza** · **Esc** | elegirla · soltarla (Esc otra vez: salir) |
-| **Clic en una capa** · **A** | encenderla o apagarla · todas encendidas |
-| **F** · **I** | centrar lo elegido · verlo solo |
-| **C** · **R** | colores por sistema o de un solo color · vista inicial |
-| **L** · **H** · **F11** | idioma · ayuda · pantalla completa |
+| **Clic en una capa** · **T** | encenderla o apagarla · todas encendidas |
+| **Enter** · **I** | centrar lo elegido · verlo solo |
+| **M** · **B** · **R** | colores por sistema o de un solo color · fondo claro u oscuro · vista inicial |
+| **L** · **H** · **F** | idioma · ayuda · pantalla completa |
 
 Al pulsar una pieza, la consola (**A] Cuerpo humano → 4**) enseña su ficha completa.
 

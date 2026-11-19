@@ -101,14 +101,19 @@ class HUD:
             d.text((rx, y), text, font=f, fill=color)
             y += int(f.size * 1.35)
 
-        # ---- ayuda, aviso y mensajes
+        # ---- ayuda, aviso y mensajes (sobre un panel, para que se lean con fondo oscuro o claro)
         bottom = h - pad
-        d.text((pad, bottom - small.size), tr("anatomy.viewer.footer"), font=small, fill=DIM)
-        bottom -= int(small.size * 1.6)
+        rows = [(small, DIM, tr("anatomy.viewer.footer"))]
         if self.show_help:
-            for line in reversed(tr.lines("anatomy.viewer.help")):
-                d.text((pad, bottom - font.size), line, font=font, fill=WHITE)
-                bottom -= int(font.size * 1.4)
+            rows = [(font, WHITE, line) for line in tr.lines("anatomy.viewer.help")] + rows
+        heights = [int(f.size * (1.6 if f is small else 1.4)) for f, _, _ in rows]
+        width = max(d.textlength(text, font=f) for f, _, text in rows)
+        top = bottom - sum(heights)
+        d.rounded_rectangle((pad - 8, top - 6, pad + width + 8, h - pad + 6), int(8 * k), fill=PANEL)
+        y = top
+        for (f, color, text), step in zip(rows, heights):
+            d.text((pad, y + step - f.size * 1.2), text, font=f, fill=color)
+            y += step
         if message:
             tw = d.textlength(message, font=big)
             d.rounded_rectangle(((w - tw) / 2 - pad, h * 0.08 - 6, (w + tw) / 2 + pad, h * 0.08 + big.size * 1.4),

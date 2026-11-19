@@ -14,6 +14,7 @@ HIDDEN, VISIBLE, SELECTED = 0, 128, 255
 PLAIN = (0.86, 0.80, 0.74)               # «un solo color»: como una figura de escayola
 HIGHLIGHT = (1.0, 0.82, 0.25)
 BACKGROUND = (0.07, 0.08, 0.10)
+LIGHT_BACKGROUND = (0.93, 0.945, 0.955)
 
 VERT = """#version 330
 uniform mat4 mvp; uniform mat4 view;
@@ -88,6 +89,7 @@ class Renderer:
         self.selected: set[int] = set()
         self.isolate = False
         self.plain = False
+        self.light = False                   # fondo claro (tecla B)
         self._pick_fbo, self._pick_size = None, None
         self.update_state()
 
@@ -134,7 +136,7 @@ class Renderer:
         target = fbo or self.ctx.screen
         target.use()
         self.ctx.viewport = (0, 0, w, h)
-        self.ctx.clear(*BACKGROUND, 1.0)
+        self.ctx.clear(*(LIGHT_BACKGROUND if self.light else BACKGROUND), 1.0)
         self.ctx.enable(moderngl.DEPTH_TEST)
         self.ctx.disable(moderngl.CULL_FACE)          # algunas mallas vienen con caras al revés
         mvp, view = self._matrices(camera, w, h)
@@ -145,9 +147,22 @@ class Renderer:
         self.prog["strength"].value = 0.0 if self.isolate else 1.0
         self.state_tex.use(0)
         self.prog["state"].value = 0
-        for system, vao in self.vaos.items():
-            if system in self.drawn:
+        self._draw(self.vaos, target)
+
+    def _draw(self, vaos, target):
+        """Primero todo lo de dentro y después la piel, borrando antes la profundidad: la piel es lo
+        de fuera, y así no la atraviesan los músculos o las venas que, con menos triángulos,
+        quedan unos milímetros por fuera de ella."""
+        for system, vao in vaos.items():
+            if system != "skin" and system in self.drawn:
                 vao.render()
+        if "skin" in vaos and "skin" in self.drawn:
+            mask = target.color_mask                  # borrar solo la profundidad
+            target.color_mask = (False, False, False, False)
+            target.clear(depth=1.0)
+            target.color_mask = mask
+            target.use()                              # vuelve a aplicar la máscara a OpenGL
+            vaos["skin"].render()
 
     def pick(self, camera, w, h, x, y) -> int | None:
         """Número de la pieza en el píxel (x, y), con y desde abajo, o None."""
@@ -166,9 +181,7 @@ class Renderer:
         self.pick_prog["mvp"].write(mvp.tobytes())
         self.state_tex.use(0)
         self.pick_prog["state"].value = 0
-        for system, vao in self.pick_vaos.items():
-            if system in self.drawn:
-                vao.render()
+        self._draw(self.pick_vaos, fbo)
         x, y = int(np.clip(x, 0, w - 1)), int(np.clip(y, 0, h - 1))
         number = encode_pick(fbo.read(viewport=(x, y, 1, 1), components=3))
         if previous is not None:

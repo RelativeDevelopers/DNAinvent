@@ -1452,9 +1452,9 @@
       "title": "DNAinvent · Human body",
       "layers": "Layers (click to switch on or off)",
       "help": [
-        "Drag: rotate · Right-click and drag: move · Wheel: zoom",
-        "Click on a piece: pick it · F: centre it · I: show only what you picked",
-        "C: colours · A: all layers · R: start view · L: language · H: help · Esc: quit"
+        "W/S: move closer and further · A/D: sideways · Space/C: up and down · Q/E and arrows: turn · Shift: fast",
+        "Drag: rotate · Right-click and drag: move · Wheel: zoom · Click on a piece: pick it",
+        "Enter: centre · I: only what you picked · M: colours · B: light background · T: all layers · R: start view · L: language · F: full screen · H: help · Esc: quit"
       ],
       "none": "Click on a piece to find out what it is",
       "cells": "Cells: {list}",
@@ -1472,7 +1472,9 @@
       "reset": "Start view",
       "nothing_selected": "Pick a piece first",
       "loaded": "Human body: {pieces} pieces and {triangles} triangles.",
-      "footer": "Reference body · educational, not diagnostic · BodyParts3D © DBCLS (CC BY 4.0)"
+      "footer": "Reference body · educational, not diagnostic · BodyParts3D © DBCLS (CC BY 4.0)",
+      "light_on": "Light background",
+      "light_off": "Dark background"
     }
   }
 }

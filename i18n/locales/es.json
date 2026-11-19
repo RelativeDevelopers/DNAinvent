@@ -1452,9 +1452,9 @@
       "title": "DNAinvent · Cuerpo humano",
       "layers": "Capas (clic para encender o apagar)",
       "help": [
-        "Arrastrar: girar · Clic derecho y arrastrar: mover · Rueda: acercar",
-        "Clic en una pieza: elegirla · F: centrarla · I: ver solo lo elegido",
-        "C: colores · A: todas las capas · R: vista inicial · L: idioma · H: ayuda · Esc: salir"
+        "W/S: acercarte y alejarte · A/D: a los lados · Espacio/C: subir y bajar · Q/E y flechas: girar · Mayús: rápido",
+        "Arrastrar: girar · Clic derecho y arrastrar: mover · Rueda: acercar · Clic en una pieza: elegirla",
+        "Enter: centrar · I: solo lo elegido · M: colores · B: fondo claro · T: todas las capas · R: vista inicial · L: idioma · F: pantalla completa · H: ayuda · Esc: salir"
       ],
       "none": "Pulsa sobre una pieza para saber qué es",
       "cells": "Células: {list}",
@@ -1472,7 +1472,9 @@
       "reset": "Vista inicial",
       "nothing_selected": "Primero elige una pieza",
       "loaded": "Cuerpo humano: {pieces} piezas y {triangles} triángulos.",
-      "footer": "Cuerpo de referencia · divulgación, no diagnóstico · BodyParts3D © DBCLS (CC BY 4.0)"
+      "footer": "Cuerpo de referencia · divulgación, no diagnóstico · BodyParts3D © DBCLS (CC BY 4.0)",
+      "light_on": "Fondo claro",
+      "light_off": "Fondo oscuro"
     }
   }
 }
