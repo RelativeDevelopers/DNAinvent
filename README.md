@@ -28,8 +28,9 @@ DNAinvent funciona **en el navegador** y **en la consola de tu ordenador**, y ha
 
 > 🌐 **¿Sin instalar nada?** Úsalo directamente desde la
 > [página web de DNAinvent](https://relativedevelopers.com/dnainvent/): pulsa **«Abrir DNAinvent»**.
-> La web tiene la doble hélice en 3D, el microscopio 3D, la proteína 3D y la página divulgativa
-> *Qué es el ADN*. Este repositorio es el programa completo para tu ordenador.
+> La web tiene la doble hélice en 3D, el microscopio 3D, la proteína 3D, los **genes reales**
+> (las fichas de los 14 genes de serie y un buscador para cualquier otro gen humano) y la página
+> divulgativa *Qué es el ADN*. Este repositorio es el programa completo para tu ordenador.
 
 ---
 
@@ -68,8 +69,43 @@ Escribe ADN y DNAinvent te dice **qué proteína es**, cuánto se parece a la pr
 - Ábrela en el microscopio y compara las dos **en pantalla partida** o **superpuestas**.
 - Guarda las estructuras en formato PDB para usarlas en otros programas.
 
-### 📚 Base de datos de genes reales
-Importa genes reales del NCBI con sus variantes y las enfermedades asociadas, y consúltalos sin conexión.
+### 🧬 Genes reales: los 14 genes de serie
+Una colección de fichas de **14 genes famosos**, listos para consultar sin conexión: HBB (anemia
+falciforme), CFTR (fibrosis quística), BRCA1 y BRCA2 (cáncer de mama y ovario), TP53, HTT
+(Huntington), DMD (Duchenne), F8 (hemofilia A), PAH (fenilcetonuria), APOE, LDLR (colesterol
+alto familiar), SMN1 (atrofia muscular espinal), G6PD y LCT (la lactosa). Entre todos, más de
+70.000 variantes de ClinVar.
+
+- **Ficha del gen:** qué hace, en qué cromosoma está, cuántas variantes se conocen y de qué tipo,
+  con cinco colores (🔴 causan enfermedad · 🟡 efecto incierto · 🟢 sanas · 🔵 especiales, que
+  protegen o aumentan el riesgo · ⚪ sin clasificar), sus variantes con nombre propio (HbS, ΔF508…),
+  sus enfermedades principales y un **«¿Sabías que…?»**.
+- **Ficha de la variante:** el cambio codón a codón (`GAG → GTG`, `Glu → Val`), qué hace en cada
+  enfermedad (la **causa**, es **factor de riesgo** o **protege**), su frecuencia en la población y
+  el **nivel de revisión** de ClinVar (*mide cuánto se ha revisado la clasificación, no la
+  probabilidad de que sea cierta*).
+- **La mutación en la proteína 3D:** dónde cae el cambio en la proteína plegada (modelo de
+  AlphaFold): si está en la superficie o escondido dentro, qué aminoácidos toca y qué cambia
+  (carga, si le gusta el agua, tamaño…). Se abre en el microscopio con el sitio marcado. Se
+  enseña la proteína sana con el sitio señalado, no una predicción de la mutada, porque los
+  modelos no captan bien el efecto de un solo aminoácido. BRCA2, HTT y DMD no tienen vista 3D:
+  son demasiado largas y AlphaFold DB no publica su modelo.
+- **Ficha de la enfermedad:** cómo se hereda, cuánta gente la tiene y a qué edad empieza (de
+  Orphanet), y sus tratamientos: aprobados, en ensayo, retirados, o nada todavía. Los fármacos se
+  separan en los que **actúan sobre la causa** y **otros tratamientos**.
+- **Ficha del fármaco:** qué es, sobre qué actúa, en qué fase está y **por qué funciona**,
+  explicado con palabras sencillas.
+- Todas las fichas tienen **enlaces a sus fuentes** (NCBI, ClinVar, dbSNP, Orphanet, UniProt,
+  AlphaFold DB, ChEMBL, RCSB PDB) y en **los tres idiomas**: los nombres de los genes y de las
+  enfermedades y las explicaciones están escritos a mano.
+
+> ⚠️ **Es divulgación, no consejo médico.** *Aprobado* quiere decir que el fármaco trata la
+> enfermedad, no necesariamente que la cure. Ante cualquier duda de salud, consulta a un
+> profesional sanitario.
+
+### 📚 Tu propia base de datos de genes
+Además de los genes de serie, puedes importar **cualquier gen** del NCBI con sus variantes y las
+enfermedades asociadas, y consultarlo sin conexión.
 - **Sana frente a variante:** compara la versión sana de un gen con la mutada, codón a codón. Por ejemplo, en la anemia falciforme: `GAG → GTG`, `Glu → Val`.
 - **Buscador** de genes y enfermedades por palabras.
 - Para cada variante, qué hace en cada enfermedad: si la **causa**, es **factor de riesgo** o **protege** (la variante de la anemia falciforme, por ejemplo, protege frente a la malaria).
@@ -146,7 +182,7 @@ En el menú principal tienes todas las herramientas. Algunas destacadas:
 - **1] Doble hélice** — al terminar, puedes abrir la hélice en el microscopio.
 - **7] Microscopio 3D**
 - **8] Proteína 3D**
-- **9] Base de datos de genes**
+- **9] Base de datos de genes** → **C] Genes de serie (fichas)** para los 14 genes de serie
 - **L] Cambiar idioma**
 
 ### El microscopio directamente
@@ -184,7 +220,7 @@ El microscopio muestra hasta **60 pares de bases** (o 150 aminoácidos) a la vez
 ## 💡 Consejos
 
 - **¿Tienes gráfica NVIDIA en Windows?** Para que el microscopio vaya fluido: *Configuración → Sistema → Pantalla → Gráficos*, añade el `python.exe` que usas y elige **Alto rendimiento**. Al arrancar, la consola te dice qué tarjeta gráfica está usando.
-- **Base de datos más rápida:** el NCBI permite 3 consultas por segundo, o 10 si tienes una API key gratuita (cuenta del NCBI → *Settings → API Key Management*). Guárdala en la variable de entorno `NCBI_API_KEY`.
+- **Base de datos más rápida:** el NCBI permite 3 consultas por segundo, o 10 si tienes una API key gratuita (cuenta del NCBI → *Settings → API Key Management*). Guárdala en la variable de entorno `NCBI_API_KEY`, nunca en el código.
 - **Tus datos se guardan en** `~/.dnainvent/`: el idioma elegido, la base de datos de genes y las descargas. Puedes borrar la base de datos o la caché cuando quieras; se vuelven a crear.
 
 ---
@@ -195,6 +231,8 @@ Casi todo funciona sin conexión. Solo se conecta a Internet para:
 - **Identificar proteínas** (búsqueda BLAST en el EBI) y **descargar estructuras** de AlphaFold DB.
 - **Importar genes** del NCBI y **fármacos** de ChEMBL (con UniProt para saber cuál es la proteína de cada gen).
 - **Descargar estructuras con fármacos** del PDB (RCSB).
+- **Ver una mutación en la proteína 3D** (el modelo de AlphaFold DB se descarga la primera vez y se guarda).
+- **Construir el catálogo de genes de serie** (solo si lo haces tú: ver *Para desarrolladores*).
 
 El EBI y el NCBI piden un correo de contacto en cada búsqueda; se usa el de Relative Developers (`relativedevelopers@gmail.com`), y puedes cambiarlo con la variable de entorno `DNAINVENT_EMAIL`. No se envía nada más.
 
@@ -237,12 +275,45 @@ tools/         scripts auxiliares
 
 La versión web de DNAinvent está en su propio repositorio, `DNAinvent_web`, que usa este como paquete.
 
+### El catálogo de los genes de serie
+
+Las fichas leen un catálogo ya preparado, `~/.dnainvent/catalog.db` (unos 27 MB; la variable de
+entorno `DNAINVENT_CATALOG` permite usar otro). Para construirlo:
+
+```bash
+python tools/build_catalog.py                       # los 14 genes (en Windows: tools\build_catalog.bat)
+python tools/build_catalog.py --genes HBB,CFTR      # solo algunos
+python tools/build_catalog.py --max-variants 200    # prueba rápida, con pocas variantes por gen
+```
+
+Descarga los datos de NCBI Gene, ClinVar, RefSeq, UniProt, ChEMBL y Orphanet. Tarda: casi dos
+horas para los 14 genes sin API key del NCBI (BRCA1 y BRCA2 tienen miles de variantes), bastante
+menos con ella. Respeta los límites de cada servicio y, si se corta, al volver a ejecutarlo sigue
+donde lo dejó.
+
+Lo que no sale de las bases de datos está en dos sitios que se pueden corregir sin tocar el resto
+del código:
+
+- **`dnainvent/database/texts/`**: los textos escritos a mano. `es.json`, `ca.json` y `en.json`
+  tienen las mismas claves (nombres y explicaciones de los genes, variantes con nombre propio,
+  nombres de las enfermedades, «por qué funciona» de cada fármaco y notas de tratamiento), y
+  `common.json` las fuentes de cada texto. Si falta un texto, la ficha usa el de la fuente, en
+  inglés y marcado como tal.
+- **`dnainvent/database/curated.py`**: los datos revisados a mano que las fuentes no dan bien:
+  fármacos aprobados que ChEMBL no marca, qué fármacos actúan sobre la causa, enfermedades que
+  ClinVar llama de varias formas y fármacos retirados (con el país y el año).
+
+El código de la opción 9 está en `dnainvent/database/` (`catalog.py` construye el catálogo,
+`cards.py` prepara las fichas y `protein3d.py` sitúa la mutación en la proteína).
+
 ---
 
 ## 🙏 Créditos y datos
 
 - **Datos de proteínas:** AlphaFold DB, licencia CC-BY 4.0 (Jumper et al. 2021, *Nature*; Varadi et al. 2024, *NAR*).
-- **Datos de genes:** NCBI Gene, RefSeq y ClinVar (dominio público). Los nombres de las enfermedades vienen de ClinVar, en inglés.
+- **Datos de genes:** NCBI Gene, RefSeq y ClinVar (dominio público). Los nombres de las enfermedades vienen de ClinVar, en inglés; los de los genes de serie están traducidos a mano.
+- **Herencia, frecuencia y edad de inicio de las enfermedades:** Orphanet / Orphadata, licencia CC BY 4.0.
+- **Textos de los genes de serie** («¿Sabías que…?», «por qué funciona»): propios, escritos a partir de las fuentes que se citan en cada ficha.
 - **Fármacos:** ChEMBL, licencia CC BY-SA 3.0 (Zdrazil et al. 2024, *NAR*). **Proteínas de cada gen:** UniProt, CC BY 4.0. **Estructuras con fármacos:** RCSB PDB (dominio público).
 - **Modelo de la doble hélice:** inspirado en la idea de [codegiovanni/DNA_helix](https://github.com/codegiovanni/DNA_helix) (hélice paramétrica girada con una matriz de rotación). El código es propio y usa las medidas reales del ADN B.
 - **Microscopio 3D:** viene del proyecto *Microscopio de ADN* (DNAmicroscope) y comparte física y renderizado con el visor de **AtomicWorld**.
