@@ -1,8 +1,8 @@
 {
   "id": "dnainvent",
   "name": "DNAinvent",
-  "version": "2.1.0-dev",
-  "status": "development",
+  "version": "2.1.0",
+  "status": "available",
   "platforms": [
     "web",
     "desktop"

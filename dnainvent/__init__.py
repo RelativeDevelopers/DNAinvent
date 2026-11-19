@@ -6,5 +6,5 @@ así cualquier interfaz (consola, ventana, web) puede usarlo.
 
 from .errors import DNAinventError, InvalidParameterError, InvalidSequenceError, ServiceError
 
-__version__ = "2.1.0-dev"
+__version__ = "2.1.0"
 __all__ = ["DNAinventError", "InvalidParameterError", "InvalidSequenceError", "ServiceError"]
